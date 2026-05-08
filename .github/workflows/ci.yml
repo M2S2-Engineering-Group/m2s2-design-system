@@ -175,7 +175,7 @@ jobs:
         run: npm ci
 
       - name: Release
-        run: npx semantic-release --config release.config.tokens.js
+        run: cd packages/tokens && npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,5 +1,3 @@
-const pkgRoot = 'packages/tokens';
-
 const commitAnalyzer = ['@semantic-release/commit-analyzer', {
   preset: 'angular',
   releaseRules: [
@@ -21,17 +19,14 @@ const releaseNotesGenerator = ['@semantic-release/release-notes-generator', {
 }];
 
 const changelog = ['@semantic-release/changelog', {
-  changelogFile: 'packages/tokens/CHANGELOG.md',
+  changelogFile: 'CHANGELOG.md',
   changelogTitle: '# @m2s2/tokens Changelog\n\nAll notable changes to the design token system are documented here.\n\nBreaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).',
 }];
 
-const npm = ['@semantic-release/npm', { pkgRoot, npmPublish: true }];
+const npm = ['@semantic-release/npm', { pkgRoot: '.', npmPublish: true }];
 
 const git = ['@semantic-release/git', {
-  assets: [
-    'packages/tokens/CHANGELOG.md',
-    'packages/tokens/package.json',
-  ],
+  assets: ['CHANGELOG.md', 'package.json'],
   message: 'chore(release): @m2s2/tokens v${nextRelease.version} [skip ci]',
 }];
 
