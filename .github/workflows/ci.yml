@@ -142,7 +142,7 @@ jobs:
         run: npm run build:prod --workspace=packages/ng-lib
 
       - name: Release
-        run: npx semantic-release --config release.config.ng-lib.js
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
