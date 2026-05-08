@@ -1,0 +1,19 @@
+<m2s2-card [featured]="config().featured ?? false">
+  <div class="fc-header">
+    @if (config().icon) {
+      <span class="fc-icon" aria-hidden="true" [innerHTML]="config().icon"></span>
+    }
+    <h2 class="fc-title">{{ config().title }}</h2>
+  </div>
+  <p class="fc-body">{{ config().body }}</p>
+  @if (config().items?.length) {
+    <ul class="fc-list">
+      @for (item of config().items!; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  }
+  @if (config().note) {
+    <p class="fc-note">{{ config().note }}</p>
+  }
+</m2s2-card>

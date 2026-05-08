@@ -1,0 +1,65 @@
+<!-- ── Anonymous mode: email + name form ─────────────────────────────────── -->
+@if (mode() === 'anon') {
+  @if (state() !== 'done') {
+    <div class="sub-form">
+      <input
+        class="sub-input"
+        type="text"
+        placeholder="Your name (optional)"
+        [(ngModel)]="name"
+        [disabled]="state() === 'submitting'">
+      <input
+        class="sub-input"
+        type="email"
+        placeholder="your@email.com"
+        [(ngModel)]="email"
+        [disabled]="state() === 'submitting'">
+      <button
+        class="sub-btn"
+        [disabled]="!emailValid || state() === 'submitting'"
+        (click)="submit()">
+        {{ state() === 'submitting' ? 'Submitting…' : 'Subscribe' }}
+      </button>
+      @if (state() === 'error') {
+        <p class="sub-feedback sub-feedback--error">
+          Something went wrong — please try again.
+        </p>
+      }
+    </div>
+  } @else {
+    <div class="sub-success">
+      <span class="sub-success-icon">✓</span>
+      <p class="sub-success-text">Check your email to confirm your subscription.</p>
+    </div>
+  }
+}
+
+<!-- ── Auth mode: one-click toggle ──────────────────────────────────────── -->
+@if (mode() === 'auth') {
+  <div class="sub-auth">
+    @if (!subscribed()) {
+      <button
+        class="sub-btn"
+        [disabled]="state() === 'submitting'"
+        (click)="submit()">
+        {{ state() === 'submitting' ? 'Subscribing…' : 'Subscribe to Blog Updates' }}
+      </button>
+      @if (state() === 'done') {
+        <p class="sub-feedback sub-feedback--success">You're subscribed!</p>
+      }
+    } @else {
+      <span class="sub-subscribed-label">✓ Subscribed to blog updates</span>
+      <button
+        class="sub-btn sub-btn--unsub"
+        [disabled]="state() === 'submitting'"
+        (click)="submit()">
+        {{ state() === 'submitting' ? 'Unsubscribing…' : 'Unsubscribe' }}
+      </button>
+    }
+    @if (state() === 'error') {
+      <p class="sub-feedback sub-feedback--error">
+        Something went wrong — please try again.
+      </p>
+    }
+  </div>
+}

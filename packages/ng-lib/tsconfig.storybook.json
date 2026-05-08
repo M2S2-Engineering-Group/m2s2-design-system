@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*.stories.ts",
+    ".storybook/preview.ts",
+    ".storybook/themes.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts"
+  ]
+}

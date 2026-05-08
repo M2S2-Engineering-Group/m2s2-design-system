@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "../../dist/**"]
+    },
+    "build:prod": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "../../dist/**"]
+    },
+    "build:storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/storybook/**", "../../dist/storybook/**"]
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "@m2s2/react-lib",
+  "version": "0.1.0",
+  "description": "React component library by M²S² Engineering Group — coming soon.",
+  "author": "M²S² Engineering Group <contact@m2s2.io>",
+  "license": "MIT",
+  "keywords": ["react", "component-library", "ui", "m2s2"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/M2S2-Engineering-Group/m2s2-design-system",
+    "directory": "packages/react-lib"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6007",
+    "build:storybook": "storybook build -o ../../dist/storybook/react"
+  },
+  "peerDependencies": {
+    "@m2s2/tokens": ">=0.1.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.3.6",
+    "@storybook/react-vite": "^10.3.6",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "storybook": "^10.3.6",
+    "typescript": "~5.9.3",
+    "vite": "^6.3.5"
+  }
+}

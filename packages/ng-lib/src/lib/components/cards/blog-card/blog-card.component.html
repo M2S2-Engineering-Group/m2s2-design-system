@@ -1,0 +1,24 @@
+<div class="bc-cover">
+  @if (config().coverImage) {
+    <img [src]="config().coverImage" [alt]="config().title" class="bc-cover-img" loading="lazy" />
+  } @else {
+    <div class="bc-cover-placeholder">
+      <span class="bc-cover-tag">{{ config().tags[0] }}</span>
+    </div>
+  }
+</div>
+
+<div class="bc-inner">
+  <div class="bc-meta">
+    <time [dateTime]="config().date">{{ formatDate(config().date) }}</time>
+  </div>
+  <h2 class="bc-title">
+    <a [routerLink]="['/blog', config().slug]">{{ config().title }}</a>
+  </h2>
+  <p class="bc-summary">{{ config().summary }}</p>
+  <div class="bc-tags">
+    @for (tag of config().tags; track tag) {
+      <span class="bc-tag">{{ tag }}</span>
+    }
+  </div>
+</div>

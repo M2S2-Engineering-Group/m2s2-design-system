@@ -1,0 +1,122 @@
+.m2-toolbar {
+  background: var(--color-nav-bg) !important;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 0 0 var(--color-primary-dim);
+  height: var(--nav-height) !important;
+  padding: 0 var(--space-4);
+  transform: translateY(0);
+  transition:
+    background 200ms ease,
+    box-shadow 200ms ease,
+    backdrop-filter 200ms ease,
+    transform 300ms ease;
+
+  &.toolbar-scrolled {
+    background: color-mix(in srgb, var(--color-nav-bg) 80%, transparent) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      0 1px 0 0 var(--color-primary-dim),
+      0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  &.toolbar-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+.m2-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  height: 48px;
+  width: auto;
+  transform: scale(1.1);
+  transform-origin: left center;
+}
+
+.brand-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-on-nav);
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.nav-btn {
+  color: var(--color-on-nav) !important;
+  font-size: var(--font-size-sm) !important;
+  letter-spacing: 0.02em;
+  border-radius: 4px !important;
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  &.nav-active {
+    color: var(--color-secondary) !important;
+    background: var(--color-nav-active-bg) !important;
+  }
+
+  &:hover:not(.nav-active) {
+    color: var(--color-secondary) !important;
+    background: var(--color-nav-hover-bg) !important;
+  }
+}
+
+.icon-btn {
+  color: var(--color-on-nav) !important;
+
+  &:hover {
+    color: var(--color-secondary) !important;
+  }
+}
+
+.menu-user-name {
+  padding: 8px 16px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-on-surface-muted);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 4px;
+  pointer-events: none;
+}
+
+.profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-primary-dim);
+  display: block;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+}

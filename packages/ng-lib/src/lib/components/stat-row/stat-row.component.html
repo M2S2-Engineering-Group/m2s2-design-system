@@ -1,0 +1,11 @@
+<div class="sr-row">
+  @for (stat of stats(); track stat.label; let last = $last) {
+    <div class="sr-item">
+      <span class="sr-value">{{ stat.value }}</span>
+      <span class="sr-label">{{ stat.label }}</span>
+    </div>
+    @if (!last) {
+      <div class="sr-divider" aria-hidden="true"></div>
+    }
+  }
+</div>

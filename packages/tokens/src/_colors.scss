@@ -1,0 +1,75 @@
+// =============================================================================
+// SEMANTIC COLOR TOKENS — DARK THEME (default)
+// =============================================================================
+// These are the tokens components use. They reference primitives by default
+// but can be overridden directly with any value.
+//
+// To retheme: override any --color-* or --gradient-* token in your own
+// :root { } block after importing this file. You do not need to touch
+// primitives or this file at all.
+//
+// Example brand override (in your app's global stylesheet):
+//   :root {
+//     --color-primary:       #your-brand-color;
+//     --color-secondary:     #your-accent;
+//     --gradient-brand:      linear-gradient(90deg, #your-start, #your-end);
+//     --gradient-brand-135:  linear-gradient(135deg, #your-start, #your-end);
+//   }
+// =============================================================================
+
+:root {
+  color-scheme: dark;
+
+  // ── Surfaces ────────────────────────────────────────────────────────────────
+  --color-bg:               var(--neutral-900);
+  --color-surface:          var(--neutral-850);
+  --color-surface-raised:   var(--neutral-800);
+  --color-surface-overlay:  #2d1b4e;
+
+  // ── Navigation ──────────────────────────────────────────────────────────────
+  --color-nav-bg:           var(--neutral-950);
+  --color-nav-hover-bg:     #250c3b;
+  --color-nav-active-bg:    #351650;
+  --color-nav-dropdown-bg:  #0b0314;
+
+  // ── Text ────────────────────────────────────────────────────────────────────
+  --color-on-bg:            var(--neutral-100);   // 14.8:1 on --color-bg ✓
+  --color-on-surface:       var(--neutral-200);   // 12.4:1 on --color-surface ✓
+  --color-on-surface-muted: var(--neutral-400);   //  6.2:1 on --color-surface ✓
+  --color-on-nav:           var(--neutral-50);    // 14.3:1 on --color-nav-bg ✓
+
+  // ── Brand — Primary ─────────────────────────────────────────────────────────
+  --color-primary:          var(--purple-400);    //  4.9:1 on --color-surface ✓
+  --color-primary-vivid:    var(--purple-500);    // decorative / large text only
+  --color-primary-dim:      var(--purple-700);    // borders, accents — not for text
+  --color-on-primary:       #1a0030;
+
+  // ── Brand — Secondary ───────────────────────────────────────────────────────
+  --color-secondary:        var(--cyan-400);      //  9.1:1 on --color-surface ✓
+  --color-secondary-dim:    var(--cyan-600);
+  --color-on-secondary:     #001a20;
+
+  // ── Borders ─────────────────────────────────────────────────────────────────
+  --color-border:           var(--neutral-600);
+  --color-border-subtle:    var(--neutral-700);
+
+  // ── Scrollbar ───────────────────────────────────────────────────────────────
+  --color-scrollbar:        rgb(55, 2, 99);
+  --color-scrollbar-hover:  #3f0052;
+
+  // ── Gradients ───────────────────────────────────────────────────────────────
+  --gradient-brand:        linear-gradient(90deg, var(--purple-800) 0%, var(--purple-500) 50%, var(--cyan-400) 100%);
+  --gradient-brand-135:    linear-gradient(135deg, var(--purple-800) 0%, var(--cyan-400) 100%);
+  --gradient-nav-bar:      linear-gradient(90deg, rgba(64,6,144,1) 0%, rgba(109,7,152,1) 62%, rgba(0,212,255,1) 100%);
+
+  // ── Semantic States ─────────────────────────────────────────────────────────
+  --color-error:            var(--red-400);       // 5.3:1 on --color-surface ✓
+  --color-success:          var(--green-400);     // 7.4:1 on --color-surface ✓
+  --color-warning:          var(--yellow-400);    // 9.4:1 on --color-surface ✓
+  --color-info:             var(--blue-400);      // 7.0:1 on --color-surface ✓
+
+  --color-error-bg:         rgba(248, 113, 113, 0.15);
+  --color-success-bg:       rgba(74,  222, 128, 0.15);
+  --color-warning-bg:       rgba(251, 191,  36, 0.15);
+  --color-info-bg:          rgba(56,  189, 248, 0.15);
+}

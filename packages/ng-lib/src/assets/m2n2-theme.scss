@@ -1,0 +1,684 @@
+
+
+// Secondary
+$secondary-4: #b1b5b9;
+$secondary-5: #9da3a8;
+$secondary-dark: #27292a;
+$secondary-light: #fafafb;
+$secondary-7: #6e7276;
+$secondary-8: #565a5c;
+$secondary-1: #ebedee;
+$secondary-2: #d8dadc;
+$secondary-3: #c4c8cb;
+$secondary-9: #3f4143;
+$secondary-6: #858b8f;
+
+// Primary
+$primary-dark: #15002b;
+$primary-9: #2a0052;
+$primary-8: #430070;
+$primary-7: #00458f;
+$primary-6: #0053ad;
+$primary-5: #0062cc;
+$primary-4: #3381d6;
+$primary-3: #66a1e0;
+$primary-2: #99c0eb;
+$primary-1: #cce0f5;
+$primary-light: #f9f2fc;
+
+// Alerts
+$danger-5: #e50022;
+$warning-5: #ffc200;
+$success-5: #0dba5c;
+$info-5: #0097cc;
+
+// Dark UI Background
+$background-7: #14202c;
+$background-6: #2B3540;
+$background-5: #2b3641;
+$background-3: #434c56;
+
+// Light UI Background
+$background-1: #ffffff;
+$background-2: #f3f4f4;
+
+// Core Palette
+$primary-5: #0062cc;
+$secondary-5: #9da3a8;
+
+// Light UI Text
+$secondary-dark: #27292a;
+$secondary-8: #565a5c;
+$secondary-7: #6e7276;
+$primary-6: #0053ad;
+
+// Dark UI Text
+$secondary-light: #fafafb;
+$secondary-2: #d8dadc;
+$secondary-4: #b1b5b9;
+$secondary-6: #858b8f;
+$secondary-7: #6e7276;
+$primary-3: #66a1e0;
+
+// Link Text
+$primary-6: #0053ad;
+$primary-3: #66a1e0;
+
+// AV Colors
+$danger-5: #e50022;
+$amber-5: #f24829;
+$orange-5: #ff8f00;
+$lime-5: #66dd33;
+
+// Disabled Text
+$secondary-4: #b1b5b9;
+$secondary-6: #858b8f;
+$secondary-7: #6e7276;
+
+// Hint Text
+$secondary-6: #858b8f;
+
+// Avatar Colors
+$indigo-6: #570ece;
+$amber-6: #ce3d23;
+$cyan-6: #0080ad;
+$gold-7: #b38800;
+$violet-6: #402696;
+$orange-6: #d97a00;
+$magenta-6: #98004d;
+$lime-7: #479b24;
+
+// Chip Avatar Colors
+$info-5: #0097cc;
+$secondary-6: #858b8f;
+$magenta-5: #b2005a;
+$green-6: #0b9e4e;
+$primary-5: #0062cc;
+$amber-5: #f24829;
+
+// Chip Avatar font colors with opacity
+$cyan-7: #006a8f;
+$green-7: #098240;
+
+/*
+	Font Styles:
+*/
+
+// Display-LG
+$display-lg-color: #000000;
+$display-lg-font-family: 'Noto Sans';
+$display-lg-font-size: 96px;
+$display-lg-font-style: normal;
+$display-lg-font-weight: 300;
+$display-lg-letter-spacing: 0px;
+$display-lg-line-height: normal;
+$display-lg-text-align: start;
+
+@mixin display-lg() {
+	color: $display-lg-color;
+	font-family: $display-lg-font-family;
+	font-size: $display-lg-font-size;
+	font-style: $display-lg-font-style;
+	font-weight: $display-lg-font-weight;
+	letter-spacing: $display-lg-letter-spacing;
+	line-height: $display-lg-line-height;
+	text-align: $display-lg-text-align;
+}
+
+// Display-MD
+$display-md-color: #27292a;
+$display-md-font-family: 'Noto Sans';
+$display-md-font-size: 64px;
+$display-md-font-style: normal;
+$display-md-font-weight: 300;
+$display-md-letter-spacing: 0px;
+$display-md-line-height: normal;
+$display-md-text-align: left;
+
+@mixin display-md() {
+	color: $display-md-color;
+	font-family: $display-md-font-family;
+	font-size: $display-md-font-size;
+	font-style: $display-md-font-style;
+	font-weight: $display-md-font-weight;
+	letter-spacing: $display-md-letter-spacing;
+	line-height: $display-md-line-height;
+	text-align: $display-md-text-align;
+}
+
+// Display-SM
+$display-sm-color: #27292a;
+$display-sm-font-family: 'Noto Sans';
+$display-sm-font-size: 48px;
+$display-sm-font-style: normal;
+$display-sm-font-weight: 300;
+$display-sm-letter-spacing: 0px;
+$display-sm-line-height: normal;
+$display-sm-text-align: left;
+
+@mixin display-sm() {
+	color: $display-sm-color;
+	font-family: $display-sm-font-family;
+	font-size: $display-sm-font-size;
+	font-style: $display-sm-font-style;
+	font-weight: $display-sm-font-weight;
+	letter-spacing: $display-sm-letter-spacing;
+	line-height: $display-sm-line-height;
+	text-align: $display-sm-text-align;
+}
+
+// Header Text
+$header-text-color: #27292a;
+$header-text-font-family: 'Noto Sans';
+$header-text-font-size: 32px;
+$header-text-font-style: normal;
+$header-text-font-weight: 400;
+$header-text-letter-spacing: 0px;
+$header-text-line-height: normal;
+$header-text-text-align: left;
+
+@mixin header-text() {
+	color: $header-text-color;
+	font-family: $header-text-font-family;
+	font-size: $header-text-font-size;
+	font-style: $header-text-font-style;
+	font-weight: $header-text-font-weight;
+	letter-spacing: $header-text-letter-spacing;
+	line-height: $header-text-line-height;
+	text-align: $header-text-text-align;
+}
+
+// Page Title | First Level Heading | H1
+$page-title-first-level-heading-h-1-color: #27292a;
+$page-title-first-level-heading-h-1-font-family: 'Noto Sans';
+$page-title-first-level-heading-h-1-font-size: 24px;
+$page-title-first-level-heading-h-1-font-style: normal;
+$page-title-first-level-heading-h-1-font-weight: 400;
+$page-title-first-level-heading-h-1-letter-spacing: 0px;
+$page-title-first-level-heading-h-1-line-height: normal;
+$page-title-first-level-heading-h-1-text-align: left;
+
+@mixin page-title-first-level-heading-h-1() {
+	color: $page-title-first-level-heading-h-1-color;
+	font-family: $page-title-first-level-heading-h-1-font-family;
+	font-size: $page-title-first-level-heading-h-1-font-size;
+	font-style: $page-title-first-level-heading-h-1-font-style;
+	font-weight: $page-title-first-level-heading-h-1-font-weight;
+	letter-spacing: $page-title-first-level-heading-h-1-letter-spacing;
+	line-height: $page-title-first-level-heading-h-1-line-height;
+	text-align: $page-title-first-level-heading-h-1-text-align;
+}
+
+// Page Section | Second Level Heading | H2
+$page-section-second-level-heading-h-2-color: #27292a;
+$page-section-second-level-heading-h-2-font-family: 'Noto Sans';
+$page-section-second-level-heading-h-2-font-size: 20px;
+$page-section-second-level-heading-h-2-font-style: normal;
+$page-section-second-level-heading-h-2-font-weight: 400;
+$page-section-second-level-heading-h-2-letter-spacing: 0px;
+$page-section-second-level-heading-h-2-line-height: normal;
+$page-section-second-level-heading-h-2-text-align: left;
+
+@mixin page-section-second-level-heading-h-2() {
+	color: $page-section-second-level-heading-h-2-color;
+	font-family: $page-section-second-level-heading-h-2-font-family;
+	font-size: $page-section-second-level-heading-h-2-font-size;
+	font-style: $page-section-second-level-heading-h-2-font-style;
+	font-weight: $page-section-second-level-heading-h-2-font-weight;
+	letter-spacing: $page-section-second-level-heading-h-2-letter-spacing;
+	line-height: $page-section-second-level-heading-h-2-line-height;
+	text-align: $page-section-second-level-heading-h-2-text-align;
+}
+
+// Page Sub-section | Third Level Heading | H3
+$page-sub-section-third-level-heading-h-3-color: #0062cc;
+$page-sub-section-third-level-heading-h-3-font-family: 'Noto Sans';
+$page-sub-section-third-level-heading-h-3-font-size: 18px;
+$page-sub-section-third-level-heading-h-3-font-style: normal;
+$page-sub-section-third-level-heading-h-3-font-weight: 300;
+$page-sub-section-third-level-heading-h-3-letter-spacing: 0px;
+$page-sub-section-third-level-heading-h-3-line-height: normal;
+$page-sub-section-third-level-heading-h-3-text-align: left;
+
+@mixin page-sub-section-third-level-heading-h-3() {
+	color: $page-sub-section-third-level-heading-h-3-color;
+	font-family: $page-sub-section-third-level-heading-h-3-font-family;
+	font-size: $page-sub-section-third-level-heading-h-3-font-size;
+	font-style: $page-sub-section-third-level-heading-h-3-font-style;
+	font-weight: $page-sub-section-third-level-heading-h-3-font-weight;
+	letter-spacing: $page-sub-section-third-level-heading-h-3-letter-spacing;
+	line-height: $page-sub-section-third-level-heading-h-3-line-height;
+	text-align: $page-sub-section-third-level-heading-h-3-text-align;
+}
+
+// Fourth Level Heading | H4
+$fourth-level-heading-h-4-color: #6e7276;
+$fourth-level-heading-h-4-font-family: 'Noto Sans';
+$fourth-level-heading-h-4-font-size: 16px;
+$fourth-level-heading-h-4-font-style: normal;
+$fourth-level-heading-h-4-font-weight: 600;
+$fourth-level-heading-h-4-letter-spacing: 0px;
+$fourth-level-heading-h-4-line-height: normal;
+$fourth-level-heading-h-4-text-align: left;
+
+@mixin fourth-level-heading-h-4() {
+	color: $fourth-level-heading-h-4-color;
+	font-family: $fourth-level-heading-h-4-font-family;
+	font-size: $fourth-level-heading-h-4-font-size;
+	font-style: $fourth-level-heading-h-4-font-style;
+	font-weight: $fourth-level-heading-h-4-font-weight;
+	letter-spacing: $fourth-level-heading-h-4-letter-spacing;
+	line-height: $fourth-level-heading-h-4-line-height;
+	text-align: $fourth-level-heading-h-4-text-align;
+}
+
+// Fifth Level Heading | H5
+$fifth-level-heading-h-5-color: #6e7276;
+$fifth-level-heading-h-5-font-family: 'Noto Sans';
+$fifth-level-heading-h-5-font-size: 14px;
+$fifth-level-heading-h-5-font-style: normal;
+$fifth-level-heading-h-5-font-weight: 600;
+$fifth-level-heading-h-5-letter-spacing: 0px;
+$fifth-level-heading-h-5-line-height: normal;
+$fifth-level-heading-h-5-text-align: left;
+
+@mixin fifth-level-heading-h-5() {
+	color: $fifth-level-heading-h-5-color;
+	font-family: $fifth-level-heading-h-5-font-family;
+	font-size: $fifth-level-heading-h-5-font-size;
+	font-style: $fifth-level-heading-h-5-font-style;
+	font-weight: $fifth-level-heading-h-5-font-weight;
+	letter-spacing: $fifth-level-heading-h-5-letter-spacing;
+	line-height: $fifth-level-heading-h-5-line-height;
+	text-align: $fifth-level-heading-h-5-text-align;
+}
+
+// Sixth Level Heading | H6
+$sixth-level-heading-h-6-color: #6e7276;
+$sixth-level-heading-h-6-font-family: 'Noto Sans';
+$sixth-level-heading-h-6-font-size: 12px;
+$sixth-level-heading-h-6-font-style: normal;
+$sixth-level-heading-h-6-font-weight: 700;
+$sixth-level-heading-h-6-letter-spacing: 0px;
+$sixth-level-heading-h-6-line-height: normal;
+$sixth-level-heading-h-6-text-align: left;
+
+@mixin sixth-level-heading-h-6() {
+	color: $sixth-level-heading-h-6-color;
+	font-family: $sixth-level-heading-h-6-font-family;
+	font-size: $sixth-level-heading-h-6-font-size;
+	font-style: $sixth-level-heading-h-6-font-style;
+	font-weight: $sixth-level-heading-h-6-font-weight;
+	letter-spacing: $sixth-level-heading-h-6-letter-spacing;
+	line-height: $sixth-level-heading-h-6-line-height;
+	text-align: $sixth-level-heading-h-6-text-align;
+}
+
+// Lead Text | Lead Paragraph
+$lead-text-lead-paragraph-color: #27292a;
+$lead-text-lead-paragraph-font-family: 'Noto Sans';
+$lead-text-lead-paragraph-font-size: 16px;
+$lead-text-lead-paragraph-font-style: normal;
+$lead-text-lead-paragraph-font-weight: 300;
+$lead-text-lead-paragraph-letter-spacing: 0px;
+$lead-text-lead-paragraph-line-height: 1.6em;
+$lead-text-lead-paragraph-text-align: left;
+
+@mixin lead-text-lead-paragraph() {
+	color: $lead-text-lead-paragraph-color;
+	font-family: $lead-text-lead-paragraph-font-family;
+	font-size: $lead-text-lead-paragraph-font-size;
+	font-style: $lead-text-lead-paragraph-font-style;
+	font-weight: $lead-text-lead-paragraph-font-weight;
+	letter-spacing: $lead-text-lead-paragraph-letter-spacing;
+	line-height: $lead-text-lead-paragraph-line-height;
+	text-align: $lead-text-lead-paragraph-text-align;
+}
+
+// Normal Text | Paragraph
+$normal-text-paragraph-color: #6e7276;
+$normal-text-paragraph-font-family: 'Noto Sans';
+$normal-text-paragraph-font-size: 14px;
+$normal-text-paragraph-font-style: normal;
+$normal-text-paragraph-font-weight: 400;
+$normal-text-paragraph-letter-spacing: 0px;
+$normal-text-paragraph-line-height: 1.6em;
+$normal-text-paragraph-text-align: left;
+
+@mixin normal-text-paragraph() {
+	color: $normal-text-paragraph-color;
+	font-family: $normal-text-paragraph-font-family;
+	font-size: $normal-text-paragraph-font-size;
+	font-style: $normal-text-paragraph-font-style;
+	font-weight: $normal-text-paragraph-font-weight;
+	letter-spacing: $normal-text-paragraph-letter-spacing;
+	line-height: $normal-text-paragraph-line-height;
+	text-align: $normal-text-paragraph-text-align;
+}
+
+// List Item Primary Text
+$list-item-primary-text-color: #27292a;
+$list-item-primary-text-font-family: 'Noto Sans';
+$list-item-primary-text-font-size: 16px;
+$list-item-primary-text-font-style: normal;
+$list-item-primary-text-font-weight: 400;
+$list-item-primary-text-letter-spacing: 0px;
+$list-item-primary-text-line-height: normal;
+$list-item-primary-text-text-align: left;
+
+@mixin list-item-primary-text() {
+	color: $list-item-primary-text-color;
+	font-family: $list-item-primary-text-font-family;
+	font-size: $list-item-primary-text-font-size;
+	font-style: $list-item-primary-text-font-style;
+	font-weight: $list-item-primary-text-font-weight;
+	letter-spacing: $list-item-primary-text-letter-spacing;
+	line-height: $list-item-primary-text-line-height;
+	text-align: $list-item-primary-text-text-align;
+}
+
+// List Item Secondary Text
+$list-item-secondary-text-color: #6e7276;
+$list-item-secondary-text-font-family: 'Noto Sans';
+$list-item-secondary-text-font-size: 14px;
+$list-item-secondary-text-font-style: normal;
+$list-item-secondary-text-font-weight: 400;
+$list-item-secondary-text-letter-spacing: 0px;
+$list-item-secondary-text-line-height: normal;
+$list-item-secondary-text-text-align: left;
+
+@mixin list-item-secondary-text() {
+	color: $list-item-secondary-text-color;
+	font-family: $list-item-secondary-text-font-family;
+	font-size: $list-item-secondary-text-font-size;
+	font-style: $list-item-secondary-text-font-style;
+	font-weight: $list-item-secondary-text-font-weight;
+	letter-spacing: $list-item-secondary-text-letter-spacing;
+	line-height: $list-item-secondary-text-line-height;
+	text-align: $list-item-secondary-text-text-align;
+}
+
+// Data Label
+$data-label-color: #0062cc;
+$data-label-font-family: 'Noto Sans';
+$data-label-font-size: 12px;
+$data-label-font-style: normal;
+$data-label-font-weight: 400;
+$data-label-letter-spacing: 0px;
+$data-label-line-height: normal;
+$data-label-text-align: left;
+
+@mixin data-label() {
+	color: $data-label-color;
+	font-family: $data-label-font-family;
+	font-size: $data-label-font-size;
+	font-style: $data-label-font-style;
+	font-weight: $data-label-font-weight;
+	letter-spacing: $data-label-letter-spacing;
+	line-height: $data-label-line-height;
+	text-align: $data-label-text-align;
+}
+
+// Data Text | Dropdown Menu List Item | Form Label
+$data-text-dropdown-menu-list-item-form-label-color: #27292a;
+$data-text-dropdown-menu-list-item-form-label-font-family: 'Noto Sans';
+$data-text-dropdown-menu-list-item-form-label-font-size: 14px;
+$data-text-dropdown-menu-list-item-form-label-font-style: normal;
+$data-text-dropdown-menu-list-item-form-label-font-weight: 400;
+$data-text-dropdown-menu-list-item-form-label-letter-spacing: 0px;
+$data-text-dropdown-menu-list-item-form-label-line-height: normal;
+$data-text-dropdown-menu-list-item-form-label-text-align: left;
+
+@mixin data-text-dropdown-menu-list-item-form-label() {
+	color: $data-text-dropdown-menu-list-item-form-label-color;
+	font-family: $data-text-dropdown-menu-list-item-form-label-font-family;
+	font-size: $data-text-dropdown-menu-list-item-form-label-font-size;
+	font-style: $data-text-dropdown-menu-list-item-form-label-font-style;
+	font-weight: $data-text-dropdown-menu-list-item-form-label-font-weight;
+	letter-spacing: $data-text-dropdown-menu-list-item-form-label-letter-spacing;
+	line-height: $data-text-dropdown-menu-list-item-form-label-line-height;
+	text-align: $data-text-dropdown-menu-list-item-form-label-text-align;
+}
+
+// FIRST LEVEL NAVIGATION
+$first-level-navigation-color: #27292a;
+$first-level-navigation-font-family: 'Noto Sans';
+$first-level-navigation-font-size: 14px;
+$first-level-navigation-font-style: normal;
+$first-level-navigation-font-weight: 700;
+$first-level-navigation-letter-spacing: 0px;
+$first-level-navigation-line-height: normal;
+$first-level-navigation-text-align: left;
+$first-level-navigation-text-transform: uppercase;
+
+@mixin first-level-navigation() {
+	color: $first-level-navigation-color;
+	font-family: $first-level-navigation-font-family;
+	font-size: $first-level-navigation-font-size;
+	font-style: $first-level-navigation-font-style;
+	font-weight: $first-level-navigation-font-weight;
+	letter-spacing: $first-level-navigation-letter-spacing;
+	line-height: $first-level-navigation-line-height;
+	text-align: $first-level-navigation-text-align;
+	text-transform: $first-level-navigation-text-transform;
+}
+
+// Second and Third Level Navigation
+$second-and-third-level-navigation-color: #565a5c;
+$second-and-third-level-navigation-font-family: 'Noto Sans';
+$second-and-third-level-navigation-font-size: 14px;
+$second-and-third-level-navigation-font-style: normal;
+$second-and-third-level-navigation-font-weight: 400;
+$second-and-third-level-navigation-letter-spacing: 0px;
+$second-and-third-level-navigation-line-height: normal;
+$second-and-third-level-navigation-text-align: left;
+
+@mixin second-and-third-level-navigation() {
+	color: $second-and-third-level-navigation-color;
+	font-family: $second-and-third-level-navigation-font-family;
+	font-size: $second-and-third-level-navigation-font-size;
+	font-style: $second-and-third-level-navigation-font-style;
+	font-weight: $second-and-third-level-navigation-font-weight;
+	letter-spacing: $second-and-third-level-navigation-letter-spacing;
+	line-height: $second-and-third-level-navigation-line-height;
+	text-align: $second-and-third-level-navigation-text-align;
+}
+
+// BUTTON-LG
+$button-lg-color: #27292a;
+$button-lg-font-family: 'Noto Sans';
+$button-lg-font-size: 16px;
+$button-lg-font-style: normal;
+$button-lg-font-weight: 600;
+$button-lg-letter-spacing: 1px;
+$button-lg-line-height: normal;
+$button-lg-text-align: left;
+$button-lg-text-transform: uppercase;
+
+@mixin button-lg() {
+	color: $button-lg-color;
+	font-family: $button-lg-font-family;
+	font-size: $button-lg-font-size;
+	font-style: $button-lg-font-style;
+	font-weight: $button-lg-font-weight;
+	letter-spacing: $button-lg-letter-spacing;
+	line-height: $button-lg-line-height;
+	text-align: $button-lg-text-align;
+	text-transform: $button-lg-text-transform;
+}
+
+// BUTTON-SM
+$button-sm-color: #27292a;
+$button-sm-font-family: 'Noto Sans';
+$button-sm-font-size: 12px;
+$button-sm-font-style: normal;
+$button-sm-font-weight: 700;
+$button-sm-letter-spacing: 1px;
+$button-sm-line-height: normal;
+$button-sm-text-align: left;
+$button-sm-text-transform: uppercase;
+
+@mixin button-sm() {
+	color: $button-sm-color;
+	font-family: $button-sm-font-family;
+	font-size: $button-sm-font-size;
+	font-style: $button-sm-font-style;
+	font-weight: $button-sm-font-weight;
+	letter-spacing: $button-sm-letter-spacing;
+	line-height: $button-sm-line-height;
+	text-align: $button-sm-text-align;
+	text-transform: $button-sm-text-transform;
+}
+
+// BUTTON-MD
+$button-md-color: #27292a;
+$button-md-font-family: 'Noto Sans';
+$button-md-font-size: 14px;
+$button-md-font-style: normal;
+$button-md-font-weight: 600;
+$button-md-letter-spacing: 1px;
+$button-md-line-height: normal;
+$button-md-text-align: left;
+$button-md-text-transform: uppercase;
+
+@mixin button-md() {
+	color: $button-md-color;
+	font-family: $button-md-font-family;
+	font-size: $button-md-font-size;
+	font-style: $button-md-font-style;
+	font-weight: $button-md-font-weight;
+	letter-spacing: $button-md-letter-spacing;
+	line-height: $button-md-line-height;
+	text-align: $button-md-text-align;
+	text-transform: $button-md-text-transform;
+}
+
+// Footnote
+$footnote-color: #27292a;
+$footnote-font-family: 'Noto Sans';
+$footnote-font-size: 10px;
+$footnote-font-style: normal;
+$footnote-font-weight: 400;
+$footnote-letter-spacing: 0px;
+$footnote-line-height: normal;
+$footnote-text-align: left;
+
+@mixin footnote() {
+	color: $footnote-color;
+	font-family: $footnote-font-family;
+	font-size: $footnote-font-size;
+	font-style: $footnote-font-style;
+	font-weight: $footnote-font-weight;
+	letter-spacing: $footnote-letter-spacing;
+	line-height: $footnote-line-height;
+	text-align: $footnote-text-align;
+}
+
+// Data Label Inline | Fieldset Label | Caption
+$data-label-inline-fieldset-label-caption-color: #6e7276;
+$data-label-inline-fieldset-label-caption-font-family: 'Noto Sans';
+$data-label-inline-fieldset-label-caption-font-size: 12px;
+$data-label-inline-fieldset-label-caption-font-style: normal;
+$data-label-inline-fieldset-label-caption-font-weight: 400;
+$data-label-inline-fieldset-label-caption-letter-spacing: 0px;
+$data-label-inline-fieldset-label-caption-line-height: normal;
+$data-label-inline-fieldset-label-caption-text-align: left;
+
+@mixin data-label-inline-fieldset-label-caption() {
+	color: $data-label-inline-fieldset-label-caption-color;
+	font-family: $data-label-inline-fieldset-label-caption-font-family;
+	font-size: $data-label-inline-fieldset-label-caption-font-size;
+	font-style: $data-label-inline-fieldset-label-caption-font-style;
+	font-weight: $data-label-inline-fieldset-label-caption-font-weight;
+	letter-spacing: $data-label-inline-fieldset-label-caption-letter-spacing;
+	line-height: $data-label-inline-fieldset-label-caption-line-height;
+	text-align: $data-label-inline-fieldset-label-caption-text-align;
+}
+
+// TABLE COLUMN HEADER
+$table-column-header-color: #6e7276;
+$table-column-header-font-family: 'Noto Sans';
+$table-column-header-font-size: 14px;
+$table-column-header-font-style: normal;
+$table-column-header-font-weight: 400;
+$table-column-header-letter-spacing: 0px;
+$table-column-header-line-height: normal;
+$table-column-header-text-align: left;
+$table-column-header-text-transform: uppercase;
+
+@mixin table-column-header() {
+	color: $table-column-header-color;
+	font-family: $table-column-header-font-family;
+	font-size: $table-column-header-font-size;
+	font-style: $table-column-header-font-style;
+	font-weight: $table-column-header-font-weight;
+	letter-spacing: $table-column-header-letter-spacing;
+	line-height: $table-column-header-line-height;
+	text-align: $table-column-header-text-align;
+	text-transform: $table-column-header-text-transform;
+}
+
+// Table Data
+$table-data-color: #27292a;
+$table-data-font-family: 'Noto Sans';
+$table-data-font-size: 16px;
+$table-data-font-style: normal;
+$table-data-font-weight: 400;
+$table-data-letter-spacing: 0px;
+$table-data-line-height: normal;
+$table-data-text-align: left;
+
+@mixin table-data() {
+	color: $table-data-color;
+	font-family: $table-data-font-family;
+	font-size: $table-data-font-size;
+	font-style: $table-data-font-style;
+	font-weight: $table-data-font-weight;
+	letter-spacing: $table-data-letter-spacing;
+	line-height: $table-data-line-height;
+	text-align: $table-data-text-align;
+}
+
+// ASIDE HEADER | DROPDOWN MENU HEADER
+$aside-header-dropdown-menu-header-color: #565a5c;
+$aside-header-dropdown-menu-header-font-family: 'Noto Sans';
+$aside-header-dropdown-menu-header-font-size: 14px;
+$aside-header-dropdown-menu-header-font-style: normal;
+$aside-header-dropdown-menu-header-font-weight: 400;
+$aside-header-dropdown-menu-header-letter-spacing: 0px;
+$aside-header-dropdown-menu-header-line-height: normal;
+$aside-header-dropdown-menu-header-text-align: left;
+$aside-header-dropdown-menu-header-text-transform: uppercase;
+
+@mixin aside-header-dropdown-menu-header() {
+	color: $aside-header-dropdown-menu-header-color;
+	font-family: $aside-header-dropdown-menu-header-font-family;
+	font-size: $aside-header-dropdown-menu-header-font-size;
+	font-style: $aside-header-dropdown-menu-header-font-style;
+	font-weight: $aside-header-dropdown-menu-header-font-weight;
+	letter-spacing: $aside-header-dropdown-menu-header-letter-spacing;
+	line-height: $aside-header-dropdown-menu-header-line-height;
+	text-align: $aside-header-dropdown-menu-header-text-align;
+	text-transform: $aside-header-dropdown-menu-header-text-transform;
+}
+
+// Link Text
+$link-text-color: #0053ad;
+$link-text-font-family: 'Noto Sans';
+$link-text-font-size: 14px;
+$link-text-font-style: normal;
+$link-text-font-weight: 400;
+$link-text-letter-spacing: 0px;
+$link-text-line-height: normal;
+$link-text-text-align: left;
+
+@mixin link-text() {
+	color: $link-text-color;
+	font-family: $link-text-font-family;
+	font-size: $link-text-font-size;
+	font-style: $link-text-font-style;
+	font-weight: $link-text-font-weight;
+	letter-spacing: $link-text-letter-spacing;
+	line-height: $link-text-line-height;
+	text-align: $link-text-text-align;
+}

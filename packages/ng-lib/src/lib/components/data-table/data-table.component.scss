@@ -1,0 +1,135 @@
+.table-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dt-empty {
+  padding: var(--space-10);
+  text-align: center;
+  color: var(--color-on-surface-muted);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+// ── Toolbar: search + pills + column toggle in one row ────────────────────────
+.dt-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.dt-search {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-on-surface);
+  font-size: var(--font-size-sm);
+  width: 200px;
+  transition: border-color var(--transition-fast);
+  flex-shrink: 0;
+
+  &::placeholder { color: var(--color-on-surface-muted); }
+  &:focus { outline: none; border-color: var(--color-primary); }
+  &::-webkit-search-cancel-button { cursor: pointer; }
+}
+
+.dt-pills {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.dt-pill {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: none;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-surface-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+
+  &:hover { color: var(--color-on-surface); border-color: var(--color-primary); }
+
+  &--active {
+    background: var(--color-primary-dim);
+    border-color: var(--color-primary-dim);
+    color: #fff;
+  }
+}
+
+.dt-count {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+  white-space: nowrap;
+  margin-right: auto; // pushes column toggle to the far right
+}
+
+// ── Column toggle ─────────────────────────────────────────────────────────────
+.dt-col-wrap {
+  position: relative;
+  margin-left: auto;
+}
+
+// When there is no search/pills (dt-count not present), auto-margin still
+// keeps the toggle on the right via flex layout.
+.dt-col-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-on-surface);
+    border-color: var(--color-primary);
+  }
+}
+
+.dt-col-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--space-1));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: 10;
+  min-width: 140px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dt-col-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-on-surface);
+  cursor: pointer;
+
+  input[type="checkbox"] { cursor: pointer; accent-color: var(--color-primary); }
+}
+
+// ── Scroll wrapper ────────────────────────────────────────────────────────────
+.dt-scroll {
+  overflow-x: auto;
+}
+
+// ── Mobile ────────────────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .dt-search { width: 100%; }
+  .dt-scroll  { overflow-x: visible; }
+}

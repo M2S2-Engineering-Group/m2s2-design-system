@@ -1,0 +1,299 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Force run mode'
+        required: true
+        default: 'stories-only'
+        type: choice
+        options:
+          - stories-only
+          - storybook-infra
+          - full
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - 'apps/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'package-lock.json'
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - 'apps/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  # ── Detect: classify what changed ─────────────────────────────────────────
+  detect:
+    name: Detect change type
+    runs-on: ubuntu-latest
+    outputs:
+      stories_only:    ${{ steps.check.outputs.stories_only }}
+      storybook_infra: ${{ steps.check.outputs.storybook_infra }}
+      full:            ${{ steps.check.outputs.full }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Classify changed files
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ github.event.inputs.mode }}"
+            echo "stories_only=$(    [ "$MODE" = "stories-only"   ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+            echo "storybook_infra=$([ "$MODE" = "storybook-infra" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+            echo "full=$(           [ "$MODE" = "full"            ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="HEAD^"
+          fi
+
+          CHANGED=$(git diff --name-only "$BASE" HEAD)
+          echo "Changed files:"
+          echo "$CHANGED"
+
+          # Infra-only
+          NON_INFRA=$(echo "$CHANGED" | grep -vE '^infra/' || true)
+          if [ -z "$NON_INFRA" ] && [ -n "$CHANGED" ]; then
+            echo "stories_only=false"    >> "$GITHUB_OUTPUT"
+            echo "storybook_infra=true"  >> "$GITHUB_OUTPUT"
+            echo "full=false"            >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "storybook_infra=false" >> "$GITHUB_OUTPUT"
+
+          # Stories-only: only .stories.ts / .stories.tsx changes
+          NON_STORIES=$(echo "$CHANGED" | grep -vE '^packages/.*\.stories\.tsx?$' || true)
+          if [ -z "$NON_STORIES" ] && [ -n "$CHANGED" ]; then
+            echo "stories_only=true" >> "$GITHUB_OUTPUT"
+            echo "full=false"        >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "stories_only=false" >> "$GITHUB_OUTPUT"
+
+          echo "full=true" >> "$GITHUB_OUTPUT"
+
+  # ── Build & test ──────────────────────────────────────────────────────────
+  build:
+    name: Build & test
+    needs: [detect]
+    if: needs.detect.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build ng-lib
+        run: npm run build --workspace=packages/ng-lib
+
+      - name: Test ng-lib
+        run: npm run test --workspace=packages/ng-lib -- --watch=false
+
+  # ── Release: @m2s2/ng-lib ─────────────────────────────────────────────────
+  release-ng-lib:
+    name: Release @m2s2/ng-lib
+    needs: [detect, build]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build ng-lib
+        run: npm run build:prod --workspace=packages/ng-lib
+
+      - name: Release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # ── Release: @m2s2/tokens ─────────────────────────────────────────────────
+  release-tokens:
+    name: Release @m2s2/tokens
+    needs: [detect, build, release-ng-lib]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release
+        run: npx semantic-release --config release.config.tokens.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # ── Deploy Storybook: full build ──────────────────────────────────────────
+  deploy-storybook:
+    name: Deploy Storybook
+    needs: [detect, build]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build ng-lib
+        run: npm run build:prod --workspace=packages/ng-lib
+
+      - name: Build Storybook
+        run: npm run build:storybook
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Sync Storybook to S3
+        run: |
+          aws s3 sync dist/storybook/ \
+            s3://${{ secrets.S3_WEB_BUCKET }}/design-system-storybook/ \
+            --delete \
+            --cache-control "max-age=300,public"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.STORYBOOK_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+  # ── Storybook sync: stories-only changes ─────────────────────────────────
+  storybook-sync:
+    name: Sync Storybook to S3
+    needs: [detect]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.stories_only == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build ng-lib
+        run: npm run build:prod --workspace=packages/ng-lib
+
+      - name: Build Storybook
+        run: npm run build:storybook
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Sync Storybook to S3
+        run: |
+          aws s3 sync dist/storybook/ \
+            s3://${{ secrets.S3_WEB_BUCKET }}/design-system-storybook/ \
+            --delete \
+            --cache-control "max-age=300,public"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.STORYBOOK_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+  # ── Storybook infra: deploy CDK stack ─────────────────────────────────────
+  deploy-storybook-stack:
+    name: Deploy storybook CDK stack
+    needs: [detect]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.storybook_infra == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache-dependency-path: infra/storybook/go.sum
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Deploy storybook CDK stack
+        working-directory: infra/storybook
+        run: npx cdk deploy M2S2DesignSystemStorybookStack --require-approval never
+        env:
+          S3_WEB_BUCKET:       ${{ secrets.S3_WEB_BUCKET }}
+          CLOUDFRONT_OAI_ID:   ${{ secrets.CLOUDFRONT_OAI_ID }}
+          STORYBOOK_CERT_ARN:  ${{ secrets.STORYBOOK_CERT_ARN }}
+          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+          CDK_DEFAULT_REGION:  us-east-1

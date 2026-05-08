@@ -1,0 +1,57 @@
+// =============================================================================
+// BRAND OVERRIDE TEMPLATE
+// =============================================================================
+// Copy this file into your app and customize. Import it AFTER @m2s2/tokens
+// so your values take precedence over the defaults.
+//
+// You only need to override what you want to change. Every token has a
+// sensible default from the base system.
+//
+// Usage in your global stylesheet:
+//   @use '@m2s2/tokens';
+//   @use './brand-override';
+// =============================================================================
+
+// -- Primitives (optional) --
+// Define your own raw palette if you want to reference shades by name.
+// :root {
+//   --brand-100: #e0f2fe;
+//   --brand-500: #0ea5e9;
+//   --brand-900: #0c4a6e;
+//   --accent-400: #f472b6;
+// }
+
+// -- Semantic overrides (dark theme) --
+:root {
+  // Replace with your brand colors
+  // --color-primary:          #0ea5e9;
+  // --color-primary-vivid:    #38bdf8;
+  // --color-primary-dim:      #0369a1;
+  // --color-on-primary:       #ffffff;
+
+  // --color-secondary:        #f472b6;
+  // --color-secondary-dim:    #db2777;
+  // --color-on-secondary:     #ffffff;
+
+  // Replace gradients
+  // --gradient-brand:         linear-gradient(90deg, #0369a1 0%, #0ea5e9 50%, #f472b6 100%);
+  // --gradient-brand-135:     linear-gradient(135deg, #0369a1 0%, #f472b6 100%);
+  // --gradient-nav-bar:       linear-gradient(90deg, #0369a1 0%, #0ea5e9 62%, #f472b6 100%);
+
+  // Override font family
+  // --font-family-base:       'Inter', sans-serif;
+  // --font-family-heading:    'Sora', sans-serif;
+}
+
+// -- Semantic overrides (light theme) --
+:root[data-theme="light"] {
+  // --color-primary:          #0369a1;
+  // --color-primary-vivid:    #0ea5e9;
+}
+
+// -- Auto light (keep in sync with above) --
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    // --color-primary:        #0369a1;
+  }
+}

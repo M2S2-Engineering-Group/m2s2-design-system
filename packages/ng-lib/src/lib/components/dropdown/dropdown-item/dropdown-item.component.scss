@@ -1,0 +1,36 @@
+li:hover {
+  color: var(--color-secondary);
+  background-color: var(--color-surface-overlay);
+}
+
+a:hover {
+  color: var(--color-secondary);
+}
+
+a {
+  color: var(--color-primary);
+  display: table;
+}
+
+a.active {
+  background-color: var(--color-primary-dim);
+  color: var(--color-secondary);
+}
+
+img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  padding-bottom: 2px;
+}
+
+span {
+  vertical-align: middle;
+  padding-left: 2px;
+}
+
+.dd-item {
+  align-items: center;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}

@@ -1,0 +1,35 @@
+<div class="panel-header">
+  <div class="panel-header-text">
+    <h2 class="panel-title">{{ data.title }}</h2>
+    @if (data.subtitle) {
+      <p class="panel-subtitle">{{ data.subtitle }}</p>
+    }
+  </div>
+  @if (!data.modal) {
+    <button class="panel-close" aria-label="Close" (click)="close(null)">&#x2715;</button>
+  }
+</div>
+
+<div class="panel-body">
+  @if (data.bodyComponent) {
+    <ng-container
+      [ngComponentOutlet]="data.bodyComponent"
+      [ngComponentOutletInputs]="data.bodyInputs ?? {}">
+    </ng-container>
+  } @else if (data.message) {
+    <p class="panel-message">{{ data.message }}</p>
+  }
+</div>
+
+@if (data.actions?.length) {
+  <div class="panel-footer">
+    @for (a of data.actions; track a.label) {
+      <button
+        class="panel-btn"
+        [class]="'panel-btn--' + (a.variant ?? 'secondary')"
+        (click)="action(a)">
+        {{ a.label }}
+      </button>
+    }
+  </div>
+}

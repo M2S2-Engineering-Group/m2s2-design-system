@@ -1,0 +1,23 @@
+<div class="dialog-header">
+  <h2 class="dialog-title">{{ data.title }}</h2>
+  @if (!data.modal) {
+    <button class="dialog-close" aria-label="Close" (click)="ref.close(null)">&#x2715;</button>
+  }
+</div>
+
+@if (data.message) {
+  <div class="dialog-body">
+    <p class="dialog-message">{{ data.message }}</p>
+  </div>
+}
+
+<div class="dialog-footer">
+  @for (action of data.actions; track action.label) {
+    <button
+      class="dialog-btn"
+      [class]="'dialog-btn--' + (action.variant ?? 'secondary')"
+      (click)="close(action)">
+      {{ action.label }}
+    </button>
+  }
+</div>

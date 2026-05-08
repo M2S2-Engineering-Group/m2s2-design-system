@@ -1,0 +1,20 @@
+@if (isClickable() && !isRouterLink()) {
+  <button mat-menu-item (click)="getClickable().click()">
+    @if (dropdownItem.matIcon) { <mat-icon>{{ dropdownItem.matIcon }}</mat-icon> }
+    <span>{{ dropdownItem.text }}</span>
+  </button>
+}
+
+@if (isRouterLink() && !isClickable()) {
+  <a mat-menu-item [routerLink]="getRouterLink().routerLink">
+    @if (dropdownItem.matIcon) { <mat-icon>{{ dropdownItem.matIcon }}</mat-icon> }
+    <span>{{ dropdownItem.text }}</span>
+  </a>
+}
+
+@if (isAnchor()) {
+  <a mat-menu-item [href]="getAnchor().hrefAddr" target="_blank" rel="noopener noreferrer">
+    @if (dropdownItem.matIcon) { <mat-icon>{{ dropdownItem.matIcon }}</mat-icon> }
+    <span>{{ dropdownItem.text }}</span>
+  </a>
+}

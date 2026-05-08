@@ -1,0 +1,24 @@
+// =============================================================================
+// @m2s2/tokens — Design Token System
+// =============================================================================
+// Import this single file to get all tokens:
+//   @use '@m2s2/tokens';
+//
+// Or import individual files for tree-shaking in SCSS:
+//   @use '@m2s2/tokens/src/breakpoints' as bp;
+//   @use '@m2s2/tokens/src/typography';
+//
+// To apply a brand override, import this file first, then define your own
+// :root { } block with the tokens you want to change. See brand-override.scss.
+// =============================================================================
+
+@use 'src/primitives';
+@use 'src/colors';
+@use 'src/typography';
+@use 'src/spacing';
+@use 'src/motion';
+@use 'src/layout';
+@use 'src/utilities';
+@use 'src/themes/light';
+@use 'src/themes/auto';
+@use 'src/overlay';

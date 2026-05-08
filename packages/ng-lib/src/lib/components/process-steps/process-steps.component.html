@@ -1,0 +1,12 @@
+<ol class="ps-steps">
+  @for (step of steps(); track step.num; let last = $last) {
+    <li class="ps-step">
+      <span class="ps-num">{{ step.num }}</span>
+      <span class="ps-name">{{ step.name }}</span>
+      <span class="ps-desc">{{ step.desc }}</span>
+    </li>
+    @if (!last) {
+      <li class="ps-divider" aria-hidden="true">&#8594;</li>
+    }
+  }
+</ol>

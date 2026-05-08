@@ -1,0 +1,102 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.sub-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.sub-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-on-surface-muted);
+  border-radius: 8px;
+  color: var(--color-on-surface);
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-fast);
+  box-sizing: border-box;
+
+  &::placeholder { color: var(--color-on-surface-muted); }
+  &:focus { outline: none; border-color: var(--color-primary); }
+  &:disabled { opacity: 0.5; }
+}
+
+.sub-btn {
+  padding: var(--space-3) var(--space-6);
+  border-radius: 8px;
+  border: none;
+  background: var(--gradient-brand-135);
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  white-space: nowrap;
+
+  &:hover:not(:disabled) { opacity: 0.88; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  &--unsub {
+    background: none;
+    border: 1px solid var(--color-on-surface-muted);
+    color: var(--color-on-surface-muted);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-error);
+      color: var(--color-error);
+    }
+  }
+}
+
+.sub-feedback {
+  font-size: var(--font-size-xs);
+  margin: 0;
+
+  &--error   { color: var(--color-error); }
+  &--success { color: var(--color-success); }
+}
+
+.sub-success {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.sub-success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+}
+
+.sub-success-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-on-surface);
+  margin: 0;
+}
+
+.sub-auth {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.sub-subscribed-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
