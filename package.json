@@ -2,6 +2,7 @@
   "name": "m2s2-design-system",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "npm@11.11.0",
   "workspaces": [
     "packages/*"
   ],
