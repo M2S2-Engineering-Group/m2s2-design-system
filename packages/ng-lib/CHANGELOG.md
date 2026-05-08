@@ -4,6 +4,13 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.0.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/ng-lib-v1.0.0...ng-lib-v1.0.1) (2026-05-08)
+
+
+### Bug Fixes
+
+* trigger ng-lib release ([12cd9f9](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/12cd9f9921c58b721c2e1358cb3b651054725a60))
+
 # 1.0.0 (2026-05-08)
 
 
