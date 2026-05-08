@@ -142,7 +142,7 @@ jobs:
         run: npm run build:prod --workspace=packages/ng-lib
 
       - name: Release
-        run: npx semantic-release
+        run: npx semantic-release --config release.config.ng-lib.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -267,8 +267,8 @@ jobs:
   # ── Storybook infra: deploy CDK stack ─────────────────────────────────────
   deploy-storybook-stack:
     name: Deploy storybook CDK stack
-    needs: [detect]
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.storybook_infra == 'true'
+    needs: [detect, build]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (needs.detect.outputs.storybook_infra == 'true' || needs.detect.outputs.full == 'true') && (needs.build.result == 'success' || needs.build.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

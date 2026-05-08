@@ -1,0 +1,137 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  IAM role for the m2s2-design-system GitHub Actions CI/CD pipeline.
+  Imports the shared CI policy and OIDC provider from the m2s2-github-oidc stack.
+
+  Prerequisites: deploy the platform m2s2-github-oidc stack first (it exports the
+  shared policy ARN and OIDC provider ARN used here).
+
+  First-time deploy (run locally with admin credentials):
+    aws cloudformation deploy \
+      --stack-name m2s2-design-system-github-oidc \
+      --template-file infra/github-oidc/design-system-github-oidc.template.yaml \
+      --capabilities CAPABILITY_NAMED_IAM \
+      --parameter-overrides \
+        WebBucketName=<your-bucket> \
+        StorybookDistributionId=*
+
+  After the CDK storybook stack is deployed, update StorybookDistributionId with the
+  real distribution ID from the M2S2DesignSystemStorybookDistroId stack output.
+
+Parameters:
+  GitHubOrg:
+    Type: String
+    Default: M2S2-Engineering-Group
+    Description: GitHub organization name
+
+  GitHubRepo:
+    Type: String
+    Default: m2s2-design-system
+    Description: GitHub repository name
+
+  WebBucketName:
+    Type: String
+    Description: S3 bucket hosting the web assets (shared with platform)
+
+  StorybookDistributionId:
+    Type: String
+    Default: "*"
+    Description: >
+      CloudFront distribution ID for the design system Storybook.
+      Use * on first deploy; update with the real ID after the CDK stack is deployed.
+
+Resources:
+  DesignSystemGitHubActionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: m2s2-design-system-github-actions-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !ImportValue M2S2GitHubOIDCProviderArn
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${GitHubRepo}:ref:refs/heads/main
+      ManagedPolicyArns:
+        - !ImportValue M2S2CiCommonPolicyArn
+        - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+      Policies:
+        - PolicyName: m2s2-design-system-ci
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: S3StorybookSync
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                Resource: !Sub arn:aws:s3:::${WebBucketName}/design-system-storybook/*
+
+              - Sid: CloudFrontInvalidate
+                Effect: Allow
+                Action: cloudfront:CreateInvalidation
+                Resource: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${StorybookDistributionId}
+
+              # CloudFront CRUD — required for CDK to manage the storybook distribution
+              - Sid: CloudFrontManage
+                Effect: Allow
+                Action:
+                  - cloudfront:CreateDistribution
+                  - cloudfront:UpdateDistribution
+                  - cloudfront:DeleteDistribution
+                  - cloudfront:GetDistribution
+                  - cloudfront:GetDistributionConfig
+                  - cloudfront:ListDistributions
+                  - cloudfront:TagResource
+                  - cloudfront:UntagResource
+                Resource: "*"
+
+              - Sid: CloudFormationSelfManage
+                Effect: Allow
+                Action:
+                  - cloudformation:CreateStack
+                  - cloudformation:UpdateStack
+                  - cloudformation:DescribeStacks
+                  - cloudformation:DescribeStackEvents
+                  - cloudformation:GetTemplate
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:DescribeChangeSet
+                  - cloudformation:ExecuteChangeSet
+                  - cloudformation:DeleteChangeSet
+                Resource:
+                  - !Sub arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/m2s2-design-system-github-oidc/*
+                  - !Sub arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/M2S2DesignSystemStorybookStack/*
+
+              - Sid: IAMSelfManage
+                Effect: Allow
+                Action:
+                  - iam:GetRole
+                  - iam:CreateRole
+                  - iam:UpdateRole
+                  - iam:DeleteRole
+                  - iam:PutRolePolicy
+                  - iam:DeleteRolePolicy
+                  - iam:GetRolePolicy
+                  - iam:AttachRolePolicy
+                  - iam:DetachRolePolicy
+                  - iam:TagRole
+                  - iam:UntagRole
+                  - iam:PassRole
+                Resource:
+                  - !Sub arn:aws:iam::${AWS::AccountId}:role/m2s2-design-system-github-actions-role
+                  - !Sub arn:aws:iam::${AWS::AccountId}:role/cdk-*
+
+Outputs:
+  RoleArn:
+    Description: >
+      ARN of the IAM role for GitHub Actions.
+      Set as AWS_DEPLOY_ROLE_ARN secret in the m2s2-design-system repo.
+    Value: !GetAtt DesignSystemGitHubActionsRole.Arn
+    Export:
+      Name: M2S2DesignSystemGitHubActionsRoleArn
