@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "tsConfig": "packages/ng-lib/tsconfig.spec.json"
+            "tsConfig": "tsconfig.spec.json"
           }
         },
         "storybook": {
