@@ -7,6 +7,12 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+  viteFinal: async (config, { configType }) => {
+    if (configType === 'PRODUCTION') {
+      config.base = '/react/';
+    }
+    return config;
+  },
 };
 
 export default config;
