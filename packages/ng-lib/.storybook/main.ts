@@ -10,12 +10,6 @@ const config: StorybookConfig = {
     name: '@storybook/angular',
     options: {},
   },
-  webpackFinal: async (config, { configType }) => {
-    if (configType === 'PRODUCTION') {
-      config.output = { ...config.output, publicPath: '/angular/' };
-    }
-    return config;
-  },
 };
 
 export default config;

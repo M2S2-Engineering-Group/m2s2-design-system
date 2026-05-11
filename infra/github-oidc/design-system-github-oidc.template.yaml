@@ -12,7 +12,7 @@ Description: >
       --template-file infra/github-oidc/design-system-github-oidc.template.yaml \
       --capabilities CAPABILITY_NAMED_IAM \
       --parameter-overrides \
-        WebBucketName=<your-bucket> \
+        StorybookBucketName=<your-storybook-bucket> \
         StorybookDistributionId=*
 
   After the CDK storybook stack is deployed, update StorybookDistributionId with the
@@ -29,9 +29,9 @@ Parameters:
     Default: m2s2-design-system
     Description: GitHub repository name
 
-  WebBucketName:
+  StorybookBucketName:
     Type: String
-    Description: S3 bucket hosting the web assets (shared with platform)
+    Description: Dedicated S3 bucket for the design system Storybook (not shared with platform)
 
   StorybookDistributionId:
     Type: String
@@ -65,13 +65,20 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
+              # s3:ListBucket must be on the bucket ARN (not the /* objects ARN)
+              - Sid: S3StorybookList
+                Effect: Allow
+                Action:
+                  - s3:ListBucket
+                Resource: !Sub arn:aws:s3:::${StorybookBucketName}
+
               - Sid: S3StorybookSync
                 Effect: Allow
                 Action:
                   - s3:GetObject
                   - s3:PutObject
                   - s3:DeleteObject
-                Resource: !Sub arn:aws:s3:::${WebBucketName}/design-system-storybook/*
+                Resource: !Sub arn:aws:s3:::${StorybookBucketName}/*
 
               - Sid: CloudFrontInvalidate
                 Effect: Allow
@@ -90,7 +97,31 @@ Resources:
                   - cloudfront:ListDistributions
                   - cloudfront:TagResource
                   - cloudfront:UntagResource
+                  - cloudfront:CreateOriginAccessControl
+                  - cloudfront:GetOriginAccessControl
+                  - cloudfront:UpdateOriginAccessControl
+                  - cloudfront:DeleteOriginAccessControl
+                  - cloudfront:ListOriginAccessControls
                 Resource: "*"
+
+              # S3 bucket management — required for CDK to create/configure the storybook bucket
+              - Sid: S3BucketManage
+                Effect: Allow
+                Action:
+                  - s3:CreateBucket
+                  - s3:DeleteBucket
+                  - s3:GetBucketPolicy
+                  - s3:PutBucketPolicy
+                  - s3:DeleteBucketPolicy
+                  - s3:GetBucketVersioning
+                  - s3:PutBucketVersioning
+                  - s3:GetBucketPublicAccessBlock
+                  - s3:PutBucketPublicAccessBlock
+                  - s3:GetEncryptionConfiguration
+                  - s3:PutEncryptionConfiguration
+                  - s3:GetBucketTagging
+                  - s3:PutBucketTagging
+                Resource: !Sub arn:aws:s3:::${StorybookBucketName}
 
               - Sid: CloudFormationSelfManage
                 Effect: Allow
