@@ -1,0 +1,36 @@
+.m2s2-status-badge {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border-radius: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+
+  &[data-variant='pill'] {
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+  }
+
+  // ── Inquiry statuses ──────────────────────────────────────────────────────
+  &[data-status='received']        { background: rgba(96,  165, 250, 0.15); color: #60a5fa; }
+  &[data-status='reviewing']       { background: var(--color-warning-bg);   color: var(--color-warning); }
+  &[data-status='in_conversation'] { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+  &[data-status='closed']          { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+  &[data-status='cancelled']       { background: var(--color-error-bg);     color: var(--color-error); }
+
+  // ── Resume statuses ───────────────────────────────────────────────────────
+  &[data-status='resume-received'] { background: rgba(96,  165, 250, 0.15); color: #60a5fa; }
+  &[data-status='resume-pending']  { background: var(--color-warning-bg);   color: var(--color-warning); }
+  &[data-status='resume-approved'] { background: var(--color-success-bg);   color: var(--color-success); }
+  &[data-status='resume-declined'] { background: var(--color-error-bg);     color: var(--color-error); }
+
+  // ── Subscriber source ─────────────────────────────────────────────────────
+  &[data-status='auth']            { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+  &[data-status='signup']          { background: rgba(96,  165, 250, 0.15); color: #60a5fa; }
+
+  // ── Subscriber verification ───────────────────────────────────────────────
+  &[data-status='verified']        { background: var(--color-success-bg);   color: var(--color-success); }
+  &[data-status='unverified']      { background: var(--color-warning-bg);   color: var(--color-warning); }
+}

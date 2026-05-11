@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { M2S2PanelData, DialogAction } from '../../models';
+import { NgM2S2PanelData, DialogAction } from '../../models/panel/panel.model';
 
 @Component({
   selector: 'm2s2-panel',
@@ -11,7 +11,7 @@ import { M2S2PanelData, DialogAction } from '../../models';
   imports: [NgComponentOutlet],
 })
 export class M2S2PanelComponent {
-  readonly data = inject<M2S2PanelData>(MAT_DIALOG_DATA);
+  readonly data = inject<NgM2S2PanelData>(MAT_DIALOG_DATA);
   readonly ref  = inject(MatDialogRef<M2S2PanelComponent>);
 
   close(value?: unknown): void {

@@ -1,27 +1,17 @@
+import { NavbarConfig, NavbarButton, NavbarLoginButton } from '@m2s2/models';
 import { DropdownItemModel } from '../dropdown/item/dropdown-item.model';
 
-export interface NavbarConfig {
-  brand: string;
-  brandLogo?: string;
-  brandRouterOutlet: string;
-  isFixed: boolean;
-  buttons: NavbarButton[];
-  loginButton?: NavbarLoginButton;
-}
+export type { NavbarConfig, NavbarLoginButton };
 
-export interface NavbarButton {
-  id: string;
+/** Angular-specific NavbarButton — adds routerLink and matIcon. */
+export interface NgNavbarButton extends NavbarButton {
   routerLink?: string;
-  href?: string;
   matIcon?: string;
-  requiresAuth?: boolean;
-  title: string;
-  isDropdown?: boolean;
   dropdownItems?: DropdownItemModel[];
 }
 
-export interface NavbarLoginButton {
-  dropdownItems:   DropdownItemModel[];
-  profileImageUrl?: string;
-  userName?:        string;
+/** Angular-specific NavbarConfig — uses NgNavbarButton and brandRouterOutlet. */
+export interface NgNavbarConfig extends Omit<NavbarConfig, 'buttons' | 'brandPath'> {
+  brandRouterOutlet: string;
+  buttons: NgNavbarButton[];
 }

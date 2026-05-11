@@ -1,4 +1,1 @@
-export interface StatItem {
-  value: string;
-  label: string;
-}
+export { StatItem } from '@m2s2/models';

@@ -2,7 +2,7 @@ import { Injectable, inject, Type } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { M2S2PanelComponent } from '../../components/panel/panel.component';
-import { M2S2PanelData } from '../../models/panel/panel.model';
+import { NgM2S2PanelData } from '../../models/panel/panel.model';
 
 const PANEL_CLASS = 'm2s2-panel-overlay';
 
@@ -21,7 +21,7 @@ export class M2S2PanelService {
    * Open the built-in panel shell.
    * For rich body content, set `data.bodyComponent` to your component type.
    */
-  panel(data: M2S2PanelData, config?: Partial<MatDialogConfig>): MatDialogRef<M2S2PanelComponent, unknown> {
+  panel(data: NgM2S2PanelData, config?: Partial<MatDialogConfig>): MatDialogRef<M2S2PanelComponent, unknown> {
     const side     = data.side ?? 'right';
     const position = side === 'left' ? { top: '0', left: '0' } : { top: '0', right: '0' };
 
@@ -39,7 +39,7 @@ export class M2S2PanelService {
   /** Open any component inside the branded panel shell. */
   open<T>(
     bodyComponent: Type<T>,
-    panelData: Omit<M2S2PanelData, 'bodyComponent'>,
+    panelData: Omit<NgM2S2PanelData, 'bodyComponent'>,
     config?: Partial<MatDialogConfig>,
   ): MatDialogRef<M2S2PanelComponent, unknown> {
     return this.panel({ ...panelData, bodyComponent: bodyComponent as Type<unknown> }, config);

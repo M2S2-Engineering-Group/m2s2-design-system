@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { DropdownItemComponent } from '../dropdown';
-import { NavbarButton, NavbarConfig } from '../../models/navbar/navbar-confing.model';
+import { NgNavbarButton, NgNavbarConfig } from '../../models/navbar/navbar-confing.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -33,9 +33,9 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  @Input() public navbarConfig: NavbarConfig = {
+  @Input() public navbarConfig: NgNavbarConfig = {
     brand: 'Brand',
-    brandRouterOutlet: 'home',
+    brandRouterOutlet: '',
     isFixed: false,
     buttons: [],
   };
@@ -96,23 +96,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.sentinel?.remove();
   }
 
-  public get navButtons(): NavbarButton[] {
+  public get navButtons(): NgNavbarButton[] {
     return this.navbarConfig?.buttons.filter(b => !b.isDropdown);
   }
 
-  public get navDropdowns(): NavbarButton[] {
+  public get navDropdowns(): NgNavbarButton[] {
     return this.navbarConfig?.buttons.filter(b => b.isDropdown);
   }
 
-  public isVisible(item: NavbarButton): boolean {
+  public isVisible(item: NgNavbarButton): boolean {
     return (!!item.requiresAuth && this.loggedIn) || !item.requiresAuth;
   }
 
-  public isRouterLink(item: NavbarButton): boolean {
+  public isRouterLink(item: NgNavbarButton): boolean {
     return !!item.routerLink && !item.href;
   }
 
-  public isAnchor(item: NavbarButton): boolean {
+  public isAnchor(item: NgNavbarButton): boolean {
     return !!item.href && !item.routerLink;
   }
 

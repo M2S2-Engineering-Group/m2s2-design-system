@@ -1,0 +1,31 @@
+{
+  "name": "@m2s2/models",
+  "version": "0.1.0",
+  "description": "Framework-agnostic shared model interfaces for the M²S² design system.",
+  "author": "M²S² Engineering Group <contact@m2s2.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/M2S2-Engineering-Group/m2s2-design-system",
+    "directory": "packages/models"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "build:prod": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}

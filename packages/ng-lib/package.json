@@ -28,6 +28,7 @@
     "build:storybook": "cd ../.. && ng run m2s2-ng-lib:build-storybook"
   },
   "dependencies": {
+    "@m2s2/models": "*",
     "tslib": "~2.3.1"
   },
   "peerDependencies": {

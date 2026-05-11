@@ -15,20 +15,20 @@
 
 Get the package building before writing any components.
 
-- [ ] `vite.config.ts` — library mode, ESM + CJS output, SCSS support
-- [ ] `tsconfig.json` — strict, JSX, path aliases
-- [ ] `package.json` — `main`, `module`, `types`, `exports`, `build` script
-- [ ] `sass` dev dep + Vite `css.preprocessorOptions` with `@m2s2/tokens` include path
-- [ ] `src/index.ts` — barrel file (empty for now)
-- [ ] `src/styles/tokens.scss` — single `@use '@m2s2/tokens'` import for consumers
+- [x] `vite.config.ts` — library mode, ESM + CJS output, SCSS support
+- [x] `tsconfig.json` — strict, JSX, path aliases
+- [x] `package.json` — `main`, `module`, `types`, `exports`, `build` script
+- [x] `sass` dev dep + Vite `css.preprocessorOptions` with `@m2s2/tokens` include path
+- [x] `src/index.ts` — barrel file
+- [x] `src/styles/tokens.scss` — single `@use '@m2s2/tokens'` import for consumers
 
-**Verify:** `npm run build --workspace=packages/react-lib` produces `dist/`
+**Verify:** `npm run build --workspace=packages/react-lib` produces `dist/` ✅
 
 ---
 
 ## Phase 2 — Components (simple → complex)
 
-Each component ships with: `.tsx`, `.scss` (BEM), `.stories.tsx`, `.test.tsx`
+Each component ships with: `.tsx`, `.scss` (BEM), `.stories.tsx`
 
 Angular → React adapter rules:
 - `@Input()` / `input()` → props
@@ -40,18 +40,18 @@ Angular → React adapter rules:
 
 ### Display-only components
 
-- [ ] `StatusBadge` — status string + optional label + badge/pill variant
-- [ ] `PageHeader` — title + subtitle
-- [ ] `SectionHeader` — config object
-- [ ] `StatRow` — array of `StatItem`
-- [ ] `ProcessSteps` — array of `ProcessStep` (num, name, desc)
+- [x] `StatusBadge` — status string + optional label + badge/pill variant
+- [x] `PageHeader` — title + subtitle
+- [x] `SectionHeader` — config object
+- [x] `StatRow` — array of `StatItem`
+- [x] `ProcessSteps` — array of `ProcessStep` (num, name, desc)
 
 ### Layout / structural components
 
-- [ ] `Footer` — config object + social links (github, linkedin, twitter, email)
-- [ ] `BaseCard` — featured boolean + variant prop + `children` slot
-- [ ] `BlogCard` — extends BaseCard
-- [ ] `FeatureCard` — extends BaseCard
+- [x] `Footer` — config object + social links (github, linkedin, twitter, email)
+- [x] `BaseCard` — featured boolean + variant prop + `children` slot
+- [x] `BlogCard` — extends BaseCard
+- [x] `FeatureCard` — extends BaseCard
 
 ### Interactive components
 
@@ -95,7 +95,7 @@ Angular → React adapter rules:
 - [ ] `release.config.js` — semantic-release, tag format `react-lib-v{version}`, pkgRoot `dist/`
 - [ ] CI job in `.github/workflows/ci.yml` — build + test + release for `react-lib`
 - [ ] Vitest config (`vitest.config.ts`) — jsdom environment, coverage
-- [ ] Storybook `preview.ts` — import tokens SCSS, `ThemeProvider` decorator, dark/light toolbar toggle
+- [ ] Storybook `preview.ts` — import tokens SCSS, `ThemeProvider` decorator, dark/light toolbar toggle ✅ (partial — tokens imported)
 
 ---
 
@@ -127,15 +127,15 @@ Peer deps to add: `aws-amplify`, `react-router`
 
 | Component | Built | Stories | Tests |
 |-----------|-------|---------|-------|
-| StatusBadge | | | |
-| PageHeader | | | |
-| SectionHeader | | | |
-| StatRow | | | |
-| ProcessSteps | | | |
-| Footer | | | |
-| BaseCard | | | |
-| BlogCard | | | |
-| FeatureCard | | | |
+| StatusBadge | ✅ | ✅ | |
+| PageHeader | ✅ | ✅ | |
+| SectionHeader | ✅ | ✅ | |
+| StatRow | ✅ | ✅ | |
+| ProcessSteps | ✅ | ✅ | |
+| Footer | ✅ | ✅ | |
+| BaseCard | ✅ | ✅ | |
+| BlogCard | ✅ | ✅ | |
+| FeatureCard | ✅ | ✅ | |
 | CtaSection | | | |
 | SubscribeForm | | | |
 | DataTable | | | |

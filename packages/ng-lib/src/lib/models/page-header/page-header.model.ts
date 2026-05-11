@@ -1,4 +1,1 @@
-export interface PageHeaderConfig {
-  title: string;
-  subtitle: string;
-}
+export { PageHeaderConfig } from '@m2s2/models';

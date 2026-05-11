@@ -1,5 +1,1 @@
-export interface ProcessStep {
-  num: string;
-  name: string;
-  desc: string;
-}
+export { ProcessStep } from '@m2s2/models';

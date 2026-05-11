@@ -1,4 +1,7 @@
-export class DropdownItemModel {
+import { DropdownItem } from '@m2s2/models';
+
+/** Angular-specific dropdown item — extends base with matIcon support. */
+export class DropdownItemModel implements DropdownItem {
   id: string = '';
   imgSrc: string = '';
   matIcon: string = '';
@@ -30,6 +33,7 @@ export class ClickableDropdownItemModel extends DropdownItemModel {
   }
 }
 
+/** Angular Router variant — use routerLink instead of href. */
 export class RouterLinkDropdownModel extends DropdownItemModel {
   routerLink: string = '';
 

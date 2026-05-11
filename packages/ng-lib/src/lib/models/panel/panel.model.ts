@@ -1,21 +1,13 @@
 import { Type } from '@angular/core';
-import { DialogAction } from '../dialog/dialog.model';
+import { M2S2PanelData, PanelSide, DialogAction } from '@m2s2/models';
 
-export type PanelSide = 'left' | 'right';
+export type { PanelSide, DialogAction };
+export { M2S2PanelData };
 
-export interface M2S2PanelData {
-  title:          string;
-  subtitle?:      string;
-  /** Simple text body — use bodyComponent for rich content. */
-  message?:       string;
-  /** Component to render as the panel body. */
+/** Angular-specific panel data — extends base with ngComponentOutlet support. */
+export interface NgM2S2PanelData extends M2S2PanelData {
+  /** Angular component to render as the panel body. */
   bodyComponent?: Type<unknown>;
   /** Inputs forwarded to bodyComponent via ngComponentOutlet. */
-  bodyInputs?:    Record<string, unknown>;
-  /** Footer action buttons. */
-  actions?:       DialogAction[];
-  /** When true, backdrop clicks and Escape do not close the panel. */
-  modal?:         boolean;
-  side?:          PanelSide;
-  width?:         string;
+  bodyInputs?: Record<string, unknown>;
 }
