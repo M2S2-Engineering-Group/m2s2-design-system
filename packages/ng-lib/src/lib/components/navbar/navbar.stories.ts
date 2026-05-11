@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NavbarComponent } from './navbar.component';
 import { AuthService } from '../../services/auth/auth.service';
-import { NavbarConfig } from '../../models/navbar/navbar-confing.model';
+import { NgNavbarConfig } from '../../models/navbar/navbar-confing.model';
 import { RouterLinkDropdownModel } from '../../models/dropdown/item/dropdown-item.model';
 
 const mockAuthService = (loggedIn: boolean): Partial<AuthService> => ({
@@ -15,7 +15,7 @@ const mockAuthService = (loggedIn: boolean): Partial<AuthService> => ({
   signOut: () => {},
 });
 
-const publicConfig: NavbarConfig = {
+const publicConfig: NgNavbarConfig = {
   brand:            'M²S²',
   brandLogo:        'assets/M2S2-logo-only.png',
   brandRouterOutlet: 'home',

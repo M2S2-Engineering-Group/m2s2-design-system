@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { applicationConfig } from '@storybook/angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { M2S2PanelService } from '../../services/panel/panel.service';
-import { M2S2PanelData } from '../../models/panel/panel.model';
+import { NgM2S2PanelData } from '../../models/panel/panel.model';
 
 // ── Sample body component ────────────────────────────────────────────────────
 
@@ -91,7 +91,7 @@ class PanelDemoComponent {
   private readonly panelSvc = inject(M2S2PanelService);
   lastResult: unknown;
 
-  readonly buttons: { label: string; data: M2S2PanelData }[] = [
+  readonly buttons: { label: string; data: NgM2S2PanelData }[] = [
     {
       label: 'Info panel (message)',
       data: {
@@ -157,7 +157,7 @@ class PanelDemoComponent {
     },
   ];
 
-  open(data: M2S2PanelData): void {
+  open(data: NgM2S2PanelData): void {
     this.panelSvc.panel(data).afterClosed().subscribe(result => {
       this.lastResult = result ?? null;
     });
