@@ -4,6 +4,13 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# [1.2.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.1.1...tokens-v1.2.0) (2026-05-11)
+
+
+### Features
+
+* model package, react lib and angular refactor ([1bc5523](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/1bc5523a70e444c5dd134c2fba325279bb295233))
+
 ## [1.1.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.1.0...tokens-v1.1.1) (2026-05-09)
 
 
