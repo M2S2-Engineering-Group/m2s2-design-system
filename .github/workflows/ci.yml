@@ -106,6 +106,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build models
+        run: npm run build --workspace=packages/models
+
       - name: Build ng-lib
         run: npm run build --workspace=packages/ng-lib
 
@@ -137,6 +140,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Build models
+        run: npm run build --workspace=packages/models
 
       - name: Build ng-lib
         run: npm run build:prod --workspace=packages/ng-lib
@@ -197,6 +203,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build models
+        run: npm run build --workspace=packages/models
+
       - name: Build ng-lib
         run: npm run build:prod --workspace=packages/ng-lib
 
@@ -238,6 +247,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Build models
+        run: npm run build --workspace=packages/models
 
       - name: Build ng-lib
         run: npm run build:prod --workspace=packages/ng-lib
