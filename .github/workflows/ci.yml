@@ -212,7 +212,7 @@ jobs:
       - name: Sync Storybook to S3
         run: |
           aws s3 sync dist/storybook/ \
-            s3://${{ secrets.S3_WEB_BUCKET }}/design-system-storybook/ \
+            s3://${{ secrets.S3_STORYBOOK_BUCKET }}/ \
             --delete \
             --cache-control "max-age=300,public"
 
@@ -254,7 +254,7 @@ jobs:
       - name: Sync Storybook to S3
         run: |
           aws s3 sync dist/storybook/ \
-            s3://${{ secrets.S3_WEB_BUCKET }}/design-system-storybook/ \
+            s3://${{ secrets.S3_STORYBOOK_BUCKET }}/ \
             --delete \
             --cache-control "max-age=300,public"
 
@@ -292,8 +292,7 @@ jobs:
         working-directory: infra/storybook
         run: npx cdk deploy M2S2DesignSystemStorybookStack --require-approval never
         env:
-          S3_WEB_BUCKET:       ${{ secrets.S3_WEB_BUCKET }}
-          CLOUDFRONT_OAI_ID:   ${{ secrets.CLOUDFRONT_OAI_ID }}
+          S3_STORYBOOK_BUCKET: ${{ secrets.S3_STORYBOOK_BUCKET }}
           STORYBOOK_CERT_ARN:  ${{ secrets.STORYBOOK_CERT_ARN }}
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION:  us-east-1

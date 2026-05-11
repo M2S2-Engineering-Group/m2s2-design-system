@@ -19,8 +19,7 @@ func main() {
 				Region:  jsii.String("us-east-1"), // CloudFront certs must be us-east-1
 			},
 		},
-		BucketName:     os.Getenv("S3_WEB_BUCKET"),
-		OaiId:          os.Getenv("CLOUDFRONT_OAI_ID"),
+		BucketName:     os.Getenv("S3_STORYBOOK_BUCKET"),
 		CertificateArn: os.Getenv("STORYBOOK_CERT_ARN"),
 		DomainName:     "storybook.m2s2.io",
 	})

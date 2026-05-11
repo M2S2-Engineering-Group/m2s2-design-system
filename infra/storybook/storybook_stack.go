@@ -12,8 +12,8 @@ import (
 
 type StorybookStackProps struct {
 	awscdk.StackProps
+	// BucketName is the desired S3 bucket name. If empty, CDK generates one.
 	BucketName     string
-	OaiId          string
 	CertificateArn string
 	DomainName     string
 }
@@ -21,22 +21,23 @@ type StorybookStackProps struct {
 func NewStorybookStack(scope constructs.Construct, id string, props *StorybookStackProps) awscdk.Stack {
 	stack := awscdk.NewStack(scope, &id, &props.StackProps)
 
-	bucket := awss3.Bucket_FromBucketName(
-		stack, jsii.String("WebBucket"), jsii.String(props.BucketName),
-	)
-
-	oai := awscloudfront.OriginAccessIdentity_FromOriginAccessIdentityId(
-		stack, jsii.String("OAI"), jsii.String(props.OaiId),
-	)
+	bucketProps := &awss3.BucketProps{
+		BlockPublicAccess: awss3.BlockPublicAccess_BLOCK_ALL(),
+		Versioned:         jsii.Bool(false),
+	}
+	if props.BucketName != "" {
+		bucketProps.BucketName = jsii.String(props.BucketName)
+	}
+	bucket := awss3.NewBucket(stack, jsii.String("StorybookBucket"), bucketProps)
 
 	cert := awscertificatemanager.Certificate_FromCertificateArn(
 		stack, jsii.String("StorybookCert"), jsii.String(props.CertificateArn),
 	)
 
-	origin := awscloudfrontorigins.NewS3Origin(bucket, &awscloudfrontorigins.S3OriginProps{
-		OriginAccessIdentity: oai,
-		OriginPath:           jsii.String("/design-system-storybook"),
-	})
+	origin := awscloudfrontorigins.S3BucketOrigin_WithOriginAccessControl(
+		bucket,
+		&awscloudfrontorigins.S3BucketOriginWithOACProps{},
+	)
 
 	distro := awscloudfront.NewDistribution(stack, jsii.String("StorybookDistro"), &awscloudfront.DistributionProps{
 		Comment:           jsii.String("M2S2 Design System Storybook — storybook.m2s2.io"),
@@ -64,6 +65,12 @@ func NewStorybookStack(scope constructs.Construct, id string, props *StorybookSt
 				Ttl:                awscdk.Duration_Seconds(jsii.Number(30)),
 			},
 		},
+	})
+
+	awscdk.NewCfnOutput(stack, jsii.String("StorybookBucketName"), &awscdk.CfnOutputProps{
+		ExportName:  jsii.String("M2S2DesignSystemStorybookBucketName"),
+		Value:       bucket.BucketName(),
+		Description: jsii.String("Dedicated S3 bucket for the design system storybook"),
 	})
 
 	awscdk.NewCfnOutput(stack, jsii.String("StorybookCFDomain"), &awscdk.CfnOutputProps{
