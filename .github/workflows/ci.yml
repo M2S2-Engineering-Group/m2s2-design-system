@@ -240,10 +240,17 @@ jobs:
 
       - name: Sync Storybook to S3
         run: |
+          # Sync immutable hashed assets first (JS/CSS/fonts)
           aws s3 sync dist/storybook/ \
             s3://${{ secrets.S3_STORYBOOK_BUCKET }}/ \
             --delete \
-            --cache-control "max-age=300,public"
+            --exclude "*.html" --exclude "*.json" \
+            --cache-control "max-age=31536000,immutable"
+          # Sync entry files with no-cache so browsers always revalidate
+          aws s3 sync dist/storybook/ \
+            s3://${{ secrets.S3_STORYBOOK_BUCKET }}/ \
+            --exclude "*" --include "*.html" --include "*.json" \
+            --cache-control "no-cache"
 
       - name: Invalidate CloudFront cache
         run: |
@@ -285,10 +292,17 @@ jobs:
 
       - name: Sync Storybook to S3
         run: |
+          # Sync immutable hashed assets first (JS/CSS/fonts)
           aws s3 sync dist/storybook/ \
             s3://${{ secrets.S3_STORYBOOK_BUCKET }}/ \
             --delete \
-            --cache-control "max-age=300,public"
+            --exclude "*.html" --exclude "*.json" \
+            --cache-control "max-age=31536000,immutable"
+          # Sync entry files with no-cache so browsers always revalidate
+          aws s3 sync dist/storybook/ \
+            s3://${{ secrets.S3_STORYBOOK_BUCKET }}/ \
+            --exclude "*" --include "*.html" --include "*.json" \
+            --cache-control "no-cache"
 
       - name: Invalidate CloudFront cache
         run: |

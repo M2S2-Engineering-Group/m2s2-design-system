@@ -51,20 +51,6 @@ func NewStorybookStack(scope constructs.Construct, id string, props *StorybookSt
 			AllowedMethods:       awscloudfront.AllowedMethods_ALLOW_GET_HEAD_OPTIONS(),
 			CachedMethods:        awscloudfront.CachedMethods_CACHE_GET_HEAD_OPTIONS(),
 		},
-		ErrorResponses: &[]*awscloudfront.ErrorResponse{
-			{
-				HttpStatus:         jsii.Number(403),
-				ResponseHttpStatus: jsii.Number(200),
-				ResponsePagePath:   jsii.String("/index.html"),
-				Ttl:                awscdk.Duration_Seconds(jsii.Number(30)),
-			},
-			{
-				HttpStatus:         jsii.Number(404),
-				ResponseHttpStatus: jsii.Number(200),
-				ResponsePagePath:   jsii.String("/index.html"),
-				Ttl:                awscdk.Duration_Seconds(jsii.Number(30)),
-			},
-		},
 	})
 
 	awscdk.NewCfnOutput(stack, jsii.String("StorybookBucketName"), &awscdk.CfnOutputProps{
