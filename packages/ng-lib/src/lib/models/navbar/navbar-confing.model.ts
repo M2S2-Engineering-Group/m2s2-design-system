@@ -1,7 +1,7 @@
 import { NavbarConfig, NavbarButton, NavbarLoginButton } from '@m2s2/models';
 import { DropdownItemModel } from '../dropdown/item/dropdown-item.model';
 
-export type { NavbarConfig, NavbarLoginButton };
+export type { NavbarConfig };
 
 /** Angular-specific NavbarButton — adds routerLink and matIcon. */
 export interface NgNavbarButton extends NavbarButton {
@@ -10,8 +10,14 @@ export interface NgNavbarButton extends NavbarButton {
   dropdownItems?: DropdownItemModel[];
 }
 
-/** Angular-specific NavbarConfig — uses NgNavbarButton and brandRouterOutlet. */
-export interface NgNavbarConfig extends Omit<NavbarConfig, 'buttons' | 'brandPath'> {
+/** Angular-specific NavbarLoginButton — uses DropdownItemModel[]. */
+export interface NgNavbarLoginButton extends Omit<NavbarLoginButton, 'dropdownItems'> {
+  dropdownItems: DropdownItemModel[];
+}
+
+/** Angular-specific NavbarConfig — uses NgNavbarButton, NgNavbarLoginButton, and brandRouterOutlet. */
+export interface NgNavbarConfig extends Omit<NavbarConfig, 'buttons' | 'brandPath' | 'loginButton'> {
   brandRouterOutlet: string;
   buttons: NgNavbarButton[];
+  loginButton?: NgNavbarLoginButton;
 }
