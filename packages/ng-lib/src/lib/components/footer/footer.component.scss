@@ -1,4 +1,5 @@
-// Mobile-first footer
+@use 'tokens/src/mixins' as m;
+
 .m2s2-footer {
   width: 100%;
   min-height: var(--footer-height, 48px);
@@ -17,7 +18,6 @@
   text-align: center;
   min-height: var(--footer-height, 48px);
 
-  // Side-by-side on tablet and up
   @media (min-width: 576px) {
     flex-direction: row;
     justify-content: space-between;
@@ -37,23 +37,5 @@
   gap: var(--space-3);
 }
 
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.8;
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
-
-  &:hover {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
-}
-
-.social-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  fill: currentColor;
-  color: var(--color-secondary);
-}
+.social-link { @include m.social-link; }
+.social-icon { @include m.social-icon; }

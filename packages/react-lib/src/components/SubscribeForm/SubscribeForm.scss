@@ -1,16 +1,6 @@
-@use 'tokens/src/mixins' as m;
+@use 'packages/tokens/src/mixins' as m;
 
-:host {
-  display: block;
-  width: 100%;
-}
-
-.sub-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  width: 100%;
-}
+.sub-form { display: flex; flex-direction: column; gap: var(--space-3); width: 100%; }
 
 .sub-input { @include m.form-input; }
 
@@ -28,11 +18,7 @@
   &--success { @include m.feedback-success; }
 }
 
-.sub-success {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
+.sub-success { display: flex; align-items: center; gap: var(--space-3); }
 
 .sub-success-icon {
   display: flex;
@@ -47,18 +33,9 @@
   flex-shrink: 0;
 }
 
-.sub-success-text {
-  font-size: var(--font-size-sm);
-  color: var(--color-on-surface);
-  margin: 0;
-}
+.sub-success-text { font-size: var(--font-size-sm); color: var(--color-on-surface); margin: 0; }
 
-.sub-auth {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-}
+.sub-auth { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
 
 .sub-subscribed-label {
   font-size: var(--font-size-sm);

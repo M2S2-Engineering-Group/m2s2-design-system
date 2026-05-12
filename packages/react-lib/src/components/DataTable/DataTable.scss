@@ -1,4 +1,4 @@
-@use 'tokens/src/mixins' as m;
+@use 'packages/tokens/src/mixins' as m;
 
 .table-panel {
   background: var(--color-surface);
@@ -47,9 +47,7 @@
 
 .dt-col-wrap { position: relative; margin-left: auto; }
 
-.dt-col-btn {
-  @include m.filter-pill;
-}
+.dt-col-btn { @include m.filter-pill; }
 
 .dt-col-panel {
   @include m.floating-panel;

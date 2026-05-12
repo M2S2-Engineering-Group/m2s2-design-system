@@ -1,3 +1,5 @@
+@use 'tokens/src/mixins' as m;
+
 :host {
   display: flex;
   flex-direction: column;
@@ -5,130 +7,26 @@
   overflow: hidden;
 }
 
-// ── Header ──────────────────────────────────────────────────────────────────
-.panel-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding: var(--space-6);
-  border-bottom: 1px solid var(--color-border);
-  flex-shrink: 0;
-}
-
+.panel-header      { @include m.overlay-header-stacked; }
 .panel-header-text {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
   min-width: 0;
 }
+.panel-title    { @include m.overlay-title; }
+.panel-subtitle { @include m.overlay-subtitle; }
+.panel-close    { @include m.btn-icon; }
 
-.panel-title {
-  margin: 0;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-on-surface);
-  line-height: 1.3;
-}
+.panel-body    { @include m.overlay-body; }
+.panel-message { @include m.overlay-message; }
 
-.panel-subtitle {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  color: var(--color-on-surface-muted);
-  line-height: 1.5;
-}
+.panel-footer { @include m.overlay-footer; }
 
-.panel-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  border: none;
-  background: none;
-  font-size: 1rem;
-  color: var(--color-on-surface-muted);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background var(--transition-fast), color var(--transition-fast);
-
-  &:hover {
-    background: var(--color-surface-raised);
-    color: var(--color-on-surface);
-  }
-}
-
-// ── Body ────────────────────────────────────────────────────────────────────
-.panel-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--space-6);
-  overscroll-behavior: contain;
-}
-
-.panel-message {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  color: var(--color-on-surface-muted);
-  line-height: 1.6;
-}
-
-// ── Footer ──────────────────────────────────────────────────────────────────
-.panel-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-6);
-  border-top: 1px solid var(--color-border);
-  flex-shrink: 0;
-}
-
-// ── Action buttons ──────────────────────────────────────────────────────────
 .panel-btn {
-  padding: var(--space-2) var(--space-5);
-  border-radius: 8px;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: opacity var(--transition-fast), background var(--transition-fast),
-              border-color var(--transition-fast);
-
-  &:hover { opacity: 0.85; }
-
-  &--primary {
-    background: var(--gradient-brand-135);
-    color: #fff;
-    border-color: transparent;
-  }
-
-  &--secondary {
-    background:
-      linear-gradient(var(--color-surface-raised), var(--color-surface-raised)) padding-box,
-      var(--gradient-brand-135) border-box;
-    border: 1px solid transparent;
-    color: var(--color-secondary);
-
-    &:hover {
-      background:
-        linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
-        var(--gradient-brand-135) border-box;
-      opacity: 1;
-    }
-  }
-
-  &--destructive {
-    background: #dc2626;
-    color: #fff;
-    border-color: transparent;
-  }
-
-  &--ghost {
-    background: var(--color-surface-raised);
-    color: var(--color-on-surface);
-    border-color: var(--color-primary-dim, var(--color-primary));
-
-    &:hover { background: var(--color-surface); opacity: 1; }
-  }
+  @include m.btn-base;
+  &--primary     { @include m.btn-primary; }
+  &--secondary   { @include m.btn-secondary; }
+  &--destructive { @include m.btn-destructive; }
+  &--ghost       { @include m.btn-ghost; }
 }
