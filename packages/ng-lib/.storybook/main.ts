@@ -18,8 +18,7 @@ const config: StorybookConfig = {
       // Storybook's preview.ejs template prepends './' to each file: `import './<%= file %>'`.
       // With output.publicPath='/angular/', file='/angular/main.js' → './/angular/main.js' (broken).
       // Override HtmlWebpackPlugin's own publicPath to '' so file='main.js' → './main.js' (correct).
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const HtmlWebpackPlugin = require('html-webpack-plugin');
+      const HtmlWebpackPlugin = (await import('html-webpack-plugin')).default;
       config.plugins = config.plugins?.map(plugin => {
         if (plugin instanceof HtmlWebpackPlugin) {
           return new HtmlWebpackPlugin({ ...(plugin as any).userOptions, publicPath: '' });
