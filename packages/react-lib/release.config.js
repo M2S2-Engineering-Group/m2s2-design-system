@@ -1,11 +1,11 @@
 const commitAnalyzer = ['@semantic-release/commit-analyzer', {
   preset: 'angular',
   releaseRules: [
-    { type: 'feat',     scope: 'tokens', release: 'minor' },
-    { type: 'fix',      scope: 'tokens', release: 'patch' },
-    { type: 'perf',     scope: 'tokens', release: 'patch' },
-    { type: 'refactor', scope: 'tokens', release: 'patch' },
-    { breaking: true,   scope: 'tokens', release: 'major' },
+    { type: 'feat',     scope: 'react-lib', release: 'minor' },
+    { type: 'fix',      scope: 'react-lib', release: 'patch' },
+    { type: 'perf',     scope: 'react-lib', release: 'patch' },
+    { type: 'refactor', scope: 'react-lib', release: 'patch' },
+    { breaking: true,   scope: 'react-lib', release: 'major' },
   ],
 }];
 
@@ -20,19 +20,19 @@ const releaseNotesGenerator = ['@semantic-release/release-notes-generator', {
 
 const changelog = ['@semantic-release/changelog', {
   changelogFile: 'CHANGELOG.md',
-  changelogTitle: '# @m2s2/tokens Changelog\n\nAll notable changes to the design token system are documented here.\n\nBreaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).',
+  changelogTitle: '# @m2s2/react-lib Changelog\n\nAll notable changes to the React component library are documented here.\n\nBreaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).',
 }];
 
 const npm = ['@semantic-release/npm', { pkgRoot: '.', npmPublish: true }];
 
 const git = ['@semantic-release/git', {
   assets: ['CHANGELOG.md', 'package.json'],
-  message: 'chore(release): @m2s2/tokens v${nextRelease.version} [skip ci]',
+  message: 'chore(release): @m2s2/react-lib v${nextRelease.version} [skip ci]',
 }];
 
 module.exports = {
   branches: ['main'],
-  tagFormat: 'tokens-v${version}',
+  tagFormat: 'react-lib-v${version}',
 
   verifyConditions:  [changelog, npm, git, '@semantic-release/github'],
   analyzeCommits:    [commitAnalyzer],

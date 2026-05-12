@@ -7,11 +7,11 @@ module.exports = {
     ['@semantic-release/commit-analyzer', {
       preset: 'angular',
       releaseRules: [
-        { type: 'feat',     release: 'minor' },
-        { type: 'fix',      release: 'patch' },
-        { type: 'perf',     release: 'patch' },
-        { type: 'refactor', release: 'patch' },
-        { breaking: true,   release: 'major' },
+        { type: 'feat',     scope: 'ng-lib', release: 'minor' },
+        { type: 'fix',      scope: 'ng-lib', release: 'patch' },
+        { type: 'perf',     scope: 'ng-lib', release: 'patch' },
+        { type: 'refactor', scope: 'ng-lib', release: 'patch' },
+        { breaking: true,   scope: 'ng-lib', release: 'major' },
       ],
     }],
 

@@ -115,6 +115,9 @@ jobs:
       - name: Test ng-lib
         run: npm run test --workspace=packages/ng-lib -- --watch=false
 
+      - name: Build react-lib
+        run: npm run build --workspace=packages/react-lib
+
   # ── Release: @m2s2/ng-lib ─────────────────────────────────────────────────
   release-ng-lib:
     name: Release @m2s2/ng-lib
@@ -163,11 +166,59 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  # ── Release: @m2s2/react-lib ──────────────────────────────────────────────
+  release-react-lib:
+    name: Release @m2s2/react-lib
+    needs: [detect, build]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build models
+        run: npm run build --workspace=packages/models
+
+      - name: Build react-lib
+        run: npm run build:prod --workspace=packages/react-lib
+
+      - name: Release
+        run: |
+          output=$(cd packages/react-lib && npx semantic-release 2>&1) || {
+            if echo "$output" | grep -qE "EPUBLISHCONFLICT|Cannot publish over|already exists"; then
+              echo "$output"
+              echo "Version already published — nothing to do."
+              exit 0
+            fi
+            echo "$output"
+            exit 1
+          }
+          echo "$output"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   # ── Release: @m2s2/tokens ─────────────────────────────────────────────────
   release-tokens:
     name: Release @m2s2/tokens
-    needs: [detect, build, release-ng-lib]
-    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped')
+    needs: [detect, build, release-ng-lib, release-react-lib]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped') && (needs.release-react-lib.result == 'success' || needs.release-react-lib.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: write

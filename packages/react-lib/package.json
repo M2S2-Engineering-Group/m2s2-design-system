@@ -39,7 +39,10 @@
     "build:storybook": "storybook build -o ../../dist/storybook/react"
   },
   "dependencies": {
-    "@m2s2/models": "*"
+    "@m2s2/models": "*",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-dropdown-menu": "^2.1.4",
+    "@radix-ui/react-visually-hidden": "^1.1.1"
   },
   "peerDependencies": {
     "@m2s2/tokens": ">=1.0.0",
@@ -57,9 +60,6 @@
     }
   },
   "devDependencies": {
-    "@radix-ui/react-dialog": "^1.1.4",
-    "@radix-ui/react-dropdown-menu": "^2.1.4",
-    "@radix-ui/react-visually-hidden": "^1.1.1",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
     "@types/react": "^18.0.0",
