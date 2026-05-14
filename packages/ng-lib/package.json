@@ -31,18 +31,17 @@
     "tslib": "~2.3.1"
   },
   "peerDependencies": {
-    "@m2s2/models": ">=0.1.0",
-    "@m2s2/tokens": ">=0.1.0",
     "@angular/animations": ">=21.0.0",
     "@angular/cdk": ">=21.0.0",
     "@angular/common": ">=21.0.0",
     "@angular/core": ">=21.0.0",
     "@angular/forms": ">=21.0.0",
     "@angular/material": ">=21.0.0",
-    "@angular/router": ">=21.0.0"
+    "@angular/router": ">=21.0.0",
+    "@m2s2/models": ">=0.1.0",
+    "@m2s2/tokens": ">=0.1.0"
   },
   "devDependencies": {
-    "aws-amplify": "^6.14.3",
     "@angular-builders/jest": "^21.0.3",
     "@angular-devkit/build-angular": "^21.2.9",
     "@angular/build": "^21.2.7",
@@ -50,7 +49,11 @@
     "@angular/compiler-cli": "^21.2.8",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/angular": "^10.3.6",
+    "@testing-library/angular": "^19.2.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
+    "aws-amplify": "^6.14.3",
     "jest": "^30.0.0",
     "jest-environment-jsdom": "^30.3.0",
     "ng-packagr": "^21.2.2",

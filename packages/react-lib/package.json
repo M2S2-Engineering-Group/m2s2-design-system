@@ -35,6 +35,9 @@
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly --declarationDir dist",
     "build:prod": "vite build && tsc --emitDeclarationOnly --declarationDir dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6007",
     "build:storybook": "storybook build -o ../../dist/storybook/react"
   },
@@ -62,13 +65,19 @@
   "devDependencies": {
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^4.5.2",
+    "@vitest/coverage-v8": "^4.1.6",
+    "jsdom": "^29.1.1",
     "react-router": "^7.15.0",
     "sass": "^1.89.0",
     "storybook": "^10.3.6",
     "typescript": "~5.9.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^4.1.6"
   }
 }

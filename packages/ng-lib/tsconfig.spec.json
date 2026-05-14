@@ -5,7 +5,8 @@
     "emitDecoratorMetadata": true,
     "outDir": "../../out-tsc/spec",
     "types": [
-      "jest"
+      "jest",
+      "@testing-library/jest-dom"
     ]
   },
   "files": [
