@@ -176,8 +176,8 @@ jobs:
   # ── Release: @m2s2/react-lib ──────────────────────────────────────────────
   release-react-lib:
     name: Release @m2s2/react-lib
-    needs: [detect, build]
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true'
+    needs: [detect, build, release-ng-lib]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: write
