@@ -118,6 +118,9 @@ jobs:
       - name: Build react-lib
         run: npm run build --workspace=packages/react-lib
 
+      - name: Test react-lib
+        run: npm run test --workspace=packages/react-lib
+
   # ── Release: @m2s2/ng-lib ─────────────────────────────────────────────────
   release-ng-lib:
     name: Release @m2s2/ng-lib

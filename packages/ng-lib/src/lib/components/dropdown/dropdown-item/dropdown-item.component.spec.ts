@@ -1,25 +1,51 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen, fireEvent } from '@testing-library/angular';
+import { provideRouter } from '@angular/router';
 import { DropdownItemComponent } from './dropdown-item.component';
+import {
+  AnchorDropdownItemModel,
+  ClickableDropdownItemModel,
+  RouterLinkDropdownModel,
+} from '../../../models/dropdown/item/dropdown-item.model';
 
-describe('DropdownItemComponent', () => {
-  let component: DropdownItemComponent;
-  let fixture: ComponentFixture<DropdownItemComponent>;
+// mat-menu-item sets role="menuitem" on both button and anchor elements.
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ DropdownItemComponent ]
-    })
-    .compileComponents();
+describe('DropdownItemComponent — clickable', () => {
+  it('renders a menu item with the item text', async () => {
+    const item = new ClickableDropdownItemModel('1', '', 'Delete', jest.fn());
+    await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
+    expect(screen.getByRole('menuitem', { name: 'Delete' })).toBeInTheDocument();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DropdownItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  it('calls the click handler when the menu item is clicked', async () => {
+    const onClick = jest.fn();
+    const item = new ClickableDropdownItemModel('1', '', 'Delete', onClick);
+    await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Delete' }));
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('DropdownItemComponent — router link', () => {
+  it('renders a menu item with the item text', async () => {
+    const item = new RouterLinkDropdownModel('2', '', 'Dashboard', '/dashboard');
+    await render(DropdownItemComponent, {
+      inputs: { dropdownItem: item },
+      providers: [provideRouter([])],
+    });
+    expect(screen.getByRole('menuitem', { name: 'Dashboard' })).toBeInTheDocument();
+  });
+});
+
+describe('DropdownItemComponent — anchor', () => {
+  it('renders a menu item with the correct href', async () => {
+    const item = new AnchorDropdownItemModel('3', '', 'GitHub', 'https://github.com');
+    await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
+    expect(screen.getByRole('menuitem', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com');
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('opens the anchor in a new tab', async () => {
+    const item = new AnchorDropdownItemModel('3', '', 'GitHub', 'https://github.com');
+    await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
+    expect(screen.getByRole('menuitem', { name: 'GitHub' })).toHaveAttribute('target', '_blank');
   });
 });

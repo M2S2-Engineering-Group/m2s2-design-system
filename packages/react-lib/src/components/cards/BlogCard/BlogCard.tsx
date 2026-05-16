@@ -27,6 +27,7 @@ export function BlogCard({ config }: BlogCardProps) {
       <div className="bc-inner">
         <div className="bc-meta">
           <time dateTime={config.date}>{formatDate(config.date)}</time>
+          {config.readingTime && <span className="bc-reading-time">{config.readingTime} min read</span>}
         </div>
         <h2 className="bc-title">
           <Link to={`/blog/${config.slug}`}>{config.title}</Link>

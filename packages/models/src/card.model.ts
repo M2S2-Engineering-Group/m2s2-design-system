@@ -17,4 +17,5 @@ export interface BlogCardConfig {
   summary: string;
   tags: string[];
   coverImage?: string;
+  readingTime?: number;
 }

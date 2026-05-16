@@ -11,6 +11,9 @@
 <div class="bc-inner">
   <div class="bc-meta">
     <time [dateTime]="config().date">{{ formatDate(config().date) }}</time>
+    @if (config().readingTime) {
+      <span class="bc-reading-time">{{ config().readingTime }} min read</span>
+    }
   </div>
   <h2 class="bc-title">
     <a [routerLink]="['/blog', config().slug]">{{ config().title }}</a>
