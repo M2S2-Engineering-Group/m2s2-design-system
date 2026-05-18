@@ -13,6 +13,7 @@
   <img src="https://img.shields.io/badge/Angular-Components-red" />
   <img src="https://img.shields.io/badge/Design-Tokens-blue" />
   <img src="https://img.shields.io/badge/AWS-Production-orange" />
+  <a href="https://github.com/sponsors/mgmaster24"><img src="https://img.shields.io/github/sponsors/mgmaster24?style=flat&logo=githubsponsors&label=Sponsor" alt="GitHub Sponsors" /></a>
 </p>
 
 ---

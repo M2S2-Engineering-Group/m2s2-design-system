@@ -417,3 +417,30 @@ jobs:
           STORYBOOK_CERT_ARN:  ${{ secrets.STORYBOOK_CERT_ARN }}
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION:  us-east-1
+
+  # ── Notify CLI repo when libraries are released ───────────────────────────
+  notify-cli:
+    name: Notify m2s2-cli of new releases
+    needs: [release-ng-lib, release-react-lib, release-tokens]
+    if: |
+      always() &&
+      github.ref == 'refs/heads/main' &&
+      (
+        needs.release-ng-lib.result == 'success' ||
+        needs.release-react-lib.result == 'success' ||
+        needs.release-tokens.result == 'success'
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          repositories: m2s2-cli
+      - name: Dispatch template-sync to m2s2-cli
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          repository: M2S2-Engineering-Group/m2s2-cli
+          event-type: m2s2-libs-released
