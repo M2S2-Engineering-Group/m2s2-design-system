@@ -4,6 +4,14 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.3.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.3.0...tokens-v1.3.1) (2026-05-18)
+
+
+### Bug Fixes
+
+* add correct peerdeps to design system ([4023d1b](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/4023d1bac6ce9fe6c159a87c79cc897b2d52c740))
+* update blog card and more testing ([eea2bf0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/eea2bf01a722a48d1dbe36a70c46e69a8e6c8c3e))
+
 # [1.3.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.2.1...tokens-v1.3.0) (2026-05-14)
 
 
