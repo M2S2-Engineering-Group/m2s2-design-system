@@ -4,6 +4,13 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.2.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/ng-lib-v1.2.1...ng-lib-v1.2.2) (2026-05-18)
+
+
+### Bug Fixes
+
+* update tokens peer dep ([aafb83a](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/aafb83a002b8fa853e2ad23f9eb4ca8176a75cf5))
+
 ## [1.2.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/ng-lib-v1.2.0...ng-lib-v1.2.1) (2026-05-18)
 
 
