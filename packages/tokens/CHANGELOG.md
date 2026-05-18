@@ -4,6 +4,13 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# [1.4.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.3.2...tokens-v1.4.0) (2026-05-18)
+
+
+### Features
+
+* release of models package with component libs ([b3be85a](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/b3be85a3d68f46969f6fa24cdfffffa6d2ff5877))
+
 ## [1.3.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.3.1...tokens-v1.3.2) (2026-05-18)
 
 
