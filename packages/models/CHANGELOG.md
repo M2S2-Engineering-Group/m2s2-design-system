@@ -4,6 +4,18 @@ All notable changes to the shared model interfaces are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# [1.1.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/models-v1.0.0...models-v1.1.0) (2026-05-19)
+
+
+### Bug Fixes
+
+* vue tests and config updates ([2452694](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/2452694caa69dcdb23989499aaf331a7147cea19))
+
+
+### Features
+
+* vue-lib addition ([5ab9751](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/5ab975144b92c7b80b938ef3ec61f0129860c32a))
+
 # 1.0.0 (2026-05-18)
 
 
