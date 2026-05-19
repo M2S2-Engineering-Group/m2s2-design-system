@@ -1,0 +1,7 @@
+{
+  "name": "@m2s2/storybook-shared",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared Storybook themes, globals, and story utilities for the M²S² design system",
+  "types": "src/index.ts"
+}

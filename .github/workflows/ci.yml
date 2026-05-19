@@ -121,6 +121,12 @@ jobs:
       - name: Test react-lib
         run: npm run test --workspace=packages/react-lib
 
+      - name: Build vue-lib
+        run: npm run build --workspace=packages/vue-lib
+
+      - name: Test vue-lib
+        run: npm run test --workspace=packages/vue-lib
+
   # ── Release: @m2s2/models ─────────────────────────────────────────────────
   release-models:
     name: Release @m2s2/models
@@ -283,11 +289,66 @@ jobs:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  # ── Release: @m2s2/vue-lib ───────────────────────────────────────────────
+  release-vue-lib:
+    name: Release @m2s2/vue-lib
+    needs: [detect, build, release-models]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-models.result == 'success' || needs.release-models.result == 'skipped')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          token: ${{ steps.app-token.outputs.token }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build models
+        run: npm run build --workspace=packages/models
+
+      - name: Build vue-lib
+        run: npm run build:prod --workspace=packages/vue-lib
+
+      - name: Release
+        run: |
+          output=$(cd packages/vue-lib && npx semantic-release 2>&1) || {
+            if echo "$output" | grep -qE "EPUBLISHCONFLICT|Cannot publish over|already exists"; then
+              echo "$output"
+              echo "Version already published — nothing to do."
+              exit 0
+            fi
+            echo "$output"
+            exit 1
+          }
+          echo "$output"
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   # ── Release: @m2s2/tokens ─────────────────────────────────────────────────
   release-tokens:
     name: Release @m2s2/tokens
-    needs: [detect, build, release-models, release-ng-lib, release-react-lib]
-    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-models.result == 'success' || needs.release-models.result == 'skipped') && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped') && (needs.release-react-lib.result == 'success' || needs.release-react-lib.result == 'skipped')
+    needs: [detect, build, release-models, release-ng-lib, release-react-lib, release-vue-lib]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-models.result == 'success' || needs.release-models.result == 'skipped') && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped') && (needs.release-react-lib.result == 'success' || needs.release-react-lib.result == 'skipped') && (needs.release-vue-lib.result == 'success' || needs.release-vue-lib.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -473,7 +534,7 @@ jobs:
   # ── Notify CLI repo when libraries are released ───────────────────────────
   notify-cli:
     name: Notify m2s2-cli of new releases
-    needs: [release-models, release-ng-lib, release-react-lib, release-tokens]
+    needs: [release-models, release-ng-lib, release-react-lib, release-vue-lib, release-tokens]
     if: |
       always() &&
       github.ref == 'refs/heads/main' &&
@@ -481,6 +542,7 @@ jobs:
         needs.release-models.result == 'success' ||
         needs.release-ng-lib.result == 'success' ||
         needs.release-react-lib.result == 'success' ||
+        needs.release-vue-lib.result == 'success' ||
         needs.release-tokens.result == 'success'
       )
     runs-on: ubuntu-latest

@@ -12,20 +12,19 @@ type Story = StoryObj<typeof StatRow>;
 export const Default: Story = {
   args: {
     stats: [
-      { value: '50+', label: 'Projects Delivered' },
-      { value: '12', label: 'Years Experience' },
-      { value: '98%', label: 'Client Satisfaction' },
-      { value: '24/7', label: 'Support Available' },
+      { value: '15+', label: 'Years of experience' },
+      { value: '50+', label: 'Engineers led' },
+      { value: '30+', label: 'Products shipped' },
+      { value: '5',   label: 'Industries served' },
     ],
   },
 };
 
-export const ThreeStats: Story = {
+export const TwoStats: Story = {
   args: {
     stats: [
-      { value: '$2M+', label: 'Revenue Generated' },
-      { value: '30+', label: 'Team Members' },
-      { value: '5★', label: 'Average Rating' },
+      { value: '$2M+', label: 'Cost savings delivered' },
+      { value: '99.9%', label: 'Uptime achieved' },
     ],
   },
 };

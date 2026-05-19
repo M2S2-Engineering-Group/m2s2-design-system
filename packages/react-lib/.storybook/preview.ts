@@ -1,10 +1,26 @@
 import type { Preview } from '@storybook/react';
 import '../src/styles/tokens.scss';
+import { applyTheme, applyColorMode, sharedGlobalTypes } from '../../storybook-shared/src';
 
 const preview: Preview = {
+  globalTypes: sharedGlobalTypes,
+
+  decorators: [
+    (story, context) => {
+      applyTheme(context.globals['brandTheme'] ?? 'm2s2');
+      applyColorMode(context.globals['colorMode'] ?? 'dark');
+      return story();
+    },
+  ],
+
   parameters: {
-    layout: 'padded',
     backgrounds: { disable: true },
+    layout: 'padded',
+    options: {
+      storySort: {
+        order: ['Welcome', 'Brand Configurator', 'Components'],
+      },
+    },
   },
 };
 

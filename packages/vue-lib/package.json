@@ -1,0 +1,59 @@
+{
+  "name": "@m2s2/vue-lib",
+  "version": "0.0.0",
+  "description": "Vue 3 component library by M²S² Engineering Group.",
+  "author": "M²S² Engineering Group <contact@m2s2.io>",
+  "license": "MIT",
+  "keywords": ["vue", "vue3", "component-library", "ui", "m2s2"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/M2S2-Engineering-Group/m2s2-design-system",
+    "directory": "packages/vue-lib"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./styles": "./dist/vue-lib.css"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build && vue-tsc --emitDeclarationOnly --declarationDir dist",
+    "build:prod": "vite build && vue-tsc --emitDeclarationOnly --declarationDir dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "storybook": "storybook dev -p 6010",
+    "build:storybook": "storybook build -o ../../dist/storybook/vue"
+  },
+  "peerDependencies": {
+    "@m2s2/models": ">=0.1.0",
+    "@m2s2/tokens": ">=1.0.0",
+    "vue": ">=3.0.0"
+  },
+  "devDependencies": {
+    "@m2s2/models": "*",
+    "@m2s2/tokens": "*",
+    "@storybook/addon-docs": "^10.3.6",
+    "@storybook/vue3-vite": "^10.3.6",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitest/coverage-v8": "^4.1.6",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^29.1.1",
+    "sass": "^1.89.0",
+    "storybook": "^10.3.6",
+    "typescript": "~5.9.3",
+    "vite": "^6.3.5",
+    "vitest": "^4.1.6",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.10"
+  }
+}

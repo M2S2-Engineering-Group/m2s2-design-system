@@ -29,7 +29,7 @@ export const Default: Story = {
   },
 };
 
-export const MinimalLinks: Story = {
+export const EmailOnly: Story = {
   name: 'Email Only',
   args: {
     config: {

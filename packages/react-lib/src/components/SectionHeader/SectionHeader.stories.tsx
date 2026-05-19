@@ -9,17 +9,17 @@ const meta: Meta<typeof SectionHeader> = {
 export default meta;
 type Story = StoryObj<typeof SectionHeader>;
 
-export const WithSubtitle: Story = {
+export const LabelOnly: Story = {
   args: {
-    config: {
-      label: 'What We Do',
-      subtitle: 'We partner with teams to design, build, and scale software products.',
-    },
+    config: { label: 'What We Do' },
   },
 };
 
-export const LabelOnly: Story = {
+export const WithSubtitle: Story = {
   args: {
-    config: { label: 'Our Work' },
+    config: {
+      label: 'Core Expertise',
+      subtitle: 'The disciplines we bring to every engagement, refined over 15 years of shipping production software.',
+    },
   },
 };

@@ -12,8 +12,8 @@ type Story = StoryObj<typeof PageHeader>;
 export const Default: Story = {
   args: {
     config: {
-      title: 'Our Services',
-      subtitle: 'End-to-end software consulting from architecture to deployment.',
+      title: 'Get in Touch',
+      subtitle: "Have a project in mind or just want to chat? We'd love to hear from you.",
     },
   },
 };
@@ -21,8 +21,8 @@ export const Default: Story = {
 export const ShortSubtitle: Story = {
   args: {
     config: {
-      title: 'About Us',
-      subtitle: 'We build software that scales.',
+      title: 'Admin',
+      subtitle: 'Manage inquiries and subscribers.',
     },
   },
 };

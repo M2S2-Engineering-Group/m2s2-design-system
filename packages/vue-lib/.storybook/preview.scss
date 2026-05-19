@@ -1,0 +1,8 @@
+@use '../../tokens/index';
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-on-bg);
+  font-family: var(--font-family-base);
+}
