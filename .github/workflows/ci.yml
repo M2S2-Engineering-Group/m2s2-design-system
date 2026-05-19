@@ -218,6 +218,9 @@ jobs:
       - name: Build ng-lib
         run: npm run build:prod --workspace=packages/ng-lib
 
+      - name: Sync with remote
+        run: git pull --rebase origin main
+
       - name: Release
         run: |
           output=$(npx semantic-release 2>&1) || {
