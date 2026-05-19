@@ -4,6 +4,22 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# [1.1.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/react-lib-v1.0.0...react-lib-v1.1.0) (2026-05-19)
+
+
+### Bug Fixes
+
+* add correct peerdeps to design system ([4023d1b](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/4023d1bac6ce9fe6c159a87c79cc897b2d52c740))
+* update blog card and more testing ([eea2bf0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/eea2bf01a722a48d1dbe36a70c46e69a8e6c8c3e))
+* update tokens peer dep ([aafb83a](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/aafb83a002b8fa853e2ad23f9eb4ca8176a75cf5))
+* vue tests and config updates ([2452694](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/2452694caa69dcdb23989499aaf331a7147cea19))
+
+
+### Features
+
+* release of models package with component libs ([b3be85a](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/b3be85a3d68f46969f6fa24cdfffffa6d2ff5877))
+* vue-lib addition ([5ab9751](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/5ab975144b92c7b80b938ef3ec61f0129860c32a))
+
 # 1.0.0 (2026-05-14)
 
 
