@@ -292,8 +292,8 @@ jobs:
   # ── Release: @m2s2/vue-lib ───────────────────────────────────────────────
   release-vue-lib:
     name: Release @m2s2/vue-lib
-    needs: [detect, build, release-models]
-    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-models.result == 'success' || needs.release-models.result == 'skipped')
+    needs: [detect, build, release-models, release-ng-lib, release-react-lib]
+    if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.detect.outputs.full == 'true' && needs.build.result == 'success' && (needs.release-models.result == 'success' || needs.release-models.result == 'skipped') && (needs.release-ng-lib.result == 'success' || needs.release-ng-lib.result == 'skipped') && (needs.release-react-lib.result == 'success' || needs.release-react-lib.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: write
