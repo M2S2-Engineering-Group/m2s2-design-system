@@ -163,6 +163,20 @@ jobs:
       - name: Build models
         run: npm run build --workspace=packages/models
 
+      - name: Authenticate with npm (OIDC)
+        run: |
+          OIDC_TOKEN=$(curl -fsSL \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm" \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).value")
+          NPM_TOKEN=$(curl -fsSL -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"token\":\"$OIDC_TOKEN\"}" \
+            https://registry.npmjs.org/-/oidc/github/token \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).token")
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          echo "NODE_AUTH_TOKEN=$NPM_TOKEN" >> "$GITHUB_ENV"
+
       - name: Release
         run: |
           output=$(cd packages/models && npx semantic-release 2>&1) || {
@@ -177,7 +191,7 @@ jobs:
           echo "$output"
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
 
   # ── Release: @m2s2/ng-lib ─────────────────────────────────────────────────
   release-ng-lib:
@@ -221,6 +235,20 @@ jobs:
       - name: Sync with remote
         run: git pull --rebase origin main
 
+      - name: Authenticate with npm (OIDC)
+        run: |
+          OIDC_TOKEN=$(curl -fsSL \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm" \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).value")
+          NPM_TOKEN=$(curl -fsSL -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"token\":\"$OIDC_TOKEN\"}" \
+            https://registry.npmjs.org/-/oidc/github/token \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).token")
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          echo "NODE_AUTH_TOKEN=$NPM_TOKEN" >> "$GITHUB_ENV"
+
       - name: Release
         run: |
           output=$(npx semantic-release 2>&1) || {
@@ -235,7 +263,7 @@ jobs:
           echo "$output"
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
 
   # ── Release: @m2s2/react-lib ──────────────────────────────────────────────
   release-react-lib:
@@ -279,6 +307,20 @@ jobs:
       - name: Sync with remote
         run: git pull --rebase origin main
 
+      - name: Authenticate with npm (OIDC)
+        run: |
+          OIDC_TOKEN=$(curl -fsSL \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm" \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).value")
+          NPM_TOKEN=$(curl -fsSL -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"token\":\"$OIDC_TOKEN\"}" \
+            https://registry.npmjs.org/-/oidc/github/token \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).token")
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          echo "NODE_AUTH_TOKEN=$NPM_TOKEN" >> "$GITHUB_ENV"
+
       - name: Release
         run: |
           output=$(cd packages/react-lib && npx semantic-release 2>&1) || {
@@ -293,7 +335,7 @@ jobs:
           echo "$output"
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
 
   # ── Release: @m2s2/vue-lib ───────────────────────────────────────────────
   release-vue-lib:
@@ -337,6 +379,20 @@ jobs:
       - name: Sync with remote
         run: git pull --rebase origin main
 
+      - name: Authenticate with npm (OIDC)
+        run: |
+          OIDC_TOKEN=$(curl -fsSL \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm" \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).value")
+          NPM_TOKEN=$(curl -fsSL -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"token\":\"$OIDC_TOKEN\"}" \
+            https://registry.npmjs.org/-/oidc/github/token \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).token")
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          echo "NODE_AUTH_TOKEN=$NPM_TOKEN" >> "$GITHUB_ENV"
+
       - name: Release
         run: |
           output=$(cd packages/vue-lib && npx semantic-release 2>&1) || {
@@ -351,7 +407,7 @@ jobs:
           echo "$output"
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
 
   # ── Release: @m2s2/tokens ─────────────────────────────────────────────────
   release-tokens:
@@ -390,6 +446,20 @@ jobs:
       - name: Sync with remote
         run: git pull --rebase origin main
 
+      - name: Authenticate with npm (OIDC)
+        run: |
+          OIDC_TOKEN=$(curl -fsSL \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm" \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).value")
+          NPM_TOKEN=$(curl -fsSL -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"token\":\"$OIDC_TOKEN\"}" \
+            https://registry.npmjs.org/-/oidc/github/token \
+            | node -pe "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).token")
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          echo "NODE_AUTH_TOKEN=$NPM_TOKEN" >> "$GITHUB_ENV"
+
       - name: Release
         run: |
           output=$(cd packages/tokens && npx semantic-release 2>&1) || {
@@ -404,7 +474,7 @@ jobs:
           echo "$output"
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
 
   # ── Deploy Storybook: full build ──────────────────────────────────────────
   deploy-storybook:
