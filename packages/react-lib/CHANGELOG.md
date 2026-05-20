@@ -4,6 +4,13 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.1.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/react-lib-v1.1.0...react-lib-v1.1.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* add readmes to each offering ([b1a147a](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/b1a147a16743d43194d1ce4ef6055f81ae7dab4b))
+
 # [1.1.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/react-lib-v1.0.0...react-lib-v1.1.0) (2026-05-19)
 
 
