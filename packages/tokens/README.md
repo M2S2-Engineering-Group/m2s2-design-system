@@ -1,10 +1,6 @@
 # @m2s2/tokens
 
-Design token system for M²S² Engineering Group — CSS custom properties, SCSS partials, and theme utilities that power the [`@m2s2/ng-lib`](https://www.npmjs.com/package/@m2s2/ng-lib) component library.
-
-Framework-agnostic: works with any CSS, SCSS, or Angular project.
-
----
+Design token system for the M²S² design system — CSS custom properties, SCSS variables, and theme utilities covering color, typography, spacing, motion, and layout.
 
 ## Installation
 
@@ -12,74 +8,47 @@ Framework-agnostic: works with any CSS, SCSS, or Angular project.
 npm install @m2s2/tokens
 ```
 
----
-
 ## Usage
 
-### Import all tokens
-
-In your global stylesheet:
+### Import everything (recommended)
 
 ```scss
 @use '@m2s2/tokens';
 ```
 
-This registers all CSS custom properties on `:root` and applies dark-first theming.
-
-### Import individual partials
+### Import individual token modules
 
 ```scss
 @use '@m2s2/tokens/src/colors';
-@use '@m2s2/tokens/src/typography';
 @use '@m2s2/tokens/src/spacing';
+@use '@m2s2/tokens/src/typography';
 ```
 
----
+### CSS custom properties
+
+Tokens are exposed as CSS custom properties and available globally once the stylesheet is imported:
+
+```css
+color: var(--m2s2-color-primary);
+padding: var(--m2s2-spacing-4);
+font-size: var(--m2s2-text-lg);
+```
+
+## Token Modules
+
+| Module | Description |
+|--------|-------------|
+| `src/primitives` | Base token definitions |
+| `src/colors` | Color palette |
+| `src/typography` | Type scale and utilities |
+| `src/spacing` | Spacing and sizing scale |
+| `src/motion` | Animation and transition tokens |
+| `src/layout` | Breakpoints, grid, containers |
+| `src/utilities` | Utility classes and mixins |
+| `src/overlay` | Overlay and z-index tokens |
+| `src/themes/light` | Light theme overrides |
+| `src/themes/auto` | Auto light/dark theme detection |
 
 ## Theming
 
-Tokens are dark-first. Light mode is applied via a `data-theme` attribute or the `prefers-color-scheme` media query.
-
-```html
-<!-- Dark (default) -->
-<html>
-
-<!-- Light -->
-<html data-theme="light">
-```
-
----
-
-## Brand Overrides
-
-Copy `brand-override.example.scss` into your project and import it after the tokens to override colors, gradients, or typography:
-
-```scss
-@use '@m2s2/tokens';
-@use './brand-override';
-```
-
-Any CSS custom property can be overridden — you only need to redefine what you want to change.
-
----
-
-## Token Categories
-
-| File | Contents |
-|---|---|
-| `src/primitives` | Raw color palette (non-semantic) |
-| `src/colors` | Semantic color tokens (`--color-primary`, `--color-bg`, etc.) |
-| `src/typography` | Font family, size, weight, and line-height tokens |
-| `src/spacing` | Spacing scale (`--space-1` through `--space-16`) |
-| `src/motion` | Transition duration and easing tokens |
-| `src/layout` | Breakpoints and container width tokens |
-| `src/utilities` | Shared utility classes |
-| `src/overlay` | Angular Material overlay and panel animation styles |
-| `src/themes/light` | Light mode overrides (`data-theme="light"`) |
-| `src/themes/auto` | Auto mode via `prefers-color-scheme` |
-
----
-
-## License
-
-MIT © [M²S² Engineering Group](https://m2s2.io)
+The `auto` theme module automatically switches between light and dark based on the user's system preference. Import it once at the root of your application.
