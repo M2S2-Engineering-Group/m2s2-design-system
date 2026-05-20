@@ -4,7 +4,13 @@
   "description": "Vue 3 component library by M²S² Engineering Group.",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",
-  "keywords": ["vue", "vue3", "component-library", "ui", "m2s2"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "component-library",
+    "ui",
+    "m2s2"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/M2S2-Engineering-Group/m2s2-design-system",
@@ -24,7 +30,9 @@
     },
     "./styles": "./dist/vue-lib.css"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && vue-tsc --emitDeclarationOnly --declarationDir dist",
     "build:prod": "vite build && vue-tsc --emitDeclarationOnly --declarationDir dist",
