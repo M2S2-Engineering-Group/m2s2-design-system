@@ -4,6 +4,13 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.5.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.5.0...tokens-v1.5.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* add readmes to each offering ([b1a147a](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/b1a147a16743d43194d1ce4ef6055f81ae7dab4b))
+
 # [1.5.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/tokens-v1.4.0...tokens-v1.5.0) (2026-05-19)
 
 
