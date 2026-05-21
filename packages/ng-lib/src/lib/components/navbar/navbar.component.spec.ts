@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/angular';
 import { provideRouter } from '@angular/router';
 import { Subject } from 'rxjs';
 import { NavbarComponent } from './navbar.component';
-import { AuthService } from '../../services/auth/auth.service';
+import { M2S2_AUTH_PROVIDER } from '../../services/auth/auth.provider';
 import { NgNavbarConfig } from '../../models/navbar/navbar-confing.model';
 
 class IntersectionObserverStub {
@@ -34,7 +34,7 @@ const renderNavbar = (config: Partial<NgNavbarConfig> = {}) =>
     },
     providers: [
       provideRouter([]),
-      { provide: AuthService, useValue: authServiceStub },
+      { provide: M2S2_AUTH_PROVIDER, useValue: authServiceStub },
     ],
   });
 

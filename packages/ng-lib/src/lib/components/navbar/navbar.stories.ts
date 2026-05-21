@@ -4,14 +4,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NavbarComponent } from './navbar.component';
-import { AuthService } from '../../services/auth/auth.service';
+import { M2S2_AUTH_PROVIDER, M2S2AuthProvider } from '../../services/auth/auth.provider';
 import { NgNavbarConfig } from '../../models/navbar/navbar-confing.model';
 import { RouterLinkDropdownModel } from '../../models/dropdown/item/dropdown-item.model';
 
-const mockAuthService = (loggedIn: boolean): Partial<AuthService> => ({
+const mockAuthProvider = (loggedIn: boolean): M2S2AuthProvider => ({
   loggedIn$: new BehaviorSubject(loggedIn),
-  getCurrentUser: () => Promise.resolve(loggedIn ? { username: 'demo-user', userId: '1', signInDetails: undefined } as any : undefined),
-  getCurrentSession: () => Promise.resolve(undefined),
+  getCurrentUser: () => Promise.resolve(loggedIn ? { username: 'demo-user', userId: '1' } : undefined),
   signOut: () => {},
 });
 
@@ -60,7 +59,7 @@ type Story = StoryObj<NavbarComponent>;
 export const LoggedOut: Story = {
   name: 'Logged out',
   decorators: [
-    applicationConfig({ providers: [...sharedProviders, { provide: AuthService, useValue: mockAuthService(false) }] }),
+    applicationConfig({ providers: [...sharedProviders, { provide: M2S2_AUTH_PROVIDER, useValue: mockAuthProvider(false) }] }),
   ],
   args: { navbarConfig: publicConfig },
 };
@@ -68,7 +67,7 @@ export const LoggedOut: Story = {
 export const LoggedIn: Story = {
   name: 'Logged in',
   decorators: [
-    applicationConfig({ providers: [...sharedProviders, { provide: AuthService, useValue: mockAuthService(true) }] }),
+    applicationConfig({ providers: [...sharedProviders, { provide: M2S2_AUTH_PROVIDER, useValue: mockAuthProvider(true) }] }),
   ],
   args: {
     navbarConfig: {
@@ -87,7 +86,7 @@ export const LoggedIn: Story = {
 export const WithLogo: Story = {
   name: 'With logo image',
   decorators: [
-    applicationConfig({ providers: [...sharedProviders, { provide: AuthService, useValue: mockAuthService(false) }] }),
+    applicationConfig({ providers: [...sharedProviders, { provide: M2S2_AUTH_PROVIDER, useValue: mockAuthProvider(false) }] }),
   ],
   args: {
     navbarConfig: {
@@ -100,7 +99,7 @@ export const WithLogo: Story = {
 export const WithAvatar: Story = {
   name: 'With profile avatar',
   decorators: [
-    applicationConfig({ providers: [...sharedProviders, { provide: AuthService, useValue: mockAuthService(true) }] }),
+    applicationConfig({ providers: [...sharedProviders, { provide: M2S2_AUTH_PROVIDER, useValue: mockAuthProvider(true) }] }),
   ],
   args: {
     navbarConfig: {

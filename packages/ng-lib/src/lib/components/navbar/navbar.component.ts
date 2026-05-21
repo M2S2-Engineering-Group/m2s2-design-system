@@ -12,10 +12,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { Subscription } from 'rxjs';
 import { DropdownItemComponent } from '../dropdown';
 import { NgNavbarButton, NgNavbarConfig } from '../../models/navbar/navbar-confing.model';
-import { AuthService } from '../../services/auth/auth.service';
-import { Subscription } from 'rxjs';
+import { M2S2_AUTH_PROVIDER } from '../../services/auth/auth.provider';
 
 @Component({
   selector: 'm2-navbar',
@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public isHidden = false;
   public loggedIn = false;
 
-  private readonly authService = inject(AuthService);
+  private readonly authProvider = inject(M2S2_AUTH_PROVIDER, { optional: true });
   private readonly changeDetRef = inject(ChangeDetectorRef);
   private readonly loggedInSubscription: Subscription;
   private sentinel: HTMLElement | null = null;
@@ -52,11 +52,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private lastScrollY = 0;
 
   constructor() {
-    this.isAuthenticated().then(v => (this.loggedIn = v));
-    this.loggedInSubscription = this.authService.loggedIn$.subscribe(v => {
-      this.loggedIn = v;
-      if (v) this.changeDetRef.detectChanges();
-    });
+    if (this.authProvider) {
+      this.isAuthenticated().then(v => (this.loggedIn = v));
+      this.loggedInSubscription = this.authProvider.loggedIn$.subscribe(v => {
+        this.loggedIn = v;
+        if (v) this.changeDetRef.detectChanges();
+      });
+    } else {
+      this.loggedInSubscription = new Subscription();
+    }
   }
 
   public ngOnInit(): void {
@@ -117,7 +121,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   public async isAuthenticated(): Promise<boolean> {
-    const user = await this.authService.getCurrentUser();
+    const user = await this.authProvider?.getCurrentUser();
     return !!user;
   }
 }
