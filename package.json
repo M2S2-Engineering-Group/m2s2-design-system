@@ -15,9 +15,9 @@
     "storybook:angular": "npm run storybook --workspace=packages/ng-lib",
     "storybook:react": "npm run storybook --workspace=packages/react-lib",
     "storybook:vue": "npm run storybook --workspace=packages/vue-lib",
-    "storybook:refs": "concurrently --prefix-colors \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgCyan.bold\" --names \"angular,react,wc,vue\" \"npm run storybook:angular\" \"npm run storybook:react\" \"npm run storybook:web-components\" \"npm run storybook:vue\"",
-    "storybook:all": "concurrently --kill-others-on-fail --prefix-colors \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgCyan.bold,bgYellow.bold\" --names \"angular,react,wc,vue,composed\" \"npm run storybook:angular\" \"npm run storybook:react\" \"npm run storybook:web-components\" \"npm run storybook:vue\" \"npm run storybook\"",
-    "build:storybook": "STORYBOOK_ANGULAR_URL=/angular STORYBOOK_REACT_URL=/react STORYBOOK_WC_URL=/web-components STORYBOOK_VUE_URL=/vue storybook build --config-dir .storybook -o dist/storybook && turbo run build:storybook",
+    "storybook:refs": "concurrently --prefix-colors \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgCyan.bold\" --names \"angular,react,wc,vue\" \"npm run storybook:angular\" \"npm run storybook:react\" \"npm run storybook:vue\"",
+    "storybook:all": "concurrently --kill-others-on-fail --prefix-colors \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgCyan.bold,bgYellow.bold\" --names \"angular,react,wc,vue,composed\" \"npm run storybook:angular\" \"npm run storybook:react\" \"npm run storybook:vue\" \"npm run storybook\"",
+    "build:storybook": "STORYBOOK_ANGULAR_URL=/angular STORYBOOK_REACT_URL=/react STORYBOOK_VUE_URL=/vue storybook build --config-dir .storybook -o dist/storybook && turbo run build:storybook",
     "prepare": "husky"
   },
   "devDependencies": {

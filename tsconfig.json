@@ -35,6 +35,5 @@
   "exclude": [
     "node_modules",
     "packages/react-lib",
-    "packages/web-components"
   ]
 }

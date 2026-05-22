@@ -171,7 +171,14 @@ jobs:
         run: git pull --rebase origin main
 
       - name: Release
-        run: npx multi-semantic-release
+        run: |
+          NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release \
+            --ignore-private-packages \
+            packages/models \
+            packages/ng-lib \
+            packages/react-lib \
+            packages/vue-lib \
+            packages/tokens
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NPM_CONFIG_PROVENANCE: 'true'
