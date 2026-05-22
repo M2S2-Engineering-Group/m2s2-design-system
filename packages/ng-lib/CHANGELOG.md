@@ -4,6 +4,23 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# [2.0.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/ng-lib-v1.3.1...ng-lib-v2.0.0) (2026-05-22)
+
+
+### Features
+
+* **ng-lib:** replace authservice with m2s2provider interface ([3339d09](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/3339d09e0b3dc6c14b250e691806dc11e64cd98c))
+* **ng-lib:** trigger major release for auth provider refactor ([8871ab8](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/8871ab897ca2959cc5016b682c64bb7d3e331323))
+
+
+### BREAKING CHANGES
+
+* **ng-lib:** AuthService has been removed. Consumers must implement
+M2S2AuthProvider and provide it via the M2S2_AUTH_PROVIDER injection
+token.
+* **ng-lib:** AuthService has been removed. Consumers must implement
+  M2S2AuthProvider and provide it via the M2S2_AUTH_PROVIDER injection token.
+
 ## [1.3.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/ng-lib-v1.3.0...ng-lib-v1.3.1) (2026-05-20)
 
 
