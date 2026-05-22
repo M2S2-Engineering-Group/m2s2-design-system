@@ -39,30 +39,72 @@ All components are standalone — import only what you need:
 
 ```typescript
 import { NavbarComponent, FooterComponent } from '@m2s2/ng-lib';
-import type { NavbarConfig, FooterConfig } from '@m2s2/models';
+import type { NgNavbarConfig, FooterConfig } from '@m2s2/ng-lib';
 
 @Component({
   standalone: true,
   imports: [NavbarComponent, FooterComponent],
   template: `
-    <m2s2-navbar [config]="navbar" />
+    <m2-navbar [navbarConfig]="navbar" />
     <main>...</main>
     <m2s2-footer [config]="footer" />
   `,
 })
 export class AppComponent {
-  navbar: NavbarConfig = { brand: 'My App', brandPath: '/', isFixed: true, buttons: [] };
+  navbar: NgNavbarConfig = { brand: 'My App', brandRouterOutlet: '/', isFixed: true, buttons: [] };
   footer: FooterConfig = { brandName: 'My App', links: [] };
 }
 ```
+
+## Authentication
+
+`@m2s2/ng-lib` does not ship with a concrete auth implementation. Instead it exposes an `M2S2AuthProvider` interface and an `M2S2_AUTH_PROVIDER` injection token. Components like `NavbarComponent` use this token to show or hide auth-gated items — no auth library is required if you don't need that feature.
+
+### 1. Implement the interface
+
+```typescript
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { M2S2AuthProvider, M2S2AuthUser } from '@m2s2/ng-lib';
+// import whatever auth library you use, e.g. aws-amplify, auth0-angular, angularfire
+
+@Injectable({ providedIn: 'root' })
+export class MyAuthProvider implements M2S2AuthProvider {
+  loggedIn$ = new BehaviorSubject<boolean>(false);
+
+  async getCurrentUser(): Promise<M2S2AuthUser | undefined> {
+    // return { userId: '...', username: '...' } or undefined
+  }
+
+  signOut(): void {
+    // call your auth library's sign-out
+  }
+}
+```
+
+### 2. Provide it in `app.config.ts`
+
+```typescript
+import { M2S2_AUTH_PROVIDER } from '@m2s2/ng-lib';
+import { MyAuthProvider } from './auth/my-auth.provider';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    // ...
+    { provide: M2S2_AUTH_PROVIDER, useClass: MyAuthProvider },
+  ],
+};
+```
+
+If `M2S2_AUTH_PROVIDER` is not provided, auth-gated navbar items are simply hidden and no errors are thrown.
 
 ## Components
 
 | Component | Selector |
 |-----------|----------|
-| `NavbarComponent` | `m2s2-navbar` |
+| `NavbarComponent` | `m2-navbar` |
 | `FooterComponent` | `m2s2-footer` |
-| `BaseCardComponent` | `m2s2-base-card` |
+| `BaseCardComponent` | `m2s2-card` |
 | `BlogCardComponent` | `m2s2-blog-card` |
 | `FeatureCardComponent` | `m2s2-feature-card` |
 | `PageHeaderComponent` | `m2s2-page-header` |
@@ -72,7 +114,7 @@ export class AppComponent {
 | `CtaSectionComponent` | `m2s2-cta-section` |
 | `StatusBadgeComponent` | `m2s2-status-badge` |
 | `DataTableComponent` | `m2s2-data-table` |
-| `DropdownComponent` | `m2s2-dropdown` |
+| `DropdownItemComponent` | `m2s2-dropdown-item` |
 | `DialogComponent` | `m2s2-dialog` |
 | `PanelComponent` | `m2s2-panel` |
 | `SubscribeFormComponent` | `m2s2-subscribe-form` |
@@ -83,4 +125,11 @@ export class AppComponent {
 |---------|-------------|
 | `M2S2DialogService` | Open and manage dialogs imperatively |
 | `M2S2PanelService` | Open and manage panels/drawers imperatively |
-| `AuthService` | Authentication via AWS Amplify |
+
+## Auth API
+
+| Export | Description |
+|--------|-------------|
+| `M2S2AuthProvider` | Interface your auth provider must implement |
+| `M2S2AuthUser` | Shape of the authenticated user object (`userId`, `username`) |
+| `M2S2_AUTH_PROVIDER` | `InjectionToken<M2S2AuthProvider>` — provide your implementation here |
