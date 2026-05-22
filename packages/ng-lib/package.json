@@ -1,6 +1,6 @@
 {
   "name": "@m2s2/ng-lib",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Angular component library by M²S² Engineering Group — production-ready UI components built with signals and standalone architecture.",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",

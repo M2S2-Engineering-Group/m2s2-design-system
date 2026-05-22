@@ -170,6 +170,9 @@ jobs:
       - name: Sync with remote
         run: git pull --rebase origin main
 
+      - name: Fetch tags
+        run: git fetch --tags
+
       - name: Release
         run: |
           NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release \
