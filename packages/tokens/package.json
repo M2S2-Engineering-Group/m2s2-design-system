@@ -1,6 +1,6 @@
 {
   "name": "@m2s2/tokens",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "description": "Design token system — CSS custom properties, SCSS variables, and theme utilities",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",
