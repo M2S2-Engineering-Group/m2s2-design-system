@@ -177,7 +177,7 @@ jobs:
         run: |
           NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release \
             --ignore-private-packages \
-            --sequential-prepare \
+            --sequential-prepare=true \
             packages/models \
             packages/ng-lib \
             packages/react-lib \
