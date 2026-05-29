@@ -173,8 +173,7 @@ jobs:
         run: |
           NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release \
             --ignore-private-packages \
-            packages/models \
-            packages/tokens
+            --ignore-packages @m2s2/ng-lib,@m2s2/react-lib,@m2s2/vue-lib
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NPM_CONFIG_PROVENANCE: 'true'
@@ -229,9 +228,7 @@ jobs:
         run: |
           NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release \
             --ignore-private-packages \
-            packages/ng-lib \
-            packages/react-lib \
-            packages/vue-lib
+            --ignore-packages @m2s2/models,@m2s2/tokens
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NPM_CONFIG_PROVENANCE: 'true'
