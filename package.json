@@ -20,6 +20,9 @@
     "build:storybook": "STORYBOOK_ANGULAR_URL=/angular STORYBOOK_REACT_URL=/react STORYBOOK_VUE_URL=/vue storybook build --config-dir .storybook -o dist/storybook && turbo run build:storybook",
     "prepare": "husky"
   },
+  "multirelease": {
+    "sequentialPrepare": true
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
