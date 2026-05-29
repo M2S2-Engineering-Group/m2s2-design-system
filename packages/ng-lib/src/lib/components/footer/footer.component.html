@@ -44,8 +44,8 @@
         }
       }
     </nav>
+    @if (config().buildVersion) {
+      <span class="footer-build">{{ config().buildVersion!.split('+')[0] }}</span>
+    }
   </div>
-  @if (config().buildVersion) {
-    <div class="footer-build">{{ config().buildVersion }}</div>
-  }
 </footer>

@@ -41,10 +41,13 @@
 .social-icon { @include m.social-icon; }
 
 .footer-build {
-  text-align: center;
-  padding-bottom: var(--space-2);
-  font-size: 0.65rem;
+  display: none;
+  font-size: 0.6rem;
   font-family: monospace;
   letter-spacing: 0.04em;
-  opacity: 0.35;
+  opacity: 0.3;
+
+  @media (min-width: 576px) {
+    display: block;
+  }
 }
