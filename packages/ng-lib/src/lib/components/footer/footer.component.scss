@@ -39,3 +39,12 @@
 
 .social-link { @include m.social-link; }
 .social-icon { @include m.social-icon; }
+
+.footer-build {
+  text-align: center;
+  padding-bottom: var(--space-2);
+  font-size: 0.65rem;
+  font-family: monospace;
+  letter-spacing: 0.04em;
+  opacity: 0.35;
+}

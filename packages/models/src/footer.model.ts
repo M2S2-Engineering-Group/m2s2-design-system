@@ -12,4 +12,6 @@ export interface FooterConfig {
   /** Shown in the copyright line: © {year} {brandName} — All Rights Reserved */
   brandName: string;
   links: FooterSocialLink[];
+  /** Optional build version shown as a dim stamp in the footer */
+  buildVersion?: string;
 }

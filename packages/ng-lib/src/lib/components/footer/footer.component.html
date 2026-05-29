@@ -45,4 +45,7 @@
       }
     </nav>
   </div>
+  @if (config().buildVersion) {
+    <div class="footer-build">{{ config().buildVersion }}</div>
+  }
 </footer>
