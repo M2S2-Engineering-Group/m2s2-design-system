@@ -1,0 +1,9 @@
+// =============================================================================
+// BRAND FONTS
+// =============================================================================
+// Inter (body) + Sora (headings) via Google Fonts.
+// This @import is a CSS passthrough — SCSS emits it as-is to the compiled CSS.
+// =============================================================================
+
+// stylelint-disable-next-line import-notation
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700&display=swap');

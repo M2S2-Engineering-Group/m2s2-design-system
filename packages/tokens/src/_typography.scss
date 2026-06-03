@@ -8,8 +8,8 @@
 
 :root {
   // Font families — override to retheme typography
-  --font-family-base:    Roboto, "Helvetica Neue", sans-serif;
-  --font-family-heading: var(--font-family-base);
+  --font-family-base:    'Inter', "Helvetica Neue", sans-serif;
+  --font-family-heading: 'Sora', sans-serif;
   --font-family-mono:    "JetBrains Mono", "Fira Code", monospace;
 
   // Type scale (rem — relative to browser root, typically 16px)

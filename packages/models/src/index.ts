@@ -11,3 +11,4 @@ export * from './process-steps.model';
 export * from './section-header.model';
 export * from './stat-row.model';
 export * from './status-badge.model';
+export * from './chat.model';

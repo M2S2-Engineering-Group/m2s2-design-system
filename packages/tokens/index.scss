@@ -12,6 +12,7 @@
 // :root { } block with the tokens you want to change. See brand-override.scss.
 // =============================================================================
 
+@use 'src/fonts';
 @use 'src/primitives';
 @use 'src/colors';
 @use 'src/typography';

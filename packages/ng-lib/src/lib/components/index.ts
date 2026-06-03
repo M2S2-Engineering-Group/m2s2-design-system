@@ -12,3 +12,4 @@ export * from './stat-row';
 export * from './status-badge';
 export * from './panel';
 export * from './subscribe-form';
+export * from './chat';

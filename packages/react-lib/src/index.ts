@@ -1,3 +1,4 @@
+export { Chat } from './components/Chat/Chat';
 export { M2S2Provider } from './components/M2S2Provider/M2S2Provider';
 export { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 export { useTheme } from './hooks/useTheme';
@@ -47,6 +48,7 @@ export type {
   CardVariant,
   FeatureCardConfig,
   BlogCardConfig,
+  ChatMessage,
 } from '@m2s2/models';
 
 export { STATUS_LABELS } from '@m2s2/models';

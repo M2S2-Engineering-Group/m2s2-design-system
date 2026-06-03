@@ -1,3 +1,4 @@
+export { default as Chat } from './components/Chat/Chat.vue';
 export { default as SectionHeader } from './components/SectionHeader/SectionHeader.vue';
 export { default as StatRow } from './components/StatRow/StatRow.vue';
 export { default as StatusBadge } from './components/StatusBadge/StatusBadge.vue';

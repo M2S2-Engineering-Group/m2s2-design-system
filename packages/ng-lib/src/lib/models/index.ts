@@ -11,3 +11,4 @@ export * from './process-steps';
 export * from './section-header';
 export * from './stat-row';
 export * from './status-badge';
+export * from './chat';
