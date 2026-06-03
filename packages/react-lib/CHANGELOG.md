@@ -4,6 +4,19 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/react-lib [2.1.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.0.0...@m2s2/react-lib@2.1.0) (2026-06-03)
+
+
+### Features
+
+* adding chat component for all libs and update font families ([cf61b05](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/cf61b0560280fd07e27b5de66db9472f5281a3c2))
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.2.0
+* **@m2s2/tokens:** upgraded to 2.1.0
+
 # [2.0.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/react-lib-v1.1.1...react-lib-v2.0.0) (2026-05-22)
 
 
