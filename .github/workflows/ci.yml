@@ -174,7 +174,7 @@ jobs:
         run: git fetch --tags
 
       - name: Release
-        run: NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release --ignore-private-packages --sequential-prepare
+        run: NPM_TOKEN="$NODE_AUTH_TOKEN" npx multi-semantic-release --ignore-private-packages --sequential-prepare --deps.bump=patch
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NPM_CONFIG_PROVENANCE: 'true'
