@@ -5,7 +5,6 @@ import {
   inject,
   Input,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -32,7 +31,8 @@ import { M2S2_AUTH_PROVIDER } from '../../services/auth/auth.provider';
     DropdownItemComponent,
   ],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnDestroy {
+  private static readonly SCROLL_THRESHOLD = 80;
   @Input() public navbarConfig: NgNavbarConfig = {
     brand: 'Brand',
     brandRouterOutlet: '',
@@ -47,8 +47,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private readonly authProvider = inject(M2S2_AUTH_PROVIDER, { optional: true });
   private readonly changeDetRef = inject(ChangeDetectorRef);
   private readonly loggedInSubscription: Subscription;
-  private sentinel: HTMLElement | null = null;
-  private observer: IntersectionObserver | null = null;
   private lastScrollY = 0;
 
   constructor() {
@@ -63,27 +61,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  public ngOnInit(): void {
-    this.sentinel = document.createElement('div');
-    this.sentinel.style.cssText =
-      'position:absolute;top:15vh;height:1px;width:1px;pointer-events:none;';
-    document.body.insertBefore(this.sentinel, document.body.firstChild);
-
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        this.isScrolled = !entry.isIntersecting;
-        this.changeDetRef.detectChanges();
-      },
-      { threshold: 0 }
-    );
-    this.observer.observe(this.sentinel);
-  }
-
   @HostListener('window:scroll')
   public onWindowScroll(): void {
     const currentY = window.scrollY;
     const delta = currentY - this.lastScrollY;
-    if (currentY < 80) {
+    this.isScrolled = currentY > NavbarComponent.SCROLL_THRESHOLD;
+    if (currentY < NavbarComponent.SCROLL_THRESHOLD) {
       this.isHidden = false;
     } else if (delta > 4) {
       this.isHidden = true;
@@ -96,8 +79,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.loggedInSubscription.unsubscribe();
-    this.observer?.disconnect();
-    this.sentinel?.remove();
   }
 
   public get navButtons(): NgNavbarButton[] {
