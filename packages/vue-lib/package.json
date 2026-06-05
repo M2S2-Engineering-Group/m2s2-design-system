@@ -42,6 +42,9 @@
     "storybook": "storybook dev -p 6010",
     "build:storybook": "storybook build -o ../../dist/storybook/vue"
   },
+  "dependencies": {
+    "marked": "^17.0.0"
+  },
   "peerDependencies": {
     "@m2s2/models": "2.2.0",
     "@m2s2/tokens": "2.1.0",

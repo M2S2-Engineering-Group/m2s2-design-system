@@ -20,6 +20,8 @@ export { DataTable } from './components/DataTable/DataTable';
 export { Navbar } from './components/Navbar/Navbar';
 export { BaseCard } from './components/cards/BaseCard/BaseCard';
 export { BlogCard } from './components/cards/BlogCard/BlogCard';
+export { BlogEditor } from './components/BlogEditor/BlogEditor';
+export type { BlogEditorProps } from './components/BlogEditor/BlogEditor';
 export { FeatureCard } from './components/cards/FeatureCard/FeatureCard';
 
 // Re-export shared models consumed by this library's components
@@ -48,6 +50,8 @@ export type {
   CardVariant,
   FeatureCardConfig,
   BlogCardConfig,
+  BlogPost,
+  BlogDraft,
   ChatMessage,
 } from '@m2s2/models';
 

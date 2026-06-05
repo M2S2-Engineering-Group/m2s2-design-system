@@ -1,0 +1,155 @@
+<div class="be-root">
+
+  <!-- ── Metadata ───────────────────────────────────────────────────────────── -->
+  <section class="be-meta">
+
+    <div class="be-field be-field--full">
+      <label class="be-label">Title <span class="be-required">*</span></label>
+      <input
+        class="be-input"
+        type="text"
+        [ngModel]="title()"
+        (ngModelChange)="onTitleChange($event)"
+        placeholder="Post title…"
+      />
+    </div>
+
+    <div class="be-field">
+      <label class="be-label">Slug</label>
+      <input
+        class="be-input"
+        type="text"
+        [ngModel]="slug()"
+        (ngModelChange)="slug.set($event); slugEdited = true"
+        placeholder="post-slug"
+      />
+    </div>
+
+    <div class="be-field">
+      <label class="be-label">Date</label>
+      <input
+        class="be-input"
+        type="date"
+        [ngModel]="date()"
+        (ngModelChange)="date.set($event)"
+      />
+    </div>
+
+    <div class="be-field be-field--full">
+      <label class="be-label">Summary <span class="be-required">*</span></label>
+      <textarea
+        class="be-input be-input--textarea"
+        rows="2"
+        [ngModel]="summary()"
+        (ngModelChange)="summary.set($event)"
+        placeholder="Short description shown in blog listings…"
+      ></textarea>
+    </div>
+
+    <div class="be-field be-field--full">
+      <label class="be-label">Excerpt <span class="be-optional">(optional)</span></label>
+      <textarea
+        class="be-input be-input--textarea"
+        rows="2"
+        [ngModel]="excerpt()"
+        (ngModelChange)="excerpt.set($event)"
+        placeholder="Longer teaser for social previews…"
+      ></textarea>
+    </div>
+
+    <div class="be-field">
+      <label class="be-label">Tags</label>
+      <div class="be-tags">
+        @for (tag of tags(); track tag) {
+          <span class="be-tag">
+            {{ tag }}
+            <button type="button" class="be-tag__remove" (click)="removeTag(tag)" aria-label="Remove tag">×</button>
+          </span>
+        }
+        <input
+          class="be-tag-input"
+          type="text"
+          [(ngModel)]="tagInput"
+          (keydown)="onTagKeydown($event)"
+          placeholder="Add tag, press Enter…"
+        />
+      </div>
+    </div>
+
+    <div class="be-field">
+      <label class="be-label">Reading time (min)</label>
+      <input
+        class="be-input be-input--narrow"
+        type="number"
+        min="1"
+        [ngModel]="readingTime()"
+        (ngModelChange)="readingTime.set(+$event)"
+      />
+    </div>
+
+    <div class="be-field be-field--cover">
+      <label class="be-label">Cover Image</label>
+      <div class="be-cover">
+        @if (coverPreviewUrl() || coverImageUrl()) {
+          <img
+            class="be-cover__preview"
+            [src]="coverPreviewUrl() ?? coverImageUrl()"
+            alt="Cover preview"
+          />
+        }
+        <label class="be-cover__pick">
+          {{ (coverPreviewUrl() || coverImageUrl()) ? 'Replace' : 'Choose image' }}
+          <input type="file" accept="image/*" (change)="onCoverChange($event)" hidden />
+        </label>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── Editor ─────────────────────────────────────────────────────────────── -->
+  <section class="be-editor">
+
+    <div class="be-toolbar" role="toolbar" aria-label="Formatting">
+      @for (item of toolbarItems; track item.label) {
+        <button
+          type="button"
+          class="be-toolbar__btn"
+          [title]="item.label"
+          (click)="applyFormat(item)"
+        >{{ item.icon }}</button>
+      }
+    </div>
+
+    <div class="be-panes">
+      <div class="be-pane be-pane--write">
+        <div class="be-pane__label">Markdown</div>
+        <textarea
+          #editorTextarea
+          class="be-pane__textarea"
+          [ngModel]="content()"
+          (ngModelChange)="onContentChange($event)"
+          placeholder="Write your post in markdown…"
+          spellcheck="true"
+        ></textarea>
+      </div>
+
+      <div class="be-pane be-pane--preview">
+        <div class="be-pane__label">Preview</div>
+        <div class="be-pane__preview prose" [innerHTML]="renderedContent()"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+  <footer class="be-footer">
+    <span class="be-footer__meta">~{{ readingTime() }} min read</span>
+    <button
+      type="button"
+      class="be-publish"
+      [disabled]="!canPublish()"
+      (click)="onPublish()"
+    >Publish Post</button>
+  </footer>
+
+</div>

@@ -15,6 +15,7 @@ export interface BlogCardConfig {
   /** ISO 8601 date string */
   date: string;
   summary: string;
+  excerpt?: string;
   tags: string[];
   coverImage?: string;
   readingTime?: number;

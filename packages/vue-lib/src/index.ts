@@ -10,6 +10,7 @@ export { default as Navbar } from './components/Navbar/Navbar.vue';
 export { default as BaseCard } from './components/cards/BaseCard/BaseCard.vue';
 export { default as FeatureCard } from './components/cards/FeatureCard/FeatureCard.vue';
 export { default as BlogCard } from './components/cards/BlogCard/BlogCard.vue';
+export { default as BlogEditor } from './components/BlogEditor/BlogEditor.vue';
 export { default as DataTable } from './components/DataTable/DataTable.vue';
 export { default as SubscribeForm } from './components/SubscribeForm/SubscribeForm.vue';
 export { default as Dialog } from './components/Dialog/Dialog.vue';
