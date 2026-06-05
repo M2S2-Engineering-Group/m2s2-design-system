@@ -28,10 +28,10 @@
     "build:storybook": "cd ../.. && ng run m2s2-ng-lib:build-storybook"
   },
   "dependencies": {
-    "marked": "^17.0.0",
     "tslib": "~2.3.1"
   },
   "peerDependencies": {
+    "marked": "^17.0.0",
     "@angular/animations": "^21.0.0",
     "@angular/cdk": "^21.0.0",
     "@angular/common": "^21.0.0",
