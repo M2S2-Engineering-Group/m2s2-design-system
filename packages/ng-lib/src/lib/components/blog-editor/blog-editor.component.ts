@@ -72,7 +72,7 @@ export class BlogEditorComponent {
   readonly coverPreviewUrl = signal<string | undefined>(undefined);
 
   tagInput = '';
-  private slugEdited = false;
+  slugEdited = false;
 
   private readonly sanitizer = inject(DomSanitizer);
 
