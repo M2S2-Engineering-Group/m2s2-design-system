@@ -4,6 +4,18 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/react-lib [2.2.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.1.0...@m2s2/react-lib@2.2.0) (2026-06-05)
+
+
+### Features
+
+* adding blog editor ([fa7c69c](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/fa7c69caf3d5fecd1226d8c982709bdfb9852a1c))
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.3.0
+
 # @m2s2/react-lib [2.1.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.0.0...@m2s2/react-lib@2.1.0) (2026-06-03)
 
 
