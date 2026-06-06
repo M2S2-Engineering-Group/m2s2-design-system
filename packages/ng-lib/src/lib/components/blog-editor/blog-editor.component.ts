@@ -70,6 +70,7 @@ export class BlogEditorComponent {
   readonly readingTime = signal(1);
   readonly content     = signal('');
   readonly coverPreviewUrl = signal<string | undefined>(undefined);
+  readonly activePane      = signal<'write' | 'preview'>('write');
 
   tagInput = '';
   slugEdited = false;

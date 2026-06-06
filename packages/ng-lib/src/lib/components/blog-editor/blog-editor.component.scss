@@ -21,7 +21,11 @@
   padding: var(--space-6);
   border-bottom: 1px solid var(--color-border);
 
-  @media (max-width: 640px) { grid-template-columns: 1fr; }
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
 }
 
 .be-field {
@@ -53,6 +57,7 @@
   }
 
   &--narrow { width: 100px; }
+  &--date   { max-width: 180px; }
 }
 
 // ── Tags ──────────────────────────────────────────────────────────────────────
@@ -144,13 +149,26 @@
 
 .be-toolbar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface-raised);
   flex-shrink: 0;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+  }
+}
+
+.be-toolbar__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
 }
 
 .be-toolbar__btn {
@@ -159,6 +177,46 @@
   font-weight: var(--font-weight-semibold);
   font-family: var(--font-mono, monospace);
   border-radius: var(--radius-sm);
+
+  @media (max-width: 768px) {
+    @include m.btn-icon(38px);
+    font-size: var(--font-size-sm);
+  }
+}
+
+// ── Mobile pane toggle ────────────────────────────────────────────────────────
+
+.be-pane-toggle {
+  display: none; // desktop: hidden — split pane handles this
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+}
+
+.be-pane-toggle__btn {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  background: transparent;
+  border: none;
+  color: var(--color-on-surface-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  & + & {
+    border-left: 1px solid var(--color-border);
+  }
+
+  &--active {
+    background: var(--color-primary);
+    color: #fff;
+  }
 }
 
 // ── Split panes ───────────────────────────────────────────────────────────────
@@ -183,7 +241,13 @@
 
     @media (max-width: 768px) {
       border-right: none;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: none;
+    }
+  }
+
+  &--hidden {
+    @media (max-width: 768px) {
+      display: none;
     }
   }
 }

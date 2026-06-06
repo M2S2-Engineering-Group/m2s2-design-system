@@ -28,7 +28,7 @@
     <div class="be-field">
       <label class="be-label">Date</label>
       <input
-        class="be-input"
+        class="be-input be-input--date"
         type="date"
         [ngModel]="date()"
         (ngModelChange)="date.set($event)"
@@ -110,18 +110,36 @@
   <section class="be-editor">
 
     <div class="be-toolbar" role="toolbar" aria-label="Formatting">
-      @for (item of toolbarItems; track item.label) {
+      <!-- Mobile pane toggle — hidden on desktop via CSS -->
+      <div class="be-pane-toggle" role="group" aria-label="Editor mode">
         <button
           type="button"
-          class="be-toolbar__btn"
-          [title]="item.label"
-          (click)="applyFormat(item)"
-        >{{ item.icon }}</button>
-      }
+          class="be-pane-toggle__btn"
+          [class.be-pane-toggle__btn--active]="activePane() === 'write'"
+          (click)="activePane.set('write')"
+        >Write</button>
+        <button
+          type="button"
+          class="be-pane-toggle__btn"
+          [class.be-pane-toggle__btn--active]="activePane() === 'preview'"
+          (click)="activePane.set('preview')"
+        >Preview</button>
+      </div>
+
+      <div class="be-toolbar__tools">
+        @for (item of toolbarItems; track item.label) {
+          <button
+            type="button"
+            class="be-toolbar__btn"
+            [title]="item.label"
+            (click)="applyFormat(item)"
+          >{{ item.icon }}</button>
+        }
+      </div>
     </div>
 
     <div class="be-panes">
-      <div class="be-pane be-pane--write">
+      <div class="be-pane be-pane--write" [class.be-pane--hidden]="activePane() === 'preview'">
         <div class="be-pane__label">Markdown</div>
         <textarea
           #editorTextarea
@@ -133,7 +151,7 @@
         ></textarea>
       </div>
 
-      <div class="be-pane be-pane--preview">
+      <div class="be-pane be-pane--preview" [class.be-pane--hidden]="activePane() === 'write'">
         <div class="be-pane__label">Preview</div>
         <div class="be-pane__preview prose" [innerHTML]="renderedContent()"></div>
       </div>
