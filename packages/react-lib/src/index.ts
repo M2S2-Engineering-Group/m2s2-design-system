@@ -22,6 +22,8 @@ export { BaseCard } from './components/cards/BaseCard/BaseCard';
 export { BlogCard } from './components/cards/BlogCard/BlogCard';
 export { BlogEditor } from './components/BlogEditor/BlogEditor';
 export type { BlogEditorProps } from './components/BlogEditor/BlogEditor';
+export { LoadingButton } from './components/LoadingButton/LoadingButton';
+export type { LoadingButtonProps } from './components/LoadingButton/LoadingButton';
 export { FeatureCard } from './components/cards/FeatureCard/FeatureCard';
 
 // Re-export shared models consumed by this library's components

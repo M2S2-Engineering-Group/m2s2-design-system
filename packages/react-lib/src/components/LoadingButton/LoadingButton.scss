@@ -1,0 +1,5 @@
+@use 'packages/tokens/src/mixins' as m;
+
+@include m.btn-spinner-keyframes;
+
+.m2s2-btn-spinner { @include m.btn-spinner; }

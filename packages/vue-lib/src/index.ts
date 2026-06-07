@@ -15,3 +15,4 @@ export { default as DataTable } from './components/DataTable/DataTable.vue';
 export { default as SubscribeForm } from './components/SubscribeForm/SubscribeForm.vue';
 export { default as Dialog } from './components/Dialog/Dialog.vue';
 export { default as Panel } from './components/Panel/Panel.vue';
+export { default as LoadingButton } from './components/LoadingButton/LoadingButton.vue';

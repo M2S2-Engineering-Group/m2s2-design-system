@@ -29,6 +29,7 @@ export class ChatComponent {
   ctaUrl             = input('/contact');
   userAvatarUrl      = input<string>();
   assistantAvatarUrl = input<string>();
+  welcomeMessage     = input<string>();
 
   readonly open      = signal(false);
   readonly messages  = signal<ChatMessage[]>([]);
@@ -42,6 +43,12 @@ export class ChatComponent {
   @ViewChild('messageList') private messageList?: ElementRef<HTMLElement>;
 
   toggle(): void {
+    if (!this.open() && this.messages().length === 0) {
+      const welcome = this.welcomeMessage();
+      if (welcome) {
+        this.messages.set([{ role: 'assistant', content: welcome }]);
+      }
+    }
     this.open.update(v => !v);
   }
 
