@@ -335,3 +335,23 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           repository: M2S2-Engineering-Group/m2s2-cli
           event-type: m2s2-libs-released
+
+  # ── Notify platform when libraries are released ───────────────────────────
+  notify-platform:
+    name: Notify m2s2-platform of new releases
+    needs: [release]
+    if: always() && github.ref == 'refs/heads/main' && needs.release.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          repositories: m2s2-platform
+      - name: Dispatch deps-sync to m2s2-platform
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          repository: M2S2-Engineering-Group/m2s2-platform
+          event-type: m2s2-libs-released
