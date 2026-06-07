@@ -60,7 +60,7 @@ class InteractiveDemoComponent {
   }
 }
 
-// ── Static loading state (for args-driven stories) ────────────────────────────
+// ── Static loading state ──────────────────────────────────────────────────────
 @Component({
   selector: 'sb-loading-static',
   standalone: true,
@@ -90,9 +90,10 @@ class InteractiveDemoComponent {
 class StaticDemoComponent {}
 
 // ── Meta ──────────────────────────────────────────────────────────────────────
-const meta: Meta = {
-  title: 'Directives/Loading',
-  tags: ['autodocs'],
+const meta: Meta<StaticDemoComponent> = {
+  title:     'Directives/Loading',
+  component: StaticDemoComponent,
+  tags:      ['autodocs'],
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -118,16 +119,18 @@ The directive:
   },
 };
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<StaticDemoComponent>;
 
 export const States: Story = {
   name: 'All States',
-  render: () => ({ component: StaticDemoComponent }),
 };
 
 export const Interactive: Story = {
   name: 'Interactive Demo',
-  render: () => ({ component: InteractiveDemoComponent }),
+  render: () => ({
+    template: '<sb-loading-interactive />',
+    moduleMetadata: { imports: [InteractiveDemoComponent] },
+  }),
   parameters: {
     docs: {
       description: {
