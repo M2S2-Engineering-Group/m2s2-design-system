@@ -57,6 +57,9 @@
 }
 
 .bc-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   margin-bottom: var(--space-2);
 
   time {
@@ -64,6 +67,16 @@
     color: var(--color-on-surface-muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+}
+
+.bc-reading-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+
+  &::before {
+    content: '·';
+    margin-right: var(--space-2);
   }
 }
 
