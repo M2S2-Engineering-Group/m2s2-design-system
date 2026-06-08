@@ -4,6 +4,13 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/tokens [2.2.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.2.0...@m2s2/tokens@2.2.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* status badges should not stretch to container width ([a4bfe9b](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/a4bfe9b992af5a16b26c2f2db02ed4dc8f9d5cb7))
+
 # @m2s2/tokens [2.2.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.1.0...@m2s2/tokens@2.2.0) (2026-06-07)
 
 
