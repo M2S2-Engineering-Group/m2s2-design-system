@@ -4,6 +4,13 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.4.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.4.0...@m2s2/ng-lib@2.4.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* **ng-lib:** add spacing to blog card text ([bc04509](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/bc04509ce2cf7ff94099af336042126c518652e4))
+
 # @m2s2/ng-lib [2.4.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.3.1...@m2s2/ng-lib@2.4.0) (2026-06-07)
 
 
