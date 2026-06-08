@@ -4,6 +4,13 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.4.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.4.1...@m2s2/ng-lib@2.4.2) (2026-06-08)
+
+
+### Dependencies
+
+* **@m2s2/tokens:** upgraded to 2.2.1
+
 ## @m2s2/ng-lib [2.4.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.4.0...@m2s2/ng-lib@2.4.1) (2026-06-08)
 
 
