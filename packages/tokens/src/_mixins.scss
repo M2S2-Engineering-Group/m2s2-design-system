@@ -253,6 +253,7 @@
 
 @mixin status-badge-chrome {
   display: inline-block;
+  width: fit-content;
   padding: 2px var(--space-2);
   border-radius: 4px;
   font-size: var(--font-size-xs);
