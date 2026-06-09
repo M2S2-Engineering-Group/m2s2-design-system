@@ -1,147 +1,200 @@
-# @m2s2/react-lib — Implementation Plan
+# M²S² Design System — Execution Plan
 
-## Decisions
+## Overview
 
-| Decision | Choice |
-|----------|--------|
-| Routing | React Router v7 |
-| Auth | Peer dependency — consumers bring `aws-amplify` |
-| Styling | Plain SCSS + BEM (same as Angular side) |
-| Execution order | Components → Infrastructure |
+Multi-framework design system for the M²S² Engineering Group. All three framework libraries
+(`@m2s2/ng-lib`, `@m2s2/react-lib`, `@m2s2/vue-lib`) must stay **in parity** — no component
+is added to one library without being added to all three.
 
----
+**Packages**:
+- `@m2s2/tokens` — SCSS design tokens (colors, spacing, typography, transitions)
+- `@m2s2/models` — shared TypeScript interfaces consumed by all three libraries
+- `@m2s2/ng-lib` — Angular component library
+- `@m2s2/react-lib` — React component library
+- `@m2s2/vue-lib` — Vue component library
+- `storybook-shared` — shared Storybook setup
 
-## Phase 1 — Minimal Build Setup
-
-Get the package building before writing any components.
-
-- [x] `vite.config.ts` — library mode, ESM + CJS output, SCSS support
-- [x] `tsconfig.json` — strict, JSX, path aliases
-- [x] `package.json` — `main`, `module`, `types`, `exports`, `build` script
-- [x] `sass` dev dep + Vite `css.preprocessorOptions` with `@m2s2/tokens` include path
-- [x] `src/index.ts` — barrel file
-- [x] `src/styles/tokens.scss` — single `@use '@m2s2/tokens'` import for consumers
-
-**Verify:** `npm run build --workspace=packages/react-lib` produces `dist/` ✅
+**Repo**: `M2S2-Engineering-Group/m2s2-design-system`
+**Release**: `multi-semantic-release` — coordinated versioning across packages
 
 ---
 
-## Phase 2 — Components (simple → complex)
+## Component Parity Matrix
 
-Each component ships with: `.tsx`, `.scss` (BEM), `.stories.tsx`
+The Angular library (`ng-lib`) is the reference implementation. React and Vue must match it.
 
-Angular → React adapter rules:
-- `@Input()` / `input()` → props
-- `@Output()` / `output()` → callback props (`onChange`, `onFilter`, etc.)
-- Config object interfaces kept as-is, re-exported from `src/types/`
-- `Observable<T>` callbacks (SubscribeForm) → `Promise<T>` or async functions
-- Angular Material overlays → Radix UI primitives
-- `routerLink` → React Router `<Link>` / `useNavigate`
+| Component / Feature        | ng-lib | react-lib | vue-lib |
+|----------------------------|--------|-----------|---------|
+| StatusBadge                | ✅     | ✅        | ✅      |
+| PageHeader                 | ✅     | ✅        | ✅      |
+| SectionHeader              | ✅     | ✅        | ✅      |
+| StatRow                    | ✅     | ✅        | ✅      |
+| ProcessSteps               | ✅     | ✅        | ✅      |
+| Footer                     | ✅     | ✅        | ✅      |
+| BaseCard                   | ✅     | ✅        | ✅      |
+| BlogCard                   | ✅     | ✅        | ✅      |
+| FeatureCard                | ✅     | ✅        | ✅      |
+| CtaSection                 | ✅     | ✅        | ✅      |
+| SubscribeForm              | ✅     | ✅        | ✅      |
+| DataTable                  | ✅     | ✅        | ✅      |
+| Navbar                     | ✅     | ✅        | ✅      |
+| Dialog + service/hook      | ✅     | ✅        | ✅      |
+| Panel + service/hook       | ✅     | ✅        | ✅      |
+| Chat                       | ✅     | ✅        | ✅      |
+| BlogEditor                 | ✅     | ✅        | ✅      |
+| LoadingButton              | ❌     | ✅        | ✅      |
+| Dropdown                   | ✅     | ❌        | ❌      |
+| ThemeProvider / useTheme   | ✅ *   | ✅        | ❌      |
+| M2S2Provider / plugin      | ✅ *   | ✅        | ❌      |
+| Auth token / useAuth       | ✅ **  | ❌        | ❌      |
 
-### Display-only components
-
-- [x] `StatusBadge` — status string + optional label + badge/pill variant
-- [x] `PageHeader` — title + subtitle
-- [x] `SectionHeader` — config object
-- [x] `StatRow` — array of `StatItem`
-- [x] `ProcessSteps` — array of `ProcessStep` (num, name, desc)
-
-### Layout / structural components
-
-- [x] `Footer` — config object + social links (github, linkedin, twitter, email)
-- [x] `BaseCard` — featured boolean + variant prop + `children` slot
-- [x] `BlogCard` — extends BaseCard
-- [x] `FeatureCard` — extends BaseCard
-
-### Interactive components
-
-- [ ] `CtaSection` — title, body, label, route (internal → `<Link>`, external → `<a>`)
-- [ ] `SubscribeForm` — anon/auth modes, async callbacks, loading/error/done states
-- [ ] `DataTable` — search, status filter, column visibility toggle, resize directive
-
-### Complex / service-backed components
-
-- [ ] `Navbar` — scroll detection, fixed/sticky, desktop + mobile menu, auth-aware, dropdowns
-  - Uses Radix `DropdownMenu` for nav dropdowns
-  - `onLogin` / `onLogout` callback props (no built-in auth)
-  - `loggedIn` boolean prop (consumer controls auth state)
-- [ ] `Dialog` + `useDialog()` hook
-  - Radix `Dialog` primitive
-  - `DialogProvider` wraps app, `useDialog()` exposes `open()`, `confirm()`, `close()`
-  - Matches `M2S2DialogService` API surface: `dialog(data)`, `confirm(title, msg)`, `open(component)`
-- [ ] `Panel` + `usePanel()` hook
-  - Radix `Dialog` (sheet variant) for slide-in panel
-  - Left or right positioning via prop
-  - `PanelProvider` + `usePanel()` hook matching `M2S2PanelService`
-
-### Providers & hooks
-
-- [ ] `ThemeProvider` — sets `data-theme` attribute, exports `useTheme()` for runtime switching
-- [ ] `useAuth()` — thin hook wrapping AWS Amplify (peer dep); exposes `{ user, loggedIn, signOut }`
-- [ ] `M2S2Provider` — single wrapper composing `ThemeProvider`, `DialogProvider`, `PanelProvider`
+\* Angular uses DI (services + tokens), not a wrapper component  
+\** Angular exposes `M2S2_AUTH_PROVIDER` injection token + `M2S2AuthProvider` interface
 
 ---
 
-## Phase 3 — Exports & Types
+## Parity Gaps to Close
 
-- [ ] Finalize `src/index.ts` — all components, hooks, providers, types
-- [ ] `src/types/index.ts` — all shared interfaces (NavbarConfig, FooterConfig, etc.)
-- [ ] Verify tree-shaking — no accidental side effects in barrel
+### ng-lib
+- [ ] `LoadingButton` component
 
----
+### react-lib
+- [ ] `Dropdown` component (Radix `DropdownMenu` primitive, matches ng `DropdownItem` API)
+- [ ] `useAuth` hook — thin wrapper over AWS Amplify peer dep; mirrors `M2S2_AUTH_PROVIDER` interface
 
-## Phase 4 — Infrastructure
-
-- [ ] `release.config.js` — semantic-release, tag format `react-lib-v{version}`, pkgRoot `dist/`
-- [ ] CI job in `.github/workflows/ci.yml` — build + test + release for `react-lib`
-- [ ] Vitest config (`vitest.config.ts`) — jsdom environment, coverage
-- [ ] Storybook `preview.ts` — import tokens SCSS, `ThemeProvider` decorator, dark/light toolbar toggle ✅ (partial — tokens imported)
-
----
-
-## Phase 5 — Storybook Polish
-
-- [ ] Story per variant/state for every component
-- [ ] Storybook toolbar: theme toggle (dark/light)
-- [ ] Verify root Storybook refs still work (port 6007)
+### vue-lib
+- [ ] `ThemeProvider` / `useTheme` composable — sets `data-theme` attribute, persists in `localStorage`
+- [ ] `createM2S2()` Vue plugin — single `app.use()` call that installs all providers/plugins
+- [ ] `useAuth` composable — mirrors React `useAuth` and Angular `M2S2_AUTH_PROVIDER`
+- [ ] `Dropdown` / `DropdownItem` component
 
 ---
 
-## New Dependencies
+## Packages
 
-| Package | Purpose |
-|---------|---------|
-| `@radix-ui/react-dialog` | Dialog + Panel |
-| `@radix-ui/react-dropdown-menu` | Navbar dropdowns |
-| `@radix-ui/react-visually-hidden` | Accessibility |
-| `sass` | SCSS compilation |
-| `vitest` | Unit tests |
-| `@testing-library/react` | Component tests |
-| `react-router` v7 | Routing in Navbar, CtaSection |
+### `@m2s2/tokens` ✅
+SCSS design token partials consumed by all three libraries and the platform.
+No JS/TS exports — SCSS only.
 
-Peer deps to add: `aws-amplify`, `react-router`
+### `@m2s2/models` ✅
+Shared TypeScript interfaces for all component configs. All three libraries import from here;
+no model duplication across packages.
+
+- [x] `card.model`, `cta.model`, `data-table.model`, `dialog.model`, `dropdown.model`
+- [x] `footer.model`, `navbar.model`, `page-header.model`, `panel.model`, `process-steps.model`
+- [x] `section-header.model`, `stat-row.model`, `status-badge.model`, `chat.model`, `blog.model`
 
 ---
 
-## Component Status
+### `@m2s2/ng-lib` ✅ (minus LoadingButton)
 
-| Component | Built | Stories | Tests |
-|-----------|-------|---------|-------|
-| StatusBadge | ✅ | ✅ | |
-| PageHeader | ✅ | ✅ | |
-| SectionHeader | ✅ | ✅ | |
-| StatRow | ✅ | ✅ | |
-| ProcessSteps | ✅ | ✅ | |
-| Footer | ✅ | ✅ | |
-| BaseCard | ✅ | ✅ | |
-| BlogCard | ✅ | ✅ | |
-| FeatureCard | ✅ | ✅ | |
-| CtaSection | | | |
-| SubscribeForm | | | |
-| DataTable | | | |
-| Navbar | | | |
-| Dialog + useDialog | | | |
-| Panel + usePanel | | | |
-| ThemeProvider + useTheme | | | |
-| useAuth | | | |
-| M2S2Provider | | | |
+Angular component library. Uses Angular DI for service-backed features (Dialog, Panel, Auth).
+
+**Components** (all with Storybook stories):
+- [x] StatusBadge, PageHeader, SectionHeader, StatRow, ProcessSteps
+- [x] Footer, BaseCard, BlogCard, FeatureCard, CtaSection
+- [x] SubscribeForm, DataTable, Navbar, Dropdown + DropdownItem
+- [x] Dialog + `M2S2DialogService`, Panel + `M2S2PanelService`
+- [x] Chat, BlogEditor
+- [ ] LoadingButton
+
+**Directives**: `loading`, `resizable-col`
+**Services**: `M2S2DialogService`, `M2S2PanelService`, `M2S2_AUTH_PROVIDER` token
+
+---
+
+### `@m2s2/react-lib` ✅ (minus Dropdown, useAuth)
+
+React component library. Uses React context + hooks for service-backed features.
+
+**Components**:
+- [x] StatusBadge, PageHeader, SectionHeader, StatRow, ProcessSteps
+- [x] Footer, BaseCard, BlogCard, FeatureCard, CtaSection
+- [x] SubscribeForm, DataTable, Navbar
+- [x] DialogProvider + `useDialog`, PanelProvider + `usePanel`
+- [x] Chat, BlogEditor, LoadingButton
+- [x] ThemeProvider + `useTheme`
+- [x] M2S2Provider (composes ThemeProvider + DialogProvider + PanelProvider)
+- [ ] Dropdown + DropdownItem
+- [ ] `useAuth` hook
+
+---
+
+### `@m2s2/vue-lib` ✅ (minus ThemeProvider, plugin, useAuth, Dropdown)
+
+Vue 3 component library. Uses composables (Vue Composition API) for service-backed features.
+
+**Components**:
+- [x] StatusBadge, PageHeader, SectionHeader, StatRow, ProcessSteps
+- [x] Footer, BaseCard, BlogCard, FeatureCard, CtaSection
+- [x] SubscribeForm, DataTable, Navbar
+- [x] Dialog + DialogProvider + `useDialog`, Panel + `usePanel`
+- [x] Chat, BlogEditor, LoadingButton
+- [ ] ThemeProvider / `useTheme` composable
+- [ ] `createM2S2()` Vue plugin
+- [ ] `useAuth` composable
+- [ ] Dropdown + DropdownItem
+
+---
+
+## Phase 1 — Close Parity Gaps
+
+Goal: All three libraries export the same component and service surface.
+
+- [ ] **ng-lib**: Add `LoadingButton` component + story
+- [ ] **react-lib**: Add `Dropdown` + `DropdownItem` (Radix `DropdownMenu`)
+- [ ] **react-lib**: Add `useAuth` hook (Amplify peer dep, matches `M2S2AuthProvider` interface)
+- [ ] **vue-lib**: Add `useTheme` composable + `ThemeProvider` wrapper component
+- [ ] **vue-lib**: Add `createM2S2()` plugin (`app.use(createM2S2())` installs theme + dialog + panel)
+- [ ] **vue-lib**: Add `useAuth` composable (Amplify peer dep)
+- [ ] **vue-lib**: Add `Dropdown` + `DropdownItem` components
+- [ ] **models**: Verify `SubscribeForm` props are covered; add any missing model files
+
+---
+
+## Phase 2 — Test Coverage
+
+Each component in each library needs a test file.
+
+**Angular**: `TestBed` + Angular Testing Library
+**React**: Vitest + `@testing-library/react`
+**Vue**: Vitest + `@testing-library/vue`
+
+Priority order (highest risk → lowest): DataTable, Navbar, Dialog, Panel, SubscribeForm, BlogEditor, then display-only components.
+
+- [ ] ng-lib: test file per component
+- [ ] react-lib: test file per component
+- [ ] vue-lib: test file per component
+
+---
+
+## Phase 3 — Storybook Completeness
+
+Every component in every library must have a Storybook story covering default and key variant states.
+
+- [ ] ng-lib: stories for LoadingButton (new), verify all others are current
+- [ ] react-lib: stories for Dropdown, useAuth examples
+- [ ] vue-lib: stories for ThemeProvider, createM2S2 usage, Dropdown, useAuth
+
+---
+
+## Phase 4 — CI & Release
+
+- [x] `multi-semantic-release` — coordinated versioning; patch/minor/major per conventional commit
+- [x] `deps-sync` in `m2s2-platform` — auto-updates on design system release
+- [ ] CI job: build + test all packages on PR
+- [ ] CI job: Storybook build check on PR (catch broken stories before merge)
+- [ ] `@m2s2/web-components` and `@m2s2/vue-lib` — confirm release config is wired in `multi-semantic-release`
+
+---
+
+## Key Architecture Decisions
+
+| Decision | Choice | Reason |
+|----------|--------|--------|
+| Models package | Shared `@m2s2/models` | Single source of truth for all config interfaces; prevents drift |
+| Angular DI | Services + `InjectionToken` | Idiomatic Angular; consumers swap auth/dialog/panel implementations |
+| React context | Providers + hooks | Idiomatic React; `M2S2Provider` composes all contexts in one import |
+| Vue composition | Composables + `app.use()` plugin | Idiomatic Vue 3; mirrors React hook pattern |
+| No auth built-in | `M2S2AuthProvider` interface / peer dep only | Libraries stay auth-agnostic; AWS Amplify is the expected peer dep |
+| Token SCSS only | No JS token exports | Avoids dual-format maintenance; CSS vars handle runtime theming |
