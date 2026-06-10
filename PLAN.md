@@ -42,31 +42,18 @@ The Angular library (`ng-lib`) is the reference implementation. React and Vue mu
 | Panel + service/hook       | ✅     | ✅        | ✅      |
 | Chat                       | ✅     | ✅        | ✅      |
 | BlogEditor                 | ✅     | ✅        | ✅      |
-| LoadingButton              | ❌     | ✅        | ✅      |
-| Dropdown                   | ✅     | ❌        | ❌      |
-| ThemeProvider / useTheme   | ✅ *   | ✅        | ❌      |
-| M2S2Provider / plugin      | ✅ *   | ✅        | ❌      |
-| Auth token / useAuth       | ✅ **  | ❌        | ❌      |
+| LoadingButton              | ✅     | ✅        | ✅      |
+| Dropdown                   | ✅     | ✅        | ✅      |
+| ThemeProvider / useTheme   | ✅ *   | ✅        | ✅      |
+| M2S2Provider / plugin      | ✅ *   | ✅        | ✅      |
+| Auth token / useAuth       | ✅ **  | ✅        | ✅      |
 
 \* Angular uses DI (services + tokens), not a wrapper component  
 \** Angular exposes `M2S2_AUTH_PROVIDER` injection token + `M2S2AuthProvider` interface
 
 ---
 
-## Parity Gaps to Close
-
-### ng-lib
-- [ ] `LoadingButton` component
-
-### react-lib
-- [ ] `Dropdown` component (Radix `DropdownMenu` primitive, matches ng `DropdownItem` API)
-- [ ] `useAuth` hook — thin wrapper over AWS Amplify peer dep; mirrors `M2S2_AUTH_PROVIDER` interface
-
-### vue-lib
-- [ ] `ThemeProvider` / `useTheme` composable — sets `data-theme` attribute, persists in `localStorage`
-- [ ] `createM2S2()` Vue plugin — single `app.use()` call that installs all providers/plugins
-- [ ] `useAuth` composable — mirrors React `useAuth` and Angular `M2S2_AUTH_PROVIDER`
-- [ ] `Dropdown` / `DropdownItem` component
+## Parity Gaps ✅ (all closed)
 
 ---
 
@@ -137,18 +124,15 @@ Vue 3 component library. Uses composables (Vue Composition API) for service-back
 
 ---
 
-## Phase 1 — Close Parity Gaps
+## Phase 1 — Close Parity Gaps ✅
 
-Goal: All three libraries export the same component and service surface.
-
-- [ ] **ng-lib**: Add `LoadingButton` component + story
-- [ ] **react-lib**: Add `Dropdown` + `DropdownItem` (Radix `DropdownMenu`)
-- [ ] **react-lib**: Add `useAuth` hook (Amplify peer dep, matches `M2S2AuthProvider` interface)
-- [ ] **vue-lib**: Add `useTheme` composable + `ThemeProvider` wrapper component
-- [ ] **vue-lib**: Add `createM2S2()` plugin (`app.use(createM2S2())` installs theme + dialog + panel)
-- [ ] **vue-lib**: Add `useAuth` composable (Amplify peer dep)
-- [ ] **vue-lib**: Add `Dropdown` + `DropdownItem` components
-- [ ] **models**: Verify `SubscribeForm` props are covered; add any missing model files
+- [x] **ng-lib**: `LoadingButton` component + story
+- [x] **react-lib**: `Dropdown` + `DropdownItem` (pure CSS, matches `@m2s2/models` API)
+- [x] **react-lib**: `useAuth` hook + `AuthProvider` (implementation-agnostic, consumer provides auth impl)
+- [x] **vue-lib**: `ThemeProvider` component + `useTheme` composable
+- [x] **vue-lib**: `createM2S2()` plugin (provides theme at app level, registers provider components globally)
+- [x] **vue-lib**: `useAuth` composable + `AuthProvider` component
+- [x] **vue-lib**: `Dropdown` + `DropdownItem` components + story
 
 ---
 

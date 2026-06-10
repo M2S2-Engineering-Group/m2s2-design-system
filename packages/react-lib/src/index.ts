@@ -25,6 +25,10 @@ export type { BlogEditorProps } from './components/BlogEditor/BlogEditor';
 export { LoadingButton } from './components/LoadingButton/LoadingButton';
 export type { LoadingButtonProps } from './components/LoadingButton/LoadingButton';
 export { FeatureCard } from './components/cards/FeatureCard/FeatureCard';
+export { Dropdown } from './components/Dropdown/Dropdown';
+export type { DropdownProps } from './components/Dropdown/Dropdown';
+export { AuthProvider, useAuth } from './hooks/useAuth';
+export type { M2S2AuthUser, M2S2AuthContextValue, M2S2AuthProviderImpl, AuthProviderProps } from './hooks/useAuth';
 
 // Re-export shared models consumed by this library's components
 export type {

@@ -14,3 +14,4 @@ export * from './panel';
 export * from './subscribe-form';
 export * from './chat';
 export * from './blog-editor';
+export * from './loading-button';
