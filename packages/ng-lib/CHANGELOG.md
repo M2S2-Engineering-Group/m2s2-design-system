@@ -4,6 +4,13 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/ng-lib [2.6.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.5.0...@m2s2/ng-lib@2.6.0) (2026-06-10)
+
+
+### Features
+
+* **ng-lib:** added export functionality ([96d71a1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/96d71a1d4afadafa92982c7e0cb30c8e3cff54a6))
+
 # @m2s2/ng-lib [2.5.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.4.2...@m2s2/ng-lib@2.5.0) (2026-06-10)
 
 
