@@ -56,6 +56,9 @@ export class BlogEditorComponent {
   /** Emits the assembled draft when the user clicks Publish. */
   publish = output<BlogDraft>();
 
+  /** Emits the assembled draft when the user clicks Export. */
+  exportDraft = output<BlogDraft>();
+
   /** Emits the selected File so the platform can upload it to S3. */
   coverImageSelected = output<File>();
 
@@ -179,7 +182,16 @@ export class BlogEditorComponent {
 
   onPublish(): void {
     if (!this.canPublish()) return;
-    this.publish.emit({
+    this.publish.emit(this.assembleDraft());
+  }
+
+  onExport(): void {
+    if (!this.canPublish()) return;
+    this.exportDraft.emit(this.assembleDraft());
+  }
+
+  private assembleDraft(): BlogDraft {
+    return {
       title:       this.title(),
       slug:        this.slug() || toSlug(this.title()),
       date:        this.date(),
@@ -189,7 +201,7 @@ export class BlogEditorComponent {
       readingTime: this.readingTime(),
       content:     this.content(),
       coverImage:  this.coverImageUrl() ?? this.coverPreviewUrl(),
-    });
+    };
   }
 }
 

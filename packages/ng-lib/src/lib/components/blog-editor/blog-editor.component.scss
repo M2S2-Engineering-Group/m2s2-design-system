@@ -388,6 +388,21 @@
   margin-right: auto;
 }
 
+.be-footer__actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.be-export {
+  @include m.btn-secondary;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
 .be-publish {
   @include m.btn-primary;
 

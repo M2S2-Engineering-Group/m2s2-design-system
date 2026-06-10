@@ -162,12 +162,20 @@
   <!-- ── Footer ─────────────────────────────────────────────────────────────── -->
   <footer class="be-footer">
     <span class="be-footer__meta">~{{ readingTime() }} min read</span>
-    <button
-      type="button"
-      class="be-publish"
-      [disabled]="!canPublish()"
-      (click)="onPublish()"
-    >Publish Post</button>
+    <div class="be-footer__actions">
+      <button
+        type="button"
+        class="be-export"
+        [disabled]="!canPublish()"
+        (click)="onExport()"
+      >Export</button>
+      <button
+        type="button"
+        class="be-publish"
+        [disabled]="!canPublish()"
+        (click)="onPublish()"
+      >Publish Post</button>
+    </div>
   </footer>
 
 </div>
