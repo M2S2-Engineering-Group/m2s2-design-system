@@ -4,6 +4,13 @@ All notable changes to the component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.6.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.6.0...@m2s2/ng-lib@2.6.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* loading button fixes ([e1b19f9](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/e1b19f9e035d4c130223d4255442ef51e3eaf965))
+
 # @m2s2/ng-lib [2.6.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.5.0...@m2s2/ng-lib@2.6.0) (2026-06-10)
 
 
