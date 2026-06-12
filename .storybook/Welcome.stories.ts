@@ -28,11 +28,11 @@ export const Introduction = {
         </div>
         <div style="padding: 1rem 1.5rem; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;">
           <strong>React</strong><br/>
-          <span style="font-size: 0.875rem; opacity: 0.6;">Coming soon</span>
+          <span style="font-size: 0.875rem; opacity: 0.6;">Production ready</span>
         </div>
         <div style="padding: 1rem 1.5rem; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;">
-          <strong>Web Components</strong><br/>
-          <span style="font-size: 0.875rem; opacity: 0.6;">Coming soon</span>
+          <strong>Vue</strong><br/>
+          <span style="font-size: 0.875rem; opacity: 0.6;">Production ready</span>
         </div>
       </div>
     </div>

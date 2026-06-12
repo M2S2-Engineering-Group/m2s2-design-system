@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import LoadingButton from './LoadingButton.vue';
 
 const DEMO_STYLES = `
@@ -16,6 +16,17 @@ const meta: Meta<typeof LoadingButton> = {
   title: 'Components/LoadingButton',
   component: LoadingButton,
   tags: ['autodocs'],
+  decorators: [
+    () => ({
+      setup() {
+        const el = document.createElement('style');
+        el.textContent = DEMO_STYLES;
+        document.head.appendChild(el);
+        onUnmounted(() => el.remove());
+      },
+      template: '<story />',
+    }),
+  ],
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -43,7 +54,7 @@ export const States: Story = {
   name: 'All States',
   render: () => ({
     components: { LoadingButton },
-    styles: [DEMO_STYLES],
+
     template: `
       <div class="demo">
         <div class="demo-col">
@@ -71,7 +82,7 @@ export const Interactive: Story = {
   name: 'Interactive Demo',
   render: () => ({
     components: { LoadingButton },
-    styles: [DEMO_STYLES],
+
     setup() {
       const saving     = ref(false);
       const submitting = ref(false);
@@ -120,7 +131,7 @@ export const SpinnerOnly: Story = {
   name: 'Spinner Without Label Change',
   render: () => ({
     components: { LoadingButton },
-    styles: [DEMO_STYLES],
+
     template: `
       <div class="demo">
         <div class="demo-col">

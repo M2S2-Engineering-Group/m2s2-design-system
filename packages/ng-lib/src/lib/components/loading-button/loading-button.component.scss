@@ -1,7 +1,17 @@
 @use 'tokens/src/mixins' as m;
 
-:host { display: contents; }
+:host { display: inline-flex; }
 
 @include m.btn-spinner-keyframes;
+
+button {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+
+  &:disabled { cursor: not-allowed; }
+}
 
 .m2s2-btn-spinner { @include m.btn-spinner; }

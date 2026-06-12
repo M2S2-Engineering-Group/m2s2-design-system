@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/vue3-vite';
+import { resolve } from 'path';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.ts'],
@@ -9,6 +10,14 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal: async (config, { configType }) => {
+    config.css = {
+      ...config.css,
+      preprocessorOptions: {
+        scss: {
+          loadPaths: [resolve(__dirname, '../../..')],
+        },
+      },
+    };
     if (configType === 'PRODUCTION') {
       config.base = '/vue/';
     }

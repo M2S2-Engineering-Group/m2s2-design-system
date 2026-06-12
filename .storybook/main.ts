@@ -17,10 +17,6 @@ const config: StorybookConfig = {
       title: 'React',
       url: process.env['STORYBOOK_REACT_URL'] ?? 'http://localhost:6007',
     },
-    'web-components': {
-      title: 'Web Components',
-      url: process.env['STORYBOOK_WC_URL'] ?? 'http://localhost:6008',
-    },
     vue: {
       title: 'Vue',
       url: process.env['STORYBOOK_VUE_URL'] ?? 'http://localhost:6010',
