@@ -1,6 +1,11 @@
 import type { Preview } from '@storybook/vue3';
 import '../src/styles/tokens.scss';
-import { applyTheme, applyColorMode, sharedGlobalTypes } from '../../storybook-shared/src';
+import { applyTheme, applyColorMode, listenForThemeChanges, sharedGlobalTypes } from '../../storybook-shared/src';
+
+listenForThemeChanges((brandTheme, colorMode) => {
+  applyTheme(brandTheme);
+  applyColorMode(colorMode);
+});
 
 const preview: Preview = {
   globalTypes: sharedGlobalTypes,

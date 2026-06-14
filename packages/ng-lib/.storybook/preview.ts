@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { applyTheme, applyColorMode, sharedGlobalTypes } from '../../storybook-shared/src';
+import { applyTheme, applyColorMode, listenForThemeChanges, sharedGlobalTypes } from '../../storybook-shared/src';
 
 function syncOverlayTheme(): void {
   const theme = document.documentElement.getAttribute('data-theme') ?? 'dark';
@@ -10,6 +10,12 @@ function syncOverlayTheme(): void {
 }
 
 new MutationObserver(() => syncOverlayTheme()).observe(document.body, { childList: true });
+
+listenForThemeChanges((brandTheme, colorMode) => {
+  applyTheme(brandTheme);
+  applyColorMode(colorMode);
+  syncOverlayTheme();
+});
 
 function applyColorModeAngular(mode: string): void {
   applyColorMode(mode);

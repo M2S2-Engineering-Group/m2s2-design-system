@@ -1,5 +1,28 @@
 import { THEMES } from './themes';
 
+const STORAGE_KEY = 'm2s2-sb-theme';
+
+export function broadcastTheme(brandTheme: string, colorMode: string): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ brandTheme, colorMode }));
+  } catch {}
+}
+
+export function listenForThemeChanges(
+  onTheme: (brandTheme: string, colorMode: string) => void,
+): void {
+  const apply = () => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const { brandTheme, colorMode } = JSON.parse(raw);
+      onTheme(brandTheme ?? 'm2s2', colorMode ?? 'dark');
+    } catch {}
+  };
+  window.addEventListener('storage', apply);
+  apply();
+}
+
 export const sharedGlobalTypes = {
   brandTheme: {
     name: 'Brand Theme',
