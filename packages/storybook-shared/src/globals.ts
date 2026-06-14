@@ -23,11 +23,21 @@ export function listenForThemeChanges(
   apply();
 }
 
+function readStored(): { brandTheme: string; colorMode: string } {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { brandTheme: 'm2s2', colorMode: 'dark' };
+}
+
+const stored = readStored();
+
 export const sharedGlobalTypes = {
   brandTheme: {
     name: 'Brand Theme',
     description: 'Apply a custom brand palette to preview your own colors',
-    defaultValue: 'm2s2',
+    defaultValue: stored.brandTheme,
     toolbar: {
       icon: 'paintbrush' as const,
       items: THEMES.map((t) => ({ value: t.key, title: t.label })),
@@ -37,7 +47,7 @@ export const sharedGlobalTypes = {
   colorMode: {
     name: 'Color Mode',
     description: 'Switch between dark and light mode',
-    defaultValue: 'dark',
+    defaultValue: stored.colorMode,
     toolbar: {
       icon: 'circlehollow' as const,
       items: [
