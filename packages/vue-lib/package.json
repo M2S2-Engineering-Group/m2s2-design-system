@@ -1,6 +1,6 @@
 {
   "name": "@m2s2/vue-lib",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Vue 3 component library by M²S² Engineering Group.",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",
@@ -46,12 +46,12 @@
     "marked": "^17.0.0"
   },
   "peerDependencies": {
-    "@m2s2/models": "2.3.0",
+    "@m2s2/models": "2.4.0",
     "@m2s2/tokens": "2.2.1",
     "vue": ">=3.0.0"
   },
   "devDependencies": {
-    "@m2s2/models": "2.3.0",
+    "@m2s2/models": "2.4.0",
     "@m2s2/tokens": "2.2.1",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/vue3-vite": "^10.3.6",
