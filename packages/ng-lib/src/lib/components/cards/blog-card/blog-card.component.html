@@ -9,6 +9,12 @@
 </div>
 
 <div class="bc-inner">
+  @if (config().series; as s) {
+    <div class="bc-series">
+      <span class="bc-series-part">Part {{ s.part }} of {{ s.total }}</span>
+      <span class="bc-series-title">{{ s.title }}</span>
+    </div>
+  }
   <div class="bc-meta">
     <time [dateTime]="config().date">{{ formatDate(config().date) }}</time>
     @if (config().readingTime) {

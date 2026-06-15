@@ -14,4 +14,5 @@ export interface BlogDraft {
   readingTime: number;
   content: string;
   coverImage?: string;
+  series?: { id: string; title: string; part: number; total: number };
 }

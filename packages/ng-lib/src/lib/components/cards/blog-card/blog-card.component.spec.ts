@@ -63,4 +63,17 @@ describe('BlogCardComponent', () => {
     expect(container.querySelector('.bc-cover-placeholder')).toBeInTheDocument();
     expect(container.querySelector('.bc-cover-tag')).toHaveTextContent('Angular');
   });
+
+  it('renders a series badge when series data is provided', async () => {
+    await renderCard({
+      series: { id: 'go-backend', title: 'Go Backend Series', part: 2, total: 5 },
+    });
+    expect(screen.getByText('Part 2 of 5')).toBeInTheDocument();
+    expect(screen.getByText('Go Backend Series')).toBeInTheDocument();
+  });
+
+  it('does not render a series badge when series is omitted', async () => {
+    await renderCard();
+    expect(screen.queryByText(/Part \d+ of \d+/)).not.toBeInTheDocument();
+  });
 });

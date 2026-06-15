@@ -19,4 +19,5 @@ export interface BlogCardConfig {
   tags: string[];
   coverImage?: string;
   readingTime?: number;
+  series?: { id: string; title: string; part: number; total: number };
 }

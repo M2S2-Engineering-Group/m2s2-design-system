@@ -65,6 +65,10 @@ const coverPreview= ref<string | undefined>(props.initialPost?.coverImage);
 const tagInput    = ref('');
 const slugEdited  = ref(!!props.initialPost);
 const textareaEl  = ref<HTMLTextAreaElement | null>(null);
+const seriesId    = ref(props.initialPost?.series?.id    ?? '');
+const seriesTitle = ref(props.initialPost?.series?.title ?? '');
+const seriesPart  = ref(props.initialPost?.series?.part  ?? 1);
+const seriesTotal = ref(props.initialPost?.series?.total ?? 1);
 
 watch(() => props.initialPost, post => {
   if (!post) return;
@@ -77,6 +81,10 @@ watch(() => props.initialPost, post => {
   readingTime.value = post.readingTime ?? 1;
   content.value     = post.content;
   coverPreview.value= post.coverImage;
+  seriesId.value    = post.series?.id    ?? '';
+  seriesTitle.value = post.series?.title ?? '';
+  seriesPart.value  = post.series?.part  ?? 1;
+  seriesTotal.value = post.series?.total ?? 1;
   slugEdited.value  = true;
 });
 
@@ -152,6 +160,7 @@ function applyFormat(item: ToolbarItem) {
 
 function onPublish() {
   if (!canPublish.value) return;
+  const id = seriesId.value.trim();
   emit('publish', {
     title:       title.value,
     slug:        slug.value || toSlug(title.value),
@@ -162,6 +171,9 @@ function onPublish() {
     readingTime: readingTime.value,
     content:     content.value,
     coverImage:  props.coverImageUrl ?? coverPreview.value,
+    series: id
+      ? { id, title: seriesTitle.value.trim() || id, part: seriesPart.value, total: seriesTotal.value }
+      : undefined,
   });
 }
 </script>
@@ -221,6 +233,29 @@ function onPublish() {
             {{ previewUrl ? 'Replace' : 'Choose image' }}
             <input type="file" accept="image/*" @change="onCoverChange" hidden />
           </label>
+        </div>
+      </div>
+
+      <div class="be-field-group-label">Series <span class="be-optional">(optional)</span></div>
+
+      <div class="be-field">
+        <label class="be-label">Series ID</label>
+        <input class="be-input" type="text" v-model="seriesId" placeholder="e.g. go-backend" />
+      </div>
+
+      <div class="be-field">
+        <label class="be-label">Series Title</label>
+        <input class="be-input" type="text" v-model="seriesTitle" placeholder="e.g. Go Backend Series" />
+      </div>
+
+      <div class="be-field be-field--narrow-pair">
+        <div>
+          <label class="be-label">Part</label>
+          <input class="be-input be-input--narrow" type="number" min="1" v-model.number="seriesPart" />
+        </div>
+        <div>
+          <label class="be-label">Total Parts</label>
+          <input class="be-input be-input--narrow" type="number" min="1" v-model.number="seriesTotal" />
         </div>
       </div>
 
@@ -374,6 +409,28 @@ function onPublish() {
   font-size: var(--font-size-sm);
 
   &::placeholder { color: var(--color-on-surface-muted); }
+}
+
+.be-field-group-label {
+  grid-column: 1 / -1;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-on-surface-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.be-field--narrow-pair {
+  display: flex;
+  gap: var(--space-4);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
 }
 
 .be-cover {

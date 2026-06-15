@@ -2,7 +2,7 @@ module.exports = {
   passWithNoTests: true,
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(@angular|@smithy|rxjs|@testing-library)/)',
+    'node_modules/(?!(@angular|@smithy|rxjs|@testing-library|marked)/)',
   ],
   setupFilesAfterEnv: ['<rootDir>/packages/ng-lib/jest.setup.ts'],
   moduleNameMapper: {

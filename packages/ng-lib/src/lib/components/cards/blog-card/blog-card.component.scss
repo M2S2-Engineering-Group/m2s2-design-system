@@ -56,6 +56,34 @@
   padding: var(--space-5);
 }
 
+.bc-series {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  border-left: 2px solid var(--color-primary);
+  border-radius: 0 4px 4px 0;
+}
+
+.bc-series-part {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.bc-series-title {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .bc-meta {
   display: flex;
   align-items: center;

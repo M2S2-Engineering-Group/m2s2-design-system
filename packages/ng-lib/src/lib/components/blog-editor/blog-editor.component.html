@@ -104,6 +104,53 @@
       </div>
     </div>
 
+    <div class="be-field-group-label">Series <span class="be-optional">(optional)</span></div>
+
+    <div class="be-field">
+      <label class="be-label">Series ID</label>
+      <input
+        class="be-input"
+        type="text"
+        [ngModel]="seriesId()"
+        (ngModelChange)="seriesId.set($event)"
+        placeholder="e.g. go-backend"
+      />
+    </div>
+
+    <div class="be-field">
+      <label class="be-label">Series Title</label>
+      <input
+        class="be-input"
+        type="text"
+        [ngModel]="seriesTitle()"
+        (ngModelChange)="seriesTitle.set($event)"
+        placeholder="e.g. Go Backend Series"
+      />
+    </div>
+
+    <div class="be-field be-field--narrow-pair">
+      <div>
+        <label class="be-label">Part</label>
+        <input
+          class="be-input be-input--narrow"
+          type="number"
+          min="1"
+          [ngModel]="seriesPart()"
+          (ngModelChange)="seriesPart.set(+$event)"
+        />
+      </div>
+      <div>
+        <label class="be-label">Total Parts</label>
+        <input
+          class="be-input be-input--narrow"
+          type="number"
+          min="1"
+          [ngModel]="seriesTotal()"
+          (ngModelChange)="seriesTotal.set(+$event)"
+        />
+      </div>
+    </div>
+
   </section>
 
   <!-- ── Editor ─────────────────────────────────────────────────────────────── -->

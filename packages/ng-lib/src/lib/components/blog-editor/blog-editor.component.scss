@@ -136,6 +136,30 @@
   font-size: var(--font-size-sm);
 }
 
+// ── Series fields ─────────────────────────────────────────────────────────────
+
+.be-field-group-label {
+  grid-column: 1 / -1;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-on-surface-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.be-field--narrow-pair {
+  display: flex;
+  gap: var(--space-4);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
 // ── Editor section ────────────────────────────────────────────────────────────
 
 .be-editor {

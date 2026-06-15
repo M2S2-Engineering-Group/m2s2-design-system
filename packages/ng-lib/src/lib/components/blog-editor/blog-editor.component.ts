@@ -75,6 +75,11 @@ export class BlogEditorComponent {
   readonly coverPreviewUrl = signal<string | undefined>(undefined);
   readonly activePane      = signal<'write' | 'preview'>('write');
 
+  readonly seriesId    = signal('');
+  readonly seriesTitle = signal('');
+  readonly seriesPart  = signal(1);
+  readonly seriesTotal = signal(1);
+
   tagInput = '';
   slugEdited = false;
 
@@ -106,6 +111,10 @@ export class BlogEditorComponent {
       this.readingTime.set(post.readingTime ?? 1);
       this.content.set(post.content);
       this.coverPreviewUrl.set(post.coverImage);
+      this.seriesId.set(post.series?.id ?? '');
+      this.seriesTitle.set(post.series?.title ?? '');
+      this.seriesPart.set(post.series?.part ?? 1);
+      this.seriesTotal.set(post.series?.total ?? 1);
       this.slugEdited = true;
     });
   }
@@ -191,6 +200,7 @@ export class BlogEditorComponent {
   }
 
   private assembleDraft(): BlogDraft {
+    const seriesId = this.seriesId().trim();
     return {
       title:       this.title(),
       slug:        this.slug() || toSlug(this.title()),
@@ -201,6 +211,9 @@ export class BlogEditorComponent {
       readingTime: this.readingTime(),
       content:     this.content(),
       coverImage:  this.coverImageUrl() ?? this.coverPreviewUrl(),
+      series: seriesId
+        ? { id: seriesId, title: this.seriesTitle().trim() || seriesId, part: this.seriesPart(), total: this.seriesTotal() }
+        : undefined,
     };
   }
 }
