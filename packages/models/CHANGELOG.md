@@ -4,6 +4,13 @@ All notable changes to the shared model interfaces are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/models [2.4.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/models@2.3.0...@m2s2/models@2.4.0) (2026-06-15)
+
+
+### Features
+
+* add series handling to blog editor and tests ([905916f](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/905916f903242e746e7b8fdbe4d56894b0f5e96a))
+
 # @m2s2/models [2.3.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/models@2.2.0...@m2s2/models@2.3.0) (2026-06-05)
 
 
