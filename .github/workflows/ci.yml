@@ -109,6 +109,9 @@ jobs:
       - name: Build models
         run: npm run build --workspace=packages/models
 
+      - name: Build utils
+        run: npm run build --workspace=packages/utils
+
       - name: Build ng-lib
         run: npm run build --workspace=packages/ng-lib
 
@@ -163,6 +166,7 @@ jobs:
       - name: Build all packages
         run: |
           npm run build --workspace=packages/models
+          npm run build --workspace=packages/utils
           npm run build:prod --workspace=packages/ng-lib
           npm run build:prod --workspace=packages/react-lib
           npm run build:prod --workspace=packages/vue-lib
@@ -198,6 +202,9 @@ jobs:
 
       - name: Build models
         run: npm run build --workspace=packages/models
+
+      - name: Build utils
+        run: npm run build --workspace=packages/utils
 
       - name: Build ng-lib
         run: npm run build:prod --workspace=packages/ng-lib
@@ -250,6 +257,9 @@ jobs:
 
       - name: Build models
         run: npm run build --workspace=packages/models
+
+      - name: Build utils
+        run: npm run build --workspace=packages/utils
 
       - name: Build ng-lib
         run: npm run build:prod --workspace=packages/ng-lib
