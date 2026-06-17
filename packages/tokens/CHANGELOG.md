@@ -4,6 +4,13 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/tokens [2.2.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.2.1...@m2s2/tokens@2.2.2) (2026-06-17)
+
+
+### Bug Fixes
+
+* added eslint and fixed linting issues, added precommit hooks ([0b4877c](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/0b4877c5e26d3081c9488eae0b90b114bc13d2ae))
+
 ## @m2s2/tokens [2.2.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.2.0...@m2s2/tokens@2.2.1) (2026-06-08)
 
 
