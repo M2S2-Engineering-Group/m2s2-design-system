@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { validateEmail } from '@m2s2/utils';
 import './SubscribeForm.scss';
 
 type SubmitState = 'idle' | 'submitting' | 'done' | 'error';
@@ -23,7 +24,7 @@ export function SubscribeForm({
   const [state, setState]         = useState<SubmitState>(initialState);
   const [subscribed, setSubscribed] = useState(false);
 
-  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const emailValid = validateEmail(email);
 
   async function submit() {
     if (state === 'submitting') return;

@@ -10,11 +10,12 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "outDir": "dist"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test", "src/**/*.stories.ts", "src/**/*.stories.tsx"]
+  "exclude": ["src/**/*.stories.ts", "src/**/*.stories.tsx"]
 }

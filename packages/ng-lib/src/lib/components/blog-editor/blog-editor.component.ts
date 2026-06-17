@@ -13,30 +13,9 @@ import {
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import { BLOG_EDITOR_TOOLBAR, calcReadingTime, generateSlug, todayAsIsoDate } from '@m2s2/utils';
+import type { ToolbarItem } from '@m2s2/utils';
 import type { BlogDraft, BlogPost } from '../../models/blog';
-
-interface ToolbarItem {
-  label: string;
-  icon: string;
-  wrap?: [string, string];
-  prefix?: string;
-  block?: string;
-}
-
-const TOOLBAR: ToolbarItem[] = [
-  { label: 'Heading 2',     icon: 'H2',  prefix: '## ' },
-  { label: 'Heading 3',     icon: 'H3',  prefix: '### ' },
-  { label: 'Bold',          icon: 'B',   wrap: ['**', '**'] },
-  { label: 'Italic',        icon: 'I',   wrap: ['*', '*'] },
-  { label: 'Inline code',   icon: '`',   wrap: ['`', '`'] },
-  { label: 'Code block',    icon: '{ }', block: '\n```\n\n```\n' },
-  { label: 'Blockquote',    icon: '❝',   prefix: '> ' },
-  { label: 'Link',          icon: '⇗',   wrap: ['[', '](url)'] },
-  { label: 'Image',         icon: '⬚',   block: '![alt text](image-url)\n' },
-  { label: 'Bullet list',   icon: '•–',  prefix: '- ' },
-  { label: 'Numbered list', icon: '1.',  prefix: '1. ' },
-  { label: 'Divider',       icon: '—',   block: '\n---\n\n' },
-];
 
 @Component({
   selector: 'm2s2-blog-editor',
@@ -62,11 +41,11 @@ export class BlogEditorComponent {
   /** Emits the selected File so the platform can upload it to S3. */
   coverImageSelected = output<File>();
 
-  readonly toolbarItems = TOOLBAR;
+  readonly toolbarItems = BLOG_EDITOR_TOOLBAR;
 
   readonly title       = signal('');
   readonly slug        = signal('');
-  readonly date        = signal(todayIso());
+  readonly date        = signal(todayAsIsoDate());
   readonly summary     = signal('');
   readonly excerpt     = signal('');
   readonly tags        = signal<string[]>([]);
@@ -122,7 +101,7 @@ export class BlogEditorComponent {
   onTitleChange(value: string): void {
     this.title.set(value);
     if (!this.slugEdited) {
-      this.slug.set(toSlug(value));
+      this.slug.set(generateSlug(value));
     }
     this.readingTime.set(calcReadingTime(this.content()));
   }
@@ -203,7 +182,7 @@ export class BlogEditorComponent {
     const seriesId = this.seriesId().trim();
     return {
       title:       this.title(),
-      slug:        this.slug() || toSlug(this.title()),
+      slug:        this.slug() || generateSlug(this.title()),
       date:        this.date(),
       summary:     this.summary(),
       excerpt:     this.excerpt() || undefined,
@@ -216,22 +195,4 @@ export class BlogEditorComponent {
         : undefined,
     };
   }
-}
-
-function todayIso(): string {
-  return new Date().toISOString().split('T')[0];
-}
-
-function toSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-');
-}
-
-function calcReadingTime(content: string): number {
-  const words = content.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
 }

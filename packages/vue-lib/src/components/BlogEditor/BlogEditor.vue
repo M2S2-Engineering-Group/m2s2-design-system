@@ -2,6 +2,8 @@
 import { computed, ref, watch } from 'vue';
 import { marked } from 'marked';
 import type { BlogDraft, BlogPost } from '@m2s2/models';
+import { BLOG_EDITOR_TOOLBAR, calcReadingTime, generateSlug, todayAsIsoDate } from '@m2s2/utils';
+import type { ToolbarItem } from '@m2s2/utils';
 
 const props = withDefaults(defineProps<{
   /** Populate fields when editing an existing post. */
@@ -17,45 +19,9 @@ const emit = defineEmits<{
   coverImageSelected: [file: File];
 }>();
 
-interface ToolbarItem {
-  label: string;
-  icon: string;
-  wrap?: [string, string];
-  prefix?: string;
-  block?: string;
-}
-
-const TOOLBAR: ToolbarItem[] = [
-  { label: 'Heading 2',     icon: 'H2',  prefix: '## ' },
-  { label: 'Heading 3',     icon: 'H3',  prefix: '### ' },
-  { label: 'Bold',          icon: 'B',   wrap: ['**', '**'] },
-  { label: 'Italic',        icon: 'I',   wrap: ['*', '*'] },
-  { label: 'Inline code',   icon: '`',   wrap: ['`', '`'] },
-  { label: 'Code block',    icon: '{ }', block: '\n```\n\n```\n' },
-  { label: 'Blockquote',    icon: '❝',   prefix: '> ' },
-  { label: 'Link',          icon: '⇗',   wrap: ['[', '](url)'] },
-  { label: 'Image',         icon: '⬚',   block: '![alt text](image-url)\n' },
-  { label: 'Bullet list',   icon: '•–',  prefix: '- ' },
-  { label: 'Numbered list', icon: '1.',  prefix: '1. ' },
-  { label: 'Divider',       icon: '—',   block: '\n---\n\n' },
-];
-
-function todayIso() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function toSlug(t: string): string {
-  return t.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-');
-}
-
-function calcReadingTime(c: string): number {
-  const words = c.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
-}
-
 const title       = ref(props.initialPost?.title       ?? '');
 const slug        = ref(props.initialPost?.slug        ?? '');
-const date        = ref(props.initialPost?.date        ?? todayIso());
+const date        = ref(props.initialPost?.date        ?? todayAsIsoDate());
 const summary     = ref(props.initialPost?.summary     ?? '');
 const excerpt     = ref(props.initialPost?.excerpt     ?? '');
 const tags        = ref<string[]>([...(props.initialPost?.tags ?? [])]);
@@ -94,7 +60,7 @@ const previewUrl   = computed(() => coverPreview.value ?? props.coverImageUrl);
 
 function onTitleChange(e: Event) {
   title.value = (e.target as HTMLInputElement).value;
-  if (!slugEdited.value) slug.value = toSlug(title.value);
+  if (!slugEdited.value) slug.value = generateSlug(title.value);
   readingTime.value = calcReadingTime(content.value);
 }
 
@@ -163,7 +129,7 @@ function onPublish() {
   const id = seriesId.value.trim();
   emit('publish', {
     title:       title.value,
-    slug:        slug.value || toSlug(title.value),
+    slug:        slug.value || generateSlug(title.value),
     date:        date.value,
     summary:     summary.value,
     excerpt:     excerpt.value || undefined,
@@ -266,7 +232,7 @@ function onPublish() {
 
       <div class="be-toolbar" role="toolbar" aria-label="Formatting">
         <button
-          v-for="item in TOOLBAR"
+          v-for="item in BLOG_EDITOR_TOOLBAR"
           :key="item.label"
           type="button"
           class="be-toolbar__btn"

@@ -5,7 +5,7 @@ import { BlogCard } from './BlogCard';
 const config = {
   slug: 'my-post',
   title: 'My First Post',
-  date: '2024-06-15T12:00:00',
+  date: '2024-06-15',
   summary: 'A brief summary.',
   tags: ['Angular', 'Testing'],
 };
@@ -25,10 +25,7 @@ describe('BlogCard', () => {
 
   it('renders the formatted date', () => {
     renderCard();
-    const expected = new Date('2024-06-15T12:00:00').toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric',
-    });
-    expect(screen.getByText(expected)).toBeInTheDocument();
+    expect(screen.getByText('June 15, 2024')).toBeInTheDocument();
   });
 
   it('renders the summary', () => {

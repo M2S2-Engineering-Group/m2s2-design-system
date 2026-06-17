@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import type { BlogCardConfig } from '@m2s2/models';
+import { formatBlogDate } from '@m2s2/utils';
 
 defineProps<{ config: BlogCardConfig }>();
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  });
-}
 </script>
 
 <template>
@@ -26,7 +21,7 @@ function formatDate(iso: string): string {
     </div>
     <div class="bc-inner">
       <div class="bc-meta">
-        <time :dateTime="config.date">{{ formatDate(config.date) }}</time>
+        <time :dateTime="config.date">{{ formatBlogDate(config.date) }}</time>
         <span v-if="config.readingTime" class="bc-reading-time">{{ config.readingTime }} min read</span>
       </div>
       <h2 class="bc-title">

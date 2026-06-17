@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { validateEmail } from '@m2s2/utils';
 
 type SubmitState = 'idle' | 'submitting' | 'done' | 'error';
 type Mode = 'anon' | 'auth';
@@ -18,7 +19,7 @@ const name = ref('');
 const state = ref<SubmitState>('idle');
 const subscribed = ref(false);
 
-const emailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()));
+const emailValid = computed(() => validateEmail(email.value));
 
 async function submit(): Promise<void> {
   if (state.value === 'submitting') return;

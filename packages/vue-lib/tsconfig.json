@@ -10,11 +10,12 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["vitest/globals"],
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "outDir": "dist"
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],
-  "exclude": ["src/**/*.test.ts", "src/test", "src/**/*.stories.ts"]
+  "exclude": ["src/**/*.stories.ts"]
 }

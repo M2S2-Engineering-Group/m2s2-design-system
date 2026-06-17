@@ -8,5 +8,6 @@ export default mergeConfig(viteConfig, defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
     css: false,
+    typecheck: { tsconfig: './tsconfig.test.json' },
   },
 }));

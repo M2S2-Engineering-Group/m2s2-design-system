@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { ColumnDef } from '@m2s2/models';
+import { getStatusLabel as resolveStatusLabel } from '@m2s2/utils';
 
 const props = withDefaults(defineProps<{
   columnDefs?: ColumnDef[];
@@ -36,7 +37,7 @@ const showCols = ref(false);
 const colWrapRef = ref<HTMLElement | null>(null);
 
 function getStatusLabel(s: string): string {
-  return s === 'all' ? 'All' : (props.statusLabels[s] ?? s);
+  return resolveStatusLabel(s, props.statusLabels);
 }
 
 function onDocClick(e: MouseEvent): void {

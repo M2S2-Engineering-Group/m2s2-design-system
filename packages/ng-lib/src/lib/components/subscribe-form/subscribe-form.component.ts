@@ -6,6 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { validateEmail } from '@m2s2/utils';
 import { Observable } from 'rxjs';
 
 type SubmitState = 'idle' | 'submitting' | 'done' | 'error';
@@ -43,7 +44,7 @@ export class SubscribeFormComponent implements OnInit {
   }
 
   get emailValid(): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email.trim());
+    return validateEmail(this.email);
   }
 
   submit(): void {

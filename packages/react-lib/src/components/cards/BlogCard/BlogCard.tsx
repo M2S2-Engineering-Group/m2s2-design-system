@@ -1,15 +1,10 @@
 import { Link } from 'react-router';
 import { BlogCardConfig } from '@m2s2/models';
+import { formatBlogDate } from '@m2s2/utils';
 import './BlogCard.scss';
 
 interface BlogCardProps {
   config: BlogCardConfig;
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  });
 }
 
 export function BlogCard({ config }: BlogCardProps) {
@@ -26,7 +21,7 @@ export function BlogCard({ config }: BlogCardProps) {
       </div>
       <div className="bc-inner">
         <div className="bc-meta">
-          <time dateTime={config.date}>{formatDate(config.date)}</time>
+          <time dateTime={config.date}>{formatBlogDate(config.date)}</time>
           {config.readingTime && <span className="bc-reading-time">{config.readingTime} min read</span>}
         </div>
         <h2 className="bc-title">

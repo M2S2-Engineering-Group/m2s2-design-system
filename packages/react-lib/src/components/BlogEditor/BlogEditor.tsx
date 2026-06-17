@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { marked } from 'marked';
 import type { BlogDraft, BlogPost } from '@m2s2/models';
+import { BLOG_EDITOR_TOOLBAR, calcReadingTime, generateSlug, todayAsIsoDate } from '@m2s2/utils';
+import type { ToolbarItem } from '@m2s2/utils';
 import './BlogEditor.scss';
 
 export interface BlogEditorProps {
@@ -14,47 +16,6 @@ export interface BlogEditorProps {
   onCoverImageSelected?: (file: File) => void;
 }
 
-interface ToolbarItem {
-  label: string;
-  icon: string;
-  wrap?: [string, string];
-  prefix?: string;
-  block?: string;
-}
-
-const TOOLBAR: ToolbarItem[] = [
-  { label: 'Heading 2',     icon: 'H2',  prefix: '## ' },
-  { label: 'Heading 3',     icon: 'H3',  prefix: '### ' },
-  { label: 'Bold',          icon: 'B',   wrap: ['**', '**'] },
-  { label: 'Italic',        icon: 'I',   wrap: ['*', '*'] },
-  { label: 'Inline code',   icon: '`',   wrap: ['`', '`'] },
-  { label: 'Code block',    icon: '{ }', block: '\n```\n\n```\n' },
-  { label: 'Blockquote',    icon: '❝',   prefix: '> ' },
-  { label: 'Link',          icon: '⇗',   wrap: ['[', '](url)'] },
-  { label: 'Image',         icon: '⬚',   block: '![alt text](image-url)\n' },
-  { label: 'Bullet list',   icon: '•–',  prefix: '- ' },
-  { label: 'Numbered list', icon: '1.',  prefix: '1. ' },
-  { label: 'Divider',       icon: '—',   block: '\n---\n\n' },
-];
-
-function todayIso(): string {
-  return new Date().toISOString().split('T')[0];
-}
-
-function toSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-');
-}
-
-function calcReadingTime(content: string): number {
-  const words = content.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
-}
-
 export function BlogEditor({
   initialPost,
   coverImageUrl,
@@ -63,7 +24,7 @@ export function BlogEditor({
 }: BlogEditorProps) {
   const [title,          setTitleRaw]    = useState(initialPost?.title ?? '');
   const [slug,           setSlug]        = useState(initialPost?.slug  ?? '');
-  const [date,           setDate]        = useState(initialPost?.date  ?? todayIso());
+  const [date,           setDate]        = useState(initialPost?.date  ?? todayAsIsoDate());
   const [summary,        setSummary]     = useState(initialPost?.summary  ?? '');
   const [excerpt,        setExcerpt]     = useState(initialPost?.excerpt  ?? '');
   const [tags,           setTags]        = useState<string[]>(initialPost?.tags ?? []);
@@ -99,7 +60,7 @@ export function BlogEditor({
 
   const setTitle = useCallback((value: string) => {
     setTitleRaw(value);
-    if (!slugEdited.current) setSlug(toSlug(value));
+    if (!slugEdited.current) setSlug(generateSlug(value));
     setReadingTime(calcReadingTime(content));
   }, [content]);
 
@@ -168,7 +129,7 @@ export function BlogEditor({
     const id = seriesId.trim();
     onPublish?.({
       title,
-      slug:        slug || toSlug(title),
+      slug:        slug || generateSlug(title),
       date,
       summary,
       excerpt:     excerpt || undefined,
@@ -346,7 +307,7 @@ export function BlogEditor({
       <section className="be-editor">
 
         <div className="be-toolbar" role="toolbar" aria-label="Formatting">
-          {TOOLBAR.map(item => (
+          {BLOG_EDITOR_TOOLBAR.map(item => (
             <button
               key={item.label}
               type="button"

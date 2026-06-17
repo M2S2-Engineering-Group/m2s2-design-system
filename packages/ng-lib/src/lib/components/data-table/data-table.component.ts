@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, ElementRef, HostListener, ViewChild, input, output, signal } from '@angular/core';
+import { getStatusLabel as resolveStatusLabel } from '@m2s2/utils';
 import type { ColumnDef } from '../../models/data-table/data-table.model';
 
 @Component({
@@ -36,6 +37,6 @@ export class DataTableComponent {
   readonly showCols = signal(false);
 
   getStatusLabel(s: string): string {
-    return s === 'all' ? 'All' : (this.statusLabels()[s] ?? s);
+    return resolveStatusLabel(s, this.statusLabels());
   }
 }

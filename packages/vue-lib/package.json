@@ -34,8 +34,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build && vue-tsc --emitDeclarationOnly --declarationDir dist",
-    "build:prod": "vite build && vue-tsc --emitDeclarationOnly --declarationDir dist",
+    "build": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist",
+    "build:prod": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -48,11 +48,13 @@
   "peerDependencies": {
     "@m2s2/models": "2.4.0",
     "@m2s2/tokens": "2.2.1",
+    "@m2s2/utils": "1.0.0",
     "vue": ">=3.0.0"
   },
   "devDependencies": {
     "@m2s2/models": "2.4.0",
     "@m2s2/tokens": "2.2.1",
+    "@m2s2/utils": "1.0.0",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/vue3-vite": "^10.3.6",
     "@vitejs/plugin-vue": "^5.2.3",

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ColumnDef } from '@m2s2/models';
+import { getStatusLabel } from '@m2s2/utils';
 import './DataTable.scss';
 
 interface DataTableProps {
@@ -49,10 +50,6 @@ export function DataTable({
     return () => document.removeEventListener('click', handleClick);
   }, [showCols]);
 
-  function getStatusLabel(s: string) {
-    return s === 'all' ? 'All' : (statusLabels[s] ?? s);
-  }
-
   if (totalCount === 0) {
     return (
       <div className="table-panel">
@@ -80,7 +77,7 @@ export function DataTable({
                   className={`dt-pill${statusFilter === s ? ' dt-pill--active' : ''}`}
                   onClick={() => onStatusChange?.(s)}
                 >
-                  {getStatusLabel(s)}
+                  {getStatusLabel(s, statusLabels)}
                 </button>
               ))}
             </div>
