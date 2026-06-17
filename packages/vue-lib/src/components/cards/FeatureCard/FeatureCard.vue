@@ -9,14 +9,36 @@ defineProps<{ config: FeatureCardConfig }>();
   <BaseCard :featured="config.featured ?? false">
     <div class="fc-header">
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-if="config.icon" class="fc-icon" aria-hidden="true" v-html="config.icon" />
-      <h2 class="fc-title">{{ config.title }}</h2>
+      <span
+        v-if="config.icon"
+        class="fc-icon"
+        aria-hidden="true"
+        v-html="config.icon"
+      />
+      <h2 class="fc-title">
+        {{ config.title }}
+      </h2>
     </div>
-    <p class="fc-body">{{ config.body }}</p>
-    <ul v-if="config.items?.length" class="fc-list">
-      <li v-for="item in config.items" :key="item">{{ item }}</li>
+    <p class="fc-body">
+      {{ config.body }}
+    </p>
+    <ul
+      v-if="config.items?.length"
+      class="fc-list"
+    >
+      <li
+        v-for="item in config.items"
+        :key="item"
+      >
+        {{ item }}
+      </li>
     </ul>
-    <p v-if="config.note" class="fc-note">{{ config.note }}</p>
+    <p
+      v-if="config.note"
+      class="fc-note"
+    >
+      {{ config.note }}
+    </p>
   </BaseCard>
 </template>
 

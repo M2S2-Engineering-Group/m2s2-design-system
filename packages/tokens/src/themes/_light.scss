@@ -49,16 +49,15 @@
   // ── Gradients ───────────────────────────────────────────────────────────────
   --gradient-brand:        linear-gradient(90deg, var(--purple-800) 0%, var(--purple-700) 50%, var(--cyan-900) 100%);
   --gradient-brand-135:    linear-gradient(135deg, var(--purple-800) 0%, var(--cyan-900) 100%);
-  --gradient-nav-bar:      linear-gradient(90deg, rgba(64,6,144,1) 0%, rgba(109,7,152,1) 62%, rgba(0,212,255,1) 100%);
+  --gradient-nav-bar:      linear-gradient(90deg, rgb(64 6 144 / 100%) 0%, rgb(109 7 152 / 100%) 62%, rgb(0 212 255 / 100%) 100%);
 
   // ── Semantic States ─────────────────────────────────────────────────────────
   --color-error:            var(--red-700);      // 6.0:1 on --color-surface ✓
   --color-success:          var(--green-700);    // 5.1:1 on --color-surface ✓
   --color-warning:          var(--yellow-700);   // 4.7:1 on --color-surface ✓
   --color-info:             var(--blue-700);     // 5.1:1 on --color-surface ✓
-
-  --color-error-bg:         rgba(185,  28,  28, 0.12);
-  --color-success-bg:       rgba(21,  128,  61, 0.12);
-  --color-warning-bg:       rgba(180,  83,   9, 0.12);
-  --color-info-bg:          rgba(3,   105, 161, 0.12);
+  --color-error-bg:         rgb(185  28  28 / 12%);
+  --color-success-bg:       rgb(21  128  61 / 12%);
+  --color-warning-bg:       rgb(180  83   9 / 12%);
+  --color-info-bg:          rgb(3   105 161 / 12%);
 }

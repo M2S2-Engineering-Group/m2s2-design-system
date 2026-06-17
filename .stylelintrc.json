@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "scss/dollar-variable-pattern": null,
+    "scss/at-mixin-pattern": null,
+    "scss/comment-no-empty": null,
+    "custom-property-pattern": null,
+    "color-named": null,
+    "declaration-block-single-line-max-declarations": null,
+    "selector-class-pattern": null
+  }
+}

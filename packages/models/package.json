@@ -25,7 +25,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "build:prod": "tsc"
+    "build:prod": "tsc",
+    "lint": "eslint \"src/**/*.ts\""
   },
   "devDependencies": {
     "typescript": "~5.9.3"

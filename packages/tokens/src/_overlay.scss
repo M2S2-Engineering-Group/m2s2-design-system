@@ -7,7 +7,7 @@
     background:    var(--color-surface) !important;
     border:        1px solid var(--color-border) !important;
     border-radius: 14px !important;
-    box-shadow:    0 24px 64px rgba(0, 0, 0, 0.5) !important;
+    box-shadow:    0 24px 64px rgb(0 0 0 / 50%) !important;
     color:         var(--color-on-surface);
     overflow:      hidden;
     padding:       0 !important; // layout handled by our header/body/footer
@@ -31,7 +31,7 @@
     background:    var(--color-surface) !important;
     border:        1px solid var(--color-border) !important;
     border-radius: 0 !important;
-    box-shadow:    -8px 0 48px rgba(0, 0, 0, 0.4) !important;
+    box-shadow:    -8px 0 48px rgb(0 0 0 / 40%) !important;
     color:         var(--color-on-surface);
     overflow:      hidden;
     padding:       0 !important;
@@ -47,11 +47,11 @@
 
 .m2s2-panel--left .mat-mdc-dialog-surface {
   animation: m2s2-slide-in-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 8px 0 48px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 8px 0 48px rgb(0 0 0 / 40%) !important;
 }
 
 // ── Branded backdrop ─────────────────────────────────────────────────────────
 .cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgb(0 0 0 / 60%);
   backdrop-filter: blur(2px);
 }

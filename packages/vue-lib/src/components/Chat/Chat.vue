@@ -17,8 +17,10 @@ const props = withDefaults(defineProps<{
   subtitle:    'Ask anything about software architecture, cloud design, or engineering decisions.',
   placeholder: 'Ask a question...',
   maxMessages: 6,
-  ctaLabel:    'Start a Conversation',
-  ctaUrl:      '/contact',
+  ctaLabel:         'Start a Conversation',
+  ctaUrl:           '/contact',
+  userAvatarUrl:    undefined,
+  assistantAvatarUrl: undefined,
 });
 
 type SendState = 'idle' | 'sending' | 'error';
@@ -75,28 +77,77 @@ function onKeydown(e: KeyboardEvent) {
       :aria-label="open ? 'Close chat' : 'Open chat'"
       @click="open = !open"
     >
-      <svg v-if="open" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <svg
+        v-if="open"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M15 5L5 15M5 5l10 10"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
       </svg>
-      <svg v-else width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg
+        v-else
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </button>
 
     <!-- Panel -->
-    <div v-if="open" class="chat-panel" role="dialog" :aria-label="title">
-
+    <div
+      v-if="open"
+      class="chat-panel"
+      role="dialog"
+      :aria-label="title"
+    >
       <div class="chat-header">
-        <img v-if="assistantAvatarUrl" class="chat-header__avatar" :src="assistantAvatarUrl" alt="" aria-hidden="true" />
+        <img
+          v-if="assistantAvatarUrl"
+          class="chat-header__avatar"
+          :src="assistantAvatarUrl"
+          alt=""
+          aria-hidden="true"
+        >
         <div class="chat-header__text">
-          <p class="chat-header__title">{{ title }}</p>
-          <p v-if="messages.length === 0" class="chat-header__subtitle">{{ subtitle }}</p>
+          <p class="chat-header__title">
+            {{ title }}
+          </p>
+          <p
+            v-if="messages.length === 0"
+            class="chat-header__subtitle"
+          >
+            {{ subtitle }}
+          </p>
         </div>
       </div>
 
-      <div class="chat-messages" ref="listEl">
-        <p v-if="messages.length === 0" class="chat-empty">Send a message to get started.</p>
+      <div
+        ref="listEl"
+        class="chat-messages"
+      >
+        <p
+          v-if="messages.length === 0"
+          class="chat-empty"
+        >
+          Send a message to get started.
+        </p>
 
         <div
           v-for="(msg, i) in messages"
@@ -104,29 +155,97 @@ function onKeydown(e: KeyboardEvent) {
           class="chat-message"
           :class="`chat-message--${msg.role}`"
         >
-          <span v-if="msg.role === 'assistant'" class="chat-avatar chat-avatar--assistant">
-            <img v-if="assistantAvatarUrl" :src="assistantAvatarUrl" alt="" aria-hidden="true" />
-            <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <span
+            v-if="msg.role === 'assistant'"
+            class="chat-avatar chat-avatar--assistant"
+          >
+            <img
+              v-if="assistantAvatarUrl"
+              :src="assistantAvatarUrl"
+              alt=""
+              aria-hidden="true"
+            >
+            <svg
+              v-else
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </span>
-          <p class="chat-message__text">{{ msg.content }}</p>
-          <span v-if="msg.role === 'user'" class="chat-avatar chat-avatar--user">
-            <img v-if="userAvatarUrl" :src="userAvatarUrl" alt="" aria-hidden="true" />
-            <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <p class="chat-message__text">
+            {{ msg.content }}
+          </p>
+          <span
+            v-if="msg.role === 'user'"
+            class="chat-avatar chat-avatar--user"
+          >
+            <img
+              v-if="userAvatarUrl"
+              :src="userAvatarUrl"
+              alt=""
+              aria-hidden="true"
+            >
+            <svg
+              v-else
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="12"
+                cy="8"
+                r="4"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="M4 20c0-4 3.6-7 8-7s8 3 8 7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
             </svg>
           </span>
         </div>
 
-        <div v-if="sendState === 'sending'" class="chat-message chat-message--assistant">
+        <div
+          v-if="sendState === 'sending'"
+          class="chat-message chat-message--assistant"
+        >
           <span class="chat-avatar chat-avatar--assistant">
-            <img v-if="assistantAvatarUrl" :src="assistantAvatarUrl" alt="" aria-hidden="true" />
-            <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <img
+              v-if="assistantAvatarUrl"
+              :src="assistantAvatarUrl"
+              alt=""
+              aria-hidden="true"
+            >
+            <svg
+              v-else
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </span>
           <span class="chat-typing">
@@ -135,9 +254,17 @@ function onKeydown(e: KeyboardEvent) {
         </div>
       </div>
 
-      <div v-if="limitReached" class="chat-cta">
-        <p class="chat-cta__text">Ready to go deeper? Let's talk through your specific situation.</p>
-        <a class="chat-cta__btn" :href="ctaUrl">{{ ctaLabel }}</a>
+      <div
+        v-if="limitReached"
+        class="chat-cta"
+      >
+        <p class="chat-cta__text">
+          Ready to go deeper? Let's talk through your specific situation.
+        </p>
+        <a
+          class="chat-cta__btn"
+          :href="ctaUrl"
+        >{{ ctaLabel }}</a>
       </div>
 
       <template v-if="!limitReached">
@@ -156,15 +283,30 @@ function onKeydown(e: KeyboardEvent) {
             aria-label="Send"
             @click="submit"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </button>
         </div>
-        <p v-if="sendState === 'error'" class="chat-error">Something went wrong — please try again.</p>
+        <p
+          v-if="sendState === 'error'"
+          class="chat-error"
+        >
+          Something went wrong — please try again.
+        </p>
       </template>
-
     </div>
   </div>
 </template>

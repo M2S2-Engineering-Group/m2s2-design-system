@@ -6,12 +6,19 @@ defineProps<{ stats: StatItem[] }>();
 
 <template>
   <div class="sr-row">
-    <template v-for="(stat, i) in stats" :key="stat.label">
+    <template
+      v-for="(stat, i) in stats"
+      :key="stat.label"
+    >
       <div class="sr-item">
         <span class="sr-value">{{ stat.value }}</span>
         <span class="sr-label">{{ stat.label }}</span>
       </div>
-      <div v-if="i < stats.length - 1" class="sr-divider" aria-hidden="true" />
+      <div
+        v-if="i < stats.length - 1"
+        class="sr-divider"
+        aria-hidden="true"
+      />
     </template>
   </div>
 </template>

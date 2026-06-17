@@ -6,8 +6,12 @@ defineProps<{ config: PageHeaderConfig }>();
 
 <template>
   <header class="m2s2-page-header">
-    <h1 class="page-title">{{ config.title }}</h1>
-    <p class="page-subtitle">{{ config.subtitle }}</p>
+    <h1 class="page-title">
+      {{ config.title }}
+    </h1>
+    <p class="page-subtitle">
+      {{ config.subtitle }}
+    </p>
   </header>
 </template>
 

@@ -14,22 +14,34 @@ defineProps<{ config: BlogCardConfig }>();
         :alt="config.title"
         class="bc-cover-img"
         loading="lazy"
-      />
-      <div v-else class="bc-cover-placeholder">
+      >
+      <div
+        v-else
+        class="bc-cover-placeholder"
+      >
         <span class="bc-cover-tag">{{ config.tags[0] }}</span>
       </div>
     </div>
     <div class="bc-inner">
       <div class="bc-meta">
         <time :dateTime="config.date">{{ formatBlogDate(config.date) }}</time>
-        <span v-if="config.readingTime" class="bc-reading-time">{{ config.readingTime }} min read</span>
+        <span
+          v-if="config.readingTime"
+          class="bc-reading-time"
+        >{{ config.readingTime }} min read</span>
       </div>
       <h2 class="bc-title">
         <a :href="`/blog/${config.slug}`">{{ config.title }}</a>
       </h2>
-      <p class="bc-summary">{{ config.summary }}</p>
+      <p class="bc-summary">
+        {{ config.summary }}
+      </p>
       <div class="bc-tags">
-        <span v-for="tag in config.tags" :key="tag" class="bc-tag">{{ tag }}</span>
+        <span
+          v-for="tag in config.tags"
+          :key="tag"
+          class="bc-tag"
+        >{{ tag }}</span>
       </div>
     </div>
   </div>

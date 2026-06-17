@@ -8,10 +8,17 @@ defineProps<{ config: CtaConfig }>();
   <section class="m2s2-cta-section">
     <div class="cta-card">
       <div class="cta-text">
-        <h2 class="cta-title">{{ config.title }}</h2>
-        <p class="cta-body">{{ config.body }}</p>
+        <h2 class="cta-title">
+          {{ config.title }}
+        </h2>
+        <p class="cta-body">
+          {{ config.body }}
+        </p>
       </div>
-      <a :href="config.route" class="cta-btn">{{ config.label }}</a>
+      <a
+        :href="config.route"
+        class="cta-btn"
+      >{{ config.label }}</a>
     </div>
   </section>
 </template>

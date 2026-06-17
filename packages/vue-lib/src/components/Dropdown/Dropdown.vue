@@ -35,24 +35,30 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="m2s2-dropdown" ref="root">
+  <div
+    ref="root"
+    class="m2s2-dropdown"
+  >
     <div
       class="m2s2-dropdown__trigger"
       :aria-haspopup="'menu'"
       :aria-expanded="open"
-      @click="open = !open">
+      @click="open = !open"
+    >
       <slot />
     </div>
 
     <ul
       v-if="open"
       :class="['m2s2-dropdown__menu', `m2s2-dropdown__menu--${align}`]"
-      role="menu">
+      role="menu"
+    >
       <DropdownItemComponent
         v-for="item in items"
         :key="item.id"
         :item="item"
-        @select="open = false" />
+        @select="open = false"
+      />
     </ul>
   </div>
 </template>

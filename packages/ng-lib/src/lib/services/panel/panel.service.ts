@@ -1,5 +1,4 @@
 import { Injectable, inject, Type } from '@angular/core';
-import { ComponentType } from '@angular/cdk/overlay';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { M2S2PanelComponent } from '../../components/panel/panel.component';
 import { NgM2S2PanelData } from '../../models/panel/panel.model';

@@ -13,7 +13,10 @@ const year = new Date().getFullYear();
       <span class="footer-copy">
         &copy; {{ year }} {{ config.brandName }} &mdash; All Rights Reserved
       </span>
-      <nav class="footer-social" aria-label="Social links">
+      <nav
+        class="footer-social"
+        aria-label="Social links"
+      >
         <a
           v-for="link in config.links"
           :key="link.type"

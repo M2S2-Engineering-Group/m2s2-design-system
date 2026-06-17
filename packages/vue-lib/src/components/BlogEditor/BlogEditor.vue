@@ -10,7 +10,10 @@ const props = withDefaults(defineProps<{
   initialPost?: BlogPost;
   /** Set to the S3 URL after the platform has uploaded the selected cover image. */
   coverImageUrl?: string;
-}>(), {});
+}>(), {
+  initialPost: undefined,
+  coverImageUrl: undefined,
+});
 
 const emit = defineEmits<{
   /** Emits the assembled draft when the user clicks Publish. */
@@ -146,91 +149,169 @@ function onPublish() {
 
 <template>
   <div class="be-root">
-
     <!-- ── Metadata ──────────────────────────────────────────────────────── -->
     <section class="be-meta">
-
       <div class="be-field be-field--full">
         <label class="be-label">Title <span class="be-required">*</span></label>
-        <input class="be-input" type="text" :value="title" @input="onTitleChange" placeholder="Post title…" />
+        <input
+          class="be-input"
+          type="text"
+          :value="title"
+          placeholder="Post title…"
+          @input="onTitleChange"
+        >
       </div>
 
       <div class="be-field">
         <label class="be-label">Slug</label>
-        <input class="be-input" type="text" v-model="slug" @input="slugEdited = true" placeholder="post-slug" />
+        <input
+          v-model="slug"
+          class="be-input"
+          type="text"
+          placeholder="post-slug"
+          @input="slugEdited = true"
+        >
       </div>
 
       <div class="be-field">
         <label class="be-label">Date</label>
-        <input class="be-input" type="date" v-model="date" />
+        <input
+          v-model="date"
+          class="be-input"
+          type="date"
+        >
       </div>
 
       <div class="be-field be-field--full">
         <label class="be-label">Summary <span class="be-required">*</span></label>
-        <textarea class="be-input be-input--textarea" rows="2" v-model="summary" placeholder="Short description shown in blog listings…" />
+        <textarea
+          v-model="summary"
+          class="be-input be-input--textarea"
+          rows="2"
+          placeholder="Short description shown in blog listings…"
+        />
       </div>
 
       <div class="be-field be-field--full">
         <label class="be-label">Excerpt <span class="be-optional">(optional)</span></label>
-        <textarea class="be-input be-input--textarea" rows="2" v-model="excerpt" placeholder="Longer teaser for social previews…" />
+        <textarea
+          v-model="excerpt"
+          class="be-input be-input--textarea"
+          rows="2"
+          placeholder="Longer teaser for social previews…"
+        />
       </div>
 
       <div class="be-field">
         <label class="be-label">Tags</label>
         <div class="be-tags">
-          <span v-for="tag in tags" :key="tag" class="be-tag">
+          <span
+            v-for="tag in tags"
+            :key="tag"
+            class="be-tag"
+          >
             {{ tag }}
-            <button type="button" class="be-tag__remove" @click="removeTag(tag)" :aria-label="`Remove tag ${tag}`">×</button>
+            <button
+              type="button"
+              class="be-tag__remove"
+              :aria-label="`Remove tag ${tag}`"
+              @click="removeTag(tag)"
+            >×</button>
           </span>
-          <input class="be-tag-input" type="text" v-model="tagInput" @keydown="onTagKeydown" placeholder="Add tag, press Enter…" />
+          <input
+            v-model="tagInput"
+            class="be-tag-input"
+            type="text"
+            placeholder="Add tag, press Enter…"
+            @keydown="onTagKeydown"
+          >
         </div>
       </div>
 
       <div class="be-field">
         <label class="be-label">Reading time (min)</label>
-        <input class="be-input be-input--narrow" type="number" min="1" v-model.number="readingTime" />
+        <input
+          v-model.number="readingTime"
+          class="be-input be-input--narrow"
+          type="number"
+          min="1"
+        >
       </div>
 
       <div class="be-field be-field--cover">
         <label class="be-label">Cover Image</label>
         <div class="be-cover">
-          <img v-if="previewUrl" class="be-cover__preview" :src="previewUrl" alt="Cover preview" />
+          <img
+            v-if="previewUrl"
+            class="be-cover__preview"
+            :src="previewUrl"
+            alt="Cover preview"
+          >
           <label class="be-cover__pick">
             {{ previewUrl ? 'Replace' : 'Choose image' }}
-            <input type="file" accept="image/*" @change="onCoverChange" hidden />
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              @change="onCoverChange"
+            >
           </label>
         </div>
       </div>
 
-      <div class="be-field-group-label">Series <span class="be-optional">(optional)</span></div>
+      <div class="be-field-group-label">
+        Series <span class="be-optional">(optional)</span>
+      </div>
 
       <div class="be-field">
         <label class="be-label">Series ID</label>
-        <input class="be-input" type="text" v-model="seriesId" placeholder="e.g. go-backend" />
+        <input
+          v-model="seriesId"
+          class="be-input"
+          type="text"
+          placeholder="e.g. go-backend"
+        >
       </div>
 
       <div class="be-field">
         <label class="be-label">Series Title</label>
-        <input class="be-input" type="text" v-model="seriesTitle" placeholder="e.g. Go Backend Series" />
+        <input
+          v-model="seriesTitle"
+          class="be-input"
+          type="text"
+          placeholder="e.g. Go Backend Series"
+        >
       </div>
 
       <div class="be-field be-field--narrow-pair">
         <div>
           <label class="be-label">Part</label>
-          <input class="be-input be-input--narrow" type="number" min="1" v-model.number="seriesPart" />
+          <input
+            v-model.number="seriesPart"
+            class="be-input be-input--narrow"
+            type="number"
+            min="1"
+          >
         </div>
         <div>
           <label class="be-label">Total Parts</label>
-          <input class="be-input be-input--narrow" type="number" min="1" v-model.number="seriesTotal" />
+          <input
+            v-model.number="seriesTotal"
+            class="be-input be-input--narrow"
+            type="number"
+            min="1"
+          >
         </div>
       </div>
-
     </section>
 
     <!-- ── Editor ────────────────────────────────────────────────────────── -->
     <section class="be-editor">
-
-      <div class="be-toolbar" role="toolbar" aria-label="Formatting">
+      <div
+        class="be-toolbar"
+        role="toolbar"
+        aria-label="Formatting"
+      >
         <button
           v-for="item in BLOG_EDITOR_TOOLBAR"
           :key="item.label"
@@ -238,40 +319,52 @@ function onPublish() {
           class="be-toolbar__btn"
           :title="item.label"
           @click="applyFormat(item)"
-        >{{ item.icon }}</button>
+        >
+          {{ item.icon }}
+        </button>
       </div>
 
       <div class="be-panes">
         <div class="be-pane be-pane--write">
-          <div class="be-pane__label">Markdown</div>
+          <div class="be-pane__label">
+            Markdown
+          </div>
           <textarea
             ref="textareaEl"
             class="be-pane__textarea"
             :value="content"
-            @input="onContentChange"
             placeholder="Write your post in markdown…"
             spellcheck="true"
+            @input="onContentChange"
           />
         </div>
 
         <div class="be-pane be-pane--preview">
-          <div class="be-pane__label">Preview</div>
+          <div class="be-pane__label">
+            Preview
+          </div>
           <!-- content is authored by the admin user — trusted HTML -->
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <div class="be-pane__preview prose" v-html="renderedHtml" />
+          <div
+            class="be-pane__preview prose"
+            v-html="renderedHtml"
+          />
         </div>
       </div>
-
     </section>
 
     <!-- ── Footer ────────────────────────────────────────────────────────── -->
     <footer class="be-footer">
       <span class="be-footer__meta">~{{ readingTime }} min read</span>
-      <button type="button" class="be-publish" :disabled="!canPublish" @click="onPublish">
+      <button
+        type="button"
+        class="be-publish"
+        :disabled="!canPublish"
+        @click="onPublish"
+      >
         Publish Post
       </button>
     </footer>
-
   </div>
 </template>
 

@@ -334,7 +334,6 @@ export function BlogEditor({
           <div className="be-pane be-pane--preview">
             <div className="be-pane__label">Preview</div>
             {/* content is authored by the admin user — trusted HTML */}
-            {/* eslint-disable-next-line react/no-danger */}
             <div className="be-pane__preview prose" dangerouslySetInnerHTML={{ __html: renderedHtml }} />
           </div>
         </div>

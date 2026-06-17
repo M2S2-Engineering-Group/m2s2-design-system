@@ -94,7 +94,9 @@ const gradients = gradientTokens;
   <div class="configurator">
     <header class="config-header">
       <div class="config-header-inner">
-        <h1 class="config-title">Brand Configurator</h1>
+        <h1 class="config-title">
+          Brand Configurator
+        </h1>
         <p class="config-subtitle">
           Customize the design tokens that power every component in the library.
           Changes apply live to the entire Storybook instance — navigate to any
@@ -110,22 +112,43 @@ const gradients = gradientTokens;
           :class="{ 'preset-btn--active': activePreset === theme.key }"
           @click="applyPreset(theme.key)"
         >
-          <span class="preset-swatch" :style="{ background: theme.gradientBrand135 }"></span>
+          <span
+            class="preset-swatch"
+            :style="{ background: theme.gradientBrand135 }"
+          />
           {{ theme.label }}
         </button>
-        <button class="preset-btn preset-btn--reset" @click="reset()">Reset</button>
+        <button
+          class="preset-btn preset-btn--reset"
+          @click="reset()"
+        >
+          Reset
+        </button>
       </div>
     </header>
 
     <div class="config-body">
       <section class="token-section">
-        <h2 class="section-title">Primary Color</h2>
+        <h2 class="section-title">
+          Primary Color
+        </h2>
         <div class="token-grid">
-          <div v-for="t in primary" :key="t.cssVar" class="token-row">
+          <div
+            v-for="t in primary"
+            :key="t.cssVar"
+            class="token-row"
+          >
             <div class="token-swatch-wrap">
-              <input type="color" class="color-picker" :value="getValue(t.cssVar)"
-                     @input="setVar(t.cssVar, ($event.target as HTMLInputElement).value)" />
-              <div class="token-swatch" :style="{ background: getValue(t.cssVar) }"></div>
+              <input
+                type="color"
+                class="color-picker"
+                :value="getValue(t.cssVar)"
+                @input="setVar(t.cssVar, ($event.target as HTMLInputElement).value)"
+              >
+              <div
+                class="token-swatch"
+                :style="{ background: getValue(t.cssVar) }"
+              />
             </div>
             <div class="token-info">
               <span class="token-label">{{ t.label }}</span>
@@ -137,13 +160,26 @@ const gradients = gradientTokens;
       </section>
 
       <section class="token-section">
-        <h2 class="section-title">Secondary Color</h2>
+        <h2 class="section-title">
+          Secondary Color
+        </h2>
         <div class="token-grid">
-          <div v-for="t in secondary" :key="t.cssVar" class="token-row">
+          <div
+            v-for="t in secondary"
+            :key="t.cssVar"
+            class="token-row"
+          >
             <div class="token-swatch-wrap">
-              <input type="color" class="color-picker" :value="getValue(t.cssVar)"
-                     @input="setVar(t.cssVar, ($event.target as HTMLInputElement).value)" />
-              <div class="token-swatch" :style="{ background: getValue(t.cssVar) }"></div>
+              <input
+                type="color"
+                class="color-picker"
+                :value="getValue(t.cssVar)"
+                @input="setVar(t.cssVar, ($event.target as HTMLInputElement).value)"
+              >
+              <div
+                class="token-swatch"
+                :style="{ background: getValue(t.cssVar) }"
+              />
             </div>
             <div class="token-info">
               <span class="token-label">{{ t.label }}</span>
@@ -155,22 +191,37 @@ const gradients = gradientTokens;
       </section>
 
       <section class="token-section">
-        <h2 class="section-title">Gradients</h2>
+        <h2 class="section-title">
+          Gradients
+        </h2>
         <div class="gradient-grid">
-          <div v-for="g in gradients" :key="g.cssVar" class="gradient-row">
+          <div
+            v-for="g in gradients"
+            :key="g.cssVar"
+            class="gradient-row"
+          >
             <div class="gradient-stops">
               <div class="stop-wrap">
                 <span class="stop-label">Start</span>
-                <input type="color" class="color-picker color-picker--sm"
-                       :value="gradientStops[g.startKey]"
-                       @input="onGradientChange(g, 'start', ($event.target as HTMLInputElement).value)" />
+                <input
+                  type="color"
+                  class="color-picker color-picker--sm"
+                  :value="gradientStops[g.startKey]"
+                  @input="onGradientChange(g, 'start', ($event.target as HTMLInputElement).value)"
+                >
               </div>
-              <div class="gradient-preview" :style="{ background: getValue(g.cssVar) }"></div>
+              <div
+                class="gradient-preview"
+                :style="{ background: getValue(g.cssVar) }"
+              />
               <div class="stop-wrap">
                 <span class="stop-label">End</span>
-                <input type="color" class="color-picker color-picker--sm"
-                       :value="gradientStops[g.endKey]"
-                       @input="onGradientChange(g, 'end', ($event.target as HTMLInputElement).value)" />
+                <input
+                  type="color"
+                  class="color-picker color-picker--sm"
+                  :value="gradientStops[g.endKey]"
+                  @input="onGradientChange(g, 'end', ($event.target as HTMLInputElement).value)"
+                >
               </div>
             </div>
             <div class="token-info">
@@ -182,13 +233,20 @@ const gradients = gradientTokens;
       </section>
 
       <section class="token-section">
-        <h2 class="section-title">Export CSS Variables</h2>
+        <h2 class="section-title">
+          Export CSS Variables
+        </h2>
         <p class="section-note">
           Copy these variables into your app's <code>styles.scss</code> or a
           <code>brand-override.scss</code> file to apply your brand globally.
         </p>
         <pre class="export-block">{{ exportCss }}</pre>
-        <button class="copy-btn" @click="copy()">{{ copied ? '✓ Copied!' : 'Copy to clipboard' }}</button>
+        <button
+          class="copy-btn"
+          @click="copy()"
+        >
+          {{ copied ? '✓ Copied!' : 'Copy to clipboard' }}
+        </button>
       </section>
     </div>
   </div>

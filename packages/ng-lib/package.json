@@ -22,6 +22,7 @@
   },
   "scripts": {
     "build": "cd ../.. && ng build --project=m2s2-ng-lib",
+    "lint": "eslint \"src/**/*.ts\" \"src/**/*.html\"",
     "build:prod": "cd ../.. && ng build --project=m2s2-ng-lib -c production",
     "test": "cd ../.. && ng test --project=m2s2-ng-lib",
     "storybook": "cd ../.. && ng run m2s2-ng-lib:storybook",

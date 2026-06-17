@@ -25,7 +25,11 @@ function onBackdropClick(): void {
 <template>
   <Teleport to="body">
     <Transition name="panel-overlay-fade">
-      <div v-if="open" class="m2s2-panel-overlay" @click.self="onBackdropClick" />
+      <div
+        v-if="open"
+        class="m2s2-panel-overlay"
+        @click.self="onBackdropClick"
+      />
     </Transition>
     <Transition :name="`panel-slide-${side()}`">
       <div
@@ -39,18 +43,43 @@ function onBackdropClick(): void {
       >
         <div class="panel-header">
           <div class="panel-header-text">
-            <h2 id="panel-title" class="panel-title">{{ data.title }}</h2>
-            <p v-if="data.subtitle" class="panel-subtitle">{{ data.subtitle }}</p>
+            <h2
+              id="panel-title"
+              class="panel-title"
+            >
+              {{ data.title }}
+            </h2>
+            <p
+              v-if="data.subtitle"
+              class="panel-subtitle"
+            >
+              {{ data.subtitle }}
+            </p>
           </div>
-          <button v-if="!data.modal" class="panel-close" aria-label="Close" @click="emit('close')">&#x2715;</button>
+          <button
+            v-if="!data.modal"
+            class="panel-close"
+            aria-label="Close"
+            @click="emit('close')"
+          >
+            &#x2715;
+          </button>
         </div>
 
         <div class="panel-body">
-          <p v-if="data.message && !$slots.default" class="panel-message">{{ data.message }}</p>
+          <p
+            v-if="data.message && !$slots.default"
+            class="panel-message"
+          >
+            {{ data.message }}
+          </p>
           <slot />
         </div>
 
-        <div v-if="data.actions?.length" class="panel-footer">
+        <div
+          v-if="data.actions?.length"
+          class="panel-footer"
+        >
           <button
             v-for="action in data.actions"
             :key="action.label"

@@ -79,21 +79,33 @@ onUnmounted(() => {
     }"
   >
     <!-- Brand -->
-    <a class="navbar-brand" :href="config.brandPath">
+    <a
+      class="navbar-brand"
+      :href="config.brandPath"
+    >
       <img
         v-if="config.brandLogo"
         :src="config.brandLogo"
         :alt="config.brand"
         class="navbar-brand-logo"
-      />
-      <span v-else class="navbar-brand-text">{{ config.brand }}</span>
+      >
+      <span
+        v-else
+        class="navbar-brand-text"
+      >{{ config.brand }}</span>
     </a>
 
     <span class="navbar-spacer" />
 
     <!-- Desktop nav -->
-    <nav class="navbar-desktop" aria-label="Main navigation">
-      <template v-for="btn in config.buttons" :key="btn.id">
+    <nav
+      class="navbar-desktop"
+      aria-label="Main navigation"
+    >
+      <template
+        v-for="btn in config.buttons"
+        :key="btn.id"
+      >
         <template v-if="isVisible(btn)">
           <!-- Regular link -->
           <a
@@ -106,16 +118,28 @@ onUnmounted(() => {
           </a>
 
           <!-- Dropdown -->
-          <div v-else class="navbar-dropdown-wrap">
+          <div
+            v-else
+            class="navbar-dropdown-wrap"
+          >
             <button
               class="navbar-nav-btn navbar-nav-btn--dropdown"
               :aria-expanded="openDropdownId === btn.id"
               @click.stop="toggleDropdown(btn.id)"
             >
-              {{ btn.title }} <span class="navbar-chevron" aria-hidden="true">▾</span>
+              {{ btn.title }} <span
+                class="navbar-chevron"
+                aria-hidden="true"
+              >▾</span>
             </button>
-            <div v-if="openDropdownId === btn.id" class="navbar-dropdown-content">
-              <template v-for="item in btn.dropdownItems" :key="item.id">
+            <div
+              v-if="openDropdownId === btn.id"
+              class="navbar-dropdown-content"
+            >
+              <template
+                v-for="item in btn.dropdownItems"
+                :key="item.id"
+              >
                 <a
                   v-if="isAnchorItem(item)"
                   class="navbar-dropdown-item"
@@ -123,7 +147,12 @@ onUnmounted(() => {
                   v-bind="item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
                   @click="closeDropdowns"
                 >
-                  <img v-if="item.imgSrc" :src="item.imgSrc" :alt="item.text" class="navbar-dropdown-img" />
+                  <img
+                    v-if="item.imgSrc"
+                    :src="item.imgSrc"
+                    :alt="item.text"
+                    class="navbar-dropdown-img"
+                  >
                   {{ item.text }}
                 </a>
                 <button
@@ -131,7 +160,12 @@ onUnmounted(() => {
                   class="navbar-dropdown-item"
                   @click="() => { item.onClick(); closeDropdowns(); }"
                 >
-                  <img v-if="item.imgSrc" :src="item.imgSrc" :alt="item.text" class="navbar-dropdown-img" />
+                  <img
+                    v-if="item.imgSrc"
+                    :src="item.imgSrc"
+                    :alt="item.text"
+                    class="navbar-dropdown-img"
+                  >
                   {{ item.text }}
                 </button>
               </template>
@@ -142,7 +176,10 @@ onUnmounted(() => {
     </nav>
 
     <!-- Account menu -->
-    <div v-if="config.loginButton" class="navbar-dropdown-wrap">
+    <div
+      v-if="config.loginButton"
+      class="navbar-dropdown-wrap"
+    >
       <button
         class="navbar-icon-btn"
         aria-label="Account menu"
@@ -154,16 +191,31 @@ onUnmounted(() => {
           :src="config.loginButton.profileImageUrl"
           alt="Profile"
           class="navbar-avatar"
-        />
-        <svg v-else class="navbar-account-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        >
+        <svg
+          v-else
+          class="navbar-account-icon"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
         </svg>
       </button>
-      <div v-if="openDropdownId === '__account__'" class="navbar-dropdown-content">
-        <div v-if="config.loginButton.userName && loggedIn" class="navbar-dropdown-user">
+      <div
+        v-if="openDropdownId === '__account__'"
+        class="navbar-dropdown-content"
+      >
+        <div
+          v-if="config.loginButton.userName && loggedIn"
+          class="navbar-dropdown-user"
+        >
           {{ config.loginButton.userName }}
         </div>
-        <template v-for="item in config.loginButton.dropdownItems" :key="item.id">
+        <template
+          v-for="item in config.loginButton.dropdownItems"
+          :key="item.id"
+        >
           <a
             v-if="isAnchorItem(item) && isVisible(item)"
             class="navbar-dropdown-item"
@@ -171,7 +223,12 @@ onUnmounted(() => {
             v-bind="item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
             @click="closeDropdowns"
           >
-            <img v-if="item.imgSrc" :src="item.imgSrc" :alt="item.text" class="navbar-dropdown-img" />
+            <img
+              v-if="item.imgSrc"
+              :src="item.imgSrc"
+              :alt="item.text"
+              class="navbar-dropdown-img"
+            >
             {{ item.text }}
           </a>
           <button
@@ -179,7 +236,12 @@ onUnmounted(() => {
             class="navbar-dropdown-item"
             @click="() => { item.onClick(); closeDropdowns(); }"
           >
-            <img v-if="item.imgSrc" :src="item.imgSrc" :alt="item.text" class="navbar-dropdown-img" />
+            <img
+              v-if="item.imgSrc"
+              :src="item.imgSrc"
+              :alt="item.text"
+              class="navbar-dropdown-img"
+            >
             {{ item.text }}
           </button>
         </template>
@@ -196,13 +258,23 @@ onUnmounted(() => {
       :aria-expanded="mobileOpen"
       @click="mobileOpen = !mobileOpen"
     >
-      <span class="navbar-hamburger" :class="{ 'navbar-hamburger--open': mobileOpen }" />
+      <span
+        class="navbar-hamburger"
+        :class="{ 'navbar-hamburger--open': mobileOpen }"
+      />
     </button>
   </header>
 
   <!-- Mobile drawer -->
-  <nav v-if="mobileOpen" class="navbar-mobile-menu" aria-label="Mobile navigation">
-    <template v-for="btn in config.buttons" :key="btn.id">
+  <nav
+    v-if="mobileOpen"
+    class="navbar-mobile-menu"
+    aria-label="Mobile navigation"
+  >
+    <template
+      v-for="btn in config.buttons"
+      :key="btn.id"
+    >
       <template v-if="isVisible(btn)">
         <a
           v-if="!btn.isDropdown"
@@ -214,7 +286,10 @@ onUnmounted(() => {
           {{ btn.title }}
         </a>
         <template v-else>
-          <template v-for="item in btn.dropdownItems" :key="item.id">
+          <template
+            v-for="item in btn.dropdownItems"
+            :key="item.id"
+          >
             <a
               v-if="isAnchorItem(item) && isVisible(item)"
               class="navbar-mobile-link"
@@ -226,13 +301,18 @@ onUnmounted(() => {
               v-else-if="isClickableItem(item) && isVisible(item)"
               class="navbar-mobile-link"
               @click="() => { item.onClick(); mobileOpen = false; }"
-            >{{ item.text }}</button>
+            >
+              {{ item.text }}
+            </button>
           </template>
         </template>
       </template>
     </template>
     <template v-if="config.loginButton">
-      <template v-for="item in config.loginButton.dropdownItems" :key="item.id">
+      <template
+        v-for="item in config.loginButton.dropdownItems"
+        :key="item.id"
+      >
         <a
           v-if="isAnchorItem(item) && isVisible(item)"
           class="navbar-mobile-link"
@@ -243,7 +323,9 @@ onUnmounted(() => {
           v-else-if="isClickableItem(item) && isVisible(item)"
           class="navbar-mobile-link"
           @click="() => { item.onClick(); mobileOpen = false; }"
-        >{{ item.text }}</button>
+        >
+          {{ item.text }}
+        </button>
       </template>
     </template>
   </nav>

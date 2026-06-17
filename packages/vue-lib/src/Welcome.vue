@@ -1,10 +1,16 @@
 <template>
   <div class="welcome">
     <div class="welcome-hero">
-      <h1 class="welcome-title">@m2s2/vue-lib</h1>
+      <h1 class="welcome-title">
+        @m2s2/vue-lib
+      </h1>
       <p class="welcome-subtitle">
         Vue 3 component library by
-        <a href="https://m2s2.io" target="_blank" rel="noopener">M²S² Engineering Group</a>
+        <a
+          href="https://m2s2.io"
+          target="_blank"
+          rel="noopener"
+        >M²S² Engineering Group</a>
         — production-ready UI components built with Vue 3, the Composition API,
         and CSS custom property theming.
       </p>
@@ -33,11 +39,21 @@
       <h2>Brand theming</h2>
       <p>Use the <strong>paintbrush icon</strong> in the toolbar to switch brand themes:</p>
       <div class="welcome-themes">
-        <div class="theme-chip theme-m2s2">M²S² Default</div>
-        <div class="theme-chip theme-ocean">Ocean Blue</div>
-        <div class="theme-chip theme-emerald">Emerald</div>
-        <div class="theme-chip theme-sunset">Sunset</div>
-        <div class="theme-chip theme-midnight">Midnight</div>
+        <div class="theme-chip theme-m2s2">
+          M²S² Default
+        </div>
+        <div class="theme-chip theme-ocean">
+          Ocean Blue
+        </div>
+        <div class="theme-chip theme-emerald">
+          Emerald
+        </div>
+        <div class="theme-chip theme-sunset">
+          Sunset
+        </div>
+        <div class="theme-chip theme-midnight">
+          Midnight
+        </div>
       </div>
       <p style="margin-top: 16px">
         Use the <strong>moon/sun icon</strong> to toggle between dark and light mode.

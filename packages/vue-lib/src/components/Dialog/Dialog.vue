@@ -27,7 +27,12 @@ function onKeydown(e: KeyboardEvent): void {
 <template>
   <Teleport to="body">
     <Transition name="dialog-fade">
-      <div v-if="open" class="m2s2-dialog-overlay" @click.self="onBackdropClick" @keydown="onKeydown">
+      <div
+        v-if="open"
+        class="m2s2-dialog-overlay"
+        @click.self="onBackdropClick"
+        @keydown="onKeydown"
+      >
         <div
           class="m2s2-dialog-content"
           role="dialog"
@@ -35,16 +40,36 @@ function onKeydown(e: KeyboardEvent): void {
           :aria-labelledby="'dialog-title'"
         >
           <div class="dialog-header">
-            <h2 id="dialog-title" class="dialog-title">{{ data.title }}</h2>
-            <button v-if="!data.modal" class="dialog-close" aria-label="Close" @click="emit('close')">&#x2715;</button>
+            <h2
+              id="dialog-title"
+              class="dialog-title"
+            >
+              {{ data.title }}
+            </h2>
+            <button
+              v-if="!data.modal"
+              class="dialog-close"
+              aria-label="Close"
+              @click="emit('close')"
+            >
+              &#x2715;
+            </button>
           </div>
 
           <div class="dialog-body">
-            <p v-if="data.message" class="dialog-message">{{ data.message }}</p>
+            <p
+              v-if="data.message"
+              class="dialog-message"
+            >
+              {{ data.message }}
+            </p>
             <slot />
           </div>
 
-          <div v-if="data.actions.length" class="dialog-footer">
+          <div
+            v-if="data.actions.length"
+            class="dialog-footer"
+          >
             <button
               v-for="action in data.actions"
               :key="action.label"

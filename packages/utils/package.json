@@ -30,6 +30,7 @@
   "scripts": {
     "build": "tsc",
     "build:prod": "tsc",
+    "lint": "eslint \"src/**/*.ts\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"

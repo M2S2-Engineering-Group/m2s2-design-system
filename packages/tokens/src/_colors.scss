@@ -54,22 +54,21 @@
   --color-border-subtle:    var(--neutral-700);
 
   // ── Scrollbar ───────────────────────────────────────────────────────────────
-  --color-scrollbar:        rgb(55, 2, 99);
+  --color-scrollbar:        rgb(55 2 99);
   --color-scrollbar-hover:  #3f0052;
 
   // ── Gradients ───────────────────────────────────────────────────────────────
   --gradient-brand:        linear-gradient(90deg, var(--purple-800) 0%, var(--purple-500) 50%, var(--cyan-400) 100%);
   --gradient-brand-135:    linear-gradient(135deg, var(--purple-800) 0%, var(--cyan-400) 100%);
-  --gradient-nav-bar:      linear-gradient(90deg, rgba(64,6,144,1) 0%, rgba(109,7,152,1) 62%, rgba(0,212,255,1) 100%);
+  --gradient-nav-bar:      linear-gradient(90deg, rgb(64 6 144 / 100%) 0%, rgb(109 7 152 / 100%) 62%, rgb(0 212 255 / 100%) 100%);
 
   // ── Semantic States ─────────────────────────────────────────────────────────
   --color-error:            var(--red-400);       // 5.3:1 on --color-surface ✓
   --color-success:          var(--green-400);     // 7.4:1 on --color-surface ✓
   --color-warning:          var(--yellow-400);    // 9.4:1 on --color-surface ✓
   --color-info:             var(--blue-400);      // 7.0:1 on --color-surface ✓
-
-  --color-error-bg:         rgba(248, 113, 113, 0.15);
-  --color-success-bg:       rgba(74,  222, 128, 0.15);
-  --color-warning-bg:       rgba(251, 191,  36, 0.15);
-  --color-info-bg:          rgba(56,  189, 248, 0.15);
+  --color-error-bg:         rgb(248 113 113 / 15%);
+  --color-success-bg:       rgb(74  222 128 / 15%);
+  --color-warning-bg:       rgb(251 191  36 / 15%);
+  --color-info-bg:          rgb(56  189 248 / 15%);
 }

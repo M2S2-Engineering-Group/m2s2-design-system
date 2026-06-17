@@ -57,7 +57,12 @@ function toggleCols(): void {
 
 <template>
   <div class="table-panel">
-    <p v-if="totalCount === 0" class="dt-empty">{{ emptyMessage }}</p>
+    <p
+      v-if="totalCount === 0"
+      class="dt-empty"
+    >
+      {{ emptyMessage }}
+    </p>
 
     <template v-else>
       <div class="dt-toolbar">
@@ -68,7 +73,7 @@ function toggleCols(): void {
             :placeholder="searchPlaceholder"
             :value="searchValue"
             @input="emit('searchChange', ($event.target as HTMLInputElement).value)"
-          />
+          >
           <div class="dt-pills">
             <button
               v-for="s in statuses"
@@ -83,15 +88,31 @@ function toggleCols(): void {
           <span class="dt-count">{{ filteredCount }} of {{ totalCount }}</span>
         </template>
 
-        <div v-if="columnDefs.length > 0" ref="colWrapRef" class="dt-col-wrap">
-          <button class="dt-col-btn" @click="toggleCols">&#9881; Columns</button>
-          <div v-if="showCols" class="dt-col-panel">
-            <label v-for="col in columnDefs" :key="col.key" class="dt-col-check">
+        <div
+          v-if="columnDefs.length > 0"
+          ref="colWrapRef"
+          class="dt-col-wrap"
+        >
+          <button
+            class="dt-col-btn"
+            @click="toggleCols"
+          >
+            &#9881; Columns
+          </button>
+          <div
+            v-if="showCols"
+            class="dt-col-panel"
+          >
+            <label
+              v-for="col in columnDefs"
+              :key="col.key"
+              class="dt-col-check"
+            >
               <input
                 type="checkbox"
                 :checked="colVisibility[col.key] ?? true"
                 @change="emit('colToggle', col.key)"
-              />
+              >
               {{ col.label }}
             </label>
           </div>

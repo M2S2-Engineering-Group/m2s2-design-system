@@ -6,13 +6,22 @@ defineProps<{ steps: ProcessStep[] }>();
 
 <template>
   <ol class="ps-steps">
-    <template v-for="(step, i) in steps" :key="step.num">
+    <template
+      v-for="(step, i) in steps"
+      :key="step.num"
+    >
       <li class="ps-step">
         <span class="ps-num">{{ step.num }}</span>
         <span class="ps-name">{{ step.name }}</span>
         <span class="ps-desc">{{ step.desc }}</span>
       </li>
-      <li v-if="i < steps.length - 1" class="ps-divider" aria-hidden="true">&#8594;</li>
+      <li
+        v-if="i < steps.length - 1"
+        class="ps-divider"
+        aria-hidden="true"
+      >
+        &#8594;
+      </li>
     </template>
   </ol>
 </template>

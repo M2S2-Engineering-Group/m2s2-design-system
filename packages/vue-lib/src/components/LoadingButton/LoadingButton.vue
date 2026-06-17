@@ -8,16 +8,27 @@ withDefaults(defineProps<{
   loadingText?: string;
 }>(), {
   loading: false,
+  loadingText: undefined,
 });
 
 const attrs = useAttrs();
 </script>
 
 <template>
-  <button v-bind="attrs" :disabled="loading || (attrs.disabled as boolean)" :aria-busy="loading">
-    <span v-if="loading" class="m2s2-btn-spinner" aria-hidden="true" />
+  <button
+    v-bind="attrs"
+    :disabled="loading || (attrs.disabled as boolean)"
+    :aria-busy="loading"
+  >
+    <span
+      v-if="loading"
+      class="m2s2-btn-spinner"
+      aria-hidden="true"
+    />
     <slot v-if="!loading || !loadingText" />
-    <template v-else>{{ loadingText }}</template>
+    <template v-else>
+      {{ loadingText }}
+    </template>
   </button>
 </template>
 

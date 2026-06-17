@@ -12,6 +12,9 @@ const props = withDefaults(defineProps<{
   unsubscribeAuth?: () => Promise<unknown>;
 }>(), {
   mode: 'anon',
+  subscribeAnon: undefined,
+  subscribeAuth: undefined,
+  unsubscribeAuth: undefined,
 });
 
 const email = ref('');
@@ -62,21 +65,24 @@ async function submit(): Promise<void> {
 <template>
   <!-- Anonymous mode -->
   <template v-if="mode === 'anon'">
-    <div v-if="state !== 'done'" class="sub-form">
+    <div
+      v-if="state !== 'done'"
+      class="sub-form"
+    >
       <input
         v-model="name"
         class="sub-input"
         type="text"
         placeholder="Your name (optional)"
         :disabled="state === 'submitting'"
-      />
+      >
       <input
         v-model="email"
         class="sub-input"
         type="email"
         placeholder="your@email.com"
         :disabled="state === 'submitting'"
-      />
+      >
       <button
         class="sub-btn"
         :disabled="!emailValid || state === 'submitting'"
@@ -84,31 +90,58 @@ async function submit(): Promise<void> {
       >
         {{ state === 'submitting' ? 'Submitting…' : 'Subscribe' }}
       </button>
-      <p v-if="state === 'error'" class="sub-feedback sub-feedback--error">
+      <p
+        v-if="state === 'error'"
+        class="sub-feedback sub-feedback--error"
+      >
         Something went wrong — please try again.
       </p>
     </div>
-    <div v-else class="sub-success">
+    <div
+      v-else
+      class="sub-success"
+    >
       <span class="sub-success-icon">✓</span>
-      <p class="sub-success-text">Check your email to confirm your subscription.</p>
+      <p class="sub-success-text">
+        Check your email to confirm your subscription.
+      </p>
     </div>
   </template>
 
   <!-- Auth mode -->
-  <div v-else class="sub-auth">
+  <div
+    v-else
+    class="sub-auth"
+  >
     <template v-if="!subscribed">
-      <button class="sub-btn" :disabled="state === 'submitting'" @click="submit">
+      <button
+        class="sub-btn"
+        :disabled="state === 'submitting'"
+        @click="submit"
+      >
         {{ state === 'submitting' ? 'Subscribing…' : 'Subscribe to Blog Updates' }}
       </button>
-      <p v-if="state === 'done'" class="sub-feedback sub-feedback--success">You're subscribed!</p>
+      <p
+        v-if="state === 'done'"
+        class="sub-feedback sub-feedback--success"
+      >
+        You're subscribed!
+      </p>
     </template>
     <template v-else>
       <span class="sub-subscribed-label">✓ Subscribed to blog updates</span>
-      <button class="sub-btn sub-btn--unsub" :disabled="state === 'submitting'" @click="submit">
+      <button
+        class="sub-btn sub-btn--unsub"
+        :disabled="state === 'submitting'"
+        @click="submit"
+      >
         {{ state === 'submitting' ? 'Unsubscribing…' : 'Unsubscribe' }}
       </button>
     </template>
-    <p v-if="state === 'error'" class="sub-feedback sub-feedback--error">
+    <p
+      v-if="state === 'error'"
+      class="sub-feedback sub-feedback--error"
+    >
       Something went wrong — please try again.
     </p>
   </div>

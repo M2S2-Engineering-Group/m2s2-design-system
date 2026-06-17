@@ -118,7 +118,7 @@ export function SubscribeForm({
             {state === 'submitting' ? 'Subscribing…' : 'Subscribe to Blog Updates'}
           </button>
           {state === 'done' && (
-            <p className="sub-feedback sub-feedback--success">You're subscribed!</p>
+            <p className="sub-feedback sub-feedback--success">You&apos;re subscribed!</p>
           )}
         </>
       ) : (

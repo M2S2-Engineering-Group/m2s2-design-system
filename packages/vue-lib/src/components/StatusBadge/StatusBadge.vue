@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
   variant?: StatusBadgeVariant;
 }>(), {
   variant: 'badge',
+  label: undefined,
 });
 
 const displayLabel = computed(() => props.label ?? STATUS_LABELS[props.status] ?? props.status);

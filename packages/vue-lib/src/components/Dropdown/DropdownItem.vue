@@ -24,7 +24,10 @@ function handleClick() {
 </script>
 
 <template>
-  <li class="m2s2-dropdown__item" role="none">
+  <li
+    class="m2s2-dropdown__item"
+    role="none"
+  >
     <a
       v-if="isAnchor(item)"
       :href="(item as any).href"
@@ -32,24 +35,42 @@ function handleClick() {
       role="menuitem"
       target="_blank"
       rel="noopener noreferrer"
-      @click="emit('select')">
-      <img v-if="item.imgSrc" :src="item.imgSrc" alt="" aria-hidden="true" />
+      @click="emit('select')"
+    >
+      <img
+        v-if="item.imgSrc"
+        :src="item.imgSrc"
+        alt=""
+        aria-hidden="true"
+      >
       {{ item.text }}
     </a>
     <button
       v-else-if="isClickable(item)"
       class="m2s2-dropdown__link"
       role="menuitem"
-      @click="handleClick">
-      <img v-if="item.imgSrc" :src="item.imgSrc" alt="" aria-hidden="true" />
+      @click="handleClick"
+    >
+      <img
+        v-if="item.imgSrc"
+        :src="item.imgSrc"
+        alt=""
+        aria-hidden="true"
+      >
       {{ item.text }}
     </button>
     <span
       v-else
       class="m2s2-dropdown__link m2s2-dropdown__link--disabled"
       role="menuitem"
-      aria-disabled="true">
-      <img v-if="item.imgSrc" :src="item.imgSrc" alt="" aria-hidden="true" />
+      aria-disabled="true"
+    >
+      <img
+        v-if="item.imgSrc"
+        :src="item.imgSrc"
+        alt=""
+        aria-hidden="true"
+      >
       {{ item.text }}
     </span>
   </li>

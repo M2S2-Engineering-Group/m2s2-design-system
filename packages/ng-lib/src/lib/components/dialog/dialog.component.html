@@ -14,8 +14,7 @@
 <div class="dialog-footer">
   @for (action of data.actions; track action.label) {
     <button
-      class="dialog-btn"
-      [class]="'dialog-btn--' + (action.variant ?? 'secondary')"
+      [class]="'dialog-btn dialog-btn--' + (action.variant ?? 'secondary')"
       (click)="close(action)">
       {{ action.label }}
     </button>

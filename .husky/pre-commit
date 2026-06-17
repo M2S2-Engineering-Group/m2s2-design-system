@@ -1,0 +1,15 @@
+echo "▶ Building packages..."
+npm run build --workspace=packages/models || exit 1
+npm run build --workspace=packages/utils || exit 1
+npm run build --workspace=packages/ng-lib || exit 1
+npm run build --workspace=packages/react-lib || exit 1
+npm run build --workspace=packages/vue-lib || exit 1
+
+echo "▶ Linting..."
+npm run lint || exit 1
+
+echo "▶ Testing..."
+npm run test --workspace=packages/utils || exit 1
+npm run test --workspace=packages/ng-lib -- --watch=false || exit 1
+npm run test --workspace=packages/react-lib || exit 1
+npm run test --workspace=packages/vue-lib || exit 1

@@ -35,6 +35,7 @@
   ],
   "scripts": {
     "build": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist",
+    "lint": "eslint \"src/**/*.{ts,vue}\"",
     "build:prod": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist",
     "test": "vitest run",
     "test:watch": "vitest",

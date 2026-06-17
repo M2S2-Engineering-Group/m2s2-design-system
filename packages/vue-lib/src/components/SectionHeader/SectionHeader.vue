@@ -6,8 +6,15 @@ defineProps<{ config: SectionHeaderConfig }>();
 
 <template>
   <div class="m2s2-section-header">
-    <h2 class="sh-label">{{ config.label }}</h2>
-    <p v-if="config.subtitle" class="sh-subtitle">{{ config.subtitle }}</p>
+    <h2 class="sh-label">
+      {{ config.label }}
+    </h2>
+    <p
+      v-if="config.subtitle"
+      class="sh-subtitle"
+    >
+      {{ config.subtitle }}
+    </p>
   </div>
 </template>
 

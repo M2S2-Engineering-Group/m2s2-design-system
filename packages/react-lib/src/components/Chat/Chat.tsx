@@ -163,7 +163,7 @@ export function Chat({
 
           {limitReached && (
             <div className="chat-cta">
-              <p className="chat-cta__text">Ready to go deeper? Let's talk through your specific situation.</p>
+              <p className="chat-cta__text">Ready to go deeper? Let&apos;s talk through your specific situation.</p>
               <a className="chat-cta__btn" href={ctaUrl}>{ctaLabel}</a>
             </div>
           )}

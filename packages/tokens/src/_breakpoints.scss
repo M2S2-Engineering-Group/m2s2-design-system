@@ -6,21 +6,28 @@
 // are needed via: @use '@m2s2/tokens/src/breakpoints' as bp;
 // =============================================================================
 
-$bp-sm:  576px;   // Small  — landscape phones
-$bp-md:  768px;   // Medium — tablets
-$bp-lg:  992px;   // Large  — desktops
-$bp-xl:  1200px;  // XL
+$bp-sm: 576px;   // Small  — landscape phones
+$bp-md: 768px;   // Medium — tablets
+$bp-lg: 992px;   // Large  — desktops
+$bp-xl: 1200px;  // XL
 $bp-xxl: 1400px;  // XXL
 
 // Mobile-first mixins (min-width) — default content is mobile, mixins expand up
 @mixin up-sm  { @media (min-width: #{$bp-sm})  { @content; } }
+
 @mixin up-md  { @media (min-width: #{$bp-md})  { @content; } }
+
 @mixin up-lg  { @media (min-width: #{$bp-lg})  { @content; } }
+
 @mixin up-xl  { @media (min-width: #{$bp-xl})  { @content; } }
+
 @mixin up-xxl { @media (min-width: #{$bp-xxl}) { @content; } }
 
 // Convenience aliases used throughout the platform
 @mixin m2-mobile  { @media (max-width: #{$bp-md - 1})  { @content; } }
+
 @mixin m2-tablet  { @media (min-width: #{$bp-md}) and (max-width: #{$bp-lg - 1}) { @content; } }
+
 @mixin m2-touch   { @media (max-width: #{$bp-lg - 1})  { @content; } }
+
 @mixin m2-desktop { @media (min-width: #{$bp-lg})      { @content; } }
