@@ -1,6 +1,6 @@
 {
   "name": "@m2s2/react-lib",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "React component library by M²S² Engineering Group.",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",
@@ -43,7 +43,7 @@
     "build:storybook": "storybook build -o ../../dist/storybook/react"
   },
   "dependencies": {
-    "@m2s2/models": "2.4.0",
+    "@m2s2/models": "2.4.1",
     "@m2s2/utils": "1.0.0",
     "marked": "^17.0.0",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -51,7 +51,7 @@
     "@radix-ui/react-visually-hidden": "^1.1.1"
   },
   "peerDependencies": {
-    "@m2s2/tokens": "2.2.1",
+    "@m2s2/tokens": "2.2.2",
     "aws-amplify": ">=6.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
