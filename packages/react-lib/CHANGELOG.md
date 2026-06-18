@@ -4,6 +4,13 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/react-lib [2.5.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.5.1...@m2s2/react-lib@2.5.2) (2026-06-18)
+
+
+### Bug Fixes
+
+* make tokens, models and utils first class citizens ([f536960](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/f53696069c9442d6dc83a081251556376438a60d))
+
 ## @m2s2/react-lib [2.5.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.5.0...@m2s2/react-lib@2.5.1) (2026-06-17)
 
 
