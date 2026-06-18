@@ -29,6 +29,9 @@
     "build:storybook": "cd ../.. && ng run m2s2-ng-lib:build-storybook"
   },
   "dependencies": {
+    "@m2s2/models": "^2.4.1",
+    "@m2s2/tokens": "^2.2.2",
+    "@m2s2/utils": "^1.0.0",
     "tslib": "~2.3.1"
   },
   "peerDependencies": {
@@ -40,9 +43,6 @@
     "@angular/forms": "^21.0.0",
     "@angular/material": "^21.0.0",
     "@angular/router": "^21.0.0",
-    "@m2s2/models": "2.4.1",
-    "@m2s2/tokens": "2.2.2",
-    "@m2s2/utils": "1.0.0",
     "typescript": ">=5.9 <6.0"
   },
   "devDependencies": {

@@ -9,5 +9,5 @@
       "../"
     ]
   },
-  "allowedNonPeerDependencies": ["tslib"]
+  "allowedNonPeerDependencies": ["tslib", "@m2s2/models", "@m2s2/tokens", "@m2s2/utils"]
 }

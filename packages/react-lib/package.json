@@ -43,15 +43,15 @@
     "build:storybook": "storybook build -o ../../dist/storybook/react"
   },
   "dependencies": {
-    "@m2s2/models": "2.4.1",
-    "@m2s2/utils": "1.0.0",
+    "@m2s2/models": "^2.4.1",
+    "@m2s2/tokens": "^2.2.2",
+    "@m2s2/utils": "^1.0.0",
     "marked": "^17.0.0",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-visually-hidden": "^1.1.1"
   },
   "peerDependencies": {
-    "@m2s2/tokens": "2.2.2",
     "aws-amplify": ">=6.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
