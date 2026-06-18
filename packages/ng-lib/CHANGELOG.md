@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.7.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.2...@m2s2/ng-lib@2.7.3) (2026-06-18)
+
+
+### Bug Fixes
+
+* make tokens, models and utils first class citizens ([f536960](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/f53696069c9442d6dc83a081251556376438a60d))
+
 ## @m2s2/ng-lib [2.7.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.1...@m2s2/ng-lib@2.7.2) (2026-06-17)
 
 
