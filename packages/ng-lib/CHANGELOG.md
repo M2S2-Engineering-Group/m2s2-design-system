@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.7.4](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.3...@m2s2/ng-lib@2.7.4) (2026-06-19)
+
+
+### Bug Fixes
+
+* react and vue importing css ([bd47c84](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/bd47c84aa72d8f615412ee2bff27e7e29e722b83))
+
 ## @m2s2/ng-lib [2.7.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.2...@m2s2/ng-lib@2.7.3) (2026-06-18)
 
 
