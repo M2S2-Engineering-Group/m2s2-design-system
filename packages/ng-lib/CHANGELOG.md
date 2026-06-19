@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.7.5](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.4...@m2s2/ng-lib@2.7.5) (2026-06-19)
+
+
+### Bug Fixes
+
+* **ng-lib:** introduce component awarness to chat component ([298ae94](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/298ae9486c5ada657665ce4e76939abb7f8938e9))
+
 ## @m2s2/ng-lib [2.7.4](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.3...@m2s2/ng-lib@2.7.4) (2026-06-19)
 
 
