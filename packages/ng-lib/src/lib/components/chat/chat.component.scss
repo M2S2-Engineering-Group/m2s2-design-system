@@ -2,7 +2,7 @@
 
 :host {
   position: fixed;
-  bottom: var(--space-6);
+  bottom: var(--space-6); // overridden by [style.bottom] binding when avoidElement is set
   right: var(--space-6);
   z-index: 500;
   display: flex;

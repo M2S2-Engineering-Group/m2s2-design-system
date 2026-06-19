@@ -1,9 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
   ViewChild,
   computed,
+  effect,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -18,6 +21,7 @@ import { ChatMessage } from '../../models/chat';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
+  host: { '[style.bottom]': 'bottomStyle()' },
 })
 export class ChatComponent {
   sendMessage        = input.required<(messages: ChatMessage[]) => Observable<string>>();
@@ -30,12 +34,41 @@ export class ChatComponent {
   userAvatarUrl      = input<string>();
   assistantAvatarUrl = input<string>();
   welcomeMessage     = input<string>();
+  avoidElement       = input<HTMLElement | null>(null);
 
   readonly open      = signal(false);
   readonly messages  = signal<ChatMessage[]>([]);
   readonly sendState = signal<'idle' | 'sending' | 'error'>('idle');
+  private readonly extraBottom = signal(0);
+
+  readonly bottomStyle = computed(() => {
+    const extra = this.extraBottom();
+    return extra ? `calc(var(--space-6) + ${extra}px)` : 'var(--space-6)';
+  });
 
   draft = '';
+
+  private observer?: IntersectionObserver;
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    effect(() => {
+      this.observer?.disconnect();
+      const el = this.avoidElement();
+      if (!el) return;
+      this.observer = new IntersectionObserver(
+        ([entry]) => {
+          const visible = entry.isIntersecting
+            ? Math.round(window.innerHeight - entry.boundingClientRect.top)
+            : 0;
+          this.extraBottom.set(Math.max(0, visible));
+        },
+        { threshold: Array.from({ length: 11 }, (_, i) => i / 10) },
+      );
+      this.observer.observe(el);
+    });
+    this.destroyRef.onDestroy(() => this.observer?.disconnect());
+  }
 
   readonly userCount    = computed(() => this.messages().filter(m => m.role === 'user').length);
   readonly limitReached = computed(() => this.userCount() >= this.maxMessages());
