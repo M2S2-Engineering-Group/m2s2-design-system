@@ -1,3 +1,5 @@
+import './styles/tokens.scss';
+
 export { Chat } from './components/Chat/Chat';
 export { M2S2Provider } from './components/M2S2Provider/M2S2Provider';
 export { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
