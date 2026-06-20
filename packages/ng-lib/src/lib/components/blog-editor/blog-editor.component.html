@@ -106,50 +106,70 @@
 
     <div class="be-field-group-label">Series <span class="be-optional">(optional)</span></div>
 
-    <div class="be-field">
-      <label class="be-label">Series ID</label>
-      <input
-        class="be-input"
-        type="text"
-        [ngModel]="seriesId()"
-        (ngModelChange)="seriesId.set($event)"
-        placeholder="e.g. go-backend"
-      />
+    <div class="be-field be-field--full">
+      <label class="be-label">Series</label>
+      <select
+        class="be-input be-input--select"
+        [ngModel]="selectedSeriesKey()"
+        (ngModelChange)="onSeriesKeyChange($event)"
+      >
+        <option value="none">— None —</option>
+        @for (s of existingSeries(); track s.id) {
+          <option [value]="s.id">{{ s.title }}</option>
+        }
+        <option value="__new__">+ New series…</option>
+      </select>
     </div>
 
-    <div class="be-field">
-      <label class="be-label">Series Title</label>
-      <input
-        class="be-input"
-        type="text"
-        [ngModel]="seriesTitle()"
-        (ngModelChange)="seriesTitle.set($event)"
-        placeholder="e.g. Go Backend Series"
-      />
-    </div>
+    @if (selectedSeriesKey() === '__new__') {
+      <div class="be-field">
+        <label class="be-label">Series ID</label>
+        <input
+          class="be-input"
+          type="text"
+          [ngModel]="seriesId()"
+          (ngModelChange)="seriesId.set($event)"
+          placeholder="e.g. go-backend"
+        />
+      </div>
+      <div class="be-field">
+        <label class="be-label">Series Title</label>
+        <input
+          class="be-input"
+          type="text"
+          [ngModel]="seriesTitle()"
+          (ngModelChange)="seriesTitle.set($event)"
+          placeholder="e.g. Go Backend Series"
+        />
+      </div>
+    }
 
-    <div class="be-field be-field--narrow-pair">
-      <div>
-        <label class="be-label">Part</label>
-        <input
-          class="be-input be-input--narrow"
-          type="number"
-          min="1"
-          [ngModel]="seriesPart()"
-          (ngModelChange)="seriesPart.set(+$event)"
-        />
+    @if (selectedSeriesKey() !== 'none') {
+      <div class="be-field be-field--narrow-pair">
+        <div>
+          <label class="be-label" for="series-part">Part</label>
+          <input
+            id="series-part"
+            class="be-input be-input--narrow"
+            type="number"
+            min="1"
+            [ngModel]="seriesPart()"
+            (ngModelChange)="seriesPart.set(+$event)"
+          />
+        </div>
+        <div>
+          <label class="be-label" for="series-total">Total Parts</label>
+          <input
+            id="series-total"
+            class="be-input be-input--narrow"
+            type="number"
+            min="1"
+            [ngModel]="seriesTotal()"
+            (ngModelChange)="seriesTotal.set(+$event)"
+          />
+        </div>
       </div>
-      <div>
-        <label class="be-label">Total Parts</label>
-        <input
-          class="be-input be-input--narrow"
-          type="number"
-          min="1"
-          [ngModel]="seriesTotal()"
-          (ngModelChange)="seriesTotal.set(+$event)"
-        />
-      </div>
-    </div>
+    }
 
   </section>
 

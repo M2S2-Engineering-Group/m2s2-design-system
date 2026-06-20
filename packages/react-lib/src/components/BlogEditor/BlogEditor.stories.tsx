@@ -38,6 +38,19 @@ The practical rule: if it's *state*, reach for \`signal()\`. If it's an *event s
 `,
 };
 
+const seriesPost: BlogPost = {
+  ...existingPost,
+  slug:   'angular-signals-part-2',
+  title:  'Angular Signals: Advanced Patterns',
+  date:   '2025-04-10',
+  series: { id: 'angular-signals', title: 'Angular Signals Series', part: 2, total: 3 },
+};
+
+const existingSeries = [
+  { id: 'angular-signals', title: 'Angular Signals Series' },
+  { id: 'go-backend',      title: 'Go Backend Series' },
+];
+
 const meta: Meta<typeof BlogEditor> = {
   title: 'Components/BlogEditor',
   component: BlogEditor,
@@ -47,7 +60,7 @@ const meta: Meta<typeof BlogEditor> = {
     docs: {
       description: {
         component:
-          'Split-pane markdown editor for authoring blog posts. Includes a metadata form, live preview rendered from markdown, toolbar shortcuts, and tag input. Pass `initialPost` to load an existing post for editing. Wire `onPublish` and `onCoverImageSelected` to your API.',
+          'Split-pane markdown editor for authoring blog posts. Includes a metadata form, live preview rendered from markdown, toolbar shortcuts, and tag input. Pass `initialPost` to load an existing post for editing. Pass `existingSeries` to populate the series dropdown with series already in use across the blog. Wire `onPublish` and `onCoverImageSelected` to your API.',
       },
     },
   },
@@ -66,7 +79,17 @@ export const Empty: Story = {
   args: {},
   parameters: {
     docs: {
-      description: { story: 'Blank editor — the default state when creating a new post.' },
+      description: { story: 'Blank editor — the default state when creating a new post. The series dropdown shows only "None" and "New series…" when no existing series are provided.' },
+    },
+  },
+};
+
+export const WithExistingSeries: Story = {
+  name: 'With Existing Series',
+  args: { existingSeries },
+  parameters: {
+    docs: {
+      description: { story: 'New post with existing series available in the dropdown. The author can select a series without retyping its ID and title.' },
     },
   },
 };
@@ -74,12 +97,40 @@ export const Empty: Story = {
 export const EditExistingPost: Story = {
   name: 'Edit Existing Post',
   args: {
-    initialPost:   existingPost,
-    coverImageUrl: existingPost.coverImage,
+    initialPost:    existingPost,
+    coverImageUrl:  existingPost.coverImage,
+    existingSeries,
   },
   parameters: {
     docs: {
-      description: { story: 'Pre-populated with an existing post. Slug is locked from auto-update since it was already set.' },
+      description: { story: 'Pre-populated with an existing post that has no series. Slug is locked from auto-update since it was already set.' },
+    },
+  },
+};
+
+export const EditPostWithSeries: Story = {
+  name: 'Edit Post With Series',
+  args: {
+    initialPost:    seriesPost,
+    coverImageUrl:  seriesPost.coverImage,
+    existingSeries,
+  },
+  parameters: {
+    docs: {
+      description: { story: 'Editing a post that belongs to an existing series. The series dropdown resolves to the matching entry automatically.' },
+    },
+  },
+};
+
+export const EditPostSeriesNotInList: Story = {
+  name: 'Edit Post — Series Not In List',
+  args: {
+    initialPost:    seriesPost,
+    existingSeries: [],
+  },
+  parameters: {
+    docs: {
+      description: { story: 'Editing a post whose series ID is not found in existingSeries (e.g. list still loading). Falls back to "New series…" with the ID and title pre-filled.' },
     },
   },
 };

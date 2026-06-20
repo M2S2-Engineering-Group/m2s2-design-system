@@ -2,8 +2,25 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { BlogEditor } from './BlogEditor';
 import { makeBlogPost } from '@m2s2/utils/testing';
 
+function selectComboboxValue(value: string) {
+  const select = screen.getByRole('combobox') as HTMLSelectElement;
+  select.value = value;
+  fireEvent.change(select);
+}
+
 const renderEditor = (props: React.ComponentProps<typeof BlogEditor> = {}) =>
   render(<BlogEditor {...props} />);
+
+const fillRequiredFields = () => {
+  fireEvent.change(screen.getByPlaceholderText('Post title…'), { target: { value: 'My Post' } });
+  fireEvent.change(
+    screen.getByPlaceholderText('Short description shown in blog listings…'),
+    { target: { value: 'Great summary' } },
+  );
+  fireEvent.change(screen.getByPlaceholderText('Write your post in markdown…'), {
+    target: { value: 'Body content.' },
+  });
+};
 
 describe('BlogEditor', () => {
   describe('renders fields', () => {
@@ -64,16 +81,7 @@ describe('BlogEditor', () => {
     it('fires with the correct draft when Publish is clicked', () => {
       const onPublish = vi.fn();
       renderEditor({ onPublish });
-      fireEvent.change(screen.getByPlaceholderText('Post title…'), {
-        target: { value: 'My Post' },
-      });
-      fireEvent.change(
-        screen.getByPlaceholderText('Short description shown in blog listings…'),
-        { target: { value: 'Great summary' } },
-      );
-      fireEvent.change(screen.getByPlaceholderText('Write your post in markdown…'), {
-        target: { value: 'Body content.' },
-      });
+      fillRequiredFields();
       fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
       expect(onPublish).toHaveBeenCalledTimes(1);
       const draft = onPublish.mock.calls[0][0];
@@ -118,7 +126,6 @@ describe('BlogEditor', () => {
   describe('reading time', () => {
     it('updates reading time when content changes', () => {
       renderEditor();
-      // 200+ words causes readingTime > 1
       const longContent = 'word '.repeat(300);
       fireEvent.change(screen.getByPlaceholderText('Write your post in markdown…'), {
         target: { value: longContent },
@@ -143,7 +150,6 @@ describe('BlogEditor', () => {
       fireEvent.keyDown(tagInput, { key: 'Enter' });
       fireEvent.change(tagInput, { target: { value: 'react' } });
       fireEvent.keyDown(tagInput, { key: 'Enter' });
-      // tagInput is now empty after adding; press Backspace
       fireEvent.keyDown(tagInput, { key: 'Backspace' });
       expect(screen.queryByText('react')).not.toBeInTheDocument();
       expect(screen.getByText('angular')).toBeInTheDocument();
@@ -170,6 +176,123 @@ describe('BlogEditor', () => {
     });
   });
 
+  describe('series dropdown', () => {
+    it('shows only None and New series options when no existingSeries provided', () => {
+      renderEditor();
+      const select = screen.getByRole('combobox') as HTMLSelectElement;
+      const options = Array.from(select.options).map(o => o.text);
+      expect(options).toEqual(['— None —', '+ New series…']);
+    });
+
+    it('shows existing series as options in the dropdown', () => {
+      renderEditor({
+        existingSeries: [
+          { id: 'go-backend', title: 'Go Backend Series' },
+          { id: 'angular-deep', title: 'Angular Deep Dives' },
+        ],
+      });
+      const select = screen.getByRole('combobox') as HTMLSelectElement;
+      const options = Array.from(select.options).map(o => o.text);
+      expect(options).toContain('Go Backend Series');
+      expect(options).toContain('Angular Deep Dives');
+    });
+
+    it('hides Part and Total inputs when series is None', () => {
+      renderEditor();
+      expect(screen.queryByLabelText('Part')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('Total Parts')).not.toBeInTheDocument();
+    });
+
+    it('shows Part and Total inputs after selecting New series', () => {
+      renderEditor();
+      selectComboboxValue('__new__');
+      expect(screen.getByLabelText('Part')).toBeInTheDocument();
+      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+    });
+
+    it('shows Part and Total inputs after selecting an existing series', () => {
+      renderEditor({ existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }] });
+      selectComboboxValue('go-backend');
+      expect(screen.getByLabelText('Part')).toBeInTheDocument();
+      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+    });
+
+    it('hides series ID and title text inputs when an existing series is selected', () => {
+      renderEditor({ existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }] });
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'go-backend' } });
+      expect(screen.queryByPlaceholderText('e.g. go-backend')).not.toBeInTheDocument();
+    });
+
+    it('shows series ID and title text inputs when New series is selected', () => {
+      renderEditor();
+      selectComboboxValue('__new__');
+      expect(screen.getByPlaceholderText('e.g. go-backend')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('e.g. Go Backend Series')).toBeInTheDocument();
+    });
+  });
+
+  describe('series in published draft', () => {
+    it('emits no series when series is None', () => {
+      const onPublish = vi.fn();
+      renderEditor({ onPublish });
+      fillRequiredFields();
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      expect(onPublish.mock.calls[0][0].series).toBeUndefined();
+    });
+
+    it('emits series when New series is selected and fields are filled', () => {
+      const onPublish = vi.fn();
+      renderEditor({ onPublish });
+      fillRequiredFields();
+      selectComboboxValue('__new__');
+      fireEvent.change(screen.getByPlaceholderText('e.g. go-backend'), {
+        target: { value: 'go-backend' },
+      });
+      fireEvent.change(screen.getByPlaceholderText('e.g. Go Backend Series'), {
+        target: { value: 'Go Backend Series' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      expect(onPublish.mock.calls[0][0].series).toEqual({
+        id: 'go-backend', title: 'Go Backend Series', part: 1, total: 1,
+      });
+    });
+
+    it('uses series ID as title when New series title is left blank', () => {
+      const onPublish = vi.fn();
+      renderEditor({ onPublish });
+      fillRequiredFields();
+      selectComboboxValue('__new__');
+      fireEvent.change(screen.getByPlaceholderText('e.g. go-backend'), {
+        target: { value: 'my-series' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      expect(onPublish.mock.calls[0][0].series?.title).toBe('my-series');
+    });
+
+    it('emits correct series when an existing series is selected', () => {
+      const onPublish = vi.fn();
+      renderEditor({
+        onPublish,
+        existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }],
+      });
+      fillRequiredFields();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'go-backend' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      const series = onPublish.mock.calls[0][0].series;
+      expect(series?.id).toBe('go-backend');
+      expect(series?.title).toBe('Go Backend Series');
+    });
+
+    it('emits no series when New series is selected but ID is blank', () => {
+      const onPublish = vi.fn();
+      renderEditor({ onPublish });
+      fillRequiredFields();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      expect(onPublish.mock.calls[0][0].series).toBeUndefined();
+    });
+  });
+
   describe('initialPost', () => {
     it('pre-fills fields from initialPost', () => {
       const post = makeBlogPost({
@@ -185,6 +308,27 @@ describe('BlogEditor', () => {
       expect(
         (screen.getByPlaceholderText('post-slug') as HTMLInputElement).value,
       ).toBe('existing-post');
+    });
+
+    it('selects the matching existing series when initialPost series is in existingSeries', () => {
+      const post = makeBlogPost({
+        series: { id: 'go-backend', title: 'Go Backend Series', part: 2, total: 4 },
+      });
+      renderEditor({
+        initialPost: post,
+        existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }],
+      });
+      const select = screen.getByRole('combobox') as HTMLSelectElement;
+      expect(select.value).toBe('go-backend');
+    });
+
+    it('falls back to New series when initialPost series is not in existingSeries', () => {
+      const post = makeBlogPost({
+        series: { id: 'go-backend', title: 'Go Backend Series', part: 1, total: 3 },
+      });
+      renderEditor({ initialPost: post, existingSeries: [] });
+      const select = screen.getByRole('combobox') as HTMLSelectElement;
+      expect(select.value).toBe('__new__');
     });
   });
 });

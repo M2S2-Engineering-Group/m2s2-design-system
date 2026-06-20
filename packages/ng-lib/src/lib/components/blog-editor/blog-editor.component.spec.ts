@@ -4,6 +4,22 @@ import { BlogEditorComponent } from './blog-editor.component';
 const renderEditor = (inputs: Record<string, unknown> = {}) =>
   render(BlogEditorComponent, { inputs });
 
+const fillRequiredFields = async (fixture: { componentInstance: BlogEditorComponent; detectChanges: () => void }) => {
+  fireEvent.input(screen.getByPlaceholderText('Post title…'), {
+    target: { value: 'My Post' },
+  });
+  fixture.detectChanges();
+  fireEvent.input(
+    screen.getByPlaceholderText('Short description shown in blog listings…'),
+    { target: { value: 'Great summary' } },
+  );
+  fixture.detectChanges();
+  fireEvent.input(screen.getByPlaceholderText('Write your post in markdown…'), {
+    target: { value: 'Body content.' },
+  });
+  fixture.detectChanges();
+};
+
 describe('BlogEditorComponent', () => {
   describe('title and slug', () => {
     it('renders the title input', async () => {
@@ -137,24 +153,72 @@ describe('BlogEditorComponent', () => {
     });
   });
 
-  describe('publish output', () => {
-    const fillRequiredFields = async (fixture: { componentInstance: BlogEditorComponent; detectChanges: () => void }) => {
-      fireEvent.input(screen.getByPlaceholderText('Post title…'), {
-        target: { value: 'My Post' },
-      });
-      fixture.detectChanges();
-      fireEvent.input(
-        screen.getByPlaceholderText('Short description shown in blog listings…'),
-        { target: { value: 'Great summary' } },
-      );
-      fixture.detectChanges();
-      fireEvent.input(screen.getByPlaceholderText('Write your post in markdown…'), {
-        target: { value: 'Body content.' },
-      });
-      fixture.detectChanges();
-    };
+  describe('series dropdown', () => {
+    it('shows only None and New series options when no existingSeries are provided', async () => {
+      await renderEditor();
+      const select = screen.getByRole('combobox');
+      const options = Array.from(select.querySelectorAll<HTMLOptionElement>('option')).map(o => o.textContent?.trim());
+      expect(options).toEqual(['— None —', '+ New series…']);
+    });
 
-    it('emits publish without series when series ID is blank', async () => {
+    it('shows existing series options in the dropdown', async () => {
+      await renderEditor({
+        existingSeries: [
+          { id: 'go-backend', title: 'Go Backend Series' },
+          { id: 'angular-deep', title: 'Angular Deep Dives' },
+        ],
+      });
+      const select = screen.getByRole('combobox');
+      const options = Array.from(select.querySelectorAll<HTMLOptionElement>('option')).map(o => o.textContent?.trim());
+      expect(options).toContain('Go Backend Series');
+      expect(options).toContain('Angular Deep Dives');
+    });
+
+    it('hides Part and Total inputs when series is None', async () => {
+      await renderEditor();
+      expect(screen.queryByLabelText('Part')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('Total Parts')).not.toBeInTheDocument();
+    });
+
+    it('shows Part and Total inputs after selecting New series', async () => {
+      const { fixture } = await renderEditor();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fixture.detectChanges();
+      expect(screen.getByLabelText('Part')).toBeInTheDocument();
+      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+    });
+
+    it('shows Part and Total inputs after selecting an existing series', async () => {
+      const { fixture } = await renderEditor({
+        existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }],
+      });
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'go-backend' } });
+      fixture.detectChanges();
+      expect(screen.getByLabelText('Part')).toBeInTheDocument();
+      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+    });
+
+    it('hides the series ID and title text inputs when an existing series is selected', async () => {
+      const { fixture } = await renderEditor({
+        existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }],
+      });
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'go-backend' } });
+      fixture.detectChanges();
+      expect(screen.queryByPlaceholderText('e.g. go-backend')).not.toBeInTheDocument();
+      expect(screen.queryByPlaceholderText('e.g. Go Backend Series')).not.toBeInTheDocument();
+    });
+
+    it('shows the series ID and title text inputs when New series is selected', async () => {
+      const { fixture } = await renderEditor();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fixture.detectChanges();
+      expect(screen.getByPlaceholderText('e.g. go-backend')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('e.g. Go Backend Series')).toBeInTheDocument();
+    });
+  });
+
+  describe('publish output', () => {
+    it('emits publish without series when series is set to None', async () => {
       const { fixture } = await renderEditor();
       const spy = jest.fn();
       fixture.componentInstance.publish.subscribe(spy);
@@ -168,11 +232,13 @@ describe('BlogEditorComponent', () => {
       expect(draft.series).toBeUndefined();
     });
 
-    it('emits publish with series when series ID is filled', async () => {
+    it('emits publish with series when New series is selected and fields are filled', async () => {
       const { fixture } = await renderEditor();
       const spy = jest.fn();
       fixture.componentInstance.publish.subscribe(spy);
       await fillRequiredFields(fixture);
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fixture.detectChanges();
       fireEvent.input(screen.getByPlaceholderText('e.g. go-backend'), {
         target: { value: 'go-backend' },
       });
@@ -191,11 +257,13 @@ describe('BlogEditorComponent', () => {
       });
     });
 
-    it('uses series ID as series title when title is left blank', async () => {
+    it('uses series ID as series title when New series title is left blank', async () => {
       const { fixture } = await renderEditor();
       const spy = jest.fn();
       fixture.componentInstance.publish.subscribe(spy);
       await fillRequiredFields(fixture);
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fixture.detectChanges();
       fireEvent.input(screen.getByPlaceholderText('e.g. go-backend'), {
         target: { value: 'my-series' },
       });
@@ -203,6 +271,33 @@ describe('BlogEditorComponent', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
       const draft = spy.mock.calls[0][0];
       expect(draft.series?.title).toBe('my-series');
+    });
+
+    it('emits publish with the correct series when an existing series is selected', async () => {
+      const { fixture } = await renderEditor({
+        existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }],
+      });
+      const spy = jest.fn();
+      fixture.componentInstance.publish.subscribe(spy);
+      await fillRequiredFields(fixture);
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'go-backend' } });
+      fixture.detectChanges();
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      const draft = spy.mock.calls[0][0];
+      expect(draft.series?.id).toBe('go-backend');
+      expect(draft.series?.title).toBe('Go Backend Series');
+    });
+
+    it('emits no series when New series is selected but ID is left blank', async () => {
+      const { fixture } = await renderEditor();
+      const spy = jest.fn();
+      fixture.componentInstance.publish.subscribe(spy);
+      await fillRequiredFields(fixture);
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fixture.detectChanges();
+      fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
+      const draft = spy.mock.calls[0][0];
+      expect(draft.series).toBeUndefined();
     });
   });
 
@@ -267,8 +362,55 @@ describe('BlogEditorComponent', () => {
       fixture.detectChanges();
       expect(fixture.componentInstance.title()).toBe('Existing Post');
       expect(fixture.componentInstance.summary()).toBe('Existing summary');
-      expect(fixture.componentInstance.seriesId()).toBe('my-series');
       expect(fixture.componentInstance.seriesPart()).toBe(3);
+    });
+
+    it('selects New series in the dropdown when the post series is not in existingSeries', async () => {
+      const { fixture } = await renderEditor({
+        initialPost: {
+          slug: 'existing-post',
+          title: 'Existing Post',
+          date: '2024-01-01',
+          summary: 'Summary',
+          tags: [],
+          content: 'Content',
+          series: { id: 'my-series', title: 'My Series', part: 1, total: 3 },
+        },
+      });
+      fixture.detectChanges();
+      expect(fixture.componentInstance.selectedSeriesKey()).toBe('__new__');
+    });
+
+    it('selects the matching existing series in the dropdown when found in existingSeries', async () => {
+      const { fixture } = await renderEditor({
+        initialPost: {
+          slug: 'existing-post',
+          title: 'Existing Post',
+          date: '2024-01-01',
+          summary: 'Summary',
+          tags: [],
+          content: 'Content',
+          series: { id: 'my-series', title: 'My Series', part: 2, total: 3 },
+        },
+        existingSeries: [{ id: 'my-series', title: 'My Series' }],
+      });
+      fixture.detectChanges();
+      expect(fixture.componentInstance.selectedSeriesKey()).toBe('my-series');
+    });
+
+    it('sets selectedSeriesKey to none when the post has no series', async () => {
+      const { fixture } = await renderEditor({
+        initialPost: {
+          slug: 'existing-post',
+          title: 'Existing Post',
+          date: '2024-01-01',
+          summary: 'Summary',
+          tags: [],
+          content: 'Content',
+        },
+      });
+      fixture.detectChanges();
+      expect(fixture.componentInstance.selectedSeriesKey()).toBe('none');
     });
   });
 });

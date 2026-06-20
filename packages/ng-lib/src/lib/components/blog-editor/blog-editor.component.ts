@@ -54,10 +54,13 @@ export class BlogEditorComponent {
   readonly coverPreviewUrl = signal<string | undefined>(undefined);
   readonly activePane      = signal<'write' | 'preview'>('write');
 
-  readonly seriesId    = signal('');
-  readonly seriesTitle = signal('');
-  readonly seriesPart  = signal(1);
-  readonly seriesTotal = signal(1);
+  existingSeries = input<Array<{ id: string; title: string }>>([]);
+
+  readonly selectedSeriesKey = signal<string>('none');
+  readonly seriesId          = signal('');
+  readonly seriesTitle       = signal('');
+  readonly seriesPart        = signal(1);
+  readonly seriesTotal       = signal(1);
 
   tagInput = '';
   slugEdited = false;
@@ -78,6 +81,7 @@ export class BlogEditorComponent {
   );
 
   constructor() {
+    // Populate all fields except series key when the post loads.
     effect(() => {
       const post = this.initialPost();
       if (!post) return;
@@ -96,6 +100,30 @@ export class BlogEditorComponent {
       this.seriesTotal.set(post.series?.total ?? 1);
       this.slugEdited = true;
     });
+
+    // Derive which dropdown item to select. Runs again if existingSeries loads
+    // after initialPost so the key resolves correctly either way.
+    effect(() => {
+      const post = this.initialPost();
+      const existing = this.existingSeries();
+      if (!post?.series) {
+        this.selectedSeriesKey.set('none');
+        return;
+      }
+      const inList = existing.some(s => s.id === post.series!.id);
+      this.selectedSeriesKey.set(inList ? post.series!.id : '__new__');
+    });
+  }
+
+  onSeriesKeyChange(key: string): void {
+    this.selectedSeriesKey.set(key);
+    if (key !== 'none' && key !== '__new__') {
+      const found = this.existingSeries().find(s => s.id === key);
+      if (found) {
+        this.seriesId.set(found.id);
+        this.seriesTitle.set(found.title);
+      }
+    }
   }
 
   onTitleChange(value: string): void {
@@ -179,7 +207,15 @@ export class BlogEditorComponent {
   }
 
   private assembleDraft(): BlogDraft {
-    const seriesId = this.seriesId().trim();
+    const key = this.selectedSeriesKey();
+    let series: BlogDraft['series'];
+    if (key === '__new__') {
+      const id = this.seriesId().trim();
+      series = id ? { id, title: this.seriesTitle().trim() || id, part: this.seriesPart(), total: this.seriesTotal() } : undefined;
+    } else if (key !== 'none') {
+      const found = this.existingSeries().find(s => s.id === key);
+      series = found ? { id: found.id, title: found.title, part: this.seriesPart(), total: this.seriesTotal() } : undefined;
+    }
     return {
       title:       this.title(),
       slug:        this.slug() || generateSlug(this.title()),
@@ -190,9 +226,7 @@ export class BlogEditorComponent {
       readingTime: this.readingTime(),
       content:     this.content(),
       coverImage:  this.coverImageUrl() ?? this.coverPreviewUrl(),
-      series: seriesId
-        ? { id: seriesId, title: this.seriesTitle().trim() || seriesId, part: this.seriesPart(), total: this.seriesTotal() }
-        : undefined,
+      series,
     };
   }
 }

@@ -10,36 +10,43 @@ export interface BlogEditorProps {
   initialPost?: BlogPost;
   /** Set to the S3 URL after the platform has uploaded the selected cover image. */
   coverImageUrl?: string;
+  /** Existing series to show in the dropdown. Platform fetches these from the blog index. */
+  existingSeries?: Array<{ id: string; title: string }>;
   /** Called with the assembled draft when the user clicks Publish. */
   onPublish?: (draft: BlogDraft) => void;
   /** Called with the selected File so the platform can upload it to S3. */
   onCoverImageSelected?: (file: File) => void;
 }
 
+const NO_SERIES: Array<{ id: string; title: string }> = [];
+
 export function BlogEditor({
   initialPost,
   coverImageUrl,
+  existingSeries = NO_SERIES,
   onPublish,
   onCoverImageSelected,
 }: BlogEditorProps) {
-  const [title,          setTitleRaw]    = useState(initialPost?.title ?? '');
-  const [slug,           setSlug]        = useState(initialPost?.slug  ?? '');
-  const [date,           setDate]        = useState(initialPost?.date  ?? todayAsIsoDate());
-  const [summary,        setSummary]     = useState(initialPost?.summary  ?? '');
-  const [excerpt,        setExcerpt]     = useState(initialPost?.excerpt  ?? '');
-  const [tags,           setTags]        = useState<string[]>(initialPost?.tags ?? []);
-  const [readingTime,    setReadingTime] = useState(initialPost?.readingTime ?? 1);
-  const [content,        setContentRaw]  = useState(initialPost?.content ?? '');
-  const [coverPreview,   setCoverPreview]= useState<string | undefined>(initialPost?.coverImage);
-  const [tagInput,       setTagInput]    = useState('');
-  const [seriesId,       setSeriesId]    = useState(initialPost?.series?.id    ?? '');
-  const [seriesTitle,    setSeriesTitle] = useState(initialPost?.series?.title ?? '');
-  const [seriesPart,     setSeriesPart]  = useState(initialPost?.series?.part  ?? 1);
-  const [seriesTotal,    setSeriesTotal] = useState(initialPost?.series?.total ?? 1);
+  const [title,             setTitleRaw]          = useState(initialPost?.title ?? '');
+  const [slug,              setSlug]              = useState(initialPost?.slug  ?? '');
+  const [date,              setDate]              = useState(initialPost?.date  ?? todayAsIsoDate());
+  const [summary,           setSummary]           = useState(initialPost?.summary  ?? '');
+  const [excerpt,           setExcerpt]           = useState(initialPost?.excerpt  ?? '');
+  const [tags,              setTags]              = useState<string[]>(initialPost?.tags ?? []);
+  const [readingTime,       setReadingTime]       = useState(initialPost?.readingTime ?? 1);
+  const [content,           setContentRaw]        = useState(initialPost?.content ?? '');
+  const [coverPreview,      setCoverPreview]      = useState<string | undefined>(initialPost?.coverImage);
+  const [tagInput,          setTagInput]          = useState('');
+  const [selectedSeriesKey, setSelectedSeriesKey] = useState('none');
+  const [seriesId,          setSeriesId]          = useState(initialPost?.series?.id    ?? '');
+  const [seriesTitle,       setSeriesTitle]       = useState(initialPost?.series?.title ?? '');
+  const [seriesPart,        setSeriesPart]        = useState(initialPost?.series?.part  ?? 1);
+  const [seriesTotal,       setSeriesTotal]       = useState(initialPost?.series?.total ?? 1);
 
   const slugEdited  = useRef(!!initialPost);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Populate all fields when the post changes.
   useEffect(() => {
     if (!initialPost) return;
     setTitleRaw(initialPost.title);
@@ -58,6 +65,16 @@ export function BlogEditor({
     slugEdited.current = true;
   }, [initialPost]);
 
+  // Derive which dropdown item is selected. Re-runs if existingSeries loads after initialPost.
+  useEffect(() => {
+    if (!initialPost?.series) {
+      setSelectedSeriesKey('none');
+      return;
+    }
+    const inList = existingSeries.some(s => s.id === initialPost.series!.id);
+    setSelectedSeriesKey(inList ? initialPost.series!.id : '__new__');
+  }, [initialPost, existingSeries]);
+
   const setTitle = useCallback((value: string) => {
     setTitleRaw(value);
     if (!slugEdited.current) setSlug(generateSlug(value));
@@ -70,8 +87,18 @@ export function BlogEditor({
   }, []);
 
   const renderedHtml = marked.parse(content) as string;
-
   const canPublish = title.trim().length > 0 && summary.trim().length > 0 && content.trim().length > 0;
+
+  function onSeriesKeyChange(key: string) {
+    setSelectedSeriesKey(key);
+    if (key !== 'none' && key !== '__new__') {
+      const found = existingSeries.find(s => s.id === key);
+      if (found) {
+        setSeriesId(found.id);
+        setSeriesTitle(found.title);
+      }
+    }
+  }
 
   function onTagKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' || e.key === ',') {
@@ -126,7 +153,14 @@ export function BlogEditor({
 
   function handlePublish() {
     if (!canPublish) return;
-    const id = seriesId.trim();
+    let series: BlogDraft['series'];
+    if (selectedSeriesKey === '__new__') {
+      const id = seriesId.trim();
+      series = id ? { id, title: seriesTitle.trim() || id, part: seriesPart, total: seriesTotal } : undefined;
+    } else if (selectedSeriesKey !== 'none') {
+      const found = existingSeries.find(s => s.id === selectedSeriesKey);
+      series = found ? { id: found.id, title: found.title, part: seriesPart, total: seriesTotal } : undefined;
+    }
     onPublish?.({
       title,
       slug:        slug || generateSlug(title),
@@ -137,9 +171,7 @@ export function BlogEditor({
       readingTime,
       content,
       coverImage:  coverImageUrl ?? coverPreview,
-      series: id
-        ? { id, title: seriesTitle.trim() || id, part: seriesPart, total: seriesTotal }
-        : undefined,
+      series,
     });
   }
 
@@ -256,50 +288,72 @@ export function BlogEditor({
 
         <div className="be-field-group-label">Series <span className="be-optional">(optional)</span></div>
 
-        <div className="be-field">
-          <label className="be-label">Series ID</label>
-          <input
-            className="be-input"
-            type="text"
-            value={seriesId}
-            onChange={e => setSeriesId(e.target.value)}
-            placeholder="e.g. go-backend"
-          />
+        <div className="be-field be-field--full">
+          <label className="be-label">Series</label>
+          <select
+            className="be-input be-input--select"
+            value={selectedSeriesKey}
+            onChange={e => onSeriesKeyChange(e.target.value)}
+          >
+            <option value="none">— None —</option>
+            {existingSeries.map(s => (
+              <option key={s.id} value={s.id}>{s.title}</option>
+            ))}
+            <option value="__new__">+ New series…</option>
+          </select>
         </div>
 
-        <div className="be-field">
-          <label className="be-label">Series Title</label>
-          <input
-            className="be-input"
-            type="text"
-            value={seriesTitle}
-            onChange={e => setSeriesTitle(e.target.value)}
-            placeholder="e.g. Go Backend Series"
-          />
-        </div>
+        {selectedSeriesKey === '__new__' && (
+          <>
+            <div className="be-field">
+              <label className="be-label">Series ID</label>
+              <input
+                className="be-input"
+                type="text"
+                value={seriesId}
+                onChange={e => setSeriesId(e.target.value)}
+                placeholder="e.g. go-backend"
+              />
+            </div>
+            <div className="be-field">
+              <label className="be-label">Series Title</label>
+              <input
+                className="be-input"
+                type="text"
+                value={seriesTitle}
+                onChange={e => setSeriesTitle(e.target.value)}
+                placeholder="e.g. Go Backend Series"
+              />
+            </div>
+          </>
+        )}
 
-        <div className="be-field be-field--narrow-pair">
-          <div>
-            <label className="be-label">Part</label>
-            <input
-              className="be-input be-input--narrow"
-              type="number"
-              min={1}
-              value={seriesPart}
-              onChange={e => setSeriesPart(Number(e.target.value))}
-            />
+        {selectedSeriesKey !== 'none' && (
+          <div className="be-field be-field--narrow-pair">
+            <div>
+              <label className="be-label" htmlFor="series-part">Part</label>
+              <input
+                id="series-part"
+                className="be-input be-input--narrow"
+                type="number"
+                min={1}
+                value={seriesPart}
+                onChange={e => setSeriesPart(Number(e.target.value))}
+              />
+            </div>
+            <div>
+              <label className="be-label" htmlFor="series-total">Total Parts</label>
+              <input
+                id="series-total"
+                className="be-input be-input--narrow"
+                type="number"
+                min={1}
+                value={seriesTotal}
+                onChange={e => setSeriesTotal(Number(e.target.value))}
+              />
+            </div>
           </div>
-          <div>
-            <label className="be-label">Total Parts</label>
-            <input
-              className="be-input be-input--narrow"
-              type="number"
-              min={1}
-              value={seriesTotal}
-              onChange={e => setSeriesTotal(Number(e.target.value))}
-            />
-          </div>
-        </div>
+        )}
 
       </section>
 

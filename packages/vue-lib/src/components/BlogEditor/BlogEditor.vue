@@ -10,9 +10,12 @@ const props = withDefaults(defineProps<{
   initialPost?: BlogPost;
   /** Set to the S3 URL after the platform has uploaded the selected cover image. */
   coverImageUrl?: string;
+  /** Existing series to show in the dropdown. Platform fetches these from the blog index. */
+  existingSeries?: Array<{ id: string; title: string }>;
 }>(), {
-  initialPost: undefined,
-  coverImageUrl: undefined,
+  initialPost:    undefined,
+  coverImageUrl:  undefined,
+  existingSeries: () => [],
 });
 
 const emit = defineEmits<{
@@ -22,44 +25,68 @@ const emit = defineEmits<{
   coverImageSelected: [file: File];
 }>();
 
-const title       = ref(props.initialPost?.title       ?? '');
-const slug        = ref(props.initialPost?.slug        ?? '');
-const date        = ref(props.initialPost?.date        ?? todayAsIsoDate());
-const summary     = ref(props.initialPost?.summary     ?? '');
-const excerpt     = ref(props.initialPost?.excerpt     ?? '');
-const tags        = ref<string[]>([...(props.initialPost?.tags ?? [])]);
-const readingTime = ref(props.initialPost?.readingTime ?? 1);
-const content     = ref(props.initialPost?.content     ?? '');
-const coverPreview= ref<string | undefined>(props.initialPost?.coverImage);
-const tagInput    = ref('');
-const slugEdited  = ref(!!props.initialPost);
-const textareaEl  = ref<HTMLTextAreaElement | null>(null);
-const seriesId    = ref(props.initialPost?.series?.id    ?? '');
-const seriesTitle = ref(props.initialPost?.series?.title ?? '');
-const seriesPart  = ref(props.initialPost?.series?.part  ?? 1);
-const seriesTotal = ref(props.initialPost?.series?.total ?? 1);
+const title            = ref(props.initialPost?.title       ?? '');
+const slug             = ref(props.initialPost?.slug        ?? '');
+const date             = ref(props.initialPost?.date        ?? todayAsIsoDate());
+const summary          = ref(props.initialPost?.summary     ?? '');
+const excerpt          = ref(props.initialPost?.excerpt     ?? '');
+const tags             = ref<string[]>([...(props.initialPost?.tags ?? [])]);
+const readingTime      = ref(props.initialPost?.readingTime ?? 1);
+const content          = ref(props.initialPost?.content     ?? '');
+const coverPreview     = ref<string | undefined>(props.initialPost?.coverImage);
+const tagInput         = ref('');
+const slugEdited       = ref(!!props.initialPost);
+const textareaEl       = ref<HTMLTextAreaElement | null>(null);
+const selectedSeriesKey = ref('none');
+const seriesId         = ref(props.initialPost?.series?.id    ?? '');
+const seriesTitle      = ref(props.initialPost?.series?.title ?? '');
+const seriesPart       = ref(props.initialPost?.series?.part  ?? 1);
+const seriesTotal      = ref(props.initialPost?.series?.total ?? 1);
 
+// Populate all fields when the post changes.
 watch(() => props.initialPost, post => {
   if (!post) return;
-  title.value       = post.title;
-  slug.value        = post.slug;
-  date.value        = post.date;
-  summary.value     = post.summary;
-  excerpt.value     = post.excerpt ?? '';
-  tags.value        = [...post.tags];
-  readingTime.value = post.readingTime ?? 1;
-  content.value     = post.content;
-  coverPreview.value= post.coverImage;
-  seriesId.value    = post.series?.id    ?? '';
-  seriesTitle.value = post.series?.title ?? '';
-  seriesPart.value  = post.series?.part  ?? 1;
-  seriesTotal.value = post.series?.total ?? 1;
-  slugEdited.value  = true;
+  title.value        = post.title;
+  slug.value         = post.slug;
+  date.value         = post.date;
+  summary.value      = post.summary;
+  excerpt.value      = post.excerpt ?? '';
+  tags.value         = [...post.tags];
+  readingTime.value  = post.readingTime ?? 1;
+  content.value      = post.content;
+  coverPreview.value = post.coverImage;
+  seriesId.value     = post.series?.id    ?? '';
+  seriesTitle.value  = post.series?.title ?? '';
+  seriesPart.value   = post.series?.part  ?? 1;
+  seriesTotal.value  = post.series?.total ?? 1;
+  slugEdited.value   = true;
+});
+
+// Derive which dropdown item is selected. Re-runs if existingSeries loads after initialPost.
+watch([() => props.initialPost, () => props.existingSeries], ([post, existing]) => {
+  if (!post?.series) {
+    selectedSeriesKey.value = 'none';
+    return;
+  }
+  const inList = existing.some((s: { id: string }) => s.id === post.series!.id);
+  selectedSeriesKey.value = inList ? post.series!.id : '__new__';
 });
 
 const renderedHtml = computed(() => marked.parse(content.value) as string);
 const canPublish   = computed(() => title.value.trim().length > 0 && summary.value.trim().length > 0 && content.value.trim().length > 0);
 const previewUrl   = computed(() => coverPreview.value ?? props.coverImageUrl);
+
+function onSeriesKeyChange(e: Event) {
+  const key = (e.target as HTMLSelectElement).value;
+  selectedSeriesKey.value = key;
+  if (key !== 'none' && key !== '__new__') {
+    const found = props.existingSeries.find(s => s.id === key);
+    if (found) {
+      seriesId.value    = found.id;
+      seriesTitle.value = found.title;
+    }
+  }
+}
 
 function onTitleChange(e: Event) {
   title.value = (e.target as HTMLInputElement).value;
@@ -129,7 +156,14 @@ function applyFormat(item: ToolbarItem) {
 
 function onPublish() {
   if (!canPublish.value) return;
-  const id = seriesId.value.trim();
+  let series: BlogDraft['series'];
+  if (selectedSeriesKey.value === '__new__') {
+    const id = seriesId.value.trim();
+    series = id ? { id, title: seriesTitle.value.trim() || id, part: seriesPart.value, total: seriesTotal.value } : undefined;
+  } else if (selectedSeriesKey.value !== 'none') {
+    const found = props.existingSeries.find(s => s.id === selectedSeriesKey.value);
+    series = found ? { id: found.id, title: found.title, part: seriesPart.value, total: seriesTotal.value } : undefined;
+  }
   emit('publish', {
     title:       title.value,
     slug:        slug.value || generateSlug(title.value),
@@ -140,9 +174,7 @@ function onPublish() {
     readingTime: readingTime.value,
     content:     content.value,
     coverImage:  props.coverImageUrl ?? coverPreview.value,
-    series: id
-      ? { id, title: seriesTitle.value.trim() || id, part: seriesPart.value, total: seriesTotal.value }
-      : undefined,
+    series,
   });
 }
 </script>
@@ -263,27 +295,48 @@ function onPublish() {
         Series <span class="be-optional">(optional)</span>
       </div>
 
-      <div class="be-field">
-        <label class="be-label">Series ID</label>
-        <input
-          v-model="seriesId"
-          class="be-input"
-          type="text"
-          placeholder="e.g. go-backend"
+      <div class="be-field be-field--full">
+        <label class="be-label">Series</label>
+        <select
+          class="be-input be-input--select"
+          :value="selectedSeriesKey"
+          @change="onSeriesKeyChange"
         >
+          <option value="none">— None —</option>
+          <option
+            v-for="s in existingSeries"
+            :key="s.id"
+            :value="s.id"
+          >{{ s.title }}</option>
+          <option value="__new__">+ New series…</option>
+        </select>
       </div>
 
-      <div class="be-field">
-        <label class="be-label">Series Title</label>
-        <input
-          v-model="seriesTitle"
-          class="be-input"
-          type="text"
-          placeholder="e.g. Go Backend Series"
-        >
-      </div>
+      <template v-if="selectedSeriesKey === '__new__'">
+        <div class="be-field">
+          <label class="be-label">Series ID</label>
+          <input
+            v-model="seriesId"
+            class="be-input"
+            type="text"
+            placeholder="e.g. go-backend"
+          >
+        </div>
+        <div class="be-field">
+          <label class="be-label">Series Title</label>
+          <input
+            v-model="seriesTitle"
+            class="be-input"
+            type="text"
+            placeholder="e.g. Go Backend Series"
+          >
+        </div>
+      </template>
 
-      <div class="be-field be-field--narrow-pair">
+      <div
+        v-if="selectedSeriesKey !== 'none'"
+        class="be-field be-field--narrow-pair"
+      >
         <div>
           <label class="be-label">Part</label>
           <input
@@ -416,6 +469,7 @@ function onPublish() {
 
   &--textarea { resize: vertical; line-height: 1.6; }
   &--narrow   { width: 100px; }
+  &--select   { cursor: pointer; }
 }
 
 .be-tags {
