@@ -4,6 +4,13 @@ All notable changes to the Vue component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/vue-lib [2.6.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.5.3...@m2s2/vue-lib@2.6.0) (2026-06-20)
+
+
+### Features
+
+* add ability to select or create series in blog editor ([896fde3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/896fde300135a1df63e1b794a0028172237d5459))
+
 ## @m2s2/vue-lib [2.5.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.5.2...@m2s2/vue-lib@2.5.3) (2026-06-19)
 
 
