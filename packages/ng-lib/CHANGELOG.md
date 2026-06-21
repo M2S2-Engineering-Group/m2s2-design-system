@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/ng-lib [2.9.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.8.0...@m2s2/ng-lib@2.9.0) (2026-06-21)
+
+
+### Features
+
+* adding accessibility across the board ([89b839d](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/89b839dafc1e4a328a22ce826e69636b69ae69f6))
+
 # @m2s2/ng-lib [2.8.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.7.5...@m2s2/ng-lib@2.8.0) (2026-06-20)
 
 
