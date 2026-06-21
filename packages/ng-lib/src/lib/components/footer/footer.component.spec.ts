@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { FooterComponent } from './footer.component';
 
 describe('FooterComponent', () => {
@@ -52,5 +53,29 @@ describe('FooterComponent', () => {
       inputs: { config: { brandName: 'Acme', links: [] } },
     });
     expect(container.querySelectorAll('.social-link').length).toBe(0);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with no links', async () => {
+      const { container } = await render(FooterComponent, {
+        inputs: { config: { brandName: 'Acme Corp', links: [] } },
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with social links', async () => {
+      const { container } = await render(FooterComponent, {
+        inputs: {
+          config: {
+            brandName: 'Acme',
+            links: [
+              { type: 'github', href: 'https://github.com/acme', label: 'GitHub' },
+              { type: 'linkedin', href: 'https://linkedin.com/company/acme', label: 'LinkedIn' },
+            ],
+          },
+        },
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

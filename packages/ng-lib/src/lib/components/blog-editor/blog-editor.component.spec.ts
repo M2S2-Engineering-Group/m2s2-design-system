@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { BlogEditorComponent } from './blog-editor.component';
 
 const renderEditor = (inputs: Record<string, unknown> = {}) =>
@@ -411,6 +412,20 @@ describe('BlogEditorComponent', () => {
       });
       fixture.detectChanges();
       expect(fixture.componentInstance.selectedSeriesKey()).toBe('none');
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in default empty state', async () => {
+      const { container } = await renderEditor();
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with new series fields visible', async () => {
+      const { container, fixture } = await renderEditor();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
+      fixture.detectChanges();
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

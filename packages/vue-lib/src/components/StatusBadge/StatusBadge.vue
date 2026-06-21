@@ -16,6 +16,7 @@ const displayLabel = computed(() => props.label ?? STATUS_LABELS[props.status] ?
 
 <template>
   <span
+    role="status"
     class="m2s2-status-badge"
     :data-status="status"
     :data-variant="variant"

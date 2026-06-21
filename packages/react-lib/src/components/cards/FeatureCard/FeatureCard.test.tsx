@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeFeatureCardConfig } from '@m2s2/utils/testing';
+import { axe } from 'jest-axe';
 import { FeatureCard } from './FeatureCard';
 
 describe('FeatureCard', () => {
@@ -39,5 +40,19 @@ describe('FeatureCard', () => {
   it('does not render a note when absent', () => {
     render(<FeatureCard config={makeFeatureCardConfig({ note: undefined })} />);
     expect(screen.queryByText(/Limited/)).not.toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (default)', async () => {
+      const { container } = render(<FeatureCard config={makeFeatureCardConfig({ title: 'Fast Delivery' })} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (with items and note)', async () => {
+      const { container } = render(
+        <FeatureCard config={makeFeatureCardConfig({ items: ['Item A', 'Item B'], note: 'Limited time.' })} />
+      );
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

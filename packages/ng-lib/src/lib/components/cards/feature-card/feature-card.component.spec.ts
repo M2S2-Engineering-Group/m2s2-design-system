@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { FeatureCardComponent } from './feature-card.component';
 
 describe('FeatureCardComponent', () => {
@@ -37,5 +38,18 @@ describe('FeatureCardComponent', () => {
     const config = { ...base, icon: '⭐' };
     const { container } = await render(FeatureCardComponent, { inputs: { config } });
     expect(container.querySelector('.fc-icon')).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with basic card', async () => {
+      const { container } = await render(FeatureCardComponent, { inputs: { config: base } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with items list', async () => {
+      const config = { ...base, items: ['Item A', 'Item B', 'Item C'] };
+      const { container } = await render(FeatureCardComponent, { inputs: { config } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

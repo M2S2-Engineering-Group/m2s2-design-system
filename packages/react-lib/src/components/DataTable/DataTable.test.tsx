@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeColumnDefs } from '@m2s2/utils/testing';
+import { axe } from 'jest-axe';
 import { DataTable } from './DataTable';
 
 describe('DataTable', () => {
@@ -58,5 +59,25 @@ describe('DataTable', () => {
       </DataTable>
     );
     expect(screen.queryByRole('button', { name: /columns/i })).not.toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (with data)', async () => {
+      const { container } = render(
+        <DataTable totalCount={5}>
+          <table />
+        </DataTable>
+      );
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (empty state)', async () => {
+      const { container } = render(
+        <DataTable totalCount={0} emptyMessage="Nothing here yet.">
+          <table />
+        </DataTable>
+      );
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

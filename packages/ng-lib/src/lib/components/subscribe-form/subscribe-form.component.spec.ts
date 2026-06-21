@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { of, throwError } from 'rxjs';
 import { SubscribeFormComponent } from './subscribe-form.component';
 
@@ -63,6 +64,13 @@ describe('SubscribeFormComponent — anon mode', () => {
     fixture.detectChanges();
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
   });
+
+  describe('accessibility', () => {
+    it('has no violations in default anon mode', async () => {
+      const { container } = await render(SubscribeFormComponent);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+  });
 });
 
 describe('SubscribeFormComponent — auth mode', () => {
@@ -118,5 +126,12 @@ describe('SubscribeFormComponent — auth mode', () => {
     fireEvent.click(screen.getByRole('button', { name: /subscribe to blog updates/i }));
     fixture.detectChanges();
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in auth mode', async () => {
+      const { container } = await render(SubscribeFormComponent, { inputs: { mode: 'auth' } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

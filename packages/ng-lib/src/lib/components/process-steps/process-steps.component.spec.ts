@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { ProcessStepsComponent } from './process-steps.component';
 
 describe('ProcessStepsComponent', () => {
@@ -35,5 +36,19 @@ describe('ProcessStepsComponent', () => {
       inputs: { steps: [{ num: '01', name: 'Only', desc: 'Just one.' }] },
     });
     expect(container.querySelectorAll('.ps-divider').length).toBe(0);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with multiple steps', async () => {
+      const { container } = await render(ProcessStepsComponent, { inputs: { steps } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with a single step', async () => {
+      const { container } = await render(ProcessStepsComponent, {
+        inputs: { steps: [{ num: '01', name: 'Only', desc: 'Just one.' }] },
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeNavbarConfig, makeNavbarButton } from '@m2s2/utils/testing';
+import { axe } from 'jest-axe';
 import { Navbar } from './Navbar';
 
 const renderNavbar = (props: Partial<React.ComponentProps<typeof Navbar>> = {}) =>
@@ -48,5 +49,24 @@ describe('Navbar', () => {
   it('renders the mobile hamburger button', () => {
     renderNavbar();
     expect(screen.getByRole('button', { name: 'Open navigation menu' })).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (logged out)', async () => {
+      const { container } = render(<Navbar config={makeNavbarConfig()} loggedIn={false} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (logged in)', async () => {
+      const { container } = render(
+        <Navbar
+          config={makeNavbarConfig({
+            buttons: [makeNavbarButton({ id: '1', title: 'Dashboard', requiresAuth: true })],
+          })}
+          loggedIn={true}
+        />
+      );
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

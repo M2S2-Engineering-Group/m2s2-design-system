@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { provideRouter } from '@angular/router';
 import { Subject } from 'rxjs';
 import { NavbarComponent } from './navbar.component';
@@ -80,5 +81,23 @@ describe('NavbarComponent', () => {
     fixture.componentInstance.loggedIn = false;
     const item = { id: '1', title: 'Profile', requiresAuth: true };
     expect(fixture.componentInstance.isVisible(item)).toBe(false);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with brand only', async () => {
+      const { container } = await renderNavbar({ brand: 'Acme' });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with nav buttons', async () => {
+      const { container } = await renderNavbar({
+        brand: 'Acme',
+        buttons: [
+          { id: '1', title: 'Home', routerLink: '/', requiresAuth: false },
+          { id: '2', title: 'About', routerLink: '/about', requiresAuth: false },
+        ],
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

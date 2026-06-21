@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { StatRowComponent } from './stat-row.component';
 
 describe('StatRowComponent', () => {
@@ -32,5 +33,12 @@ describe('StatRowComponent', () => {
     const { container } = await render(StatRowComponent, { inputs: { stats } });
     const dividers = container.querySelectorAll('.sr-divider');
     expect(dividers.length).toBe(stats.length - 1);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const { container } = await render(StatRowComponent, { inputs: { stats } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

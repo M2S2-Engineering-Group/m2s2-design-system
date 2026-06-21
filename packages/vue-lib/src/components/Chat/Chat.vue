@@ -141,6 +141,9 @@ function onKeydown(e: KeyboardEvent) {
       <div
         ref="listEl"
         class="chat-messages"
+        role="log"
+        aria-live="polite"
+        aria-atomic="false"
       >
         <p
           v-if="messages.length === 0"
@@ -248,8 +251,8 @@ function onKeydown(e: KeyboardEvent) {
               />
             </svg>
           </span>
-          <span class="chat-typing">
-            <span /><span /><span />
+          <span class="chat-typing" aria-label="Assistant is typing">
+            <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
           </span>
         </div>
       </div>
@@ -302,6 +305,7 @@ function onKeydown(e: KeyboardEvent) {
         </div>
         <p
           v-if="sendState === 'error'"
+          role="alert"
           class="chat-error"
         >
           Something went wrong — please try again.

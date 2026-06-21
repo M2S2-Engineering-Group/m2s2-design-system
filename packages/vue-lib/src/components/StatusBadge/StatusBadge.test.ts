@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import StatusBadge from './StatusBadge.vue';
 
 describe('StatusBadge', () => {
@@ -41,5 +42,17 @@ describe('StatusBadge', () => {
   it('applies the pill variant', () => {
     const wrapper = mount(StatusBadge, { props: { status: 'received', variant: 'pill' } });
     expect(wrapper.find('span').attributes('data-variant')).toBe('pill');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default badge variant', async () => {
+      const wrapper = mount(StatusBadge, { props: { status: 'received' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations with pill variant', async () => {
+      const wrapper = mount(StatusBadge, { props: { status: 'received', variant: 'pill' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

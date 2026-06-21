@@ -30,7 +30,7 @@
     </div>
 
     <!-- Messages -->
-    <div class="chat-messages" #messageList>
+    <div class="chat-messages" role="log" aria-live="polite" aria-atomic="false" #messageList>
       @if (messages().length === 0) {
         <p class="chat-empty">Send a message to get started.</p>
       }
@@ -77,8 +77,8 @@
               </svg>
             }
           </span>
-          <span class="chat-typing">
-            <span></span><span></span><span></span>
+          <span class="chat-typing" aria-label="Assistant is typing">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
           </span>
         </div>
       }
@@ -115,7 +115,7 @@
         </button>
       </div>
       @if (sendState() === 'error') {
-        <p class="chat-error">Something went wrong — please try again.</p>
+        <p role="alert" class="chat-error">Something went wrong — please try again.</p>
       }
     }
 

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import DataTable from './DataTable.vue';
 import { makeColumnDefs } from '@m2s2/utils/testing';
 
@@ -47,5 +48,17 @@ describe('DataTable', () => {
     const checkbox = wrapper.find('input[type="checkbox"]');
     await checkbox.trigger('change');
     expect(wrapper.emitted('colToggle')?.[0]).toEqual([cols[0].key]);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in empty state', async () => {
+      const wrapper = mount(DataTable, { props: { totalCount: 0, emptyMessage: 'Nothing here.' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations with toolbar and statuses', async () => {
+      const wrapper = mount(DataTable, { props: { totalCount: 5, statuses: ['all', 'active'] } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

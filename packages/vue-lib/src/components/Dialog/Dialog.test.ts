@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import Dialog from './Dialog.vue';
 import { makeM2S2DialogData } from '@m2s2/utils/testing';
 
@@ -49,5 +50,17 @@ describe('Dialog', () => {
     const wrapper = mountDialog(true, { modal: true });
     await wrapper.find('.m2s2-dialog-overlay').trigger('click');
     expect(wrapper.emitted('close')).toBeFalsy();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations when closed', async () => {
+      const wrapper = mountDialog(false);
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations when open', async () => {
+      const wrapper = mountDialog(true, { title: 'Confirm Action', message: 'Are you sure?' });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

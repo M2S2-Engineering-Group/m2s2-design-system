@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import CtaSection from './CtaSection.vue';
 import { makeCtaConfig } from '@m2s2/utils/testing';
 
@@ -22,5 +23,12 @@ describe('CtaSection', () => {
   it('link href matches config.route', () => {
     const wrapper = mount(CtaSection, { props: { config: makeCtaConfig({ route: '/contact' }) } });
     expect(wrapper.find('a.cta-btn').attributes('href')).toBe('/contact');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const wrapper = mount(CtaSection, { props: { config: makeCtaConfig() } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

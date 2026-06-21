@@ -66,8 +66,8 @@ export function SubscribeForm({
   if (mode === 'anon') {
     if (state === 'done') {
       return (
-        <div className="sub-success">
-          <span className="sub-success-icon">✓</span>
+        <div role="status" className="sub-success">
+          <span className="sub-success-icon" aria-hidden="true">✓</span>
           <p className="sub-success-text">Check your email to confirm your subscription.</p>
         </div>
       );
@@ -78,6 +78,7 @@ export function SubscribeForm({
           className="sub-input"
           type="text"
           placeholder="Your name (optional)"
+          aria-label="Your name (optional)"
           value={name}
           onChange={e => setName(e.target.value)}
           disabled={state === 'submitting'}
@@ -86,6 +87,7 @@ export function SubscribeForm({
           className="sub-input"
           type="email"
           placeholder="your@email.com"
+          aria-label="Email address"
           value={email}
           onChange={e => setEmail(e.target.value)}
           disabled={state === 'submitting'}
@@ -98,7 +100,7 @@ export function SubscribeForm({
           {state === 'submitting' ? 'Submitting…' : 'Subscribe'}
         </button>
         {state === 'error' && (
-          <p className="sub-feedback sub-feedback--error">
+          <p role="alert" className="sub-feedback sub-feedback--error">
             Something went wrong — please try again.
           </p>
         )}
@@ -118,7 +120,7 @@ export function SubscribeForm({
             {state === 'submitting' ? 'Subscribing…' : 'Subscribe to Blog Updates'}
           </button>
           {state === 'done' && (
-            <p className="sub-feedback sub-feedback--success">You&apos;re subscribed!</p>
+            <p role="status" className="sub-feedback sub-feedback--success">You&apos;re subscribed!</p>
           )}
         </>
       ) : (
@@ -134,7 +136,7 @@ export function SubscribeForm({
         </>
       )}
       {state === 'error' && (
-        <p className="sub-feedback sub-feedback--error">
+        <p role="alert" className="sub-feedback sub-feedback--error">
           Something went wrong — please try again.
         </p>
       )}

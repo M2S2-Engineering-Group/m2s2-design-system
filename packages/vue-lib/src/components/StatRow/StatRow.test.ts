@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import StatRow from './StatRow.vue';
 import { makeStatItems } from '@m2s2/utils/testing';
 
@@ -24,5 +25,12 @@ describe('StatRow', () => {
     const stats = makeStatItems(3);
     const wrapper = mount(StatRow, { props: { stats } });
     expect(wrapper.findAll('.sr-divider')).toHaveLength(2);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const wrapper = mount(StatRow, { props: { stats: makeStatItems(3) } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeFooterConfig, makeFooterSocialLink } from '@m2s2/utils/testing';
+import { axe } from 'jest-axe';
 import { Footer } from './Footer';
 
 describe('Footer', () => {
@@ -37,5 +38,23 @@ describe('Footer', () => {
     });
     render(<Footer config={config} />);
     expect(screen.getByRole('link', { name: 'twitter' })).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (no links)', async () => {
+      const { container } = render(<Footer config={makeFooterConfig({ links: [] })} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (with social links)', async () => {
+      const config = makeFooterConfig({
+        links: [
+          makeFooterSocialLink({ type: 'github', href: 'https://github.com/example', label: 'GitHub' }),
+          makeFooterSocialLink({ type: 'linkedin', href: 'https://linkedin.com/in/example', label: 'LinkedIn' }),
+        ],
+      });
+      const { container } = render(<Footer config={config} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

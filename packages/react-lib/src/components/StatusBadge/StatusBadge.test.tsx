@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { StatusBadge } from './StatusBadge';
 
 describe('StatusBadge', () => {
@@ -41,5 +42,17 @@ describe('StatusBadge', () => {
   it('applies the pill variant', () => {
     render(<StatusBadge status="received" variant="pill" />);
     expect(screen.getByText('Received')).toHaveAttribute('data-variant', 'pill');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (badge variant)', async () => {
+      const { container } = render(<StatusBadge status="received" />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (pill variant)', async () => {
+      const { container } = render(<StatusBadge status="received" variant="pill" />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

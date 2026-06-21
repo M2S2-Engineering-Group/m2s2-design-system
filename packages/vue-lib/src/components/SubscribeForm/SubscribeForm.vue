@@ -74,6 +74,7 @@ async function submit(): Promise<void> {
         class="sub-input"
         type="text"
         placeholder="Your name (optional)"
+        aria-label="Your name (optional)"
         :disabled="state === 'submitting'"
       >
       <input
@@ -81,6 +82,7 @@ async function submit(): Promise<void> {
         class="sub-input"
         type="email"
         placeholder="your@email.com"
+        aria-label="Email address"
         :disabled="state === 'submitting'"
       >
       <button
@@ -92,6 +94,7 @@ async function submit(): Promise<void> {
       </button>
       <p
         v-if="state === 'error'"
+        role="alert"
         class="sub-feedback sub-feedback--error"
       >
         Something went wrong — please try again.
@@ -99,9 +102,10 @@ async function submit(): Promise<void> {
     </div>
     <div
       v-else
+      role="status"
       class="sub-success"
     >
-      <span class="sub-success-icon">✓</span>
+      <span class="sub-success-icon" aria-hidden="true">✓</span>
       <p class="sub-success-text">
         Check your email to confirm your subscription.
       </p>
@@ -123,6 +127,7 @@ async function submit(): Promise<void> {
       </button>
       <p
         v-if="state === 'done'"
+        role="status"
         class="sub-feedback sub-feedback--success"
       >
         You're subscribed!
@@ -140,6 +145,7 @@ async function submit(): Promise<void> {
     </template>
     <p
       v-if="state === 'error'"
+      role="alert"
       class="sub-feedback sub-feedback--error"
     >
       Something went wrong — please try again.

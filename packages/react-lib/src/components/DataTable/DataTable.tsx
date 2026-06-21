@@ -67,10 +67,11 @@ export function DataTable({
               className="dt-search"
               type="search"
               placeholder={searchPlaceholder}
+              aria-label="Search"
               value={searchValue}
               onChange={e => onSearchChange?.(e.target.value)}
             />
-            <div className="dt-pills">
+            <div className="dt-pills" role="group" aria-label="Filter by status">
               {statuses.map(s => (
                 <button
                   key={s}
@@ -87,11 +88,16 @@ export function DataTable({
 
         {columnDefs.length > 0 && (
           <div className="dt-col-wrap" ref={colWrapRef}>
-            <button className="dt-col-btn" onClick={() => setShowCols(v => !v)}>
+            <button
+              className="dt-col-btn"
+              aria-expanded={showCols}
+              aria-controls="dt-col-panel"
+              onClick={() => setShowCols(v => !v)}
+            >
               ⚙ Columns
             </button>
             {showCols && (
-              <div className="dt-col-panel">
+              <div id="dt-col-panel" className="dt-col-panel">
                 {columnDefs.map(col => (
                   <label key={col.key} className="dt-col-check">
                     <input

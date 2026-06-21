@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { DataTableComponent } from './data-table.component';
 
 describe('DataTableComponent', () => {
@@ -86,5 +87,19 @@ describe('DataTableComponent', () => {
     fixture.detectChanges();
     fireEvent.change(screen.getByRole('checkbox'));
     expect(spy).toHaveBeenCalledWith('name');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in empty state', async () => {
+      const { container } = await render(DataTableComponent, { inputs: { totalCount: 0 } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with status filters', async () => {
+      const { container } = await render(DataTableComponent, {
+        inputs: { totalCount: 10, statuses: ['all', 'active', 'closed'] },
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import { axe } from 'jest-axe';
 import { BlogCard } from './BlogCard';
 
 const config = {
@@ -51,5 +52,17 @@ describe('BlogCard', () => {
   it('renders the placeholder cover when no coverImage is provided', () => {
     const { container } = renderCard();
     expect(container.querySelector('.bc-cover-placeholder')).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (default)', async () => {
+      const { container } = renderCard();
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (with cover image)', async () => {
+      const { container } = renderCard({ coverImage: 'https://example.com/cover.jpg' });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

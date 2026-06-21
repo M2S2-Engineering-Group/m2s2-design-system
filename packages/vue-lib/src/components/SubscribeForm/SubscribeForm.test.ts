@@ -1,5 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
+import { axe } from 'jest-axe';
 import SubscribeForm from './SubscribeForm.vue';
 
 describe('SubscribeForm — anon mode', () => {
@@ -57,6 +58,13 @@ describe('SubscribeForm — anon mode', () => {
     await flushPromises();
     expect(wrapper.find('.sub-feedback--error').exists()).toBe(true);
     expect(wrapper.text()).toMatch(/something went wrong/i);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in default state', async () => {
+      const wrapper = mount(SubscribeForm);
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });
 
@@ -117,5 +125,12 @@ describe('SubscribeForm — auth mode', () => {
     await flushPromises();
     expect(wrapper.find('.sub-feedback--error').exists()).toBe(true);
     expect(wrapper.text()).toMatch(/something went wrong/i);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in auth mode', async () => {
+      const wrapper = mount(SubscribeForm, { props: { mode: 'auth' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

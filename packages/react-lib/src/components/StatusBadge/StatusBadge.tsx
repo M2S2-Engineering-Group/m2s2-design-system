@@ -10,7 +10,7 @@ interface StatusBadgeProps {
 export function StatusBadge({ status, label, variant = 'badge' }: StatusBadgeProps) {
   const displayLabel = label ?? STATUS_LABELS[status] ?? status;
   return (
-    <span className="m2s2-status-badge" data-status={status} data-variant={variant}>
+    <span role="status" className="m2s2-status-badge" data-status={status} data-variant={variant}>
       {displayLabel}
     </span>
   );

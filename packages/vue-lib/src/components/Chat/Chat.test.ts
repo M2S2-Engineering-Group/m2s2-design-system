@@ -1,5 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { axe } from 'jest-axe';
 import Chat from './Chat.vue';
 
 const noopSend = vi.fn().mockResolvedValue('Hello from AI');
@@ -141,6 +142,19 @@ describe('Chat', () => {
       await flushPromises();
 
       expect(wrapper.find('.chat-error').text()).toBe('Something went wrong — please try again.');
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in closed state', async () => {
+      const wrapper = mountChat();
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations in open state', async () => {
+      const wrapper = mountChat();
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(await axe(wrapper.element)).toHaveNoViolations();
     });
   });
 });

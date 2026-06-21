@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { M2S2DialogComponent } from './dialog.component';
 import { M2S2DialogData } from '../../models/dialog/dialog.model';
@@ -88,6 +89,25 @@ describe('M2S2DialogComponent', () => {
       });
       fireEvent.click(screen.getByRole('button', { name: 'Close' }));
       expect(dialogRef.close).toHaveBeenCalledWith(null);
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with title and actions', async () => {
+      const { container } = await renderDialog({
+        title: 'Confirm Delete',
+        message: 'This action cannot be undone.',
+        actions: [
+          { label: 'Cancel', value: null },
+          { label: 'Confirm', value: 'confirm', variant: 'primary' },
+        ],
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with close button visible', async () => {
+      const { container } = await renderDialog({ title: 'Closeable', actions: [], modal: false });
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

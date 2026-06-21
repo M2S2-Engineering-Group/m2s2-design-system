@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { of, throwError } from 'rxjs';
 import { ChatComponent } from './chat.component';
 import { ChatMessage } from '../../models/chat';
@@ -192,6 +193,20 @@ describe('ChatComponent', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
       fixture.detectChanges();
       expect(document.querySelector('.chat-cta')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in closed state', async () => {
+      const { container } = await renderChat();
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations in open state', async () => {
+      const { container, fixture } = await renderChat({ title: 'Support Chat' });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      fixture.detectChanges();
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

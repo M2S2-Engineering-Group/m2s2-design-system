@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import BlogCard from './BlogCard.vue';
 
 const config = {
@@ -64,5 +65,17 @@ describe('BlogCard', () => {
   it('links to the correct blog post URL', () => {
     const wrapper = mountCard();
     expect(wrapper.find('.bc-title a').attributes('href')).toBe('/blog/my-post');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default config', async () => {
+      const wrapper = mountCard();
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations with a cover image', async () => {
+      const wrapper = mountCard({ coverImage: 'https://example.com/cover.jpg' });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

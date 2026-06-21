@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { StatusBadgeComponent } from './status-badge.component';
 
 describe('StatusBadgeComponent', () => {
@@ -31,5 +32,17 @@ describe('StatusBadgeComponent', () => {
     await render(StatusBadgeComponent, { inputs: { status: 'received', label: 'Override' } });
     expect(screen.getByText('Override')).toBeInTheDocument();
     expect(screen.queryByText('Received')).not.toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default badge variant', async () => {
+      const { container } = await render(StatusBadgeComponent, { inputs: { status: 'received' } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with pill variant', async () => {
+      const { container } = await render(StatusBadgeComponent, { inputs: { status: 'received', variant: 'pill' } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

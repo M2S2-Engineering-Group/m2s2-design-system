@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import FeatureCard from './FeatureCard.vue';
 import { makeFeatureCardConfig } from '@m2s2/utils/testing';
 
@@ -39,5 +40,19 @@ describe('FeatureCard', () => {
   it('does not render a note element when note is absent', () => {
     const wrapper = mount(FeatureCard, { props: { config: makeFeatureCardConfig() } });
     expect(wrapper.find('.fc-note').exists()).toBe(false);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default config', async () => {
+      const wrapper = mount(FeatureCard, { props: { config: makeFeatureCardConfig() } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations with items and note', async () => {
+      const wrapper = mount(FeatureCard, {
+        props: { config: makeFeatureCardConfig({ items: ['Item A', 'Item B'], note: 'Requires Pro.' }) },
+      });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

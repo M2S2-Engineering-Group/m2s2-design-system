@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { SectionHeader } from './SectionHeader';
 
 describe('SectionHeader', () => {
@@ -30,5 +31,17 @@ describe('SectionHeader', () => {
   it('does not render a subtitle element when omitted', () => {
     render(<SectionHeader config={{ label: 'Test' }} />);
     expect(screen.queryByText(/subtitle/i)).not.toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (label only)', async () => {
+      const { container } = render(<SectionHeader config={{ label: 'Our Services' }} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (with subtitle)', async () => {
+      const { container } = render(<SectionHeader config={{ label: 'Our Services', subtitle: 'What we offer' }} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

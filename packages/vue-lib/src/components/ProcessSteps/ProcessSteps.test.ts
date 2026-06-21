@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import ProcessSteps from './ProcessSteps.vue';
 import { makeProcessSteps } from '@m2s2/utils/testing';
 
@@ -26,5 +27,12 @@ describe('ProcessSteps', () => {
     const descs = wrapper.findAll('.ps-desc');
     expect(descs).toHaveLength(3);
     steps.forEach((step, i) => expect(descs[i].text()).toBe(step.desc));
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const wrapper = mount(ProcessSteps, { props: { steps: makeProcessSteps(3) } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

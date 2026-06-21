@@ -71,10 +71,11 @@ function toggleCols(): void {
             class="dt-search"
             type="search"
             :placeholder="searchPlaceholder"
+            aria-label="Search"
             :value="searchValue"
             @input="emit('searchChange', ($event.target as HTMLInputElement).value)"
           >
-          <div class="dt-pills">
+          <div class="dt-pills" role="group" aria-label="Filter by status">
             <button
               v-for="s in statuses"
               :key="s"
@@ -95,12 +96,15 @@ function toggleCols(): void {
         >
           <button
             class="dt-col-btn"
+            :aria-expanded="showCols"
+            aria-controls="dt-col-panel"
             @click="toggleCols"
           >
             &#9881; Columns
           </button>
           <div
             v-if="showCols"
+            id="dt-col-panel"
             class="dt-col-panel"
           >
             <label

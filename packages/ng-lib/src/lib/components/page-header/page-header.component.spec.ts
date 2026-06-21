@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { PageHeaderComponent } from './page-header.component';
 
 describe('PageHeaderComponent', () => {
@@ -22,5 +23,12 @@ describe('PageHeaderComponent', () => {
   it('applies the page-subtitle class to the subtitle', async () => {
     await render(PageHeaderComponent, { inputs: { config } });
     expect(screen.getByText('Learn more about our team')).toHaveClass('page-subtitle');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const { container } = await render(PageHeaderComponent, { inputs: { config } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

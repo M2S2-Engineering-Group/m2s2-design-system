@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   ElementRef,
+  NgZone,
   ViewChild,
   computed,
   effect,
@@ -50,18 +51,26 @@ export class ChatComponent {
 
   private observer?: IntersectionObserver;
   private readonly destroyRef = inject(DestroyRef);
+  private readonly ngZone = inject(NgZone);
 
   constructor() {
     effect(() => {
       this.observer?.disconnect();
       const el = this.avoidElement();
-      if (!el) return;
+      if (!el) { this.extraBottom.set(0); return; }
+
+      // Immediate read so the FAB is positioned correctly before the observer fires.
+      const rect = el.getBoundingClientRect();
+      this.extraBottom.set(Math.max(0, Math.round(window.innerHeight - rect.top)));
+
+      // IntersectionObserver keeps it correct as the user scrolls.
+      // NgZone.run() is required because IntersectionObserver fires outside Angular's zone.
       this.observer = new IntersectionObserver(
         ([entry]) => {
           const visible = entry.isIntersecting
             ? Math.round(window.innerHeight - entry.boundingClientRect.top)
             : 0;
-          this.extraBottom.set(Math.max(0, visible));
+          this.ngZone.run(() => this.extraBottom.set(Math.max(0, visible)));
         },
         { threshold: Array.from({ length: 11 }, (_, i) => i / 10) },
       );

@@ -24,7 +24,29 @@ function isClickable(item: DropdownItemConfig): item is DropdownItem & Pick<Clic
 
 export function Dropdown({ trigger, items, align = 'left' }: DropdownProps) {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref        = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const menuRef    = useRef<HTMLUListElement>(null);
+
+  function getMenuItems(): HTMLElement[] {
+    return Array.from(
+      menuRef.current?.querySelectorAll('[role="menuitem"]:not([aria-disabled="true"])') ?? []
+    ) as HTMLElement[];
+  }
+
+  function openMenu() {
+    setOpen(true);
+  }
+
+  function closeMenu() {
+    setOpen(false);
+    triggerRef.current?.focus();
+  }
+
+  // Focus first menu item after menu renders.
+  useEffect(() => {
+    if (open) getMenuItems()[0]?.focus();
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -33,7 +55,7 @@ export function Dropdown({ trigger, items, align = 'left' }: DropdownProps) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
     function handleEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') closeMenu();
     }
 
     document.addEventListener('mousedown', handleOutside);
@@ -44,20 +66,60 @@ export function Dropdown({ trigger, items, align = 'left' }: DropdownProps) {
     };
   }, [open]);
 
+  function onTriggerKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (open) { closeMenu(); } else { openMenu(); }
+    }
+  }
+
+  function onMenuKeyDown(e: React.KeyboardEvent) {
+    const menuItems = getMenuItems();
+    const idx = menuItems.indexOf(document.activeElement as HTMLElement);
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        menuItems[(idx + 1) % menuItems.length]?.focus();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        menuItems[(idx - 1 + menuItems.length) % menuItems.length]?.focus();
+        break;
+      case 'Home':
+        e.preventDefault();
+        menuItems[0]?.focus();
+        break;
+      case 'End':
+        e.preventDefault();
+        menuItems[menuItems.length - 1]?.focus();
+        break;
+      case 'Tab':
+        setOpen(false);
+        break;
+    }
+  }
+
   return (
     <div className="m2s2-dropdown" ref={ref}>
       <div
+        ref={triggerRef}
         className="m2s2-dropdown__trigger"
-        onClick={() => setOpen(v => !v)}
+        tabIndex={0}
+        role="button"
         aria-haspopup="menu"
-        aria-expanded={open}>
+        aria-expanded={open}
+        onClick={() => open ? closeMenu() : openMenu()}
+        onKeyDown={onTriggerKeyDown}>
         {trigger}
       </div>
 
       {open && (
         <ul
+          ref={menuRef}
           className={`m2s2-dropdown__menu m2s2-dropdown__menu--${align}`}
-          role="menu">
+          role="menu"
+          onKeyDown={onMenuKeyDown}>
           {items.map(item => (
             <li key={item.id} className="m2s2-dropdown__item" role="none">
               {isAnchor(item) ? (

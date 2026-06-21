@@ -11,13 +11,13 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div
+  <article
     class="m2s2-card"
     :class="{ featured }"
     :data-variant="variant"
   >
     <slot />
-  </div>
+  </article>
 </template>
 
 <style lang="scss">

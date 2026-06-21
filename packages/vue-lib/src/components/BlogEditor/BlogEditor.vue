@@ -206,8 +206,9 @@ function onPublish() {
       </div>
 
       <div class="be-field">
-        <label class="be-label">Date</label>
+        <label class="be-label" for="be-date">Date</label>
         <input
+          id="be-date"
           v-model="date"
           class="be-input"
           type="date"
@@ -261,8 +262,9 @@ function onPublish() {
       </div>
 
       <div class="be-field">
-        <label class="be-label">Reading time (min)</label>
+        <label class="be-label" for="be-reading-time">Reading time (min)</label>
         <input
+          id="be-reading-time"
           v-model.number="readingTime"
           class="be-input be-input--narrow"
           type="number"
@@ -296,8 +298,9 @@ function onPublish() {
       </div>
 
       <div class="be-field be-field--full">
-        <label class="be-label">Series</label>
+        <label class="be-label" for="be-series">Series</label>
         <select
+          id="be-series"
           class="be-input be-input--select"
           :value="selectedSeriesKey"
           @change="onSeriesKeyChange"
@@ -371,6 +374,7 @@ function onPublish() {
           type="button"
           class="be-toolbar__btn"
           :title="item.label"
+          :aria-label="item.label"
           @click="applyFormat(item)"
         >
           {{ item.icon }}

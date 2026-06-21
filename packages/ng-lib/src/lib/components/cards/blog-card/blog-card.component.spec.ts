@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { provideRouter } from '@angular/router';
 import { BlogCardComponent } from './blog-card.component';
 
@@ -72,5 +73,17 @@ describe('BlogCardComponent', () => {
   it('does not render a series badge when series is omitted', async () => {
     await renderCard();
     expect(screen.queryByText(/Part \d+ of \d+/)).not.toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default card', async () => {
+      const { container } = await renderCard();
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with cover image', async () => {
+      const { container } = await renderCard({ coverImage: 'https://example.com/cover.jpg' });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

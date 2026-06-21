@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
+import { axe } from 'jest-axe';
 import { SubscribeForm } from './SubscribeForm';
 
 describe('SubscribeForm — anon mode', () => {
@@ -59,6 +60,13 @@ describe('SubscribeForm — anon mode', () => {
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (default anon form)', async () => {
+      const { container } = render(<SubscribeForm />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });
 
@@ -121,5 +129,12 @@ describe('SubscribeForm — auth mode', () => {
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (auth form)', async () => {
+      const { container } = render(<SubscribeForm mode="auth" />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

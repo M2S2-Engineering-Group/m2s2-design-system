@@ -8,6 +8,7 @@ import { STATUS_LABELS, StatusBadgeVariant } from '../../models/status-badge/sta
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    'role':                'status',
     '[attr.data-status]':  'status()',
     '[attr.data-variant]': 'variant()',
   },

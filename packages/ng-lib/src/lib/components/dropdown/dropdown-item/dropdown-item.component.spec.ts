@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { provideRouter } from '@angular/router';
 import { DropdownItemComponent } from './dropdown-item.component';
 import {
@@ -47,5 +48,26 @@ describe('DropdownItemComponent — anchor', () => {
     const item = new AnchorDropdownItemModel('3', '', 'GitHub', 'https://github.com');
     await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
     expect(screen.getByRole('menuitem', { name: 'GitHub' })).toHaveAttribute('target', '_blank');
+  });
+});
+
+describe('DropdownItemComponent — accessibility', () => {
+  function inMenuContext(container: HTMLElement): HTMLElement {
+    const menu = document.createElement('ul');
+    menu.setAttribute('role', 'menu');
+    menu.innerHTML = container.innerHTML;
+    return menu;
+  }
+
+  it('has no violations for a clickable item', async () => {
+    const item = new ClickableDropdownItemModel('1', '', 'Delete', jest.fn());
+    const { container } = await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
+    expect(await axe(inMenuContext(container))).toHaveNoViolations();
+  });
+
+  it('has no violations for an anchor item', async () => {
+    const item = new AnchorDropdownItemModel('3', '', 'GitHub', 'https://github.com');
+    const { container } = await render(DropdownItemComponent, { inputs: { dropdownItem: item } });
+    expect(await axe(inMenuContext(container))).toHaveNoViolations();
   });
 });

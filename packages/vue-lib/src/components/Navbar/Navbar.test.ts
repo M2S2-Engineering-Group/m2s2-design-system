@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import { makeNavbarConfig, makeNavbarButton } from '@m2s2/utils/testing';
 import Navbar from './Navbar.vue';
 
@@ -52,5 +53,24 @@ describe('Navbar', () => {
     const wrapper = mountNavbar();
     expect(wrapper.find('.navbar-mobile-btn').exists()).toBe(true);
     wrapper.unmount();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default config', async () => {
+      const wrapper = mountNavbar();
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+      wrapper.unmount();
+    });
+
+    it('has no violations when loggedIn with auth-required buttons', async () => {
+      const wrapper = mountNavbar({
+        config: makeNavbarConfig({
+          buttons: [makeNavbarButton({ id: '1', title: 'Dashboard', requiresAuth: true })],
+        }),
+        loggedIn: true,
+      });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+      wrapper.unmount();
+    });
   });
 });

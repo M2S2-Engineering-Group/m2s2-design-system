@@ -10,11 +10,11 @@ interface BaseCardProps {
 
 export function BaseCard({ children, featured = false, variant = 'default' }: BaseCardProps) {
   return (
-    <div
+    <article
       className={`m2s2-card${featured ? ' featured' : ''}`}
       data-variant={variant}
     >
       {children}
-    </div>
+    </article>
   );
 }

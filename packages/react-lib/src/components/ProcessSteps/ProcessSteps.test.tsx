@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeProcessSteps } from '@m2s2/utils/testing';
+import { axe } from 'jest-axe';
 import { ProcessSteps } from './ProcessSteps';
 
 describe('ProcessSteps', () => {
@@ -22,5 +23,12 @@ describe('ProcessSteps', () => {
     expect(screen.getByText('Description 1.')).toBeInTheDocument();
     expect(screen.getByText('Description 2.')).toBeInTheDocument();
     expect(screen.getByText('Description 3.')).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const { container } = render(<ProcessSteps steps={makeProcessSteps(3)} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

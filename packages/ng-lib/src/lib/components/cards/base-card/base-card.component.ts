@@ -7,6 +7,7 @@ import { CardVariant } from '../../../models/card/card.model';
   styleUrls: ['./base-card.component.scss'],
   standalone: true,
   host: {
+    'role': 'article',
     '[class.featured]': 'featured()',
     '[attr.data-variant]': 'variant()',
   },

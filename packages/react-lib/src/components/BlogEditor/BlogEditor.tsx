@@ -206,8 +206,9 @@ export function BlogEditor({
         </div>
 
         <div className="be-field">
-          <label className="be-label">Date</label>
+          <label className="be-label" htmlFor="be-date">Date</label>
           <input
+            id="be-date"
             className="be-input"
             type="date"
             value={date}
@@ -263,8 +264,9 @@ export function BlogEditor({
         </div>
 
         <div className="be-field">
-          <label className="be-label">Reading time (min)</label>
+          <label className="be-label" htmlFor="be-reading-time">Reading time (min)</label>
           <input
+            id="be-reading-time"
             className="be-input be-input--narrow"
             type="number"
             min={1}
@@ -289,8 +291,9 @@ export function BlogEditor({
         <div className="be-field-group-label">Series <span className="be-optional">(optional)</span></div>
 
         <div className="be-field be-field--full">
-          <label className="be-label">Series</label>
+          <label className="be-label" htmlFor="be-series">Series</label>
           <select
+            id="be-series"
             className="be-input be-input--select"
             value={selectedSeriesKey}
             onChange={e => onSeriesKeyChange(e.target.value)}
@@ -367,6 +370,7 @@ export function BlogEditor({
               type="button"
               className="be-toolbar__btn"
               title={item.label}
+              aria-label={item.label}
               onClick={() => applyFormat(item)}
             >{item.icon}</button>
           ))}

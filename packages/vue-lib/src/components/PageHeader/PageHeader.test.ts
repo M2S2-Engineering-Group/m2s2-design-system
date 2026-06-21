@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import PageHeader from './PageHeader.vue';
 import { makePageHeaderConfig } from '@m2s2/utils/testing';
 
@@ -14,5 +15,14 @@ describe('PageHeader', () => {
       props: { config: makePageHeaderConfig({ subtitle: 'We build things.' }) },
     });
     expect(wrapper.find('p.page-subtitle').text()).toBe('We build things.');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const wrapper = mount(PageHeader, {
+        props: { config: makePageHeaderConfig({ title: 'About Us', subtitle: 'We build things.' }) },
+      });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

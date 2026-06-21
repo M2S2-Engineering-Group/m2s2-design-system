@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { SectionHeaderComponent } from './section-header.component';
 
 describe('SectionHeaderComponent', () => {
@@ -25,5 +26,19 @@ describe('SectionHeaderComponent', () => {
   it('does not render a subtitle element when omitted', async () => {
     const { container } = await render(SectionHeaderComponent, { inputs: { config: { label: 'Test' } } });
     expect(container.querySelector('p')).not.toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with label only', async () => {
+      const { container } = await render(SectionHeaderComponent, { inputs: { config: { label: 'Our Services' } } });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with label and subtitle', async () => {
+      const { container } = await render(SectionHeaderComponent, {
+        inputs: { config: { label: 'Our Services', subtitle: 'What we offer' } },
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

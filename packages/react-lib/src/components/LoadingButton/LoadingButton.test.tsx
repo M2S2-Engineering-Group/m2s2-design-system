@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { LoadingButton } from './LoadingButton';
 
 describe('LoadingButton', () => {
@@ -46,5 +47,17 @@ describe('LoadingButton', () => {
   it('sets aria-busy when loading', () => {
     render(<LoadingButton loading>Save</LoadingButton>);
     expect(screen.getByRole('button')).toHaveAttribute('aria-busy', 'true');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (default)', async () => {
+      const { container } = render(<LoadingButton>Save</LoadingButton>);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (loading state)', async () => {
+      const { container } = render(<LoadingButton loading loadingText="Saving…">Save</LoadingButton>);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import Footer from './Footer.vue';
 import { makeFooterConfig, makeFooterSocialLink } from '@m2s2/utils/testing';
 
@@ -27,5 +28,20 @@ describe('Footer', () => {
   it('renders nothing in the social nav when links is empty', () => {
     const wrapper = mount(Footer, { props: { config: makeFooterConfig({ links: [] }) } });
     expect(wrapper.findAll('a.social-link')).toHaveLength(0);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default config', async () => {
+      const wrapper = mount(Footer, { props: { config: makeFooterConfig() } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations with social links', async () => {
+      const config = makeFooterConfig({
+        links: [makeFooterSocialLink({ type: 'github', href: 'https://github.com/test' })],
+      });
+      const wrapper = mount(Footer, { props: { config } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

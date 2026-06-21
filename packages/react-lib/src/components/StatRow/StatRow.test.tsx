@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { makeStatItems } from '@m2s2/utils/testing';
+import { axe } from 'jest-axe';
 import { StatRow } from './StatRow';
 
 describe('StatRow', () => {
@@ -20,5 +21,12 @@ describe('StatRow', () => {
   it('renders the correct number of stat items', () => {
     const { container } = render(<StatRow stats={makeStatItems(2)} />);
     expect(container.querySelectorAll('.sr-item')).toHaveLength(2);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const { container } = render(<StatRow stats={makeStatItems(3)} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

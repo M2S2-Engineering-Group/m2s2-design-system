@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import Panel from './Panel.vue';
 import { makeM2S2PanelData } from '@m2s2/utils/testing';
 
@@ -38,5 +39,17 @@ describe('Panel', () => {
   it('does not show close button on a modal panel', () => {
     const wrapper = mountPanel(true, { modal: true });
     expect(wrapper.find('.panel-close').exists()).toBe(false);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations when closed', async () => {
+      const wrapper = mountPanel(false);
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations when open', async () => {
+      const wrapper = mountPanel(true, { title: 'User Details' });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

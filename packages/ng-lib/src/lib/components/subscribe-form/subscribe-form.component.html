@@ -6,12 +6,14 @@
         class="sub-input"
         type="text"
         placeholder="Your name (optional)"
+        aria-label="Your name (optional)"
         [(ngModel)]="name"
         [disabled]="state() === 'submitting'">
       <input
         class="sub-input"
         type="email"
         placeholder="your@email.com"
+        aria-label="Email address"
         [(ngModel)]="email"
         [disabled]="state() === 'submitting'">
       <button
@@ -21,14 +23,14 @@
         {{ state() === 'submitting' ? 'Submitting…' : 'Subscribe' }}
       </button>
       @if (state() === 'error') {
-        <p class="sub-feedback sub-feedback--error">
+        <p role="alert" class="sub-feedback sub-feedback--error">
           Something went wrong — please try again.
         </p>
       }
     </div>
   } @else {
-    <div class="sub-success">
-      <span class="sub-success-icon">✓</span>
+    <div role="status" class="sub-success">
+      <span class="sub-success-icon" aria-hidden="true">✓</span>
       <p class="sub-success-text">Check your email to confirm your subscription.</p>
     </div>
   }
@@ -45,7 +47,7 @@
         {{ state() === 'submitting' ? 'Subscribing…' : 'Subscribe to Blog Updates' }}
       </button>
       @if (state() === 'done') {
-        <p class="sub-feedback sub-feedback--success">You're subscribed!</p>
+        <p role="status" class="sub-feedback sub-feedback--success">You're subscribed!</p>
       }
     } @else {
       <span class="sub-subscribed-label">✓ Subscribed to blog updates</span>
@@ -57,7 +59,7 @@
       </button>
     }
     @if (state() === 'error') {
-      <p class="sub-feedback sub-feedback--error">
+      <p role="alert" class="sub-feedback sub-feedback--error">
         Something went wrong — please try again.
       </p>
     }

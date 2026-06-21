@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { LoadingButtonComponent } from './loading-button.component';
 
 const renderButton = (inputs: Record<string, unknown> = {}, template?: string) => {
@@ -86,6 +87,22 @@ describe('LoadingButtonComponent', () => {
         { imports: [LoadingButtonComponent] },
       );
       expect(screen.getByRole('button')).toBeDisabled();
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in default state', async () => {
+      const { container } = await render('<m2s2-loading-button>Save</m2s2-loading-button>', {
+        imports: [LoadingButtonComponent],
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations in loading state', async () => {
+      const { container } = await render('<m2s2-loading-button [loading]="true">Save</m2s2-loading-button>', {
+        imports: [LoadingButtonComponent],
+      });
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import LoadingButton from './LoadingButton.vue';
 
 describe('LoadingButton', () => {
@@ -39,5 +40,20 @@ describe('LoadingButton', () => {
   it('is not disabled when loading is false', () => {
     const wrapper = mount(LoadingButton, { props: { loading: false } });
     expect((wrapper.find('button').element as HTMLButtonElement).disabled).toBe(false);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in default state', async () => {
+      const wrapper = mount(LoadingButton, { slots: { default: 'Save' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations in loading state', async () => {
+      const wrapper = mount(LoadingButton, {
+        props: { loading: true, loadingText: 'Saving…' },
+        slots: { default: 'Save' },
+      });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { provideRouter } from '@angular/router';
 import { CtaSectionComponent } from './cta-section.component';
 
@@ -35,5 +36,12 @@ describe('CtaSectionComponent', () => {
     await renderCta();
     expect(screen.getByText('Ready to get started?')).toHaveClass('cta-title');
     expect(screen.getByText('Join us today and build something great.')).toHaveClass('cta-body');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations', async () => {
+      const { container } = await renderCta();
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

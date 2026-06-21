@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { BlogEditor } from './BlogEditor';
 import { makeBlogPost } from '@m2s2/utils/testing';
 
@@ -329,6 +330,19 @@ describe('BlogEditor', () => {
       renderEditor({ initialPost: post, existingSeries: [] });
       const select = screen.getByRole('combobox') as HTMLSelectElement;
       expect(select.value).toBe('__new__');
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (empty editor)', async () => {
+      const { container } = renderEditor();
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (pre-filled editor)', async () => {
+      const post = makeBlogPost({ title: 'Existing Post', slug: 'existing-post', summary: 'A summary', content: 'Body.' });
+      const { container } = renderEditor({ initialPost: post });
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { Chat } from './Chat';
 
 const noopSend = vi.fn().mockResolvedValue('Hello from AI');
@@ -147,6 +148,19 @@ describe('Chat', () => {
       await waitFor(() =>
         expect(screen.getByText('Something went wrong — please try again.')).toBeInTheDocument(),
       );
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations (closed state)', async () => {
+      const { container } = renderChat();
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations (open state)', async () => {
+      const { container } = renderChat();
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

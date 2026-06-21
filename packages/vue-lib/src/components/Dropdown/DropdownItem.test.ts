@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
+import { axe } from 'jest-axe';
 import DropdownItem from './DropdownItem.vue';
 
 describe('DropdownItem', () => {
@@ -42,5 +43,31 @@ describe('DropdownItem', () => {
     const wrapper = mount(DropdownItem, { props: { item } });
     await wrapper.find('a').trigger('click');
     expect(wrapper.emitted('select')).toHaveLength(1);
+  });
+
+  describe('accessibility', () => {
+    function mountInMenu(item: object) {
+      const menu = document.createElement('ul');
+      menu.setAttribute('role', 'menu');
+      document.body.appendChild(menu);
+      const wrapper = mount(DropdownItem, { props: { item }, attachTo: menu });
+      return { wrapper, menu };
+    }
+
+    it('has no violations for an anchor item', async () => {
+      const item = { id: '1', text: 'GitHub', href: 'https://github.com' };
+      const { wrapper, menu } = mountInMenu(item);
+      expect(await axe(menu)).toHaveNoViolations();
+      wrapper.unmount();
+      menu.remove();
+    });
+
+    it('has no violations for a button item', async () => {
+      const item = { id: '2', text: 'Log Out', onClick: vi.fn() };
+      const { wrapper, menu } = mountInMenu(item);
+      expect(await axe(menu)).toHaveNoViolations();
+      wrapper.unmount();
+      menu.remove();
+    });
   });
 });

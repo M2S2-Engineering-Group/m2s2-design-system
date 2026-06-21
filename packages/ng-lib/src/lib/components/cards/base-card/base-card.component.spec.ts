@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { BaseCardComponent } from './base-card.component';
 
 describe('BaseCardComponent', () => {
@@ -35,5 +36,21 @@ describe('BaseCardComponent', () => {
       imports: [BaseCardComponent],
     });
     expect(document.querySelector('m2s2-card')).toHaveAttribute('data-variant', 'default');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default card', async () => {
+      const { container } = await render(`<m2s2-card>Card content</m2s2-card>`, {
+        imports: [BaseCardComponent],
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with featured variant', async () => {
+      const { container } = await render(`<m2s2-card [featured]="true">Featured content</m2s2-card>`, {
+        imports: [BaseCardComponent],
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
   });
 });

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import BaseCard from './BaseCard.vue';
 
 describe('BaseCard', () => {
@@ -26,5 +27,17 @@ describe('BaseCard', () => {
   it('defaults data-variant to default', () => {
     const wrapper = mount(BaseCard);
     expect(wrapper.find('.m2s2-card').attributes('data-variant')).toBe('default');
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with default props', async () => {
+      const wrapper = mount(BaseCard, { slots: { default: '<p>Card content</p>' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations when featured', async () => {
+      const wrapper = mount(BaseCard, { props: { featured: true }, slots: { default: '<p>Featured card</p>' } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });

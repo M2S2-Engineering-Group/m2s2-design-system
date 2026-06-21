@@ -10,9 +10,10 @@
           class="dt-search"
           type="search"
           [placeholder]="searchPlaceholder()"
+          aria-label="Search"
           [value]="searchValue()"
           (input)="searchChange.emit($any($event.target).value)">
-        <div class="dt-pills">
+        <div class="dt-pills" role="group" aria-label="Filter by status">
           @for (s of statuses(); track s) {
             <button
               class="dt-pill"
@@ -28,9 +29,9 @@
       <!-- Column toggle — pushed to the right -->
       @if (columnDefs().length > 0) {
         <div class="dt-col-wrap" #colWrap>
-          <button class="dt-col-btn" (click)="showCols.set(!showCols())">&#9881; Columns</button>
+          <button class="dt-col-btn" [attr.aria-expanded]="showCols()" aria-controls="dt-col-panel" (click)="showCols.set(!showCols())">&#9881; Columns</button>
           @if (showCols()) {
-            <div class="dt-col-panel">
+            <div id="dt-col-panel" class="dt-col-panel">
               @for (col of columnDefs(); track col.key) {
                 <label class="dt-col-check">
                   <input type="checkbox" [checked]="colVisibility()[col.key]" (change)="colToggle.emit(col.key)">

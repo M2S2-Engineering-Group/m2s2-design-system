@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import BlogEditor from './BlogEditor.vue';
 import { makeBlogPost } from '@m2s2/utils/testing';
 
@@ -210,6 +211,19 @@ describe('BlogEditor', () => {
       const slugEl = wrapper.find('input[placeholder="post-slug"]')
         .element as HTMLInputElement;
       expect(slugEl.value).toBe('existing-post');
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations in default empty state', async () => {
+      const wrapper = mountEditor();
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations when pre-filled with an existing post', async () => {
+      const post = makeBlogPost({ title: 'Existing Post', slug: 'existing-post', summary: 'A summary', content: 'Body.' });
+      const wrapper = mountEditor({ initialPost: post });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
     });
   });
 });

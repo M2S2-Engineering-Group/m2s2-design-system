@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/angular';
+import { axe } from 'jest-axe';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { M2S2PanelComponent } from './panel.component';
 import { NgM2S2PanelData } from '../../models/panel/panel.model';
@@ -88,6 +89,25 @@ describe('M2S2PanelComponent', () => {
     it('does not render a footer when no actions are provided', async () => {
       await renderPanel({ title: 'Empty Footer' });
       expect(document.querySelector('.panel-footer')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('accessibility', () => {
+    it('has no violations with title and actions', async () => {
+      const { container } = await renderPanel({
+        title: 'Edit Profile',
+        subtitle: 'Update your details',
+        actions: [
+          { label: 'Cancel', value: null },
+          { label: 'Save', value: 'save', variant: 'primary' },
+        ],
+      });
+      expect(await axe(container)).toHaveNoViolations();
+    });
+
+    it('has no violations with close button visible', async () => {
+      const { container } = await renderPanel({ title: 'Closeable', modal: false });
+      expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

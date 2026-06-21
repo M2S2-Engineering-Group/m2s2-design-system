@@ -119,7 +119,7 @@ export function Chat({
             </div>
           </div>
 
-          <div className="chat-messages" ref={listRef}>
+          <div className="chat-messages" role="log" aria-live="polite" aria-atomic="false" ref={listRef}>
             {messages.length === 0 && (
               <p className="chat-empty">Send a message to get started.</p>
             )}
@@ -154,8 +154,8 @@ export function Chat({
                     ? <img src={assistantAvatarUrl} alt="" aria-hidden="true" />
                     : <AssistantIcon />}
                 </span>
-                <span className="chat-typing">
-                  <span /><span /><span />
+                <span className="chat-typing" aria-label="Assistant is typing">
+                  <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
                 </span>
               </div>
             )}
@@ -193,7 +193,7 @@ export function Chat({
                 </button>
               </div>
               {sendState === 'error' && (
-                <p className="chat-error">Something went wrong — please try again.</p>
+                <p role="alert" className="chat-error">Something went wrong — please try again.</p>
               )}
             </>
           )}

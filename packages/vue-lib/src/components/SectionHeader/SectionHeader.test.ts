@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
+import { axe } from 'jest-axe';
 import SectionHeader from './SectionHeader.vue';
 
 describe('SectionHeader', () => {
@@ -31,5 +32,17 @@ describe('SectionHeader', () => {
   it('does not render a subtitle element when omitted', () => {
     const wrapper = mount(SectionHeader, { props: { config: { label: 'Test' } } });
     expect(wrapper.find('.sh-subtitle').exists()).toBe(false);
+  });
+
+  describe('accessibility', () => {
+    it('has no violations without subtitle', async () => {
+      const wrapper = mount(SectionHeader, { props: { config: { label: 'Our Services' } } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
+
+    it('has no violations with subtitle', async () => {
+      const wrapper = mount(SectionHeader, { props: { config: { label: 'Our Services', subtitle: 'What we offer' } } });
+      expect(await axe(wrapper.element)).toHaveNoViolations();
+    });
   });
 });
