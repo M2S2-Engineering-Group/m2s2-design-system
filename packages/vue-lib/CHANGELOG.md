@@ -4,6 +4,13 @@ All notable changes to the Vue component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/vue-lib [2.7.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.7.2...@m2s2/vue-lib@2.7.3) (2026-07-03)
+
+
+### Bug Fixes
+
+* css styling change for footer app version ([d47e4c8](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/d47e4c8dede9aef0ff3d8e965151598bbcf2445e))
+
 ## @m2s2/vue-lib [2.7.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.7.1...@m2s2/vue-lib@2.7.2) (2026-07-03)
 
 
