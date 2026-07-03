@@ -29,6 +29,10 @@ const year = new Date().getFullYear();
           <SocialIcon :type="link.type" />
         </a>
       </nav>
+      <span
+        v-if="config.buildVersion"
+        class="footer-build"
+      >{{ config.buildVersion.split('+')[0] }}</span>
     </div>
   </footer>
 </template>
@@ -75,4 +79,16 @@ const year = new Date().getFullYear();
 
 .social-link { @include m.social-link; }
 .social-icon { @include m.social-icon; }
+
+.footer-build {
+  display: none;
+  font-size: 0.6rem;
+  font-family: monospace;
+  letter-spacing: 0.04em;
+  opacity: 0.3;
+
+  @media (min-width: 576px) {
+    display: block;
+  }
+}
 </style>

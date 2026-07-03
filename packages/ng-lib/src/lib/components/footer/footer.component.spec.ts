@@ -55,6 +55,20 @@ describe('FooterComponent', () => {
     expect(container.querySelectorAll('.social-link').length).toBe(0);
   });
 
+  it('renders the build version, stripped of build metadata, when present', async () => {
+    await render(FooterComponent, {
+      inputs: { config: { brandName: 'Acme', links: [], buildVersion: '2.9.1+8f3a1c9' } },
+    });
+    expect(screen.getByText('2.9.1')).toBeInTheDocument();
+  });
+
+  it('renders no build version stamp when omitted', async () => {
+    const { container } = await render(FooterComponent, {
+      inputs: { config: { brandName: 'Acme', links: [] } },
+    });
+    expect(container.querySelector('.footer-build')).toBeNull();
+  });
+
   describe('accessibility', () => {
     it('has no violations with no links', async () => {
       const { container } = await render(FooterComponent, {

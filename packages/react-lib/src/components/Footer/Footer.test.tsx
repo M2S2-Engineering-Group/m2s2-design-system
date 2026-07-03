@@ -40,6 +40,17 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: 'twitter' })).toBeInTheDocument();
   });
 
+  it('renders the build version, stripped of build metadata, when present', () => {
+    const config = makeFooterConfig({ buildVersion: '2.7.0+8f3a1c9' });
+    render(<Footer config={config} />);
+    expect(screen.getByText('2.7.0')).toBeInTheDocument();
+  });
+
+  it('renders no build version stamp when omitted', () => {
+    const { container } = render(<Footer config={makeFooterConfig()} />);
+    expect(container.querySelector('.footer-build')).not.toBeInTheDocument();
+  });
+
   describe('accessibility', () => {
     it('has no violations (no links)', async () => {
       const { container } = render(<Footer config={makeFooterConfig({ links: [] })} />);

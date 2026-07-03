@@ -28,6 +28,7 @@ export function Footer({ config }: FooterProps) {
             </a>
           ))}
         </nav>
+        {config.buildVersion && <span className="footer-build">{config.buildVersion.split('+')[0]}</span>}
       </div>
     </footer>
   );

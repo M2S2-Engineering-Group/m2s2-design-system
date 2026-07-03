@@ -47,3 +47,17 @@ export const CustomBrand: Story = {
     },
   },
 };
+
+export const WithVersion: Story = {
+  name: 'With Version',
+  args: {
+    config: {
+      brandName: 'M²S² Engineering Group',
+      links: [
+        { type: 'github', href: 'https://github.com/mgmaster24', label: 'GitHub' },
+        { type: 'email',  href: 'mailto:hello@m2s2.io',           label: 'Email' },
+      ],
+      buildVersion: '2.7.0+8f3a1c9',
+    },
+  },
+};

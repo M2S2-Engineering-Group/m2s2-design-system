@@ -30,6 +30,16 @@ describe('Footer', () => {
     expect(wrapper.findAll('a.social-link')).toHaveLength(0);
   });
 
+  it('renders the build version, stripped of build metadata, when present', () => {
+    const wrapper = mount(Footer, { props: { config: makeFooterConfig({ buildVersion: '2.7.0+8f3a1c9' }) } });
+    expect(wrapper.find('.footer-build').text()).toBe('2.7.0');
+  });
+
+  it('renders no build version stamp when omitted', () => {
+    const wrapper = mount(Footer, { props: { config: makeFooterConfig() } });
+    expect(wrapper.find('.footer-build').exists()).toBe(false);
+  });
+
   describe('accessibility', () => {
     it('has no violations with default config', async () => {
       const wrapper = mount(Footer, { props: { config: makeFooterConfig() } });
