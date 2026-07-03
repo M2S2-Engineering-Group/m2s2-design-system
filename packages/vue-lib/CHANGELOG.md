@@ -4,6 +4,13 @@ All notable changes to the Vue component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/vue-lib [2.7.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.7.1...@m2s2/vue-lib@2.7.2) (2026-07-03)
+
+
+### Bug Fixes
+
+* add version test and storybook examples ([9f2143c](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/9f2143c7eb1313842f52604bceb279471e6d34be))
+
 ## @m2s2/vue-lib [2.7.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.7.0...@m2s2/vue-lib@2.7.1) (2026-07-03)
 
 
