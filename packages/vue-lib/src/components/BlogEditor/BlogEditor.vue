@@ -102,7 +102,7 @@ function onContentChange(e: Event) {
 function onTagKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' || e.key === ',') {
     e.preventDefault();
-    const tag = tagInput.value.trim().replace(/,/g, '').toLowerCase();
+    const tag = generateSlug(tagInput.value);
     if (tag && !tags.value.includes(tag)) tags.value = [...tags.value, tag];
     tagInput.value = '';
   }

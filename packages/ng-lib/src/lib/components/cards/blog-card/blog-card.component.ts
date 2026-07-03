@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { formatBlogDate } from '@m2s2/utils';
+import { formatBlogDate, formatTagLabel } from '@m2s2/utils';
 import { BlogCardConfig } from '../../../models/card/card.model';
 
 @Component({
@@ -14,4 +14,5 @@ export class BlogCardComponent {
   config = input.required<BlogCardConfig>();
 
   readonly formatDate = formatBlogDate;
+  readonly tagLabel = formatTagLabel;
 }

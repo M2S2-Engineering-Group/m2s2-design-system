@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { formatBlogDate, todayAsIsoDate, generateSlug, calcReadingTime } from './blog';
+import { formatBlogDate, todayAsIsoDate, generateSlug, calcReadingTime, formatTagLabel } from './blog';
 
 describe('formatBlogDate', () => {
   it('formats an ISO date string as long US date', () => {
@@ -69,6 +69,36 @@ describe('generateSlug', () => {
 
   it('handles an empty string', () => {
     expect(generateSlug('')).toBe('');
+  });
+});
+
+describe('formatTagLabel', () => {
+  it('capitalizes a single-word slug', () => {
+    expect(formatTagLabel('backend')).toBe('Backend');
+  });
+
+  it('capitalizes each word of a two-word slug', () => {
+    expect(formatTagLabel('engineering-momentum')).toBe('Engineering Momentum');
+  });
+
+  it('capitalizes every word regardless of how many there are', () => {
+    expect(formatTagLabel('site-reliability-engineering')).toBe('Site Reliability Engineering');
+  });
+
+  it('uses the exception casing for known acronyms', () => {
+    expect(formatTagLabel('ai')).toBe('AI');
+    expect(formatTagLabel('aws')).toBe('AWS');
+    expect(formatTagLabel('cdk')).toBe('CDK');
+    expect(formatTagLabel('cto')).toBe('CTO');
+    expect(formatTagLabel('typescript')).toBe('TypeScript');
+  });
+
+  it('applies acronym exceptions within a multi-word slug', () => {
+    expect(formatTagLabel('aws-lambda')).toBe('AWS Lambda');
+  });
+
+  it('handles an empty string', () => {
+    expect(formatTagLabel('')).toBe('');
   });
 });
 

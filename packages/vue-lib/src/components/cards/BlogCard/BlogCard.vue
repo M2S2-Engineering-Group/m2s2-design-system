@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { BlogCardConfig } from '@m2s2/models';
-import { formatBlogDate } from '@m2s2/utils';
+import { formatBlogDate, formatTagLabel } from '@m2s2/utils';
 
 defineProps<{ config: BlogCardConfig }>();
 </script>
@@ -19,7 +19,7 @@ defineProps<{ config: BlogCardConfig }>();
         v-else
         class="bc-cover-placeholder"
       >
-        <span class="bc-cover-tag">{{ config.tags[0] }}</span>
+        <span class="bc-cover-tag">{{ formatTagLabel(config.tags[0]) }}</span>
       </div>
     </div>
     <div class="bc-inner">
@@ -41,7 +41,7 @@ defineProps<{ config: BlogCardConfig }>();
           v-for="tag in config.tags"
           :key="tag"
           class="bc-tag"
-        >{{ tag }}</span>
+        >{{ formatTagLabel(tag) }}</span>
       </div>
     </div>
   </div>

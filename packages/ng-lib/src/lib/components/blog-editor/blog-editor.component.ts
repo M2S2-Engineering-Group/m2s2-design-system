@@ -142,7 +142,7 @@ export class BlogEditorComponent {
   onTagKeydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ',') {
       event.preventDefault();
-      const tag = this.tagInput.trim().replace(/,/g, '').toLowerCase();
+      const tag = generateSlug(this.tagInput);
       if (tag && !this.tags().includes(tag)) {
         this.tags.update(t => [...t, tag]);
       }

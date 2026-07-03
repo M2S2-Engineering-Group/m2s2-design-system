@@ -103,7 +103,7 @@ export function BlogEditor({
   function onTagKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
-      const tag = tagInput.trim().replace(/,/g, '').toLowerCase();
+      const tag = generateSlug(tagInput);
       if (tag && !tags.includes(tag)) setTags(prev => [...prev, tag]);
       setTagInput('');
     }

@@ -28,3 +28,20 @@ export function calcReadingTime(content: string): number {
   const words = content.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 200));
 }
+
+const TAG_LABEL_EXCEPTIONS: Record<string, string> = {
+  ai: 'AI',
+  aws: 'AWS',
+  cdk: 'CDK',
+  cto: 'CTO',
+  typescript: 'TypeScript',
+};
+
+/** Format a lowercase-hyphenated tag slug for display (e.g. "software-architecture" -> "Software Architecture"). */
+export function formatTagLabel(slug: string): string {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((word) => TAG_LABEL_EXCEPTIONS[word] ?? word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}

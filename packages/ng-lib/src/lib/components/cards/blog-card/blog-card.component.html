@@ -3,7 +3,7 @@
     <img [src]="config().coverImage" [alt]="config().title" class="bc-cover-img" loading="lazy" />
   } @else {
     <div class="bc-cover-placeholder">
-      <span class="bc-cover-tag">{{ config().tags[0] }}</span>
+      <span class="bc-cover-tag">{{ tagLabel(config().tags[0]) }}</span>
     </div>
   }
 </div>
@@ -27,7 +27,7 @@
   <p class="bc-summary">{{ config().summary }}</p>
   <div class="bc-tags">
     @for (tag of config().tags; track tag) {
-      <span class="bc-tag">{{ tag }}</span>
+      <span class="bc-tag">{{ tagLabel(tag) }}</span>
     }
   </div>
 </div>

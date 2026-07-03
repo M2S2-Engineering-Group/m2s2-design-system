@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { BlogCardConfig } from '@m2s2/models';
-import { formatBlogDate } from '@m2s2/utils';
+import { formatBlogDate, formatTagLabel } from '@m2s2/utils';
 import './BlogCard.scss';
 
 interface BlogCardProps {
@@ -15,7 +15,7 @@ export function BlogCard({ config }: BlogCardProps) {
           <img src={config.coverImage} alt={config.title} className="bc-cover-img" loading="lazy" />
         ) : (
           <div className="bc-cover-placeholder">
-            <span className="bc-cover-tag">{config.tags[0]}</span>
+            <span className="bc-cover-tag">{formatTagLabel(config.tags[0])}</span>
           </div>
         )}
       </div>
@@ -30,7 +30,7 @@ export function BlogCard({ config }: BlogCardProps) {
         <p className="bc-summary">{config.summary}</p>
         <div className="bc-tags">
           {config.tags.map((tag) => (
-            <span key={tag} className="bc-tag">{tag}</span>
+            <span key={tag} className="bc-tag">{formatTagLabel(tag)}</span>
           ))}
         </div>
       </div>
