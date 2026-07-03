@@ -12,6 +12,10 @@ const year = new Date().getFullYear();
     <div class="footer-inner">
       <span class="footer-copy">
         &copy; {{ year }} {{ config.brandName }} &mdash; All Rights Reserved
+        <span
+          v-if="config.buildVersion"
+          class="footer-build"
+        >&middot; {{ config.buildVersion.split('+')[0] }}</span>
       </span>
       <nav
         class="footer-social"
@@ -29,10 +33,6 @@ const year = new Date().getFullYear();
           <SocialIcon :type="link.type" />
         </a>
       </nav>
-      <span
-        v-if="config.buildVersion"
-        class="footer-build"
-      >{{ config.buildVersion.split('+')[0] }}</span>
     </div>
   </footer>
 </template>
@@ -82,13 +82,14 @@ const year = new Date().getFullYear();
 
 .footer-build {
   display: none;
+  margin-left: var(--space-2);
   font-size: 0.6rem;
   font-family: monospace;
   letter-spacing: 0.04em;
   opacity: 0.3;
 
   @media (min-width: 576px) {
-    display: block;
+    display: inline;
   }
 }
 </style>

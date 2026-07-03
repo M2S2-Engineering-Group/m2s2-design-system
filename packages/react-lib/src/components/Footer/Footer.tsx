@@ -13,6 +13,9 @@ export function Footer({ config }: FooterProps) {
       <div className="footer-inner">
         <span className="footer-copy">
           &copy; {year} {config.brandName} &mdash; All Rights Reserved
+          {config.buildVersion && (
+            <span className="footer-build">&middot; {config.buildVersion.split('+')[0]}</span>
+          )}
         </span>
         <nav className="footer-social" aria-label="Social links">
           {config.links.map((link) => (
@@ -28,7 +31,6 @@ export function Footer({ config }: FooterProps) {
             </a>
           ))}
         </nav>
-        {config.buildVersion && <span className="footer-build">{config.buildVersion.split('+')[0]}</span>}
       </div>
     </footer>
   );

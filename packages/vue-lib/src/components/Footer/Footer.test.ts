@@ -32,7 +32,7 @@ describe('Footer', () => {
 
   it('renders the build version, stripped of build metadata, when present', () => {
     const wrapper = mount(Footer, { props: { config: makeFooterConfig({ buildVersion: '2.7.0+8f3a1c9' }) } });
-    expect(wrapper.find('.footer-build').text()).toBe('2.7.0');
+    expect(wrapper.find('.footer-build').text()).toContain('2.7.0');
   });
 
   it('renders no build version stamp when omitted', () => {

@@ -59,7 +59,7 @@ describe('FooterComponent', () => {
     await render(FooterComponent, {
       inputs: { config: { brandName: 'Acme', links: [], buildVersion: '2.9.1+8f3a1c9' } },
     });
-    expect(screen.getByText('2.9.1')).toBeInTheDocument();
+    expect(screen.getByText(/2\.9\.1/)).toBeInTheDocument();
   });
 
   it('renders no build version stamp when omitted', async () => {

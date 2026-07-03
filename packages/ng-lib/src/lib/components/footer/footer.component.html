@@ -2,6 +2,9 @@
   <div class="footer-inner">
     <span class="footer-copy">
       &copy; {{ currentYear }} {{ config().brandName }} &mdash; All Rights Reserved
+      @if (config().buildVersion) {
+        <span class="footer-build">&middot; {{ config().buildVersion!.split('+')[0] }}</span>
+      }
     </span>
 
     <nav class="footer-social" aria-label="Social links">
@@ -44,8 +47,5 @@
         }
       }
     </nav>
-    @if (config().buildVersion) {
-      <span class="footer-build">{{ config().buildVersion!.split('+')[0] }}</span>
-    }
   </div>
 </footer>

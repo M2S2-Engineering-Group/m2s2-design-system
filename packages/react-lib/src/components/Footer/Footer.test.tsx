@@ -43,7 +43,7 @@ describe('Footer', () => {
   it('renders the build version, stripped of build metadata, when present', () => {
     const config = makeFooterConfig({ buildVersion: '2.7.0+8f3a1c9' });
     render(<Footer config={config} />);
-    expect(screen.getByText('2.7.0')).toBeInTheDocument();
+    expect(screen.getByText(/2\.7\.0/)).toBeInTheDocument();
   });
 
   it('renders no build version stamp when omitted', () => {

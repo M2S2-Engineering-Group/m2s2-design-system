@@ -35,12 +35,13 @@
 
 .footer-build {
   display: none;
+  margin-left: var(--space-2);
   font-size: 0.6rem;
   font-family: monospace;
   letter-spacing: 0.04em;
   opacity: 0.3;
 
   @media (min-width: 576px) {
-    display: block;
+    display: inline;
   }
 }
