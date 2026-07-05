@@ -1,6 +1,6 @@
 {
   "name": "@m2s2/utils",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Framework-agnostic utility functions for the M²S² design system.",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",
@@ -41,7 +41,7 @@
     "vitest": "^4.1.6"
   },
   "dependencies": {
-    "@m2s2/models": "^2.4.1",
+    "@m2s2/models": "2.5.0",
     "chart.js": "^4.5.1"
   }
 }
