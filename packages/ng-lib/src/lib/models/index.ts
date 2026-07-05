@@ -13,3 +13,4 @@ export * from './stat-row';
 export * from './status-badge';
 export * from './chat';
 export * from './blog';
+export * from './chart';

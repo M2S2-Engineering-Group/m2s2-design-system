@@ -32,6 +32,7 @@
     "@m2s2/models": "2.4.1",
     "@m2s2/tokens": "2.2.2",
     "@m2s2/utils": "1.0.1",
+    "chart.js": "^4.5.1",
     "tslib": "~2.3.1"
   },
   "peerDependencies": {

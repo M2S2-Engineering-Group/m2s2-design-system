@@ -30,6 +30,8 @@ export { FeatureCard } from './components/cards/FeatureCard/FeatureCard';
 export { Dropdown } from './components/Dropdown/Dropdown';
 export type { DropdownProps } from './components/Dropdown/Dropdown';
 export { AuthProvider, useAuth } from './hooks/useAuth';
+export { TimeSeriesChart } from './components/TimeSeriesChart/TimeSeriesChart';
+export { RankedBarChart } from './components/RankedBarChart/RankedBarChart';
 export type { M2S2AuthUser, M2S2AuthContextValue, M2S2AuthProviderImpl, AuthProviderProps } from './hooks/useAuth';
 
 // Re-export shared models consumed by this library's components
@@ -61,6 +63,8 @@ export type {
   BlogPost,
   BlogDraft,
   ChatMessage,
+  TimeSeriesPoint,
+  RankedBarItem,
 } from '@m2s2/models';
 
 export { STATUS_LABELS } from '@m2s2/models';

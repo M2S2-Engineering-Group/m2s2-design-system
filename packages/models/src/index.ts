@@ -13,3 +13,4 @@ export * from './stat-row.model';
 export * from './status-badge.model';
 export * from './chat.model';
 export * from './blog.model';
+export * from './chart.model';
