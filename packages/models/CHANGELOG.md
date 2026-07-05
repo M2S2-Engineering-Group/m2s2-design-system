@@ -4,6 +4,13 @@ All notable changes to the shared model interfaces are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/models [2.5.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/models@2.4.1...@m2s2/models@2.5.0) (2026-07-05)
+
+
+### Features
+
+* adding charting features ([66f93df](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/66f93df8c9b83a4db60f448a56b30abb0f37d56d))
+
 ## @m2s2/models [2.4.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/models@2.4.0...@m2s2/models@2.4.1) (2026-06-17)
 
 
