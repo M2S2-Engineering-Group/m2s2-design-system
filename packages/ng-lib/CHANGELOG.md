@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.10.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.10.0...@m2s2/ng-lib@2.10.1) (2026-07-08)
+
+
+### Bug Fixes
+
+* **ng-lib:** update the flex characteristics of the subscriber form ([57611f3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/57611f3019254f5ba60acdc422ec83931f2238c7))
+
 # @m2s2/ng-lib [2.10.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.9.3...@m2s2/ng-lib@2.10.0) (2026-07-05)
 
 
