@@ -4,6 +4,14 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.11.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.11.0...@m2s2/ng-lib@2.11.1) (2026-07-10)
+
+
+### Bug Fixes
+
+* show tab functionality on sb ([3b2b2ff](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/3b2b2ff7adf096f130d50e5cefbf86405d044e28))
+* show tab functionality on sb ([c80ec1e](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/c80ec1ea3dc51923e3596f07f3d4202bc3f9faa8))
+
 # @m2s2/ng-lib [2.11.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.10.1...@m2s2/ng-lib@2.11.0) (2026-07-10)
 
 
