@@ -35,6 +35,34 @@ describe('Chat', () => {
     });
   });
 
+  describe('welcome message', () => {
+    it('shows the welcome message as the first assistant message when opened with no prior conversation', async () => {
+      const wrapper = mountChat({ welcomeMessage: 'Hi there! How can I help?' });
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.find('.chat-message--assistant .chat-message__text').text()).toBe('Hi there! How can I help?');
+    });
+
+    it('does not show a welcome message when none is provided', async () => {
+      const wrapper = mountChat();
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.find('.chat-empty').text()).toBe('Send a message to get started.');
+    });
+
+    it('does not re-add the welcome message on subsequent opens once a conversation exists', async () => {
+      const sendMessage = vi.fn().mockResolvedValue('Reply');
+      const wrapper = mountChat({ welcomeMessage: 'Hi there!', sendMessage });
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+
+      await wrapper.find('textarea').setValue('A question');
+      await wrapper.find('button[aria-label="Send"]').trigger('click');
+      await flushPromises();
+
+      await wrapper.find('button[aria-label="Close chat"]').trigger('click');
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.findAll('.chat-message__text').filter(el => el.text() === 'Hi there!')).toHaveLength(1);
+    });
+  });
+
   describe('title and subtitle', () => {
     it('renders the custom title in the panel header', async () => {
       const wrapper = mountChat({ title: 'My Assistant' });

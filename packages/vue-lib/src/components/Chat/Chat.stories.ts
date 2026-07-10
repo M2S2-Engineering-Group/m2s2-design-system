@@ -99,7 +99,7 @@ export const WithSlotHeaderContent: Story = {
     },
     template: `
       <div v-show="activePersona === 'general'">
-        <Chat :sendMessage="mockSendMessage" title="M²S² Assistant" ctaUrl="/contact" ctaLabel="Start a Conversation" v-model:open="generalOpen">
+        <Chat :sendMessage="mockSendMessage" title="M²S² Assistant" welcomeMessage="Hi! I'm the M²S² Assistant. Ask me about our services, past work, or how M²S² can help — and if you've got a technical architecture question, switch to the MARC² tab above." ctaUrl="/contact" ctaLabel="Start a Conversation" v-model:open="generalOpen">
           <template #headerContent>
             <div style="display:flex; gap:8px; margin-top:var(--space-2);">
               <button @click="setActivePersona('general')" :style="{ fontSize: '12px', padding: '2px 10px', borderRadius: '999px', border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'general' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'general' ? '#fff' : 'var(--color-on-surface)' }">Assistant</button>
@@ -109,7 +109,7 @@ export const WithSlotHeaderContent: Story = {
         </Chat>
       </div>
       <div v-show="activePersona === 'marc'">
-        <Chat :sendMessage="mockSendMessage" title="MARC²" ctaUrl="/contact" ctaLabel="Start a Conversation" v-model:open="marcOpen">
+        <Chat :sendMessage="mockSendMessage" title="MARC²" welcomeMessage="Hey! I'm MARC², the M²S² Architecture Consultant. I'm trained on Michael's engineering experience and can help you think through architecture decisions, technology choices, cloud design, AI integration, and more. What are you working on?" ctaUrl="/contact" ctaLabel="Start a Conversation" v-model:open="marcOpen">
           <template #headerContent>
             <div style="display:flex; gap:8px; margin-top:var(--space-2);">
               <button @click="setActivePersona('general')" :style="{ fontSize: '12px', padding: '2px 10px', borderRadius: '999px', border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'general' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'general' ? '#fff' : 'var(--color-on-surface)' }">Assistant</button>

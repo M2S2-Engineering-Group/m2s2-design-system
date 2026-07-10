@@ -111,6 +111,7 @@ function TwoPersonaSwitcher() {
         <Chat
           sendMessage={mockSendMessage}
           title="M²S² Assistant"
+          welcomeMessage="Hi! I'm the M²S² Assistant. Ask me about our services, past work, or how M²S² can help — and if you've got a technical architecture question, switch to the MARC² tab above."
           ctaUrl="/contact"
           ctaLabel="Start a Conversation"
           headerContent={tabs}
@@ -122,6 +123,7 @@ function TwoPersonaSwitcher() {
         <Chat
           sendMessage={mockSendMessage}
           title="MARC²"
+          welcomeMessage="Hey! I'm MARC², the M²S² Architecture Consultant. I'm trained on Michael's engineering experience and can help you think through architecture decisions, technology choices, cloud design, AI integration, and more. What are you working on?"
           ctaUrl="/contact"
           ctaLabel="Start a Conversation"
           headerContent={tabs}

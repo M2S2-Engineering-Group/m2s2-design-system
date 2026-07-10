@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue';
+import { ref, computed, nextTick, watch } from 'vue';
 import type { ChatMessage } from '@m2s2/models';
 
 const props = withDefaults(defineProps<{
@@ -12,6 +12,11 @@ const props = withDefaults(defineProps<{
   ctaUrl?:             string;
   userAvatarUrl?:      string;
   assistantAvatarUrl?: string;
+  /**
+   * Optional greeting shown as the first assistant message the first time
+   * the panel is opened (only when there's no existing conversation yet).
+   */
+  welcomeMessage?:     string;
   /**
    * Optional extra content rendered in the header, below the title/subtitle.
    * Pass a plain string for simple text, or use the `headerContent` slot for
@@ -29,6 +34,7 @@ const props = withDefaults(defineProps<{
   ctaUrl:           '/contact',
   userAvatarUrl:    undefined,
   assistantAvatarUrl: undefined,
+  welcomeMessage:   undefined,
   headerContent:    undefined,
 });
 
@@ -76,6 +82,19 @@ async function submit() {
   }
 }
 
+function toggle() {
+  open.value = !open.value;
+}
+
+// Seeds the welcome message on any open transition — self-toggled via the
+// FAB, or forced open externally via `v-model:open` (e.g. a host switching
+// between multiple chat instances) — not just the FAB click path.
+watch(open, isOpen => {
+  if (isOpen && messages.value.length === 0 && props.welcomeMessage) {
+    messages.value = [{ role: 'assistant', content: props.welcomeMessage }];
+  }
+});
+
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
@@ -90,7 +109,7 @@ function onKeydown(e: KeyboardEvent) {
     <button
       class="chat-toggle"
       :aria-label="open ? 'Close chat' : 'Open chat'"
-      @click="open = !open"
+      @click="toggle"
     >
       <svg
         v-if="open"

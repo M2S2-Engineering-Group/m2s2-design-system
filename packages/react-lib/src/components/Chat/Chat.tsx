@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ChatMessage } from '@m2s2/models';
 import './Chat.scss';
 
@@ -12,6 +12,11 @@ interface ChatProps {
   ctaUrl?:             string;
   userAvatarUrl?:      string;
   assistantAvatarUrl?: string;
+  /**
+   * Optional greeting shown as the first assistant message the first time
+   * the panel is opened (only when there's no existing conversation yet).
+   */
+  welcomeMessage?:     string;
   /**
    * Optional extra content rendered in the header, below the title/subtitle.
    * Pass a plain string for simple text, or any element for arbitrary markup
@@ -55,20 +60,31 @@ export function Chat({
   ctaUrl             = '/contact',
   userAvatarUrl,
   assistantAvatarUrl,
+  welcomeMessage,
   headerContent,
   open: openProp,
   onOpenChange,
 }: ChatProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = openProp ?? internalOpen;
+  const [messages, setMessages]   = useState<ChatMessage[]>([]);
   const setOpen = (next: boolean) => {
     setInternalOpen(next);
     onOpenChange?.(next);
   };
-  const [messages, setMessages]   = useState<ChatMessage[]>([]);
   const [sendState, setSendState] = useState<SendState>('idle');
   const [draft, setDraft]         = useState('');
   const listRef                   = useRef<HTMLDivElement>(null);
+
+  // Seeds the welcome message on any open transition — self-toggled via the
+  // FAB, or forced open externally via the `open` prop (e.g. a host switching
+  // between multiple chat instances) — not just the FAB click path.
+  useEffect(() => {
+    if (open && messages.length === 0 && welcomeMessage) {
+      setMessages([{ role: 'assistant', content: welcomeMessage }]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   const userCount    = messages.filter(m => m.role === 'user').length;
   const limitReached = userCount >= maxMessages;

@@ -93,6 +93,18 @@ export class ChatComponent {
       this.observer.observe(el);
     });
     this.destroyRef.onDestroy(() => this.observer?.disconnect());
+
+    // Seeds the welcome message on any open transition — self-toggled via
+    // the FAB, or forced open externally via `[open]` (e.g. a host switching
+    // between multiple chat instances) — not just the FAB click path.
+    effect(() => {
+      if (this.open() && this.messages().length === 0) {
+        const welcome = this.welcomeMessage();
+        if (welcome) {
+          this.messages.set([{ role: 'assistant', content: welcome }]);
+        }
+      }
+    });
   }
 
   readonly userCount    = computed(() => this.messages().filter(m => m.role === 'user').length);
@@ -105,12 +117,6 @@ export class ChatComponent {
   @ViewChild('messageList') private messageList?: ElementRef<HTMLElement>;
 
   toggle(): void {
-    if (!this.open() && this.messages().length === 0) {
-      const welcome = this.welcomeMessage();
-      if (welcome) {
-        this.messages.set([{ role: 'assistant', content: welcome }]);
-      }
-    }
     this.open.update(v => !v);
   }
 

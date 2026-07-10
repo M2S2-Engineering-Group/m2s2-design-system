@@ -34,6 +34,35 @@ describe('Chat', () => {
     });
   });
 
+  describe('welcome message', () => {
+    it('shows the welcome message as the first assistant message when opened with no prior conversation', () => {
+      renderChat({ welcomeMessage: 'Hi there! How can I help?' });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getByText('Hi there! How can I help?')).toBeInTheDocument();
+    });
+
+    it('does not show a welcome message when none is provided', () => {
+      renderChat();
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getByText('Send a message to get started.')).toBeInTheDocument();
+    });
+
+    it('does not re-add the welcome message on subsequent opens once a conversation exists', async () => {
+      const sendMessage = vi.fn().mockResolvedValue('Reply');
+      renderChat({ welcomeMessage: 'Hi there!', sendMessage });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+
+      const textarea = screen.getByPlaceholderText('Ask a question...');
+      fireEvent.change(textarea, { target: { value: 'A question' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Send' }));
+      await waitFor(() => expect(sendMessage).toHaveBeenCalledOnce());
+
+      fireEvent.click(screen.getByRole('button', { name: 'Close chat' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getAllByText('Hi there!')).toHaveLength(1);
+    });
+  });
+
   describe('title and subtitle', () => {
     it('renders the custom title in the panel header', () => {
       renderChat({ title: 'My Assistant' });
