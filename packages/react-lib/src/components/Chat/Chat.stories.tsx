@@ -60,6 +60,45 @@ export const WithAvatars: Story = {
   },
 };
 
+export const WithStringHeaderContent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'A plain string passed to `headerContent` renders as simple text below the subtitle.',
+      },
+    },
+  },
+  args: {
+    sendMessage:   mockSendMessage,
+    title:         'Architecture Advisor',
+    headerContent: 'Now serving both General and MARC² personas',
+    ctaUrl:        '/contact',
+    ctaLabel:      'Start a Conversation',
+  },
+};
+
+export const WithElementHeaderContent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: '`headerContent` accepts any `ReactNode` and renders it as-is — the component has no opinion on what it contains. This is the mechanism a consumer would use to add e.g. a persona tab switcher, entirely from outside this component.',
+      },
+    },
+  },
+  args: {
+    sendMessage: mockSendMessage,
+    title:       'M²S² Assistant',
+    ctaUrl:      '/contact',
+    ctaLabel:    'Start a Conversation',
+    headerContent: (
+      <div style={{ display: 'flex', gap: 8, marginTop: 'var(--space-2)' }}>
+        <button style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-primary)', background: 'var(--color-primary)', color: '#fff' }}>Assistant</button>
+        <button style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-border)', background: 'transparent', color: 'var(--color-on-surface)' }}>MARC²</button>
+      </div>
+    ),
+  },
+};
+
 export const NearLimit: Story = {
   name: 'Near Limit (message 5 of 6)',
   args: {

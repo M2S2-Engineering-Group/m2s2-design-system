@@ -67,6 +67,10 @@
   font-size: var(--font-size-xs);
 }
 
+.chat-header__extra {
+  margin-top: var(--space-2);
+}
+
 .chat-messages {
   @include m.overlay-body;
   display: flex;

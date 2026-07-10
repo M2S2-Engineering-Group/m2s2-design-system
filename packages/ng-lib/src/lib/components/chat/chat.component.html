@@ -26,6 +26,13 @@
         @if (messages().length === 0) {
           <p class="chat-header__subtitle">{{ subtitle() }}</p>
         }
+        @if (headerContent(); as content) {
+          @if (isTemplateRef(content)) {
+            <ng-container [ngTemplateOutlet]="content" />
+          } @else {
+            <p class="chat-header__extra">{{ content }}</p>
+          }
+        }
       </div>
     </div>
 

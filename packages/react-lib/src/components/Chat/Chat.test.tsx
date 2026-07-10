@@ -151,6 +151,49 @@ describe('Chat', () => {
     });
   });
 
+  describe('controlled open state', () => {
+    it('renders open when the open prop is true, without needing a toggle click', () => {
+      renderChat({ open: true });
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('calls onOpenChange instead of only relying on internal state when toggled', () => {
+      const onOpenChange = vi.fn();
+      renderChat({ open: false, onOpenChange });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(onOpenChange).toHaveBeenCalledWith(true);
+    });
+
+    it('stays open when the open prop is held true even after a toggle click (fully controlled)', () => {
+      const onOpenChange = vi.fn();
+      renderChat({ open: true, onOpenChange });
+      fireEvent.click(screen.getByRole('button', { name: 'Close chat' }));
+      expect(onOpenChange).toHaveBeenCalledWith(false);
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+  });
+
+  describe('header content', () => {
+    it('does not render extra header content when headerContent is not provided', () => {
+      renderChat();
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(document.querySelector('.chat-header__extra')).not.toBeInTheDocument();
+    });
+
+    it('renders a plain string as text', () => {
+      renderChat({ headerContent: 'Now serving two personas' });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getByText('Now serving two personas')).toBeInTheDocument();
+    });
+
+    it('renders an element as-is, exactly as provided', () => {
+      renderChat({ headerContent: <button data-testid="custom-tab">Assistant</button> });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getByTestId('custom-tab')).toBeInTheDocument();
+      expect(screen.getByTestId('custom-tab')).toHaveTextContent('Assistant');
+    });
+  });
+
   describe('accessibility', () => {
     it('has no violations (closed state)', async () => {
       const { container } = renderChat();

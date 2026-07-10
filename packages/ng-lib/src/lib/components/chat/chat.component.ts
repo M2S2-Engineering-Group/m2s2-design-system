@@ -4,14 +4,17 @@ import {
   DestroyRef,
   ElementRef,
   NgZone,
+  TemplateRef,
   ViewChild,
   computed,
   effect,
   inject,
   input,
+  model,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { ChatMessage } from '../../models/chat';
 
@@ -21,7 +24,7 @@ import { ChatMessage } from '../../models/chat';
   styleUrls: ['./chat.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule],
+  imports: [FormsModule, NgTemplateOutlet],
   host: { '[style.bottom]': 'bottomStyle()' },
 })
 export class ChatComponent {
@@ -36,8 +39,21 @@ export class ChatComponent {
   assistantAvatarUrl = input<string>();
   welcomeMessage     = input<string>();
   avoidElement       = input<HTMLElement | null>(null);
+  /**
+   * Optional extra content rendered in the header, below the title/subtitle.
+   * Pass a plain string for simple text, or a TemplateRef for arbitrary
+   * markup (e.g. a consumer-defined tab switcher) — this component has no
+   * opinion on what it contains.
+   */
+  headerContent      = input<string | TemplateRef<unknown>>();
 
-  readonly open      = signal(false);
+  /**
+   * Whether the panel is open. Self-managed by default (toggled via the FAB
+   * button) — pass `[(open)]` to also control it from the host, e.g. to
+   * force a specific instance open when switching between multiple chat
+   * instances via `headerContent`.
+   */
+  readonly open      = model(false);
   readonly messages  = signal<ChatMessage[]>([]);
   readonly sendState = signal<'idle' | 'sending' | 'error'>('idle');
   private readonly extraBottom = signal(0);
@@ -81,6 +97,10 @@ export class ChatComponent {
 
   readonly userCount    = computed(() => this.messages().filter(m => m.role === 'user').length);
   readonly limitReached = computed(() => this.userCount() >= this.maxMessages());
+
+  isTemplateRef(value: string | TemplateRef<unknown>): value is TemplateRef<unknown> {
+    return value instanceof TemplateRef;
+  }
 
   @ViewChild('messageList') private messageList?: ElementRef<HTMLElement>;
 

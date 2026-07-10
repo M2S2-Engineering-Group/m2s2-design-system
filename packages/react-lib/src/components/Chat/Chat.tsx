@@ -12,6 +12,21 @@ interface ChatProps {
   ctaUrl?:             string;
   userAvatarUrl?:      string;
   assistantAvatarUrl?: string;
+  /**
+   * Optional extra content rendered in the header, below the title/subtitle.
+   * Pass a plain string for simple text, or any element for arbitrary markup
+   * (e.g. a consumer-defined tab switcher) — this component has no opinion
+   * on what it contains.
+   */
+  headerContent?:      React.ReactNode;
+  /**
+   * Whether the panel is open. Self-managed by default (toggled via the FAB
+   * button) — pass `open` + `onOpenChange` to also control it from the host,
+   * e.g. to force a specific instance open when switching between multiple
+   * chat instances via `headerContent`.
+   */
+  open?:               boolean;
+  onOpenChange?:       (open: boolean) => void;
 }
 
 type SendState = 'idle' | 'sending' | 'error';
@@ -40,8 +55,16 @@ export function Chat({
   ctaUrl             = '/contact',
   userAvatarUrl,
   assistantAvatarUrl,
+  headerContent,
+  open: openProp,
+  onOpenChange,
 }: ChatProps) {
-  const [open, setOpen]           = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = openProp ?? internalOpen;
+  const setOpen = (next: boolean) => {
+    setInternalOpen(next);
+    onOpenChange?.(next);
+  };
   const [messages, setMessages]   = useState<ChatMessage[]>([]);
   const [sendState, setSendState] = useState<SendState>('idle');
   const [draft, setDraft]         = useState('');
@@ -89,7 +112,7 @@ export function Chat({
     <div className="m2s2-chat">
       <button
         className="chat-toggle"
-        onClick={() => setOpen(v => !v)}
+        onClick={() => setOpen(!open)}
         aria-label={open ? 'Close chat' : 'Open chat'}
       >
         {open ? (
@@ -115,6 +138,9 @@ export function Chat({
               <p className="chat-header__title">{title}</p>
               {messages.length === 0 && (
                 <p className="chat-header__subtitle">{subtitle}</p>
+              )}
+              {headerContent && (
+                <div className="chat-header__extra">{headerContent}</div>
               )}
             </div>
           </div>

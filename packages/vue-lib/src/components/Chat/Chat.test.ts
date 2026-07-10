@@ -145,6 +145,59 @@ describe('Chat', () => {
     });
   });
 
+  describe('controlled open state', () => {
+    it('renders open when the open model is true, without needing a toggle click', () => {
+      const wrapper = mountChat({ open: true });
+      expect(wrapper.find('[role="dialog"]').exists()).toBe(true);
+    });
+
+    it('emits update:open instead of only relying on internal state when toggled', async () => {
+      const wrapper = mountChat({ open: false });
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.emitted('update:open')).toEqual([[true]]);
+    });
+
+    it('emits update:open with false when closed from an initially-open model', async () => {
+      const wrapper = mountChat({ open: true });
+      await wrapper.find('button[aria-label="Close chat"]').trigger('click');
+      expect(wrapper.emitted('update:open')).toEqual([[false]]);
+    });
+  });
+
+  describe('header content', () => {
+    it('does not render extra header content when headerContent is not provided', async () => {
+      const wrapper = mountChat();
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.find('.chat-header__extra').exists()).toBe(false);
+    });
+
+    it('renders a plain string prop as text', async () => {
+      const wrapper = mountChat({ headerContent: 'Now serving two personas' });
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.find('.chat-header__extra').text()).toBe('Now serving two personas');
+    });
+
+    it('renders the headerContent slot, exactly as provided', async () => {
+      const wrapper = mount(Chat, {
+        props: { sendMessage: noopSend },
+        slots: { headerContent: '<button data-testid="custom-tab">Assistant</button>' },
+      });
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.find('[data-testid="custom-tab"]').exists()).toBe(true);
+      expect(wrapper.find('[data-testid="custom-tab"]').text()).toBe('Assistant');
+    });
+
+    it('prefers the slot over the prop when both are provided', async () => {
+      const wrapper = mount(Chat, {
+        props: { sendMessage: noopSend, headerContent: 'prop text' },
+        slots: { headerContent: '<span data-testid="slot-content">slot text</span>' },
+      });
+      await wrapper.find('button[aria-label="Open chat"]').trigger('click');
+      expect(wrapper.find('[data-testid="slot-content"]').exists()).toBe(true);
+      expect(wrapper.find('.chat-header__extra').text()).toBe('slot text');
+    });
+  });
+
   describe('accessibility', () => {
     it('has no violations in closed state', async () => {
       const wrapper = mountChat();

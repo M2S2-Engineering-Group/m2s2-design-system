@@ -72,6 +72,10 @@
   font-size: var(--font-size-xs);
 }
 
+.chat-header__extra {
+  margin-top: var(--space-2);
+}
+
 // ── Messages ──────────────────────────────────────────────────────────────────
 
 .chat-messages {

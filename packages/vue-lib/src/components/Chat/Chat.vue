@@ -12,6 +12,14 @@ const props = withDefaults(defineProps<{
   ctaUrl?:             string;
   userAvatarUrl?:      string;
   assistantAvatarUrl?: string;
+  /**
+   * Optional extra content rendered in the header, below the title/subtitle.
+   * Pass a plain string for simple text, or use the `headerContent` slot for
+   * arbitrary markup (e.g. a consumer-defined tab switcher) — the slot wins
+   * over the prop when both are provided. This component has no opinion on
+   * what the slot contains.
+   */
+  headerContent?:      string;
 }>(), {
   title:       'Architecture Advisor',
   subtitle:    'Ask anything about software architecture, cloud design, or engineering decisions.',
@@ -21,11 +29,18 @@ const props = withDefaults(defineProps<{
   ctaUrl:           '/contact',
   userAvatarUrl:    undefined,
   assistantAvatarUrl: undefined,
+  headerContent:    undefined,
 });
 
 type SendState = 'idle' | 'sending' | 'error';
 
-const open      = ref(false);
+/**
+ * Whether the panel is open. Self-managed by default (toggled via the FAB
+ * button) — pass `v-model:open` to also control it from the host, e.g. to
+ * force a specific instance open when switching between multiple chat
+ * instances via the `headerContent` slot.
+ */
+const open      = defineModel<boolean>('open', { default: false });
 const messages  = ref<ChatMessage[]>([]);
 const sendState = ref<SendState>('idle');
 const draft     = ref('');
@@ -135,6 +150,14 @@ function onKeydown(e: KeyboardEvent) {
           >
             {{ subtitle }}
           </p>
+          <div
+            v-if="headerContent || $slots.headerContent"
+            class="chat-header__extra"
+          >
+            <slot name="headerContent">
+              {{ headerContent }}
+            </slot>
+          </div>
         </div>
       </div>
 
@@ -251,7 +274,10 @@ function onKeydown(e: KeyboardEvent) {
               />
             </svg>
           </span>
-          <span class="chat-typing" aria-label="Assistant is typing">
+          <span
+            class="chat-typing"
+            aria-label="Assistant is typing"
+          >
             <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
           </span>
         </div>
@@ -383,6 +409,10 @@ function onKeydown(e: KeyboardEvent) {
   @include m.overlay-subtitle;
   margin: var(--space-1) 0 0;
   font-size: var(--font-size-xs);
+}
+
+.chat-header__extra {
+  margin-top: var(--space-2);
 }
 
 .chat-messages {

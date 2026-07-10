@@ -1,3 +1,4 @@
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { render, screen, fireEvent, waitFor } from '@testing-library/angular';
 import { axe } from 'jest-axe';
 import { of, throwError } from 'rxjs';
@@ -193,6 +194,42 @@ describe('ChatComponent', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
       fixture.detectChanges();
       expect(document.querySelector('.chat-cta')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('header content', () => {
+    it('does not render extra header content when headerContent is not provided', async () => {
+      await renderChat();
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(document.querySelector('.chat-header__extra')).not.toBeInTheDocument();
+    });
+
+    it('renders a plain string as text', async () => {
+      await renderChat({ headerContent: 'Now serving two personas' });
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getByText('Now serving two personas')).toBeInTheDocument();
+    });
+
+    it('renders a TemplateRef via NgTemplateOutlet, exactly as provided', async () => {
+      @Component({
+        standalone: true,
+        imports: [ChatComponent],
+        template: `
+          <ng-template #tpl>
+            <button data-testid="custom-tab">Assistant</button>
+          </ng-template>
+          <m2s2-chat [sendMessage]="sendMessage" [headerContent]="tplRef" />
+        `,
+      })
+      class TemplateHeaderHost {
+        sendMessage = noopSend;
+        @ViewChild('tpl', { static: true }) tplRef!: TemplateRef<unknown>;
+      }
+
+      await render(TemplateHeaderHost);
+      fireEvent.click(screen.getByRole('button', { name: 'Open chat' }));
+      expect(screen.getByTestId('custom-tab')).toBeInTheDocument();
+      expect(screen.getByTestId('custom-tab')).toHaveTextContent('Assistant');
     });
   });
 

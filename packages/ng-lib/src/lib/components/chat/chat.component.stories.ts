@@ -54,3 +54,54 @@ export const WithAvatars: Story = {
     ctaLabel:           'Start a Conversation',
   },
 };
+
+export const WithStringHeaderContent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'A plain string passed to `headerContent` renders as simple text below the subtitle.',
+      },
+    },
+  },
+  args: {
+    sendMessage:   mockSendMessage,
+    title:         'Architecture Advisor',
+    headerContent: 'Now serving both General and MARC² personas',
+    ctaUrl:        '/contact',
+    ctaLabel:      'Start a Conversation',
+  },
+};
+
+export const WithTemplateHeaderContent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'A `TemplateRef` passed to `headerContent` renders as-is via `NgTemplateOutlet` — the component has no opinion on what it contains. This is the mechanism a consumer would use to add e.g. a persona tab switcher, entirely from outside this component.',
+      },
+    },
+  },
+  render: args => ({
+    props: args,
+    template: `
+      <ng-template #tabs>
+        <div style="display:flex; gap:8px; margin-top:var(--space-2);">
+          <button style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-primary); background:var(--color-primary); color:#fff;">Assistant</button>
+          <button style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-border); background:transparent; color:var(--color-on-surface);">MARC²</button>
+        </div>
+      </ng-template>
+      <m2s2-chat
+        [sendMessage]="sendMessage"
+        [title]="title"
+        [ctaUrl]="ctaUrl"
+        [ctaLabel]="ctaLabel"
+        [headerContent]="tabs"
+      />
+    `,
+  }),
+  args: {
+    sendMessage: mockSendMessage,
+    title:       'M²S² Assistant',
+    ctaUrl:      '/contact',
+    ctaLabel:    'Start a Conversation',
+  },
+};
