@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import type { ChatMessage } from '@m2s2/models';
 import Chat from './Chat.vue';
@@ -74,28 +75,49 @@ export const WithSlotHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The `headerContent` named slot renders arbitrary markup as-is, taking precedence over the string prop — the component has no opinion on what it contains. This is the mechanism a consumer would use to add e.g. a persona tab switcher, entirely from outside this component.',
+        story: 'The `headerContent` named slot renders arbitrary markup as-is, taking precedence over the string prop — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`\'s `app.component`-equivalent wiring): **two independent `Chat` instances**, one per persona, each with its own tab-switcher slot content bound to shared state. Clicking a tab shows the target instance and forces it open via `v-model:open`, while the hidden instance stays mounted — via `v-show`, not `v-if` — so its conversation history survives the switch.',
       },
     },
   },
-  render: args => ({
+  render: () => ({
     components: { Chat },
-    setup: () => ({ args }),
+    setup: () => {
+      const activePersona = ref<'general' | 'marc'>('general');
+      const generalOpen = ref(false);
+      const marcOpen = ref(false);
+
+      function setActivePersona(persona: 'general' | 'marc') {
+        activePersona.value = persona;
+        if (persona === 'general') {
+          generalOpen.value = true;
+        } else {
+          marcOpen.value = true;
+        }
+      }
+
+      return { mockSendMessage, activePersona, generalOpen, marcOpen, setActivePersona };
+    },
     template: `
-      <Chat v-bind="args">
-        <template #headerContent>
-          <div style="display:flex; gap:8px; margin-top:var(--space-2);">
-            <button style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-primary); background:var(--color-primary); color:#fff;">Assistant</button>
-            <button style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-border); background:transparent; color:var(--color-on-surface);">MARC²</button>
-          </div>
-        </template>
-      </Chat>
+      <div v-show="activePersona === 'general'">
+        <Chat :sendMessage="mockSendMessage" title="M²S² Assistant" ctaUrl="/contact" ctaLabel="Start a Conversation" v-model:open="generalOpen">
+          <template #headerContent>
+            <div style="display:flex; gap:8px; margin-top:var(--space-2);">
+              <button @click="setActivePersona('general')" :style="{ fontSize: '12px', padding: '2px 10px', borderRadius: '999px', border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'general' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'general' ? '#fff' : 'var(--color-on-surface)' }">Assistant</button>
+              <button @click="setActivePersona('marc')" :style="{ fontSize: '12px', padding: '2px 10px', borderRadius: '999px', border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'marc' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'marc' ? '#fff' : 'var(--color-on-surface)' }">MARC²</button>
+            </div>
+          </template>
+        </Chat>
+      </div>
+      <div v-show="activePersona === 'marc'">
+        <Chat :sendMessage="mockSendMessage" title="MARC²" ctaUrl="/contact" ctaLabel="Start a Conversation" v-model:open="marcOpen">
+          <template #headerContent>
+            <div style="display:flex; gap:8px; margin-top:var(--space-2);">
+              <button @click="setActivePersona('general')" :style="{ fontSize: '12px', padding: '2px 10px', borderRadius: '999px', border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'general' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'general' ? '#fff' : 'var(--color-on-surface)' }">Assistant</button>
+              <button @click="setActivePersona('marc')" :style="{ fontSize: '12px', padding: '2px 10px', borderRadius: '999px', border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'marc' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'marc' ? '#fff' : 'var(--color-on-surface)' }">MARC²</button>
+            </div>
+          </template>
+        </Chat>
+      </div>
     `,
   }),
-  args: {
-    sendMessage: mockSendMessage,
-    title:       'M²S² Assistant',
-    ctaUrl:      '/contact',
-    ctaLabel:    'Start a Conversation',
-  },
 };

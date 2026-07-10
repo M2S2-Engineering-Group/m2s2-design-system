@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import type { ChatMessage } from '@m2s2/models';
 import { Chat } from './Chat';
@@ -77,26 +78,70 @@ export const WithStringHeaderContent: Story = {
   },
 };
 
+function TwoPersonaSwitcher() {
+  const [activePersona, setActivePersonaState] = useState<'general' | 'marc'>('general');
+  const [generalOpen, setGeneralOpen] = useState(false);
+  const [marcOpen, setMarcOpen] = useState(false);
+
+  function setActivePersona(persona: 'general' | 'marc') {
+    setActivePersonaState(persona);
+    if (persona === 'general') {
+      setGeneralOpen(true);
+    } else {
+      setMarcOpen(true);
+    }
+  }
+
+  const tabs = (
+    <div style={{ display: 'flex', gap: 8, marginTop: 'var(--space-2)' }}>
+      <button
+        onClick={() => setActivePersona('general')}
+        style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'general' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'general' ? '#fff' : 'var(--color-on-surface)' }}
+      >Assistant</button>
+      <button
+        onClick={() => setActivePersona('marc')}
+        style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'marc' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'marc' ? '#fff' : 'var(--color-on-surface)' }}
+      >MARC²</button>
+    </div>
+  );
+
+  return (
+    <>
+      <div style={{ display: activePersona === 'general' ? '' : 'none' }}>
+        <Chat
+          sendMessage={mockSendMessage}
+          title="M²S² Assistant"
+          ctaUrl="/contact"
+          ctaLabel="Start a Conversation"
+          headerContent={tabs}
+          open={generalOpen}
+          onOpenChange={setGeneralOpen}
+        />
+      </div>
+      <div style={{ display: activePersona === 'marc' ? '' : 'none' }}>
+        <Chat
+          sendMessage={mockSendMessage}
+          title="MARC²"
+          ctaUrl="/contact"
+          ctaLabel="Start a Conversation"
+          headerContent={tabs}
+          open={marcOpen}
+          onOpenChange={setMarcOpen}
+        />
+      </div>
+    </>
+  );
+}
+
 export const WithElementHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: '`headerContent` accepts any `ReactNode` and renders it as-is — the component has no opinion on what it contains. This is the mechanism a consumer would use to add e.g. a persona tab switcher, entirely from outside this component.',
+        story: '`headerContent` accepts any `ReactNode` and renders it as-is — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`\'s `app.component.tsx`-equivalent wiring): **two independent `Chat` instances**, one per persona, sharing one tab-switcher element. Clicking a tab shows the target instance and forces it open via the controlled `open`/`onOpenChange` props, while the hidden instance stays mounted — via a `display` wrapper, not a conditional unmount — so its conversation history survives the switch.',
       },
     },
   },
-  args: {
-    sendMessage: mockSendMessage,
-    title:       'M²S² Assistant',
-    ctaUrl:      '/contact',
-    ctaLabel:    'Start a Conversation',
-    headerContent: (
-      <div style={{ display: 'flex', gap: 8, marginTop: 'var(--space-2)' }}>
-        <button style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-primary)', background: 'var(--color-primary)', color: '#fff' }}>Assistant</button>
-        <button style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-border)', background: 'transparent', color: 'var(--color-on-surface)' }}>MARC²</button>
-      </div>
-    ),
-  },
+  render: () => <TwoPersonaSwitcher />,
 };
 
 export const NearLimit: Story = {

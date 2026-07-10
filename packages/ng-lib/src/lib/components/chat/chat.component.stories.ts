@@ -76,32 +76,64 @@ export const WithTemplateHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A `TemplateRef` passed to `headerContent` renders as-is via `NgTemplateOutlet` — the component has no opinion on what it contains. This is the mechanism a consumer would use to add e.g. a persona tab switcher, entirely from outside this component.',
+        story: 'A `TemplateRef` passed to `headerContent` renders as-is via `NgTemplateOutlet` — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`\'s `app.component.html`): **two independent `ChatComponent` instances**, one per persona, sharing a single tab-switcher template. Clicking a tab shows the target instance and forces it open via `[open]`/`(openChange)`, while the hidden instance stays mounted — via `[style.display]`, never `@if` — so its conversation history survives the switch.',
       },
     },
   },
-  render: args => ({
-    props: args,
+  render: () => ({
+    props: {
+      sendMessage: mockSendMessage,
+      activePersona: 'general',
+      generalOpen: false,
+      marcOpen: false,
+      setActivePersona(this: { activePersona: string; generalOpen: boolean; marcOpen: boolean }, persona: string) {
+        this.activePersona = persona;
+        if (persona === 'general') {
+          this.generalOpen = true;
+        } else {
+          this.marcOpen = true;
+        }
+      },
+    },
     template: `
       <ng-template #tabs>
         <div style="display:flex; gap:8px; margin-top:var(--space-2);">
-          <button style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-primary); background:var(--color-primary); color:#fff;">Assistant</button>
-          <button style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-border); background:transparent; color:var(--color-on-surface);">MARC²</button>
+          <button
+            (click)="setActivePersona('general')"
+            [style.background]="activePersona === 'general' ? 'var(--color-primary)' : 'transparent'"
+            [style.color]="activePersona === 'general' ? '#fff' : 'var(--color-on-surface)'"
+            style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-primary); cursor:pointer;"
+          >Assistant</button>
+          <button
+            (click)="setActivePersona('marc')"
+            [style.background]="activePersona === 'marc' ? 'var(--color-primary)' : 'transparent'"
+            [style.color]="activePersona === 'marc' ? '#fff' : 'var(--color-on-surface)'"
+            style="font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid var(--color-primary); cursor:pointer;"
+          >MARC²</button>
         </div>
       </ng-template>
       <m2s2-chat
+        [style.display]="activePersona === 'general' ? '' : 'none'"
         [sendMessage]="sendMessage"
-        [title]="title"
-        [ctaUrl]="ctaUrl"
-        [ctaLabel]="ctaLabel"
+        [open]="generalOpen"
+        (openChange)="generalOpen = $event"
+        title="M²S² Assistant"
+        welcomeMessage="Hi! I'm the M²S² Assistant. Ask me about our services, past work, or how M²S² can help — and if you've got a technical architecture question, switch to the MARC² tab above."
+        ctaUrl="/contact"
+        ctaLabel="Start a Conversation"
+        [headerContent]="tabs"
+      />
+      <m2s2-chat
+        [style.display]="activePersona === 'marc' ? '' : 'none'"
+        [sendMessage]="sendMessage"
+        [open]="marcOpen"
+        (openChange)="marcOpen = $event"
+        title="MARC²"
+        welcomeMessage="Hey! I'm MARC², the M²S² Architecture Consultant. I'm trained on Michael's engineering experience and can help you think through architecture decisions, technology choices, cloud design, AI integration, and more. What are you working on?"
+        ctaUrl="/contact"
+        ctaLabel="Start a Conversation"
         [headerContent]="tabs"
       />
     `,
   }),
-  args: {
-    sendMessage: mockSendMessage,
-    title:       'M²S² Assistant',
-    ctaUrl:      '/contact',
-    ctaLabel:    'Start a Conversation',
-  },
 };
