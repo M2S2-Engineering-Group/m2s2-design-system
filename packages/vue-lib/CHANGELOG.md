@@ -4,6 +4,13 @@ All notable changes to the Vue component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/vue-lib [2.9.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.8.0...@m2s2/vue-lib@2.9.0) (2026-07-10)
+
+
+### Features
+
+* add definable header to chat widget ([dd8ab36](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/dd8ab36a0d21ed128a15ad4a59b2335e92ae8d58))
+
 # @m2s2/vue-lib [2.8.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/vue-lib@2.7.3...@m2s2/vue-lib@2.8.0) (2026-07-05)
 
 
