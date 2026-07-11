@@ -59,7 +59,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/jest-axe": "^3.5.9",
-    "axe-core": "^4.10.2",
+    "axe-core": "^4.12.1",
     "jest": "^30.0.0",
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.3.0",
