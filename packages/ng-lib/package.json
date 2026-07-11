@@ -33,7 +33,7 @@
     "@m2s2/tokens": "2.2.2",
     "@m2s2/utils": "1.1.0",
     "chart.js": "^4.5.1",
-    "tslib": "~2.3.1"
+    "tslib": "~2.8.1"
   },
   "peerDependencies": {
     "@angular/animations": "^21.0.0",
