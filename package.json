@@ -41,7 +41,7 @@
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/html-vite": "^10.3.6",
     "concurrently": "^9.2.3",
-    "eslint": "^9.39.4",
+    "eslint": "^9.39.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-vue": "^10.9.2",
