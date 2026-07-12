@@ -49,7 +49,7 @@
     "multi-semantic-release": "^3.0.2",
     "semantic-release": "^25.0.3",
     "storybook": "^10.3.6",
-    "stylelint": "^17.13.0",
+    "stylelint": "^17.14.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "turbo": "^2.5.4",
     "typescript-eslint": "^8.63.0",
