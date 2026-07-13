@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.11.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.11.1...@m2s2/ng-lib@2.11.2) (2026-07-13)
+
+
+### Bug Fixes
+
+* update axe setup for separate libs ([c6844de](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/c6844de8b05ca40b64147c329872f9cbb5118ce4))
+
 ## @m2s2/ng-lib [2.11.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.11.0...@m2s2/ng-lib@2.11.1) (2026-07-10)
 
 
