@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/M2S2-Engineering-Group/.github/main/assets/m2s2-logo.png" alt="M²S² Logo" width="220"/>
+  <img src="https://raw.githubusercontent.com/M2S2-Engineering-Group/.github/main/assets/m2s2-banner.png" alt="M²S² Logo" width="220"/>
 </p>
 
 <h1 align="center">M²S² Design System</h1>
