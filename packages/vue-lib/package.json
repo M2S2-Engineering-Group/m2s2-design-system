@@ -64,7 +64,7 @@
     "@storybook/vue3-vite": "^10.3.6",
     "@types/jest-axe": "^3.5.9",
     "@vitejs/plugin-vue": "^6.0.7",
-    "@vitest/coverage-v8": "^4.1.6",
+    "@vitest/coverage-v8": "^4.1.10",
     "@vue/test-utils": "^2.4.6",
     "axe-core": "^4.12.1",
     "jest-axe": "^10.0.0",
