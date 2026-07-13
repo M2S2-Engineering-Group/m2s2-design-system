@@ -26,10 +26,7 @@
     "@angular/compiler": "^21.0.0",
     "@angular/core": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
-    "@angular/platform-browser-dynamic": "^21.0.0",
-    "jest-axe": {
-      "axe-core": "^4.12.1"
-    }
+    "@angular/platform-browser-dynamic": "^21.0.0"
   },
   "devDependencies": {
     "@angular-eslint/eslint-plugin": "^22.0.0",
