@@ -4,6 +4,14 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/react-lib [2.9.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.9.1...@m2s2/react-lib@2.9.2) (2026-07-13)
+
+
+### Bug Fixes
+
+* update axe setup for separate libs ([c6844de](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/c6844de8b05ca40b64147c329872f9cbb5118ce4))
+* update vite deps ([6f11688](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/6f116886c3003a52f32badcb78ebda234ebb4c81))
+
 ## @m2s2/react-lib [2.9.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.9.0...@m2s2/react-lib@2.9.1) (2026-07-10)
 
 
