@@ -41,7 +41,7 @@ export function BlogEditor({
   const [seriesId,          setSeriesId]          = useState(initialPost?.series?.id    ?? '');
   const [seriesTitle,       setSeriesTitle]       = useState(initialPost?.series?.title ?? '');
   const [seriesPart,        setSeriesPart]        = useState(initialPost?.series?.part  ?? 1);
-  const [seriesTotal,       setSeriesTotal]       = useState(initialPost?.series?.total ?? 1);
+  const [seriesTotal,       setSeriesTotal]       = useState<number | undefined>(initialPost?.series?.total);
 
   const slugEdited  = useRef(!!initialPost);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -61,7 +61,7 @@ export function BlogEditor({
     setSeriesId(initialPost.series?.id    ?? '');
     setSeriesTitle(initialPost.series?.title ?? '');
     setSeriesPart(initialPost.series?.part  ?? 1);
-    setSeriesTotal(initialPost.series?.total ?? 1);
+    setSeriesTotal(initialPost.series?.total);
     slugEdited.current = true;
   }, [initialPost]);
 
@@ -156,10 +156,12 @@ export function BlogEditor({
     let series: BlogDraft['series'];
     if (selectedSeriesKey === '__new__') {
       const id = seriesId.trim();
-      series = id ? { id, title: seriesTitle.trim() || id, part: seriesPart, total: seriesTotal } : undefined;
+      const total = seriesTotal;
+      series = id ? { id, title: seriesTitle.trim() || id, part: seriesPart, ...(total !== undefined ? { total } : {}) } : undefined;
     } else if (selectedSeriesKey !== 'none') {
       const found = existingSeries.find(s => s.id === selectedSeriesKey);
-      series = found ? { id: found.id, title: found.title, part: seriesPart, total: seriesTotal } : undefined;
+      const total = seriesTotal;
+      series = found ? { id: found.id, title: found.title, part: seriesPart, ...(total !== undefined ? { total } : {}) } : undefined;
     }
     onPublish?.({
       title,
@@ -345,15 +347,17 @@ export function BlogEditor({
               />
             </div>
             <div>
-              <label className="be-label" htmlFor="series-total">Total Parts</label>
+              <label className="be-label" htmlFor="series-total">Total Parts <span className="be-optional">(optional)</span></label>
               <input
                 id="series-total"
                 className="be-input be-input--narrow"
                 type="number"
                 min={1}
-                value={seriesTotal}
-                onChange={e => setSeriesTotal(Number(e.target.value))}
+                value={seriesTotal ?? ''}
+                placeholder="auto"
+                onChange={e => setSeriesTotal(e.target.value ? Number(e.target.value) : undefined)}
               />
+              <span className="be-hint">Leave blank to derive from published post count</span>
             </div>
           </div>
         )}

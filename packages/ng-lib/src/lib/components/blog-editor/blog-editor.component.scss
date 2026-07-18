@@ -47,6 +47,7 @@
 
 .be-required { color: var(--color-error); margin-left: 2px; }
 .be-optional { color: var(--color-on-surface-muted); font-weight: var(--font-weight-normal); text-transform: none; letter-spacing: 0; }
+.be-hint     { font-size: var(--font-size-xs); color: var(--color-on-surface-muted); line-height: 1.4; }
 
 .be-input {
   @include m.form-input;

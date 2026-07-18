@@ -41,7 +41,7 @@ const selectedSeriesKey = ref('none');
 const seriesId         = ref(props.initialPost?.series?.id    ?? '');
 const seriesTitle      = ref(props.initialPost?.series?.title ?? '');
 const seriesPart       = ref(props.initialPost?.series?.part  ?? 1);
-const seriesTotal      = ref(props.initialPost?.series?.total ?? 1);
+const seriesTotal      = ref<number | undefined>(props.initialPost?.series?.total);
 
 // Populate all fields when the post changes.
 watch(() => props.initialPost, post => {
@@ -58,7 +58,7 @@ watch(() => props.initialPost, post => {
   seriesId.value     = post.series?.id    ?? '';
   seriesTitle.value  = post.series?.title ?? '';
   seriesPart.value   = post.series?.part  ?? 1;
-  seriesTotal.value  = post.series?.total ?? 1;
+  seriesTotal.value  = post.series?.total;
   slugEdited.value   = true;
 });
 
@@ -157,12 +157,13 @@ function applyFormat(item: ToolbarItem) {
 function onPublish() {
   if (!canPublish.value) return;
   let series: BlogDraft['series'];
+  const total = seriesTotal.value;
   if (selectedSeriesKey.value === '__new__') {
     const id = seriesId.value.trim();
-    series = id ? { id, title: seriesTitle.value.trim() || id, part: seriesPart.value, total: seriesTotal.value } : undefined;
+    series = id ? { id, title: seriesTitle.value.trim() || id, part: seriesPart.value, ...(total !== undefined ? { total } : {}) } : undefined;
   } else if (selectedSeriesKey.value !== 'none') {
     const found = props.existingSeries.find(s => s.id === selectedSeriesKey.value);
-    series = found ? { id: found.id, title: found.title, part: seriesPart.value, total: seriesTotal.value } : undefined;
+    series = found ? { id: found.id, title: found.title, part: seriesPart.value, ...(total !== undefined ? { total } : {}) } : undefined;
   }
   emit('publish', {
     title:       title.value,
@@ -350,13 +351,16 @@ function onPublish() {
           >
         </div>
         <div>
-          <label class="be-label">Total Parts</label>
+          <label class="be-label">Total Parts <span class="be-optional">(optional)</span></label>
           <input
-            v-model.number="seriesTotal"
             class="be-input be-input--narrow"
             type="number"
             min="1"
+            :value="seriesTotal"
+            placeholder="auto"
+            @input="seriesTotal = ($event.target as HTMLInputElement).value ? +($event.target as HTMLInputElement).value : undefined"
           >
+          <span class="be-hint">Leave blank to derive from published post count</span>
         </div>
       </div>
     </section>
@@ -467,6 +471,7 @@ function onPublish() {
 
 .be-required { color: var(--color-error); margin-left: 2px; }
 .be-optional { color: var(--color-on-surface-muted); font-weight: var(--font-weight-normal); text-transform: none; letter-spacing: 0; }
+.be-hint     { font-size: var(--font-size-xs); color: var(--color-on-surface-muted); line-height: 1.4; }
 
 .be-input {
   @include m.form-input;

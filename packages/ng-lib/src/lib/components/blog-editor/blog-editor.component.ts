@@ -60,7 +60,7 @@ export class BlogEditorComponent {
   readonly seriesId          = signal('');
   readonly seriesTitle       = signal('');
   readonly seriesPart        = signal(1);
-  readonly seriesTotal       = signal(1);
+  readonly seriesTotal       = signal<number | undefined>(undefined);
 
   tagInput = '';
   slugEdited = false;
@@ -97,7 +97,7 @@ export class BlogEditorComponent {
       this.seriesId.set(post.series?.id ?? '');
       this.seriesTitle.set(post.series?.title ?? '');
       this.seriesPart.set(post.series?.part ?? 1);
-      this.seriesTotal.set(post.series?.total ?? 1);
+      this.seriesTotal.set(post.series?.total);
       this.slugEdited = true;
     });
 
@@ -208,13 +208,14 @@ export class BlogEditorComponent {
 
   private assembleDraft(): BlogDraft {
     const key = this.selectedSeriesKey();
+    const total = this.seriesTotal();
     let series: BlogDraft['series'];
     if (key === '__new__') {
       const id = this.seriesId().trim();
-      series = id ? { id, title: this.seriesTitle().trim() || id, part: this.seriesPart(), total: this.seriesTotal() } : undefined;
+      series = id ? { id, title: this.seriesTitle().trim() || id, part: this.seriesPart(), ...(total !== undefined ? { total } : {}) } : undefined;
     } else if (key !== 'none') {
       const found = this.existingSeries().find(s => s.id === key);
-      series = found ? { id: found.id, title: found.title, part: this.seriesPart(), total: this.seriesTotal() } : undefined;
+      series = found ? { id: found.id, title: found.title, part: this.seriesPart(), ...(total !== undefined ? { total } : {}) } : undefined;
     }
     return {
       title:       this.title(),

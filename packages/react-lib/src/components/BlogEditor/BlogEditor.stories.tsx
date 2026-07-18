@@ -43,6 +43,11 @@ const seriesPost: BlogPost = {
   slug:   'angular-signals-part-2',
   title:  'Angular Signals: Advanced Patterns',
   date:   '2025-04-10',
+  series: { id: 'angular-signals', title: 'Angular Signals Series', part: 2 },
+};
+
+const seriesPostWithTotal: BlogPost = {
+  ...seriesPost,
   series: { id: 'angular-signals', title: 'Angular Signals Series', part: 2, total: 3 },
 };
 
@@ -117,7 +122,21 @@ export const EditPostWithSeries: Story = {
   },
   parameters: {
     docs: {
-      description: { story: 'Editing a post that belongs to an existing series. The series dropdown resolves to the matching entry automatically.' },
+      description: { story: 'Editing a post that belongs to an existing series without a total set. The "Total Parts" field is blank — the reader-facing count will be derived from the number of published posts in the series.' },
+    },
+  },
+};
+
+export const EditPostWithSeriesTotal: Story = {
+  name: 'Edit Post With Series (explicit total)',
+  args: {
+    initialPost:    seriesPostWithTotal,
+    coverImageUrl:  seriesPostWithTotal.coverImage,
+    existingSeries,
+  },
+  parameters: {
+    docs: {
+      description: { story: 'Editing a post where the author has explicitly set a total (e.g. "Part 2 of 3"). Use this when you want to announce the planned length of the series before all parts are published.' },
     },
   },
 };

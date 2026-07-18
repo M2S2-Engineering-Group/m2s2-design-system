@@ -161,15 +161,17 @@
           />
         </div>
         <div>
-          <label class="be-label" for="series-total">Total Parts</label>
+          <label class="be-label" for="series-total">Total Parts <span class="be-optional">(optional)</span></label>
           <input
             id="series-total"
             class="be-input be-input--narrow"
             type="number"
             min="1"
             [ngModel]="seriesTotal()"
-            (ngModelChange)="seriesTotal.set(+$event)"
+            (ngModelChange)="seriesTotal.set($event ? +$event : undefined)"
+            placeholder="auto"
           />
+          <span class="be-hint">Leave blank to derive from published post count</span>
         </div>
       </div>
     }

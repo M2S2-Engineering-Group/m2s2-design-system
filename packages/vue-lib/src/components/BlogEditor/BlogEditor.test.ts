@@ -178,7 +178,7 @@ describe('BlogEditor', () => {
       await wrapper.find('input[placeholder="e.g. Go Backend Series"]').setValue('Go Backend Series');
       await wrapper.find('.be-publish').trigger('click');
       const draft = (wrapper.emitted('publish') as unknown[][])[0][0] as Record<string, unknown>;
-      expect(draft.series).toEqual({ id: 'go-backend', title: 'Go Backend Series', part: 1, total: 1 });
+      expect(draft.series).toEqual({ id: 'go-backend', title: 'Go Backend Series', part: 1 });
     });
 
     it('emits correct series when an existing series is selected', async () => {

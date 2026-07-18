@@ -201,21 +201,21 @@ describe('BlogEditor', () => {
     it('hides Part and Total inputs when series is None', () => {
       renderEditor();
       expect(screen.queryByLabelText('Part')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Total Parts')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(/Total Parts/)).not.toBeInTheDocument();
     });
 
     it('shows Part and Total inputs after selecting New series', () => {
       renderEditor();
       selectComboboxValue('__new__');
       expect(screen.getByLabelText('Part')).toBeInTheDocument();
-      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+      expect(screen.getByLabelText(/Total Parts/)).toBeInTheDocument();
     });
 
     it('shows Part and Total inputs after selecting an existing series', () => {
       renderEditor({ existingSeries: [{ id: 'go-backend', title: 'Go Backend Series' }] });
       selectComboboxValue('go-backend');
       expect(screen.getByLabelText('Part')).toBeInTheDocument();
-      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+      expect(screen.getByLabelText(/Total Parts/)).toBeInTheDocument();
     });
 
     it('hides series ID and title text inputs when an existing series is selected', () => {
@@ -254,7 +254,7 @@ describe('BlogEditor', () => {
       });
       fireEvent.click(screen.getByRole('button', { name: 'Publish Post' }));
       expect(onPublish.mock.calls[0][0].series).toEqual({
-        id: 'go-backend', title: 'Go Backend Series', part: 1, total: 1,
+        id: 'go-backend', title: 'Go Backend Series', part: 1,
       });
     });
 

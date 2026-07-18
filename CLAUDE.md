@@ -28,9 +28,35 @@ each framework package implements its own markup/rendering/lifecycle calling
 into that shared logic. This is the one place real sharing happens — CSS is
 **not** currently shared via a common partial; each framework has its own
 copy of the same rules, sourced only from the shared design tokens. These
-copies can and do drift (found `vue-lib`'s `StatRow` had drifted from
-`ng-lib`/`react-lib` at one point) — when touching a component's styles,
-check whether the other two frameworks' copies need the same fix.
+copies can and do drift — when touching a component's styles, always update
+all three frameworks' copies.
+
+**CSS duplication inventory (tech debt):** The following components have
+inner class rules that are byte-for-byte (or near-byte-for-byte) identical
+between `ng-lib` and `react-lib`. Vue either matches or has intentional minor
+divergences (`StatRow` gap/color, for example). These are the highest-priority
+candidates for a future `packages/tokens/src/components/` shared-partials
+layer:
+
+| Component | Duplicate classes | Note |
+|---|---|---|
+| `StatRow` | `.sr-row/item/value/label/divider` | 100% identical Angular↔React |
+| `RankedBarChart` + `TimeSeriesChart` | `.m2s2-chart` | 100% identical |
+| `SectionHeader` | `.sh-label`, `.sh-subtitle` | 100% identical |
+| `PageHeader` | `.page-title`, `.page-subtitle` | 100% identical |
+| `CtaSection` | `.cta-card/text/title/body/btn` | 100% identical |
+| `SubscribeForm` | `.sub-form/input/btn/feedback/success-*/auth/subscribed-label` | Functionally identical, minor whitespace diffs |
+| `BlogCard` | `.bc-cover/inner/title/summary/tags/tag` | ~identical; `.bc-series*`/`.bc-reading-time` only in Angular |
+| `Dialog` | `.dialog-header/title/close/body/message/footer/btn` | Identical chrome; React adds overlay/animation wrapper |
+| `Panel` | `.panel-header/title/close/body/message/footer/btn` | Same as Dialog |
+| `BlogEditor` | all `.be-*` | All three libs; Vue inline `<style>` |
+
+Already well-factored — thin wrappers over tokens mixins, nothing to
+extract: `StatusBadge`, `LoadingButton`, `BaseCard`, `FeatureCard`.
+
+Proposed fix (not yet implemented): add `packages/tokens/src/components/_<name>.scss`
+partials; each framework lib `@use`s the partial and only defines its root
+selector (`:host` for Angular, `.m2s2-*` for React, `<style>` for Vue).
 
 File layout per framework for a component named `Thing`:
 - `ng-lib`: `packages/ng-lib/src/lib/components/thing/thing.component.{ts,html,scss}`

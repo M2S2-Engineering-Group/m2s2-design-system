@@ -178,7 +178,7 @@ describe('BlogEditorComponent', () => {
     it('hides Part and Total inputs when series is None', async () => {
       await renderEditor();
       expect(screen.queryByLabelText('Part')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Total Parts')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(/Total Parts/)).not.toBeInTheDocument();
     });
 
     it('shows Part and Total inputs after selecting New series', async () => {
@@ -186,7 +186,7 @@ describe('BlogEditorComponent', () => {
       fireEvent.change(screen.getByRole('combobox'), { target: { value: '__new__' } });
       fixture.detectChanges();
       expect(screen.getByLabelText('Part')).toBeInTheDocument();
-      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+      expect(screen.getByLabelText(/Total Parts/)).toBeInTheDocument();
     });
 
     it('shows Part and Total inputs after selecting an existing series', async () => {
@@ -196,7 +196,7 @@ describe('BlogEditorComponent', () => {
       fireEvent.change(screen.getByRole('combobox'), { target: { value: 'go-backend' } });
       fixture.detectChanges();
       expect(screen.getByLabelText('Part')).toBeInTheDocument();
-      expect(screen.getByLabelText('Total Parts')).toBeInTheDocument();
+      expect(screen.getByLabelText(/Total Parts/)).toBeInTheDocument();
     });
 
     it('hides the series ID and title text inputs when an existing series is selected', async () => {
@@ -254,7 +254,6 @@ describe('BlogEditorComponent', () => {
         id: 'go-backend',
         title: 'Go Backend Series',
         part: 1,
-        total: 1,
       });
     });
 
