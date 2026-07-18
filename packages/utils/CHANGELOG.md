@@ -4,6 +4,13 @@ All notable changes to the shared utility functions are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/utils [1.1.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/utils@1.1.0...@m2s2/utils@1.1.1) (2026-07-18)
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.5.1
+
 # @m2s2/utils [1.1.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/utils@1.0.1...@m2s2/utils@1.1.0) (2026-07-05)
 
 
