@@ -1,6 +1,6 @@
 {
   "name": "@m2s2/vue-lib",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "description": "Vue 3 component library by M²S² Engineering Group.",
   "author": "M²S² Engineering Group <contact@m2s2.io>",
   "license": "MIT",
@@ -44,22 +44,22 @@
     "build:storybook": "storybook build -o ../../dist/storybook/vue"
   },
   "dependencies": {
-    "@m2s2/models": "2.5.0",
+    "@m2s2/models": "2.5.1",
     "@m2s2/tokens": "2.2.2",
-    "@m2s2/utils": "1.1.0",
+    "@m2s2/utils": "1.1.1",
     "chart.js": "^4.5.1",
     "marked": "^17.0.0"
   },
   "peerDependencies": {
-    "@m2s2/models": "2.5.0",
+    "@m2s2/models": "2.5.1",
     "@m2s2/tokens": "2.2.2",
-    "@m2s2/utils": "1.1.0",
+    "@m2s2/utils": "1.1.1",
     "vue": ">=3.0.0"
   },
   "devDependencies": {
-    "@m2s2/models": "2.5.0",
+    "@m2s2/models": "2.5.1",
     "@m2s2/tokens": "2.2.2",
-    "@m2s2/utils": "1.1.0",
+    "@m2s2/utils": "1.1.1",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/vue3-vite": "^10.3.6",
     "@types/jest-axe": "^3.5.9",
