@@ -4,6 +4,19 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.11.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.11.2...@m2s2/ng-lib@2.11.3) (2026-07-18)
+
+
+### Bug Fixes
+
+* added the ability to infer series total if not provided ([86300dc](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/86300dc62c36a1b09f85ba2dd3b566e58cfd3976))
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.5.1
+* **@m2s2/utils:** upgraded to 1.1.1
+
 ## @m2s2/ng-lib [2.11.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.11.1...@m2s2/ng-lib@2.11.2) (2026-07-13)
 
 
