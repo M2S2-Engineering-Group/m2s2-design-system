@@ -1,1 +1,1 @@
-export * from './stat-row.component';
+export * from "./stat-row.component";

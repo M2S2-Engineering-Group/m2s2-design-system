@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { useAttrs } from 'vue';
+import { useAttrs } from "vue";
 
 defineOptions({ inheritAttrs: false });
 
-withDefaults(defineProps<{
-  loading?: boolean;
-  loadingText?: string;
-}>(), {
-  loading: false,
-  loadingText: undefined,
-});
+withDefaults(
+  defineProps<{
+    loading?: boolean;
+    loadingText?: string;
+  }>(),
+  {
+    loading: false,
+    loadingText: undefined,
+  },
+);
 
 const attrs = useAttrs();
 </script>
@@ -20,11 +23,7 @@ const attrs = useAttrs();
     :disabled="loading || (attrs.disabled as boolean)"
     :aria-busy="loading"
   >
-    <span
-      v-if="loading"
-      class="m2s2-btn-spinner"
-      aria-hidden="true"
-    />
+    <span v-if="loading" class="m2s2-btn-spinner" aria-hidden="true" />
     <slot v-if="!loading || !loadingText" />
     <template v-else>
       {{ loadingText }}
@@ -33,9 +32,11 @@ const attrs = useAttrs();
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 @include m.btn-spinner-keyframes;
 
-.m2s2-btn-spinner { @include m.btn-spinner; }
+.m2s2-btn-spinner {
+  @include m.btn-spinner;
+}
 </style>

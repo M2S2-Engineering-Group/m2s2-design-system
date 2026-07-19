@@ -6,7 +6,9 @@
   border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
-  transition: border-color var(--transition-base), transform var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base);
 
   &:hover {
     border-color: var(--color-primary-dim);
@@ -74,11 +76,13 @@
     text-decoration: none;
     transition: color var(--transition-fast);
 
-    &:hover { color: var(--color-primary); }
+    &:hover {
+      color: var(--color-primary);
+    }
 
     // Stretch link to cover the entire card
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
     }

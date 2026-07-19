@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { of, throwError } from 'rxjs';
-import { componentWrapperDecorator } from '@storybook/angular';
-import { SubscribeFormComponent } from './subscribe-form.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { of, throwError } from "rxjs";
+import { componentWrapperDecorator } from "@storybook/angular";
+import { SubscribeFormComponent } from "./subscribe-form.component";
 
 const meta: Meta<SubscribeFormComponent> = {
-  title:     'Components/SubscribeForm',
+  title: "Components/SubscribeForm",
   component: SubscribeFormComponent,
-  tags:      ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    mode: { control: 'radio', options: ['anon', 'auth'] },
+    mode: { control: "radio", options: ["anon", "auth"] },
   },
   decorators: [
     componentWrapperDecorator(
@@ -31,40 +31,40 @@ export default meta;
 type Story = StoryObj<SubscribeFormComponent>;
 
 export const Anonymous: Story = {
-  name: 'Anonymous — email + name form',
+  name: "Anonymous — email + name form",
   args: {
-    mode:          'anon',
+    mode: "anon",
     subscribeAnon: (email: string, _name: string) => {
-      console.log('subscribeAnon called with', email);
+      console.log("subscribeAnon called with", email);
       return of(undefined);
     },
   },
 };
 
 export const AnonymousError: Story = {
-  name: 'Anonymous — API error state',
+  name: "Anonymous — API error state",
   args: {
-    mode:          'anon',
-    initialState:  'error',
-    subscribeAnon: () => throwError(() => new Error('Server error')),
+    mode: "anon",
+    initialState: "error",
+    subscribeAnon: () => throwError(() => new Error("Server error")),
   },
 };
 
 export const Authenticated: Story = {
-  name: 'Authenticated — one-click subscribe',
+  name: "Authenticated — one-click subscribe",
   args: {
-    mode:          'auth',
+    mode: "auth",
     subscribeAuth: () => of(undefined),
     unsubscribeAuth: () => of(undefined),
   },
 };
 
 export const AuthenticatedError: Story = {
-  name: 'Authenticated — API error state',
+  name: "Authenticated — API error state",
   args: {
-    mode:            'auth',
-    initialState:    'error',
-    subscribeAuth:   () => throwError(() => new Error('Server error')),
-    unsubscribeAuth: () => throwError(() => new Error('Server error')),
+    mode: "auth",
+    initialState: "error",
+    subscribeAuth: () => throwError(() => new Error("Server error")),
+    unsubscribeAuth: () => throwError(() => new Error("Server error")),
   },
 };

@@ -1,7 +1,7 @@
-import { ref } from 'vue';
-import type { Meta, StoryObj } from '@storybook/vue3';
-import type { ChatMessage } from '@m2s2/models';
-import Chat from './Chat.vue';
+import { ref } from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import type { ChatMessage } from "@m2s2/models";
+import Chat from "./Chat.vue";
 
 const fakeResponses: Record<number, string> = {
   1: "Good question. The answer depends on your read/write ratio and query patterns. If you're doing a lot of relational queries with joins, Postgres will serve you better. If you need horizontal write scalability and your data is genuinely document-shaped, then a document store makes sense. Most teams reach for NoSQL before they've actually outgrown Postgres — I'd start relational and migrate only when you have a concrete reason.",
@@ -13,20 +13,23 @@ const fakeResponses: Record<number, string> = {
 };
 
 async function mockSendMessage(messages: ChatMessage[]): Promise<string> {
-  await new Promise(resolve => setTimeout(resolve, 1200 + Math.random() * 800));
-  const userCount = messages.filter(m => m.role === 'user').length;
+  await new Promise((resolve) =>
+    setTimeout(resolve, 1200 + Math.random() * 800),
+  );
+  const userCount = messages.filter((m) => m.role === "user").length;
   return fakeResponses[userCount] ?? fakeResponses[6];
 }
 
 const meta: Meta<typeof Chat> = {
-  title: 'Components/Chat',
+  title: "Components/Chat",
   component: Chat,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'Fixed bottom-right chat widget. The panel opens on toggle, supports a configurable message cap, and surfaces a CTA when the limit is reached. Pass `sendMessage` to connect to any backend.',
+        component:
+          "Fixed bottom-right chat widget. The panel opens on toggle, supports a configurable message cap, and surfaces a CTA when the limit is reached. Pass `sendMessage` to connect to any backend.",
       },
     },
   },
@@ -37,20 +40,20 @@ type Story = StoryObj<typeof Chat>;
 export const Default: Story = {
   args: {
     sendMessage: mockSendMessage,
-    title:       'Architecture Advisor',
-    ctaUrl:      '/contact',
-    ctaLabel:    'Start a Conversation',
+    title: "Architecture Advisor",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
 export const WithAvatars: Story = {
   args: {
-    sendMessage:        mockSendMessage,
-    title:              'Architecture Advisor',
-    assistantAvatarUrl: 'https://placehold.co/36x36/7c3aed/ffffff?text=M2',
-    userAvatarUrl:      'https://placehold.co/36x36/334155/ffffff?text=You',
-    ctaUrl:             '/contact',
-    ctaLabel:           'Start a Conversation',
+    sendMessage: mockSendMessage,
+    title: "Architecture Advisor",
+    assistantAvatarUrl: "https://placehold.co/36x36/7c3aed/ffffff?text=M2",
+    userAvatarUrl: "https://placehold.co/36x36/334155/ffffff?text=You",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
@@ -58,16 +61,17 @@ export const WithStringHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A plain string passed to the `headerContent` prop renders as simple text below the subtitle.',
+        story:
+          "A plain string passed to the `headerContent` prop renders as simple text below the subtitle.",
       },
     },
   },
   args: {
-    sendMessage:   mockSendMessage,
-    title:         'Architecture Advisor',
-    headerContent: 'Now serving both General and MARC² personas',
-    ctaUrl:        '/contact',
-    ctaLabel:      'Start a Conversation',
+    sendMessage: mockSendMessage,
+    title: "Architecture Advisor",
+    headerContent: "Now serving both General and MARC² personas",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
@@ -75,27 +79,34 @@ export const WithSlotHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The `headerContent` named slot renders arbitrary markup as-is, taking precedence over the string prop — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`\'s `app.component`-equivalent wiring): **two independent `Chat` instances**, one per persona, each with its own tab-switcher slot content bound to shared state. Clicking a tab shows the target instance and forces it open via `v-model:open`, while the hidden instance stays mounted — via `v-show`, not `v-if` — so its conversation history survives the switch.',
+        story:
+          "The `headerContent` named slot renders arbitrary markup as-is, taking precedence over the string prop — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`'s `app.component`-equivalent wiring): **two independent `Chat` instances**, one per persona, each with its own tab-switcher slot content bound to shared state. Clicking a tab shows the target instance and forces it open via `v-model:open`, while the hidden instance stays mounted — via `v-show`, not `v-if` — so its conversation history survives the switch.",
       },
     },
   },
   render: () => ({
     components: { Chat },
     setup: () => {
-      const activePersona = ref<'general' | 'marc'>('general');
+      const activePersona = ref<"general" | "marc">("general");
       const generalOpen = ref(false);
       const marcOpen = ref(false);
 
-      function setActivePersona(persona: 'general' | 'marc') {
+      function setActivePersona(persona: "general" | "marc") {
         activePersona.value = persona;
-        if (persona === 'general') {
+        if (persona === "general") {
           generalOpen.value = true;
         } else {
           marcOpen.value = true;
         }
       }
 
-      return { mockSendMessage, activePersona, generalOpen, marcOpen, setActivePersona };
+      return {
+        mockSendMessage,
+        activePersona,
+        generalOpen,
+        marcOpen,
+        setActivePersona,
+      };
     },
     template: `
       <div v-show="activePersona === 'general'">

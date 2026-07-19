@@ -1,62 +1,63 @@
-import { ref, defineComponent } from 'vue';
-import type { Meta, StoryObj } from '@storybook/vue3';
-import type { M2S2DialogData } from '@m2s2/models';
-import DialogProvider from './DialogProvider.vue';
-import { useDialog } from './useDialog';
+import { ref, defineComponent } from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import type { M2S2DialogData } from "@m2s2/models";
+import DialogProvider from "./DialogProvider.vue";
+import { useDialog } from "./useDialog";
 
 const BUTTONS: { label: string; data: M2S2DialogData }[] = [
   {
-    label: 'Confirm dialog',
+    label: "Confirm dialog",
     data: {
-      title: 'Confirm action',
-      message: 'Are you sure you want to proceed? This action cannot be undone.',
+      title: "Confirm action",
+      message:
+        "Are you sure you want to proceed? This action cannot be undone.",
       actions: [
-        { label: 'Cancel',  value: false, variant: 'secondary' },
-        { label: 'Confirm', value: true,  variant: 'primary'   },
+        { label: "Cancel", value: false, variant: "secondary" },
+        { label: "Confirm", value: true, variant: "primary" },
       ],
     },
   },
   {
-    label: 'Destructive dialog',
+    label: "Destructive dialog",
     data: {
-      title: 'Delete record',
-      message: 'This will permanently delete the record and all associated data. This cannot be reversed.',
+      title: "Delete record",
+      message:
+        "This will permanently delete the record and all associated data. This cannot be reversed.",
       actions: [
-        { label: 'Keep it', value: false, variant: 'ghost'       },
-        { label: 'Delete',  value: true,  variant: 'destructive' },
+        { label: "Keep it", value: false, variant: "ghost" },
+        { label: "Delete", value: true, variant: "destructive" },
       ],
     },
   },
   {
-    label: 'Multi-action dialog',
+    label: "Multi-action dialog",
     data: {
-      title: 'Save changes',
-      message: 'You have unsaved changes. What would you like to do?',
+      title: "Save changes",
+      message: "You have unsaved changes. What would you like to do?",
       actions: [
-        { label: 'Discard',     value: 'discard', variant: 'ghost'     },
-        { label: 'Save draft',  value: 'draft',   variant: 'secondary' },
-        { label: 'Publish now', value: 'publish', variant: 'primary'   },
+        { label: "Discard", value: "discard", variant: "ghost" },
+        { label: "Save draft", value: "draft", variant: "secondary" },
+        { label: "Publish now", value: "publish", variant: "primary" },
       ],
     },
   },
   {
-    label: 'Info dialog (no message)',
+    label: "Info dialog (no message)",
     data: {
-      title: 'Feature coming soon',
-      actions: [
-        { label: 'Got it', value: true, variant: 'primary' },
-      ],
+      title: "Feature coming soon",
+      actions: [{ label: "Got it", value: true, variant: "primary" }],
     },
   },
   {
-    label: 'Modal dialog (cannot dismiss)',
+    label: "Modal dialog (cannot dismiss)",
     data: {
-      title: 'Action required',
-      message: 'You must choose an option to continue. Clicking outside or pressing Escape will not close this dialog.',
+      title: "Action required",
+      message:
+        "You must choose an option to continue. Clicking outside or pressing Escape will not close this dialog.",
       modal: true,
       actions: [
-        { label: 'Cancel',  value: false, variant: 'secondary' },
-        { label: 'Proceed', value: true,  variant: 'primary'   },
+        { label: "Cancel", value: false, variant: "secondary" },
+        { label: "Proceed", value: true, variant: "primary" },
       ],
     },
   },
@@ -64,18 +65,18 @@ const BUTTONS: { label: string; data: M2S2DialogData }[] = [
 
 const DemoInner = defineComponent({
   setup() {
-    const dialogSvc  = useDialog();
+    const dialogSvc = useDialog();
     const lastResult = ref<unknown>(undefined);
-    const hasResult  = ref(false);
+    const hasResult = ref(false);
 
     function resultLabel(v: unknown): string {
-      return v === null ? 'null (× button)' : JSON.stringify(v);
+      return v === null ? "null (× button)" : JSON.stringify(v);
     }
 
     async function open(data: M2S2DialogData) {
       const result = await dialogSvc.dialog(data);
       lastResult.value = result ?? null;
-      hasResult.value  = true;
+      hasResult.value = true;
     }
 
     return { buttons: BUTTONS, lastResult, hasResult, resultLabel, open };
@@ -114,22 +115,22 @@ const DEMO_STYLES = `
 `;
 
 const meta: Meta = {
-  title: 'Components/Dialog',
-  tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  title: "Components/Dialog",
+  tags: ["autodocs"],
+  parameters: { layout: "fullscreen" },
 };
 export default meta;
 
 export const Default: StoryObj = {
-  name: 'Interactive — all variants',
+  name: "Interactive — all variants",
   render: () => ({
     components: { DialogProvider, DemoInner },
     setup() {
-      if (typeof document !== 'undefined') {
-        let el = document.getElementById('dialog-demo-styles');
+      if (typeof document !== "undefined") {
+        let el = document.getElementById("dialog-demo-styles");
         if (!el) {
-          el = document.createElement('style');
-          el.id = 'dialog-demo-styles';
+          el = document.createElement("style");
+          el.id = "dialog-demo-styles";
           el.textContent = DEMO_STYLES;
           document.head.appendChild(el);
         }

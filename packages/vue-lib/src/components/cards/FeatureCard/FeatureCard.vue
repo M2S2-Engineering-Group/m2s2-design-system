@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { FeatureCardConfig } from '@m2s2/models';
-import BaseCard from '../BaseCard/BaseCard.vue';
+import type { FeatureCardConfig } from "@m2s2/models";
+import BaseCard from "../BaseCard/BaseCard.vue";
 
 defineProps<{ config: FeatureCardConfig }>();
 </script>
@@ -22,21 +22,12 @@ defineProps<{ config: FeatureCardConfig }>();
     <p class="fc-body">
       {{ config.body }}
     </p>
-    <ul
-      v-if="config.items?.length"
-      class="fc-list"
-    >
-      <li
-        v-for="item in config.items"
-        :key="item"
-      >
+    <ul v-if="config.items?.length" class="fc-list">
+      <li v-for="item in config.items" :key="item">
         {{ item }}
       </li>
     </ul>
-    <p
-      v-if="config.note"
-      class="fc-note"
-    >
+    <p v-if="config.note" class="fc-note">
       {{ config.note }}
     </p>
   </BaseCard>

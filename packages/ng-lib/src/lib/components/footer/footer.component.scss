@@ -1,4 +1,4 @@
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/mixins" as m;
 
 .m2s2-footer {
   width: 100%;
@@ -37,8 +37,12 @@
   gap: var(--space-3);
 }
 
-.social-link { @include m.social-link; }
-.social-icon { @include m.social-icon; }
+.social-link {
+  @include m.social-link;
+}
+.social-icon {
+  @include m.social-icon;
+}
 
 .footer-build {
   display: none;

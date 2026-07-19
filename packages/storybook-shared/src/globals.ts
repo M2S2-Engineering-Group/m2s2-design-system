@@ -1,10 +1,13 @@
-import { THEMES } from './themes';
+import { THEMES } from "./themes";
 
-const STORAGE_KEY = 'm2s2-sb-theme';
+const STORAGE_KEY = "m2s2-sb-theme";
 
 export function broadcastTheme(brandTheme: string, colorMode: string): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ brandTheme, colorMode }));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ brandTheme, colorMode }),
+    );
   } catch {}
 }
 
@@ -16,10 +19,10 @@ export function listenForThemeChanges(
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       const { brandTheme, colorMode } = JSON.parse(raw);
-      onTheme(brandTheme ?? 'm2s2', colorMode ?? 'dark');
+      onTheme(brandTheme ?? "m2s2", colorMode ?? "dark");
     } catch {}
   };
-  window.addEventListener('storage', apply);
+  window.addEventListener("storage", apply);
   apply();
 }
 
@@ -28,31 +31,31 @@ function readStored(): { brandTheme: string; colorMode: string } {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
   } catch {}
-  return { brandTheme: 'm2s2', colorMode: 'dark' };
+  return { brandTheme: "m2s2", colorMode: "dark" };
 }
 
 const stored = readStored();
 
 export const sharedGlobalTypes = {
   brandTheme: {
-    name: 'Brand Theme',
-    description: 'Apply a custom brand palette to preview your own colors',
+    name: "Brand Theme",
+    description: "Apply a custom brand palette to preview your own colors",
     defaultValue: stored.brandTheme,
     toolbar: {
-      icon: 'paintbrush' as const,
+      icon: "paintbrush" as const,
       items: THEMES.map((t) => ({ value: t.key, title: t.label })),
       dynamicTitle: true,
     },
   },
   colorMode: {
-    name: 'Color Mode',
-    description: 'Switch between dark and light mode',
+    name: "Color Mode",
+    description: "Switch between dark and light mode",
     defaultValue: stored.colorMode,
     toolbar: {
-      icon: 'circlehollow' as const,
+      icon: "circlehollow" as const,
       items: [
-        { value: 'dark',  title: 'Dark',  icon: 'moon' as const },
-        { value: 'light', title: 'Light', icon: 'sun'  as const },
+        { value: "dark", title: "Dark", icon: "moon" as const },
+        { value: "light", title: "Light", icon: "sun" as const },
       ],
       dynamicTitle: true,
     },

@@ -9,7 +9,6 @@
 // All mixins emit only the CSS properties shown — callers control class names.
 // =============================================================================
 
-
 // ── Buttons ───────────────────────────────────────────────────────────────────
 
 // Base reset shared by all button variants. Does not set color or background.
@@ -30,8 +29,14 @@
     background var(--transition-fast),
     border-color var(--transition-fast);
 
-  &:hover:not(:disabled) { opacity: 0.85; }
-  &:disabled             { opacity: 0.5; cursor: not-allowed; }
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 @mixin btn-primary {
@@ -46,7 +51,8 @@
   @include btn-base;
 
   background:
-    linear-gradient(var(--color-surface-raised), var(--color-surface-raised)) padding-box,
+    linear-gradient(var(--color-surface-raised), var(--color-surface-raised))
+      padding-box,
     var(--gradient-brand-135) border-box;
   border: 1px solid transparent;
   color: var(--color-secondary);
@@ -74,7 +80,10 @@
   color: var(--color-on-surface);
   border-color: var(--color-primary-dim, var(--color-primary));
 
-  &:hover:not(:disabled) { background: var(--color-surface); opacity: 1; }
+  &:hover:not(:disabled) {
+    background: var(--color-surface);
+    opacity: 1;
+  }
 }
 
 // Large brand CTA button — used in CtaSection, SubscribeForm.
@@ -89,8 +98,14 @@
   background: var(--gradient-brand-135);
   color: #fff;
 
-  &:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
-  &:active                { transform: translateY(0); }
+  &:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 // Outlined muted button — unsubscribe, secondary destructive.
@@ -123,14 +138,15 @@
   color: var(--color-on-surface-muted);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 
   &:hover {
     background: var(--color-surface-raised);
     color: var(--color-on-surface);
   }
 }
-
 
 // ── Form inputs ───────────────────────────────────────────────────────────────
 
@@ -145,9 +161,18 @@
   transition: border-color var(--transition-fast);
   box-sizing: border-box;
 
-  &::placeholder { color: var(--color-on-surface-muted); }
-  &:focus        { outline: none; border-color: var(--color-primary); }
-  &:disabled     { opacity: 0.5; }
+  &::placeholder {
+    color: var(--color-on-surface-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 // Compact search/filter input (shorter, fixed width via caller).
@@ -160,10 +185,15 @@
   font-size: var(--font-size-sm);
   transition: border-color var(--transition-fast);
 
-  &::placeholder { color: var(--color-on-surface-muted); }
-  &:focus        { outline: none; border-color: var(--color-primary); }
-}
+  &::placeholder {
+    color: var(--color-on-surface-muted);
+  }
 
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+}
 
 // ── Overlay chrome (dialog + panel share this shell) ─────────────────────────
 
@@ -222,7 +252,6 @@
   line-height: 1.6;
 }
 
-
 // ── Card ─────────────────────────────────────────────────────────────────────
 
 @mixin card-surface {
@@ -232,7 +261,9 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  transition: border-color var(--transition-base), transform var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base);
 
   &:hover {
     border-color: var(--color-primary);
@@ -254,7 +285,6 @@
   border-left: 3px solid var(--color-primary);
   border-radius: 10px;
 }
-
 
 // ── Status badge ──────────────────────────────────────────────────────────────
 
@@ -278,27 +308,74 @@
 // All [data-status] color rules — apply inside the badge root selector.
 @mixin status-badge-colors {
   // Inquiry
-  &[data-status='received']        { background: rgb(96  165 250 / 15%); color: #60a5fa; }
-  &[data-status='reviewing']       { background: var(--color-warning-bg);   color: var(--color-warning); }
-  &[data-status='in_conversation'] { background: rgb(167 139 250 / 15%); color: #a78bfa; }
-  &[data-status='closed']          { background: rgb(156 163 175 / 15%); color: #9ca3af; }
-  &[data-status='cancelled']       { background: var(--color-error-bg);     color: var(--color-error); }
+  &[data-status="received"] {
+    background: rgb(96 165 250 / 15%);
+    color: #60a5fa;
+  }
+
+  &[data-status="reviewing"] {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+  }
+
+  &[data-status="in_conversation"] {
+    background: rgb(167 139 250 / 15%);
+    color: #a78bfa;
+  }
+
+  &[data-status="closed"] {
+    background: rgb(156 163 175 / 15%);
+    color: #9ca3af;
+  }
+
+  &[data-status="cancelled"] {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+  }
 
   // Resume
-  &[data-status='resume-received'] { background: rgb(96  165 250 / 15%); color: #60a5fa; }
-  &[data-status='resume-pending']  { background: var(--color-warning-bg);   color: var(--color-warning); }
-  &[data-status='resume-approved'] { background: var(--color-success-bg);   color: var(--color-success); }
-  &[data-status='resume-declined'] { background: var(--color-error-bg);     color: var(--color-error); }
+  &[data-status="resume-received"] {
+    background: rgb(96 165 250 / 15%);
+    color: #60a5fa;
+  }
+
+  &[data-status="resume-pending"] {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+  }
+
+  &[data-status="resume-approved"] {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+  }
+
+  &[data-status="resume-declined"] {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+  }
 
   // Subscriber source
-  &[data-status='auth']            { background: rgb(167 139 250 / 15%); color: #a78bfa; }
-  &[data-status='signup']          { background: rgb(96  165 250 / 15%); color: #60a5fa; }
+  &[data-status="auth"] {
+    background: rgb(167 139 250 / 15%);
+    color: #a78bfa;
+  }
+
+  &[data-status="signup"] {
+    background: rgb(96 165 250 / 15%);
+    color: #60a5fa;
+  }
 
   // Subscriber verification
-  &[data-status='verified']        { background: var(--color-success-bg);   color: var(--color-success); }
-  &[data-status='unverified']      { background: var(--color-warning-bg);   color: var(--color-warning); }
-}
+  &[data-status="verified"] {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+  }
 
+  &[data-status="unverified"] {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+  }
+}
 
 // ── Filter pills ──────────────────────────────────────────────────────────────
 
@@ -316,7 +393,10 @@
     border-color var(--transition-fast),
     background var(--transition-fast);
 
-  &:hover { color: var(--color-on-surface); border-color: var(--color-primary); }
+  &:hover {
+    color: var(--color-on-surface);
+    border-color: var(--color-primary);
+  }
 }
 
 @mixin filter-pill-active {
@@ -324,7 +404,6 @@
   border-color: var(--color-primary-dim);
   color: #fff;
 }
-
 
 // ── Floating dropdown panel ───────────────────────────────────────────────────
 
@@ -336,7 +415,6 @@
   box-shadow: var(--shadow-md);
 }
 
-
 // ── Social links (footer) ─────────────────────────────────────────────────────
 
 @mixin social-link {
@@ -344,7 +422,9 @@
   align-items: center;
   justify-content: center;
   opacity: 0.8;
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
 
   &:hover {
     opacity: 1;
@@ -360,11 +440,14 @@
   color: var(--color-secondary);
 }
 
-
 // ── Loading spinner ───────────────────────────────────────────────────────────
 
 @mixin btn-spinner-keyframes {
-  @keyframes m2s2-spin { to { transform: rotate(360deg); } }
+  @keyframes m2s2-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 // Element-level styles only — caller controls the class name.
@@ -383,7 +466,6 @@
   flex-shrink: 0;
 }
 
-
 // ── Feedback text ─────────────────────────────────────────────────────────────
 
 @mixin feedback-text {
@@ -391,6 +473,10 @@
   margin: 0;
 }
 
-@mixin feedback-error   { color: var(--color-error); }
+@mixin feedback-error {
+  color: var(--color-error);
+}
 
-@mixin feedback-success { color: var(--color-success); }
+@mixin feedback-success {
+  color: var(--color-success);
+}

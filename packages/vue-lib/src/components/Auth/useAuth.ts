@@ -1,14 +1,14 @@
-import { inject, type InjectionKey } from 'vue';
+import { inject, type InjectionKey } from "vue";
 
 export interface M2S2AuthUser {
-  userId:   string;
+  userId: string;
   username: string;
 }
 
 export interface M2S2AuthContext {
-  user:     M2S2AuthUser | undefined;
+  user: M2S2AuthUser | undefined;
   loggedIn: boolean;
-  loading:  boolean;
+  loading: boolean;
   signOut(): Promise<void>;
 }
 
@@ -18,10 +18,10 @@ export interface M2S2AuthProviderImpl {
   signOut(): void | Promise<void>;
 }
 
-export const AUTH_KEY: InjectionKey<M2S2AuthContext> = Symbol('auth');
+export const AUTH_KEY: InjectionKey<M2S2AuthContext> = Symbol("auth");
 
 export function useAuth(): M2S2AuthContext {
   const ctx = inject(AUTH_KEY);
-  if (!ctx) throw new Error('useAuth must be used within an <AuthProvider>');
+  if (!ctx) throw new Error("useAuth must be used within an <AuthProvider>");
   return ctx;
 }

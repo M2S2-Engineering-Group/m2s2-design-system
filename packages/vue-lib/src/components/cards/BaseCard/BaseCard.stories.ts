@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
-import BaseCard from './BaseCard.vue';
+import type { Meta, StoryObj } from "@storybook/vue3";
+import BaseCard from "./BaseCard.vue";
 
 const meta: Meta<typeof BaseCard> = {
-  title: 'Cards/BaseCard',
+  title: "Cards/BaseCard",
   component: BaseCard,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    variant: { control: 'select', options: ['default', 'raised', 'accent'] },
-    featured: { control: 'boolean' },
+    variant: { control: "select", options: ["default", "raised", "accent"] },
+    featured: { control: "boolean" },
   },
 };
 export default meta;
@@ -21,7 +21,7 @@ const defaultSlot = `
 `;
 
 export const Default: Story = {
-  args: { variant: 'default', featured: false },
+  args: { variant: "default", featured: false },
   render: (args) => ({
     components: { BaseCard },
     setup: () => ({ args }),
@@ -30,16 +30,16 @@ export const Default: Story = {
 };
 
 export const Raised: Story = {
-  args: { variant: 'raised', featured: false },
+  args: { variant: "raised", featured: false },
   render: Default.render,
 };
 
 export const Accent: Story = {
-  args: { variant: 'accent', featured: false },
+  args: { variant: "accent", featured: false },
   render: Default.render,
 };
 
 export const Featured: Story = {
-  args: { variant: 'default', featured: true },
+  args: { variant: "default", featured: true },
   render: Default.render,
 };

@@ -1,4 +1,4 @@
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .table-panel {
   background: var(--color-surface);
@@ -28,14 +28,22 @@
   @include m.form-input-compact;
   width: 200px;
   flex-shrink: 0;
-  &::-webkit-search-cancel-button { cursor: pointer; }
+  &::-webkit-search-cancel-button {
+    cursor: pointer;
+  }
 }
 
-.dt-pills { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.dt-pills {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
 
 .dt-pill {
   @include m.filter-pill;
-  &--active { @include m.filter-pill-active; }
+  &--active {
+    @include m.filter-pill-active;
+  }
 }
 
 .dt-count {
@@ -45,9 +53,14 @@
   margin-right: auto;
 }
 
-.dt-col-wrap { position: relative; margin-left: auto; }
+.dt-col-wrap {
+  position: relative;
+  margin-left: auto;
+}
 
-.dt-col-btn { @include m.filter-pill; }
+.dt-col-btn {
+  @include m.filter-pill;
+}
 
 .dt-col-panel {
   @include m.floating-panel;
@@ -69,12 +82,21 @@
   color: var(--color-on-surface);
   cursor: pointer;
 
-  input[type='checkbox'] { cursor: pointer; accent-color: var(--color-primary); }
+  input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: var(--color-primary);
+  }
 }
 
-.dt-scroll { overflow-x: auto; }
+.dt-scroll {
+  overflow-x: auto;
+}
 
 @media (max-width: 767px) {
-  .dt-search { width: 100%; }
-  .dt-scroll  { overflow-x: visible; }
+  .dt-search {
+    width: 100%;
+  }
+  .dt-scroll {
+    overflow-x: visible;
+  }
 }

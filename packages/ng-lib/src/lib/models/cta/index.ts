@@ -1,1 +1,1 @@
-export * from './cta.model';
+export * from "./cta.model";

@@ -1,1 +1,1 @@
-export * from './navbar-confing.model';
+export * from "./navbar-confing.model";

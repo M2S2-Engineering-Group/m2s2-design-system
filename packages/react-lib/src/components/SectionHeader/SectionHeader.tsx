@@ -1,5 +1,5 @@
-import { SectionHeaderConfig } from '@m2s2/models';
-import './SectionHeader.scss';
+import { SectionHeaderConfig } from "@m2s2/models";
+import "./SectionHeader.scss";
 
 interface SectionHeaderProps {
   config: SectionHeaderConfig;

@@ -1,5 +1,5 @@
-import { InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
+import { InjectionToken } from "@angular/core";
+import { Observable } from "rxjs";
 
 export interface M2S2AuthUser {
   userId: string;
@@ -12,4 +12,6 @@ export interface M2S2AuthProvider {
   signOut(): void | Promise<void>;
 }
 
-export const M2S2_AUTH_PROVIDER = new InjectionToken<M2S2AuthProvider>('M2S2AuthProvider');
+export const M2S2_AUTH_PROVIDER = new InjectionToken<M2S2AuthProvider>(
+  "M2S2AuthProvider",
+);

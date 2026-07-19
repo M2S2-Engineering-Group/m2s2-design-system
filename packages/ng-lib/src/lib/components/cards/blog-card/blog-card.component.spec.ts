@@ -1,15 +1,15 @@
-import { render, screen } from '@testing-library/angular';
-import { axe } from 'jest-axe';
-import { provideRouter } from '@angular/router';
-import { BlogCardComponent } from './blog-card.component';
+import { render, screen } from "@testing-library/angular";
+import { axe } from "jest-axe";
+import { provideRouter } from "@angular/router";
+import { BlogCardComponent } from "./blog-card.component";
 
-describe('BlogCardComponent', () => {
+describe("BlogCardComponent", () => {
   const config = {
-    slug: 'my-post',
-    title: 'My First Post',
-    date: '2024-06-15',
-    summary: 'A brief summary of the post.',
-    tags: ['Angular', 'Testing'],
+    slug: "my-post",
+    title: "My First Post",
+    date: "2024-06-15",
+    summary: "A brief summary of the post.",
+    tags: ["Angular", "Testing"],
   };
 
   const renderCard = (overrides = {}) =>
@@ -18,71 +18,84 @@ describe('BlogCardComponent', () => {
       providers: [provideRouter([])],
     });
 
-  it('renders the post title', async () => {
+  it("renders the post title", async () => {
     await renderCard();
-    expect(screen.getByText('My First Post')).toBeInTheDocument();
+    expect(screen.getByText("My First Post")).toBeInTheDocument();
   });
 
-  it('renders the formatted date', async () => {
+  it("renders the formatted date", async () => {
     await renderCard();
-    expect(screen.getByText('June 15, 2024')).toBeInTheDocument();
+    expect(screen.getByText("June 15, 2024")).toBeInTheDocument();
   });
 
-  it('renders the summary', async () => {
+  it("renders the summary", async () => {
     await renderCard();
-    expect(screen.getByText('A brief summary of the post.')).toBeInTheDocument();
+    expect(
+      screen.getByText("A brief summary of the post."),
+    ).toBeInTheDocument();
   });
 
-  it('renders all tags in the tag list', async () => {
+  it("renders all tags in the tag list", async () => {
     const { container } = await renderCard();
-    const tags = container.querySelectorAll('.bc-tag');
-    expect(tags[0]).toHaveTextContent('Angular');
-    expect(tags[1]).toHaveTextContent('Testing');
+    const tags = container.querySelectorAll(".bc-tag");
+    expect(tags[0]).toHaveTextContent("Angular");
+    expect(tags[1]).toHaveTextContent("Testing");
   });
 
-  it('renders a cover image when coverImage is provided', async () => {
-    await renderCard({ coverImage: 'https://example.com/cover.jpg' });
-    const img = screen.getByRole('img', { name: 'My First Post' });
-    expect(img).toHaveAttribute('src', 'https://example.com/cover.jpg');
+  it("renders a cover image when coverImage is provided", async () => {
+    await renderCard({ coverImage: "https://example.com/cover.jpg" });
+    const img = screen.getByRole("img", { name: "My First Post" });
+    expect(img).toHaveAttribute("src", "https://example.com/cover.jpg");
   });
 
-  it('renders the reading time when provided', async () => {
+  it("renders the reading time when provided", async () => {
     await renderCard({ readingTime: 5 });
-    expect(screen.getByText('5 min read')).toBeInTheDocument();
+    expect(screen.getByText("5 min read")).toBeInTheDocument();
   });
 
-  it('does not render a reading time element when omitted', async () => {
+  it("does not render a reading time element when omitted", async () => {
     await renderCard();
     expect(screen.queryByText(/min read/)).not.toBeInTheDocument();
   });
 
-  it('renders the placeholder cover with the first tag when no coverImage is provided', async () => {
+  it("renders the placeholder cover with the first tag when no coverImage is provided", async () => {
     const { container } = await renderCard();
-    expect(container.querySelector('.bc-cover-placeholder')).toBeInTheDocument();
-    expect(container.querySelector('.bc-cover-tag')).toHaveTextContent('Angular');
+    expect(
+      container.querySelector(".bc-cover-placeholder"),
+    ).toBeInTheDocument();
+    expect(container.querySelector(".bc-cover-tag")).toHaveTextContent(
+      "Angular",
+    );
   });
 
-  it('renders a series badge when series data is provided', async () => {
+  it("renders a series badge when series data is provided", async () => {
     await renderCard({
-      series: { id: 'go-backend', title: 'Go Backend Series', part: 2, total: 5 },
+      series: {
+        id: "go-backend",
+        title: "Go Backend Series",
+        part: 2,
+        total: 5,
+      },
     });
-    expect(screen.getByText('Part 2 of 5')).toBeInTheDocument();
-    expect(screen.getByText('Go Backend Series')).toBeInTheDocument();
+    expect(screen.getByText("Part 2 of 5")).toBeInTheDocument();
+    expect(screen.getByText("Go Backend Series")).toBeInTheDocument();
   });
 
-  it('does not render a series badge when series is omitted', async () => {
+  it("does not render a series badge when series is omitted", async () => {
     await renderCard();
     expect(screen.queryByText(/Part \d+ of \d+/)).not.toBeInTheDocument();
   });
 
-  describe('accessibility', () => {
-    it('has no violations with default card', async () => {
+  describe("accessibility", () => {
+    it("has no violations with default card", async () => {
       const { container } = await renderCard();
       expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('has no violations with cover image', async () => {
-      const { container } = await renderCard({ coverImage: 'https://example.com/cover.jpg' });
+    it("has no violations with cover image", async () => {
+      const { container } = await renderCard({
+        coverImage: "https://example.com/cover.jpg",
+      });
       expect(await axe(container)).toHaveNoViolations();
     });
   });

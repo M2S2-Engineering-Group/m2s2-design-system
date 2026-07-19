@@ -1,1 +1,1 @@
-export * from './status-badge.model';
+export * from "./status-badge.model";

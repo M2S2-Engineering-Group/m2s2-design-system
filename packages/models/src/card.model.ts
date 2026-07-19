@@ -1,4 +1,4 @@
-export type CardVariant = 'default' | 'raised' | 'accent';
+export type CardVariant = "default" | "raised" | "accent";
 
 export interface FeatureCardConfig {
   icon?: string;

@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 
 @Component({
-  selector: 'm2s2-loading-button',
+  selector: "m2s2-loading-button",
   template: `
     <button [disabled]="loading() || disabled()" [attr.aria-busy]="loading()">
-      @if (loading()) { <span class="m2s2-btn-spinner" aria-hidden="true"></span> }
+      @if (loading()) {
+        <span class="m2s2-btn-spinner" aria-hidden="true"></span>
+      }
       @if (!loading() || !loadingText()) {
         <ng-content />
       } @else {
@@ -12,12 +14,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       }
     </button>
   `,
-  styleUrls: ['./loading-button.component.scss'],
+  styleUrls: ["./loading-button.component.scss"],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingButtonComponent {
-  loading     = input<boolean>(false);
+  loading = input<boolean>(false);
   loadingText = input<string | undefined>(undefined);
-  disabled    = input<boolean>(false);
+  disabled = input<boolean>(false);
 }

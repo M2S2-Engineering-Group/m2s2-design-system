@@ -1,1 +1,1 @@
-export * from './footer.model';
+export * from "./footer.model";

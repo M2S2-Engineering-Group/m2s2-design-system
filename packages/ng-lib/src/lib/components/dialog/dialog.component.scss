@@ -1,18 +1,38 @@
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/mixins" as m;
 
-.dialog-header  { @include m.overlay-header; }
-.dialog-title   { @include m.overlay-title; }
-.dialog-close   { @include m.btn-icon; }
+.dialog-header {
+  @include m.overlay-header;
+}
+.dialog-title {
+  @include m.overlay-title;
+}
+.dialog-close {
+  @include m.btn-icon;
+}
 
-.dialog-body    { padding: var(--space-5) var(--space-6); }
-.dialog-message { @include m.overlay-message; }
+.dialog-body {
+  padding: var(--space-5) var(--space-6);
+}
+.dialog-message {
+  @include m.overlay-message;
+}
 
-.dialog-footer  { @include m.overlay-footer; }
+.dialog-footer {
+  @include m.overlay-footer;
+}
 
 .dialog-btn {
   @include m.btn-base;
-  &--primary     { @include m.btn-primary; }
-  &--secondary   { @include m.btn-secondary; }
-  &--destructive { @include m.btn-destructive; }
-  &--ghost       { @include m.btn-ghost; }
+  &--primary {
+    @include m.btn-primary;
+  }
+  &--secondary {
+    @include m.btn-secondary;
+  }
+  &--destructive {
+    @include m.btn-destructive;
+  }
+  &--ghost {
+    @include m.btn-ghost;
+  }
 }

@@ -1,4 +1,4 @@
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/mixins" as m;
 
 :host {
   display: block;
@@ -12,20 +12,28 @@
   width: 100%;
 }
 
-.sub-input { @include m.form-input; }
+.sub-input {
+  @include m.form-input;
+}
 
 .sub-btn {
   @include m.btn-primary;
   padding: var(--space-3) var(--space-6);
   font-weight: var(--font-weight-semibold);
 
-  &--unsub { @include m.btn-muted; }
+  &--unsub {
+    @include m.btn-muted;
+  }
 }
 
 .sub-feedback {
   @include m.feedback-text;
-  &--error   { @include m.feedback-error; }
-  &--success { @include m.feedback-success; }
+  &--error {
+    @include m.feedback-error;
+  }
+  &--success {
+    @include m.feedback-success;
+  }
 }
 
 .sub-success {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { Chart } from 'chart.js/auto';
-import type { RankedBarItem } from '@m2s2/models';
-import { buildRankedBarChartConfig } from '@m2s2/utils';
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { Chart } from "chart.js/auto";
+import type { RankedBarItem } from "@m2s2/models";
+import { buildRankedBarChartConfig } from "@m2s2/utils";
 
 const props = defineProps<{ data: RankedBarItem[] }>();
 

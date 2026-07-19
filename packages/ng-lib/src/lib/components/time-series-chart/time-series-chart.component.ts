@@ -8,22 +8,23 @@ import {
   inject,
   input,
   viewChild,
-} from '@angular/core';
-import { Chart } from 'chart.js/auto';
-import { buildTimeSeriesChartConfig } from '@m2s2/utils';
-import { TimeSeriesPoint } from '../../models/chart';
+} from "@angular/core";
+import { Chart } from "chart.js/auto";
+import { buildTimeSeriesChartConfig } from "@m2s2/utils";
+import { TimeSeriesPoint } from "../../models/chart";
 
 @Component({
-  selector: 'm2s2-time-series-chart',
-  templateUrl: './time-series-chart.component.html',
-  styleUrls: ['./time-series-chart.component.scss'],
+  selector: "m2s2-time-series-chart",
+  templateUrl: "./time-series-chart.component.html",
+  styleUrls: ["./time-series-chart.component.scss"],
   standalone: true,
 })
 export class TimeSeriesChartComponent {
   data = input.required<TimeSeriesPoint[]>();
-  type = input<'line' | 'bar'>('line');
+  type = input<"line" | "bar">("line");
 
-  private readonly canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
+  private readonly canvasRef =
+    viewChild.required<ElementRef<HTMLCanvasElement>>("canvas");
   private readonly injector = inject(Injector);
   private readonly destroyRef = inject(DestroyRef);
   private chart?: Chart;

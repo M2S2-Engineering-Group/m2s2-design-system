@@ -1,4 +1,4 @@
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 // ── Overlay backdrop ──────────────────────────────────────────────────────────
 
@@ -8,12 +8,30 @@
   background: rgba(0, 0, 0, 0.45);
   z-index: var(--z-modal);
 
-  &[data-state='open']  { animation: overlay-in  200ms ease; }
-  &[data-state='closed'] { animation: overlay-out 200ms ease; }
+  &[data-state="open"] {
+    animation: overlay-in 200ms ease;
+  }
+  &[data-state="closed"] {
+    animation: overlay-out 200ms ease;
+  }
 }
 
-@keyframes overlay-in  { from { opacity: 0; } to { opacity: 1; } }
-@keyframes overlay-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 
 // ── Panel drawer ──────────────────────────────────────────────────────────────
 
@@ -34,22 +52,58 @@
   &--right {
     right: 0;
     border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-    &[data-state='open']  { animation: slide-in-right  220ms ease; }
-    &[data-state='closed'] { animation: slide-out-right 200ms ease; }
+    &[data-state="open"] {
+      animation: slide-in-right 220ms ease;
+    }
+    &[data-state="closed"] {
+      animation: slide-out-right 200ms ease;
+    }
   }
 
   &--left {
     left: 0;
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    &[data-state='open']  { animation: slide-in-left  220ms ease; }
-    &[data-state='closed'] { animation: slide-out-left 200ms ease; }
+    &[data-state="open"] {
+      animation: slide-in-left 220ms ease;
+    }
+    &[data-state="closed"] {
+      animation: slide-out-left 200ms ease;
+    }
   }
 }
 
-@keyframes slide-in-right  { from { transform: translateX(100%); } to { transform: translateX(0); } }
-@keyframes slide-out-right { from { transform: translateX(0); } to { transform: translateX(100%); } }
-@keyframes slide-in-left   { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-@keyframes slide-out-left  { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
 
 // ── Chrome ────────────────────────────────────────────────────────────────────
 
@@ -64,17 +118,37 @@
   min-width: 0;
 }
 
-.panel-title    { @include m.overlay-title; }
-.panel-subtitle { @include m.overlay-subtitle; }
-.panel-close    { @include m.btn-icon; }
-.panel-body     { @include m.overlay-body; }
-.panel-message  { @include m.overlay-message; }
-.panel-footer   { @include m.overlay-footer; }
+.panel-title {
+  @include m.overlay-title;
+}
+.panel-subtitle {
+  @include m.overlay-subtitle;
+}
+.panel-close {
+  @include m.btn-icon;
+}
+.panel-body {
+  @include m.overlay-body;
+}
+.panel-message {
+  @include m.overlay-message;
+}
+.panel-footer {
+  @include m.overlay-footer;
+}
 
 .panel-btn {
   @include m.btn-base;
-  &--primary     { @include m.btn-primary; }
-  &--secondary   { @include m.btn-secondary; }
-  &--destructive { @include m.btn-destructive; }
-  &--ghost       { @include m.btn-ghost; }
+  &--primary {
+    @include m.btn-primary;
+  }
+  &--secondary {
+    @include m.btn-secondary;
+  }
+  &--destructive {
+    @include m.btn-destructive;
+  }
+  &--ghost {
+    @include m.btn-ghost;
+  }
 }

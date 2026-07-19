@@ -1,33 +1,39 @@
 <script setup lang="ts">
-import type { AnchorDropdownItem, ClickableDropdownItem, DropdownItem } from '@m2s2/models';
+import type {
+  AnchorDropdownItem,
+  ClickableDropdownItem,
+  DropdownItem,
+} from "@m2s2/models";
 
-type DropdownItemConfig = DropdownItem & (
-  | Pick<AnchorDropdownItem, 'href'>
-  | Pick<ClickableDropdownItem, 'onClick'>
-  | Record<string, never>
-);
+type DropdownItemConfig = DropdownItem &
+  (
+    | Pick<AnchorDropdownItem, "href">
+    | Pick<ClickableDropdownItem, "onClick">
+    | Record<string, never>
+  );
 
 const props = defineProps<{ item: DropdownItemConfig }>();
-const emit  = defineEmits<{ select: [] }>();
+const emit = defineEmits<{ select: [] }>();
 
-function isAnchor(i: DropdownItemConfig): i is DropdownItem & Pick<AnchorDropdownItem, 'href'> {
-  return 'href' in i;
+function isAnchor(
+  i: DropdownItemConfig,
+): i is DropdownItem & Pick<AnchorDropdownItem, "href"> {
+  return "href" in i;
 }
-function isClickable(i: DropdownItemConfig): i is DropdownItem & Pick<ClickableDropdownItem, 'onClick'> {
-  return 'onClick' in i;
+function isClickable(
+  i: DropdownItemConfig,
+): i is DropdownItem & Pick<ClickableDropdownItem, "onClick"> {
+  return "onClick" in i;
 }
 
 function handleClick() {
   if (isClickable(props.item)) (props.item as ClickableDropdownItem).onClick();
-  emit('select');
+  emit("select");
 }
 </script>
 
 <template>
-  <li
-    class="m2s2-dropdown__item"
-    role="none"
-  >
+  <li class="m2s2-dropdown__item" role="none">
     <a
       v-if="isAnchor(item)"
       :href="(item as any).href"
@@ -37,12 +43,7 @@ function handleClick() {
       rel="noopener noreferrer"
       @click="emit('select')"
     >
-      <img
-        v-if="item.imgSrc"
-        :src="item.imgSrc"
-        alt=""
-        aria-hidden="true"
-      >
+      <img v-if="item.imgSrc" :src="item.imgSrc" alt="" aria-hidden="true" />
       {{ item.text }}
     </a>
     <button
@@ -51,12 +52,7 @@ function handleClick() {
       role="menuitem"
       @click="handleClick"
     >
-      <img
-        v-if="item.imgSrc"
-        :src="item.imgSrc"
-        alt=""
-        aria-hidden="true"
-      >
+      <img v-if="item.imgSrc" :src="item.imgSrc" alt="" aria-hidden="true" />
       {{ item.text }}
     </button>
     <span
@@ -65,12 +61,7 @@ function handleClick() {
       role="menuitem"
       aria-disabled="true"
     >
-      <img
-        v-if="item.imgSrc"
-        :src="item.imgSrc"
-        alt=""
-        aria-hidden="true"
-      >
+      <img v-if="item.imgSrc" :src="item.imgSrc" alt="" aria-hidden="true" />
       {{ item.text }}
     </span>
   </li>
@@ -78,7 +69,9 @@ function handleClick() {
 
 <style lang="scss">
 .m2s2-dropdown {
-  &__item { display: block; }
+  &__item {
+    display: block;
+  }
 
   &__link {
     display: flex;
@@ -93,16 +86,25 @@ function handleClick() {
     text-align: left;
     cursor: pointer;
     text-decoration: none;
-    transition: background 150ms ease, color 150ms ease;
+    transition:
+      background 150ms ease,
+      color 150ms ease;
 
     &:hover {
       background: var(--color-surface-overlay);
       color: var(--color-secondary);
     }
 
-    &--disabled { opacity: 0.5; cursor: not-allowed; }
+    &--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
-    img { width: 20px; height: 20px; object-fit: contain; }
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
   }
 }
 </style>

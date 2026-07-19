@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { validateEmail } from '@m2s2/utils';
-import './SubscribeForm.scss';
+import { useState } from "react";
+import { validateEmail } from "@m2s2/utils";
+import "./SubscribeForm.scss";
 
-type SubmitState = 'idle' | 'submitting' | 'done' | 'error';
+type SubmitState = "idle" | "submitting" | "done" | "error";
 
 interface SubscribeFormProps {
-  mode?: 'anon' | 'auth';
+  mode?: "anon" | "auth";
   subscribeAnon?: (email: string, name: string) => Promise<unknown>;
   subscribeAuth?: () => Promise<unknown>;
   unsubscribeAuth?: () => Promise<unknown>;
@@ -13,62 +13,66 @@ interface SubscribeFormProps {
 }
 
 export function SubscribeForm({
-  mode = 'anon',
+  mode = "anon",
   subscribeAnon,
   subscribeAuth,
   unsubscribeAuth,
-  initialState = 'idle',
+  initialState = "idle",
 }: SubscribeFormProps) {
-  const [email, setEmail]         = useState('');
-  const [name, setName]           = useState('');
-  const [state, setState]         = useState<SubmitState>(initialState);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [state, setState] = useState<SubmitState>(initialState);
   const [subscribed, setSubscribed] = useState(false);
 
   const emailValid = validateEmail(email);
 
   async function submit() {
-    if (state === 'submitting') return;
+    if (state === "submitting") return;
 
-    if (mode === 'auth') {
+    if (mode === "auth") {
       if (subscribed) {
         if (!unsubscribeAuth) return;
-        setState('submitting');
+        setState("submitting");
         try {
           await unsubscribeAuth();
           setSubscribed(false);
-          setState('idle');
+          setState("idle");
         } catch {
-          setState('error');
+          setState("error");
         }
       } else {
         if (!subscribeAuth) return;
-        setState('submitting');
+        setState("submitting");
         try {
           await subscribeAuth();
           setSubscribed(true);
-          setState('done');
+          setState("done");
         } catch {
-          setState('error');
+          setState("error");
         }
       }
     } else {
       if (!emailValid || !subscribeAnon) return;
-      setState('submitting');
+      setState("submitting");
       try {
         await subscribeAnon(email.trim(), name.trim());
-        setState('done');
+        setState("done");
       } catch {
-        setState('error');
+        setState("error");
       }
     }
   }
 
-  if (mode === 'anon') {
-    if (state === 'done') {
+  if (mode === "anon") {
+    if (state === "done") {
       return (
         <div role="status" className="sub-success">
-          <span className="sub-success-icon" aria-hidden="true">✓</span>
-          <p className="sub-success-text">Check your email to confirm your subscription.</p>
+          <span className="sub-success-icon" aria-hidden="true">
+            ✓
+          </span>
+          <p className="sub-success-text">
+            Check your email to confirm your subscription.
+          </p>
         </div>
       );
     }
@@ -80,8 +84,8 @@ export function SubscribeForm({
           placeholder="Your name (optional)"
           aria-label="Your name (optional)"
           value={name}
-          onChange={e => setName(e.target.value)}
-          disabled={state === 'submitting'}
+          onChange={(e) => setName(e.target.value)}
+          disabled={state === "submitting"}
         />
         <input
           className="sub-input"
@@ -89,17 +93,17 @@ export function SubscribeForm({
           placeholder="your@email.com"
           aria-label="Email address"
           value={email}
-          onChange={e => setEmail(e.target.value)}
-          disabled={state === 'submitting'}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={state === "submitting"}
         />
         <button
           className="sub-btn"
-          disabled={!emailValid || state === 'submitting'}
+          disabled={!emailValid || state === "submitting"}
           onClick={submit}
         >
-          {state === 'submitting' ? 'Submitting…' : 'Subscribe'}
+          {state === "submitting" ? "Submitting…" : "Subscribe"}
         </button>
-        {state === 'error' && (
+        {state === "error" && (
           <p role="alert" className="sub-feedback sub-feedback--error">
             Something went wrong — please try again.
           </p>
@@ -114,28 +118,34 @@ export function SubscribeForm({
         <>
           <button
             className="sub-btn"
-            disabled={state === 'submitting'}
+            disabled={state === "submitting"}
             onClick={submit}
           >
-            {state === 'submitting' ? 'Subscribing…' : 'Subscribe to Blog Updates'}
+            {state === "submitting"
+              ? "Subscribing…"
+              : "Subscribe to Blog Updates"}
           </button>
-          {state === 'done' && (
-            <p role="status" className="sub-feedback sub-feedback--success">You&apos;re subscribed!</p>
+          {state === "done" && (
+            <p role="status" className="sub-feedback sub-feedback--success">
+              You&apos;re subscribed!
+            </p>
           )}
         </>
       ) : (
         <>
-          <span className="sub-subscribed-label">✓ Subscribed to blog updates</span>
+          <span className="sub-subscribed-label">
+            ✓ Subscribed to blog updates
+          </span>
           <button
             className="sub-btn sub-btn--unsub"
-            disabled={state === 'submitting'}
+            disabled={state === "submitting"}
             onClick={submit}
           >
-            {state === 'submitting' ? 'Unsubscribing…' : 'Unsubscribe'}
+            {state === "submitting" ? "Unsubscribing…" : "Unsubscribe"}
           </button>
         </>
       )}
-      {state === 'error' && (
+      {state === "error" && (
         <p role="alert" className="sub-feedback sub-feedback--error">
           Something went wrong — please try again.
         </p>

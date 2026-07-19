@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import type { ChatMessage } from '@m2s2/models';
-import { Chat } from './Chat';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import type { ChatMessage } from "@m2s2/models";
+import { Chat } from "./Chat";
 
 const fakeResponses: Record<number, string> = {
   1: "Good question. The answer depends on your read/write ratio and query patterns. If you're doing a lot of relational queries with joins, Postgres will serve you better. If you need horizontal write scalability and your data is genuinely document-shaped, then a document store makes sense. Most teams reach for NoSQL before they've actually outgrown Postgres — I'd start relational and migrate only when you have a concrete reason.",
@@ -13,26 +13,31 @@ const fakeResponses: Record<number, string> = {
 };
 
 async function mockSendMessage(messages: ChatMessage[]): Promise<string> {
-  await new Promise(resolve => setTimeout(resolve, 1200 + Math.random() * 800));
-  const userCount = messages.filter(m => m.role === 'user').length;
+  await new Promise((resolve) =>
+    setTimeout(resolve, 1200 + Math.random() * 800),
+  );
+  const userCount = messages.filter((m) => m.role === "user").length;
   return fakeResponses[userCount] ?? fakeResponses[6];
 }
 
 const meta: Meta<typeof Chat> = {
-  title: 'Components/Chat',
+  title: "Components/Chat",
   component: Chat,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'Fixed bottom-right chat widget. The panel opens on toggle, supports a configurable message cap, and surfaces a CTA when the limit is reached. Pass `sendMessage` to connect to any backend.',
+        component:
+          "Fixed bottom-right chat widget. The panel opens on toggle, supports a configurable message cap, and surfaces a CTA when the limit is reached. Pass `sendMessage` to connect to any backend.",
       },
     },
   },
   decorators: [
-    Story => (
-      <div style={{ minHeight: '100vh', background: 'var(--color-bg, #0a0a0f)' }}>
+    (Story) => (
+      <div
+        style={{ minHeight: "100vh", background: "var(--color-bg, #0a0a0f)" }}
+      >
         <Story />
       </div>
     ),
@@ -44,20 +49,20 @@ type Story = StoryObj<typeof Chat>;
 export const Default: Story = {
   args: {
     sendMessage: mockSendMessage,
-    title:       'Architecture Advisor',
-    ctaUrl:      '/contact',
-    ctaLabel:    'Start a Conversation',
+    title: "Architecture Advisor",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
 export const WithAvatars: Story = {
   args: {
-    sendMessage:        mockSendMessage,
-    title:              'Architecture Advisor',
-    assistantAvatarUrl: 'https://placehold.co/36x36/7c3aed/ffffff?text=M2',
-    userAvatarUrl:      'https://placehold.co/36x36/334155/ffffff?text=You',
-    ctaUrl:             '/contact',
-    ctaLabel:           'Start a Conversation',
+    sendMessage: mockSendMessage,
+    title: "Architecture Advisor",
+    assistantAvatarUrl: "https://placehold.co/36x36/7c3aed/ffffff?text=M2",
+    userAvatarUrl: "https://placehold.co/36x36/334155/ffffff?text=You",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
@@ -65,27 +70,30 @@ export const WithStringHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A plain string passed to `headerContent` renders as simple text below the subtitle.',
+        story:
+          "A plain string passed to `headerContent` renders as simple text below the subtitle.",
       },
     },
   },
   args: {
-    sendMessage:   mockSendMessage,
-    title:         'Architecture Advisor',
-    headerContent: 'Now serving both General and MARC² personas',
-    ctaUrl:        '/contact',
-    ctaLabel:      'Start a Conversation',
+    sendMessage: mockSendMessage,
+    title: "Architecture Advisor",
+    headerContent: "Now serving both General and MARC² personas",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
 function TwoPersonaSwitcher() {
-  const [activePersona, setActivePersonaState] = useState<'general' | 'marc'>('general');
+  const [activePersona, setActivePersonaState] = useState<"general" | "marc">(
+    "general",
+  );
   const [generalOpen, setGeneralOpen] = useState(false);
   const [marcOpen, setMarcOpen] = useState(false);
 
-  function setActivePersona(persona: 'general' | 'marc') {
+  function setActivePersona(persona: "general" | "marc") {
     setActivePersonaState(persona);
-    if (persona === 'general') {
+    if (persona === "general") {
       setGeneralOpen(true);
     } else {
       setMarcOpen(true);
@@ -93,21 +101,46 @@ function TwoPersonaSwitcher() {
   }
 
   const tabs = (
-    <div style={{ display: 'flex', gap: 8, marginTop: 'var(--space-2)' }}>
+    <div style={{ display: "flex", gap: 8, marginTop: "var(--space-2)" }}>
       <button
-        onClick={() => setActivePersona('general')}
-        style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'general' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'general' ? '#fff' : 'var(--color-on-surface)' }}
-      >Assistant</button>
+        onClick={() => setActivePersona("general")}
+        style={{
+          fontSize: 12,
+          padding: "2px 10px",
+          borderRadius: 999,
+          border: "1px solid var(--color-primary)",
+          cursor: "pointer",
+          background:
+            activePersona === "general"
+              ? "var(--color-primary)"
+              : "transparent",
+          color:
+            activePersona === "general" ? "#fff" : "var(--color-on-surface)",
+        }}
+      >
+        Assistant
+      </button>
       <button
-        onClick={() => setActivePersona('marc')}
-        style={{ fontSize: 12, padding: '2px 10px', borderRadius: 999, border: '1px solid var(--color-primary)', cursor: 'pointer', background: activePersona === 'marc' ? 'var(--color-primary)' : 'transparent', color: activePersona === 'marc' ? '#fff' : 'var(--color-on-surface)' }}
-      >MARC²</button>
+        onClick={() => setActivePersona("marc")}
+        style={{
+          fontSize: 12,
+          padding: "2px 10px",
+          borderRadius: 999,
+          border: "1px solid var(--color-primary)",
+          cursor: "pointer",
+          background:
+            activePersona === "marc" ? "var(--color-primary)" : "transparent",
+          color: activePersona === "marc" ? "#fff" : "var(--color-on-surface)",
+        }}
+      >
+        MARC²
+      </button>
     </div>
   );
 
   return (
     <>
-      <div style={{ display: activePersona === 'general' ? '' : 'none' }}>
+      <div style={{ display: activePersona === "general" ? "" : "none" }}>
         <Chat
           sendMessage={mockSendMessage}
           title="M²S² Assistant"
@@ -119,7 +152,7 @@ function TwoPersonaSwitcher() {
           onOpenChange={setGeneralOpen}
         />
       </div>
-      <div style={{ display: activePersona === 'marc' ? '' : 'none' }}>
+      <div style={{ display: activePersona === "marc" ? "" : "none" }}>
         <Chat
           sendMessage={mockSendMessage}
           title="MARC²"
@@ -139,7 +172,8 @@ export const WithElementHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: '`headerContent` accepts any `ReactNode` and renders it as-is — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`\'s `app.component.tsx`-equivalent wiring): **two independent `Chat` instances**, one per persona, sharing one tab-switcher element. Clicking a tab shows the target instance and forces it open via the controlled `open`/`onOpenChange` props, while the hidden instance stays mounted — via a `display` wrapper, not a conditional unmount — so its conversation history survives the switch.',
+        story:
+          "`headerContent` accepts any `ReactNode` and renders it as-is — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`'s `app.component.tsx`-equivalent wiring): **two independent `Chat` instances**, one per persona, sharing one tab-switcher element. Clicking a tab shows the target instance and forces it open via the controlled `open`/`onOpenChange` props, while the hidden instance stays mounted — via a `display` wrapper, not a conditional unmount — so its conversation history survives the switch.",
       },
     },
   },
@@ -147,7 +181,7 @@ export const WithElementHeaderContent: Story = {
 };
 
 export const NearLimit: Story = {
-  name: 'Near Limit (message 5 of 6)',
+  name: "Near Limit (message 5 of 6)",
   args: {
     sendMessage: mockSendMessage,
     maxMessages: 6,

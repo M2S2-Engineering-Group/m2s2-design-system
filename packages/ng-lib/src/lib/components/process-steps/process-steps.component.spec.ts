@@ -1,15 +1,15 @@
-import { render, screen } from '@testing-library/angular';
-import { axe } from 'jest-axe';
-import { ProcessStepsComponent } from './process-steps.component';
+import { render, screen } from "@testing-library/angular";
+import { axe } from "jest-axe";
+import { ProcessStepsComponent } from "./process-steps.component";
 
-describe('ProcessStepsComponent', () => {
+describe("ProcessStepsComponent", () => {
   const steps = [
-    { num: '01', name: 'Discovery', desc: 'We learn about your goals.' },
-    { num: '02', name: 'Design', desc: 'We craft the solution.' },
-    { num: '03', name: 'Deliver', desc: 'We ship and support.' },
+    { num: "01", name: "Discovery", desc: "We learn about your goals." },
+    { num: "02", name: "Design", desc: "We craft the solution." },
+    { num: "03", name: "Deliver", desc: "We ship and support." },
   ];
 
-  it('renders every step number, name, and description', async () => {
+  it("renders every step number, name, and description", async () => {
     await render(ProcessStepsComponent, { inputs: { steps } });
     for (const step of steps) {
       expect(screen.getByText(step.num)).toBeInTheDocument();
@@ -18,35 +18,41 @@ describe('ProcessStepsComponent', () => {
     }
   });
 
-  it('applies ps-num, ps-name, and ps-desc classes', async () => {
+  it("applies ps-num, ps-name, and ps-desc classes", async () => {
     await render(ProcessStepsComponent, { inputs: { steps } });
-    expect(screen.getByText('01')).toHaveClass('ps-num');
-    expect(screen.getByText('Discovery')).toHaveClass('ps-name');
-    expect(screen.getByText('We learn about your goals.')).toHaveClass('ps-desc');
+    expect(screen.getByText("01")).toHaveClass("ps-num");
+    expect(screen.getByText("Discovery")).toHaveClass("ps-name");
+    expect(screen.getByText("We learn about your goals.")).toHaveClass(
+      "ps-desc",
+    );
   });
 
-  it('renders dividers between steps but not after the last one', async () => {
-    const { container } = await render(ProcessStepsComponent, { inputs: { steps } });
-    const dividers = container.querySelectorAll('.ps-divider');
+  it("renders dividers between steps but not after the last one", async () => {
+    const { container } = await render(ProcessStepsComponent, {
+      inputs: { steps },
+    });
+    const dividers = container.querySelectorAll(".ps-divider");
     expect(dividers.length).toBe(steps.length - 1);
   });
 
-  it('renders a single step with no dividers', async () => {
+  it("renders a single step with no dividers", async () => {
     const { container } = await render(ProcessStepsComponent, {
-      inputs: { steps: [{ num: '01', name: 'Only', desc: 'Just one.' }] },
+      inputs: { steps: [{ num: "01", name: "Only", desc: "Just one." }] },
     });
-    expect(container.querySelectorAll('.ps-divider').length).toBe(0);
+    expect(container.querySelectorAll(".ps-divider").length).toBe(0);
   });
 
-  describe('accessibility', () => {
-    it('has no violations with multiple steps', async () => {
-      const { container } = await render(ProcessStepsComponent, { inputs: { steps } });
+  describe("accessibility", () => {
+    it("has no violations with multiple steps", async () => {
+      const { container } = await render(ProcessStepsComponent, {
+        inputs: { steps },
+      });
       expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('has no violations with a single step', async () => {
+    it("has no violations with a single step", async () => {
       const { container } = await render(ProcessStepsComponent, {
-        inputs: { steps: [{ num: '01', name: 'Only', desc: 'Just one.' }] },
+        inputs: { steps: [{ num: "01", name: "Only", desc: "Just one." }] },
       });
       expect(await axe(container)).toHaveNoViolations();
     });

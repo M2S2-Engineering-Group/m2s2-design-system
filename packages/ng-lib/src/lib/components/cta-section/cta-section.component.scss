@@ -1,4 +1,4 @@
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/mixins" as m;
 
 .m2s2-cta-section {
   padding: var(--space-12) 0;
@@ -37,7 +37,9 @@
   color: var(--color-on-bg);
   margin: 0;
 
-  @media (min-width: 768px) { font-size: var(--font-size-2xl); }
+  @media (min-width: 768px) {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .cta-body {

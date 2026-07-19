@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CtaConfig } from '@m2s2/models';
+import type { CtaConfig } from "@m2s2/models";
 
 defineProps<{ config: CtaConfig }>();
 </script>
@@ -15,16 +15,13 @@ defineProps<{ config: CtaConfig }>();
           {{ config.body }}
         </p>
       </div>
-      <a
-        :href="config.route"
-        class="cta-btn"
-      >{{ config.label }}</a>
+      <a :href="config.route" class="cta-btn">{{ config.label }}</a>
     </div>
   </section>
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-cta-section {
   padding: var(--space-12) 0;
@@ -63,7 +60,9 @@ defineProps<{ config: CtaConfig }>();
   color: var(--color-on-bg);
   margin: 0;
 
-  @media (min-width: 768px) { font-size: var(--font-size-2xl); }
+  @media (min-width: 768px) {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .cta-body {

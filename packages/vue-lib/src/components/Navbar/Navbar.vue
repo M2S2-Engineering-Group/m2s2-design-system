@@ -1,13 +1,22 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import type { NavbarConfig, NavbarButton, DropdownItem, AnchorDropdownItem, ClickableDropdownItem } from '@m2s2/models';
+import { ref, onMounted, onUnmounted } from "vue";
+import type {
+  NavbarConfig,
+  NavbarButton,
+  DropdownItem,
+  AnchorDropdownItem,
+  ClickableDropdownItem,
+} from "@m2s2/models";
 
-const props = withDefaults(defineProps<{
-  config: NavbarConfig;
-  loggedIn?: boolean;
-}>(), {
-  loggedIn: false,
-});
+const props = withDefaults(
+  defineProps<{
+    config: NavbarConfig;
+    loggedIn?: boolean;
+  }>(),
+  {
+    loggedIn: false,
+  },
+);
 
 const scrolled = ref(false);
 const hidden = ref(false);
@@ -20,11 +29,11 @@ function isVisible(item: NavbarButton | DropdownItem): boolean {
 }
 
 function isAnchorItem(item: DropdownItem): item is AnchorDropdownItem {
-  return 'href' in item;
+  return "href" in item;
 }
 
 function isClickableItem(item: DropdownItem): item is ClickableDropdownItem {
-  return 'onClick' in item;
+  return "onClick" in item;
 }
 
 function toggleDropdown(id: string): void {
@@ -51,21 +60,21 @@ function onResize(): void {
 
 function onDocClick(e: MouseEvent): void {
   const target = e.target as HTMLElement;
-  if (!target.closest('.navbar-dropdown-wrap')) {
+  if (!target.closest(".navbar-dropdown-wrap")) {
     closeDropdowns();
   }
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onResize);
-  document.addEventListener('click', onDocClick);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onResize);
+  document.addEventListener("click", onDocClick);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll);
-  window.removeEventListener('resize', onResize);
-  document.removeEventListener('click', onDocClick);
+  window.removeEventListener("scroll", onScroll);
+  window.removeEventListener("resize", onResize);
+  document.removeEventListener("click", onDocClick);
 });
 </script>
 
@@ -79,72 +88,60 @@ onUnmounted(() => {
     }"
   >
     <!-- Brand -->
-    <a
-      class="navbar-brand"
-      :href="config.brandPath"
-    >
+    <a class="navbar-brand" :href="config.brandPath">
       <img
         v-if="config.brandLogo"
         :src="config.brandLogo"
         :alt="config.brand"
         class="navbar-brand-logo"
-      >
-      <span
-        v-else
-        class="navbar-brand-text"
-      >{{ config.brand }}</span>
+      />
+      <span v-else class="navbar-brand-text">{{ config.brand }}</span>
     </a>
 
     <span class="navbar-spacer" />
 
     <!-- Desktop nav -->
-    <nav
-      class="navbar-desktop"
-      aria-label="Main navigation"
-    >
-      <template
-        v-for="btn in config.buttons"
-        :key="btn.id"
-      >
+    <nav class="navbar-desktop" aria-label="Main navigation">
+      <template v-for="btn in config.buttons" :key="btn.id">
         <template v-if="isVisible(btn)">
           <!-- Regular link -->
           <a
             v-if="!btn.isDropdown"
             class="navbar-nav-btn"
             :href="btn.href"
-            v-bind="btn.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
+            v-bind="
+              btn.href?.startsWith('http')
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {}
+            "
           >
             {{ btn.title }}
           </a>
 
           <!-- Dropdown -->
-          <div
-            v-else
-            class="navbar-dropdown-wrap"
-          >
+          <div v-else class="navbar-dropdown-wrap">
             <button
               class="navbar-nav-btn navbar-nav-btn--dropdown"
               :aria-expanded="openDropdownId === btn.id"
               @click.stop="toggleDropdown(btn.id)"
             >
-              {{ btn.title }} <span
-                class="navbar-chevron"
-                aria-hidden="true"
-              >▾</span>
+              {{ btn.title }}
+              <span class="navbar-chevron" aria-hidden="true">▾</span>
             </button>
             <div
               v-if="openDropdownId === btn.id"
               class="navbar-dropdown-content"
             >
-              <template
-                v-for="item in btn.dropdownItems"
-                :key="item.id"
-              >
+              <template v-for="item in btn.dropdownItems" :key="item.id">
                 <a
                   v-if="isAnchorItem(item)"
                   class="navbar-dropdown-item"
                   :href="item.href"
-                  v-bind="item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
+                  v-bind="
+                    item.href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {}
+                  "
                   @click="closeDropdowns"
                 >
                   <img
@@ -152,20 +149,25 @@ onUnmounted(() => {
                     :src="item.imgSrc"
                     :alt="item.text"
                     class="navbar-dropdown-img"
-                  >
+                  />
                   {{ item.text }}
                 </a>
                 <button
                   v-else-if="isClickableItem(item)"
                   class="navbar-dropdown-item"
-                  @click="() => { item.onClick(); closeDropdowns(); }"
+                  @click="
+                    () => {
+                      item.onClick();
+                      closeDropdowns();
+                    }
+                  "
                 >
                   <img
                     v-if="item.imgSrc"
                     :src="item.imgSrc"
                     :alt="item.text"
                     class="navbar-dropdown-img"
-                  >
+                  />
                   {{ item.text }}
                 </button>
               </template>
@@ -176,10 +178,7 @@ onUnmounted(() => {
     </nav>
 
     <!-- Account menu -->
-    <div
-      v-if="config.loginButton"
-      class="navbar-dropdown-wrap"
-    >
+    <div v-if="config.loginButton" class="navbar-dropdown-wrap">
       <button
         class="navbar-icon-btn"
         aria-label="Account menu"
@@ -191,7 +190,7 @@ onUnmounted(() => {
           :src="config.loginButton.profileImageUrl"
           alt="Profile"
           class="navbar-avatar"
-        >
+        />
         <svg
           v-else
           class="navbar-account-icon"
@@ -199,7 +198,9 @@ onUnmounted(() => {
           fill="currentColor"
           aria-hidden="true"
         >
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+          <path
+            d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"
+          />
         </svg>
       </button>
       <div
@@ -220,7 +221,11 @@ onUnmounted(() => {
             v-if="isAnchorItem(item) && isVisible(item)"
             class="navbar-dropdown-item"
             :href="item.href"
-            v-bind="item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
+            v-bind="
+              item.href.startsWith('http')
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {}
+            "
             @click="closeDropdowns"
           >
             <img
@@ -228,20 +233,25 @@ onUnmounted(() => {
               :src="item.imgSrc"
               :alt="item.text"
               class="navbar-dropdown-img"
-            >
+            />
             {{ item.text }}
           </a>
           <button
             v-else-if="isClickableItem(item) && isVisible(item)"
             class="navbar-dropdown-item"
-            @click="() => { item.onClick(); closeDropdowns(); }"
+            @click="
+              () => {
+                item.onClick();
+                closeDropdowns();
+              }
+            "
           >
             <img
               v-if="item.imgSrc"
               :src="item.imgSrc"
               :alt="item.text"
               class="navbar-dropdown-img"
-            >
+            />
             {{ item.text }}
           </button>
         </template>
@@ -254,7 +264,9 @@ onUnmounted(() => {
     <!-- Mobile hamburger -->
     <button
       class="navbar-mobile-btn"
-      :aria-label="mobileOpen ? 'Close navigation menu' : 'Open navigation menu'"
+      :aria-label="
+        mobileOpen ? 'Close navigation menu' : 'Open navigation menu'
+      "
       :aria-expanded="mobileOpen"
       @click="mobileOpen = !mobileOpen"
     >
@@ -271,36 +283,44 @@ onUnmounted(() => {
     class="navbar-mobile-menu"
     aria-label="Mobile navigation"
   >
-    <template
-      v-for="btn in config.buttons"
-      :key="btn.id"
-    >
+    <template v-for="btn in config.buttons" :key="btn.id">
       <template v-if="isVisible(btn)">
         <a
           v-if="!btn.isDropdown"
           class="navbar-mobile-link"
           :href="btn.href"
-          v-bind="btn.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
+          v-bind="
+            btn.href?.startsWith('http')
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {}
+          "
           @click="mobileOpen = false"
         >
           {{ btn.title }}
         </a>
         <template v-else>
-          <template
-            v-for="item in btn.dropdownItems"
-            :key="item.id"
-          >
+          <template v-for="item in btn.dropdownItems" :key="item.id">
             <a
               v-if="isAnchorItem(item) && isVisible(item)"
               class="navbar-mobile-link"
               :href="item.href"
-              v-bind="item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
+              v-bind="
+                item.href.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {}
+              "
               @click="mobileOpen = false"
-            >{{ item.text }}</a>
+              >{{ item.text }}</a
+            >
             <button
               v-else-if="isClickableItem(item) && isVisible(item)"
               class="navbar-mobile-link"
-              @click="() => { item.onClick(); mobileOpen = false; }"
+              @click="
+                () => {
+                  item.onClick();
+                  mobileOpen = false;
+                }
+              "
             >
               {{ item.text }}
             </button>
@@ -309,20 +329,23 @@ onUnmounted(() => {
       </template>
     </template>
     <template v-if="config.loginButton">
-      <template
-        v-for="item in config.loginButton.dropdownItems"
-        :key="item.id"
-      >
+      <template v-for="item in config.loginButton.dropdownItems" :key="item.id">
         <a
           v-if="isAnchorItem(item) && isVisible(item)"
           class="navbar-mobile-link"
           :href="item.href"
           @click="mobileOpen = false"
-        >{{ item.text }}</a>
+          >{{ item.text }}</a
+        >
         <button
           v-else-if="isClickableItem(item) && isVisible(item)"
           class="navbar-mobile-link"
-          @click="() => { item.onClick(); mobileOpen = false; }"
+          @click="
+            () => {
+              item.onClick();
+              mobileOpen = false;
+            }
+          "
         >
           {{ item.text }}
         </button>
@@ -332,7 +355,7 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .navbar {
   display: flex;
@@ -359,7 +382,9 @@ onUnmounted(() => {
       0 4px 24px rgba(0, 0, 0, 0.35);
   }
 
-  &--hidden { transform: translateY(-100%); }
+  &--hidden {
+    transform: translateY(-100%);
+  }
 
   &--fixed {
     position: fixed;
@@ -388,14 +413,18 @@ onUnmounted(() => {
   color: var(--color-on-nav);
 }
 
-.navbar-spacer { flex: 1; }
+.navbar-spacer {
+  flex: 1;
+}
 
 .navbar-desktop {
   display: flex;
   align-items: center;
   gap: var(--space-1);
 
-  @media (max-width: 991px) { display: none; }
+  @media (max-width: 991px) {
+    display: none;
+  }
 }
 
 .navbar-nav-btn {
@@ -412,19 +441,28 @@ onUnmounted(() => {
   border: none;
   cursor: pointer;
   letter-spacing: 0.02em;
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
 
   &:hover {
     color: var(--color-secondary);
     background: var(--color-nav-hover-bg, rgba(255, 255, 255, 0.08));
   }
 
-  &--dropdown { gap: var(--space-1); }
+  &--dropdown {
+    gap: var(--space-1);
+  }
 }
 
-.navbar-chevron { font-size: 0.7em; opacity: 0.7; }
+.navbar-chevron {
+  font-size: 0.7em;
+  opacity: 0.7;
+}
 
-.navbar-dropdown-wrap { position: relative; }
+.navbar-dropdown-wrap {
+  position: relative;
+}
 
 .navbar-dropdown-content {
   @include m.floating-panel;
@@ -463,7 +501,9 @@ onUnmounted(() => {
   text-align: left;
   transition: background var(--transition-fast);
 
-  &:hover { background: var(--color-surface-raised); }
+  &:hover {
+    background: var(--color-surface-raised);
+  }
 }
 
 .navbar-dropdown-img {
@@ -476,7 +516,10 @@ onUnmounted(() => {
 .navbar-icon-btn {
   @include m.btn-icon(40px);
   color: var(--color-on-nav);
-  &:hover { background: var(--color-nav-hover-bg, rgba(255, 255, 255, 0.08)); color: var(--color-secondary); }
+  &:hover {
+    background: var(--color-nav-hover-bg, rgba(255, 255, 255, 0.08));
+    color: var(--color-secondary);
+  }
 }
 
 .navbar-avatar {
@@ -498,7 +541,9 @@ onUnmounted(() => {
   color: var(--color-on-nav);
   display: none;
 
-  @media (max-width: 991px) { display: flex; }
+  @media (max-width: 991px) {
+    display: flex;
+  }
 }
 
 .navbar-hamburger {
@@ -511,23 +556,35 @@ onUnmounted(() => {
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     display: block;
     width: 20px;
     height: 2px;
     background: currentColor;
     position: absolute;
     left: 0;
-    transition: transform var(--transition-fast), top var(--transition-fast);
+    transition:
+      transform var(--transition-fast),
+      top var(--transition-fast);
   }
 
-  &::before { top: -6px; }
-  &::after  { top:  6px; }
+  &::before {
+    top: -6px;
+  }
+  &::after {
+    top: 6px;
+  }
 
   &--open {
     background: transparent;
-    &::before { top: 0; transform: rotate(45deg); }
-    &::after  { top: 0; transform: rotate(-45deg); }
+    &::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+    &::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
   }
 }
 
@@ -555,7 +612,9 @@ onUnmounted(() => {
   cursor: pointer;
   text-align: left;
   width: 100%;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 
   &:hover {
     background: var(--color-nav-hover-bg, rgba(255, 255, 255, 0.08));

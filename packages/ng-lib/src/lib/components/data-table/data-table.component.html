@@ -2,7 +2,6 @@
   @if (totalCount() === 0) {
     <p class="dt-empty">{{ emptyMessage() }}</p>
   } @else {
-
     <div class="dt-toolbar">
       <!-- Search + status pills -->
       @if (statuses().length > 0) {
@@ -12,29 +11,44 @@
           [placeholder]="searchPlaceholder()"
           aria-label="Search"
           [value]="searchValue()"
-          (input)="searchChange.emit($any($event.target).value)">
+          (input)="searchChange.emit($any($event.target).value)"
+        />
         <div class="dt-pills" role="group" aria-label="Filter by status">
           @for (s of statuses(); track s) {
             <button
               class="dt-pill"
               [class.dt-pill--active]="statusFilter() === s"
-              (click)="statusChange.emit(s)">
+              (click)="statusChange.emit(s)"
+            >
               {{ getStatusLabel(s) }}
             </button>
           }
         </div>
-        <span class="dt-count">{{ filteredCount() }} of {{ totalCount() }}</span>
+        <span class="dt-count"
+          >{{ filteredCount() }} of {{ totalCount() }}</span
+        >
       }
 
       <!-- Column toggle — pushed to the right -->
       @if (columnDefs().length > 0) {
         <div class="dt-col-wrap" #colWrap>
-          <button class="dt-col-btn" [attr.aria-expanded]="showCols()" aria-controls="dt-col-panel" (click)="showCols.set(!showCols())">&#9881; Columns</button>
+          <button
+            class="dt-col-btn"
+            [attr.aria-expanded]="showCols()"
+            aria-controls="dt-col-panel"
+            (click)="showCols.set(!showCols())"
+          >
+            &#9881; Columns
+          </button>
           @if (showCols()) {
             <div id="dt-col-panel" class="dt-col-panel">
               @for (col of columnDefs(); track col.key) {
                 <label class="dt-col-check">
-                  <input type="checkbox" [checked]="colVisibility()[col.key]" (change)="colToggle.emit(col.key)">
+                  <input
+                    type="checkbox"
+                    [checked]="colVisibility()[col.key]"
+                    (change)="colToggle.emit(col.key)"
+                  />
                   {{ col.label }}
                 </label>
               }
@@ -47,6 +61,5 @@
     <div class="dt-scroll">
       <ng-content />
     </div>
-
   }
 </div>

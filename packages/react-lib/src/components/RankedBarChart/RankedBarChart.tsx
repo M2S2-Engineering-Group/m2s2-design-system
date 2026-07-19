@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { Chart } from 'chart.js/auto';
-import { RankedBarItem } from '@m2s2/models';
-import { buildRankedBarChartConfig } from '@m2s2/utils';
-import './RankedBarChart.scss';
+import { useEffect, useRef } from "react";
+import { Chart } from "chart.js/auto";
+import { RankedBarItem } from "@m2s2/models";
+import { buildRankedBarChartConfig } from "@m2s2/utils";
+import "./RankedBarChart.scss";
 
 interface RankedBarChartProps {
   data: RankedBarItem[];

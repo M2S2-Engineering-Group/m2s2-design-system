@@ -1,1 +1,1 @@
-export { usePanelContext as usePanel } from '../components/Panel/PanelProvider';
+export { usePanelContext as usePanel } from "../components/Panel/PanelProvider";

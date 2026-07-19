@@ -1,4 +1,4 @@
-import { DropdownItem } from './dropdown.model';
+import { DropdownItem } from "./dropdown.model";
 
 export interface NavbarConfig {
   brand: string;

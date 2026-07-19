@@ -1,44 +1,48 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, watch } from 'vue';
-import type { ChatMessage } from '@m2s2/models';
+import { ref, computed, nextTick, watch } from "vue";
+import type { ChatMessage } from "@m2s2/models";
 
-const props = withDefaults(defineProps<{
-  sendMessage:         (messages: ChatMessage[]) => Promise<string>;
-  title?:              string;
-  subtitle?:           string;
-  placeholder?:        string;
-  maxMessages?:        number;
-  ctaLabel?:           string;
-  ctaUrl?:             string;
-  userAvatarUrl?:      string;
-  assistantAvatarUrl?: string;
-  /**
-   * Optional greeting shown as the first assistant message the first time
-   * the panel is opened (only when there's no existing conversation yet).
-   */
-  welcomeMessage?:     string;
-  /**
-   * Optional extra content rendered in the header, below the title/subtitle.
-   * Pass a plain string for simple text, or use the `headerContent` slot for
-   * arbitrary markup (e.g. a consumer-defined tab switcher) — the slot wins
-   * over the prop when both are provided. This component has no opinion on
-   * what the slot contains.
-   */
-  headerContent?:      string;
-}>(), {
-  title:       'Architecture Advisor',
-  subtitle:    'Ask anything about software architecture, cloud design, or engineering decisions.',
-  placeholder: 'Ask a question...',
-  maxMessages: 6,
-  ctaLabel:         'Start a Conversation',
-  ctaUrl:           '/contact',
-  userAvatarUrl:    undefined,
-  assistantAvatarUrl: undefined,
-  welcomeMessage:   undefined,
-  headerContent:    undefined,
-});
+const props = withDefaults(
+  defineProps<{
+    sendMessage: (messages: ChatMessage[]) => Promise<string>;
+    title?: string;
+    subtitle?: string;
+    placeholder?: string;
+    maxMessages?: number;
+    ctaLabel?: string;
+    ctaUrl?: string;
+    userAvatarUrl?: string;
+    assistantAvatarUrl?: string;
+    /**
+     * Optional greeting shown as the first assistant message the first time
+     * the panel is opened (only when there's no existing conversation yet).
+     */
+    welcomeMessage?: string;
+    /**
+     * Optional extra content rendered in the header, below the title/subtitle.
+     * Pass a plain string for simple text, or use the `headerContent` slot for
+     * arbitrary markup (e.g. a consumer-defined tab switcher) — the slot wins
+     * over the prop when both are provided. This component has no opinion on
+     * what the slot contains.
+     */
+    headerContent?: string;
+  }>(),
+  {
+    title: "Architecture Advisor",
+    subtitle:
+      "Ask anything about software architecture, cloud design, or engineering decisions.",
+    placeholder: "Ask a question...",
+    maxMessages: 6,
+    ctaLabel: "Start a Conversation",
+    ctaUrl: "/contact",
+    userAvatarUrl: undefined,
+    assistantAvatarUrl: undefined,
+    welcomeMessage: undefined,
+    headerContent: undefined,
+  },
+);
 
-type SendState = 'idle' | 'sending' | 'error';
+type SendState = "idle" | "sending" | "error";
 
 /**
  * Whether the panel is open. Self-managed by default (toggled via the FAB
@@ -46,13 +50,15 @@ type SendState = 'idle' | 'sending' | 'error';
  * force a specific instance open when switching between multiple chat
  * instances via the `headerContent` slot.
  */
-const open      = defineModel<boolean>('open', { default: false });
-const messages  = ref<ChatMessage[]>([]);
-const sendState = ref<SendState>('idle');
-const draft     = ref('');
-const listEl    = ref<HTMLElement | null>(null);
+const open = defineModel<boolean>("open", { default: false });
+const messages = ref<ChatMessage[]>([]);
+const sendState = ref<SendState>("idle");
+const draft = ref("");
+const listEl = ref<HTMLElement | null>(null);
 
-const userCount    = computed(() => messages.value.filter(m => m.role === 'user').length);
+const userCount = computed(
+  () => messages.value.filter((m) => m.role === "user").length,
+);
 const limitReached = computed(() => userCount.value >= props.maxMessages);
 
 async function scrollToBottom() {
@@ -64,21 +70,24 @@ async function scrollToBottom() {
 
 async function submit() {
   const text = draft.value.trim();
-  if (!text || sendState.value === 'sending' || limitReached.value) return;
+  if (!text || sendState.value === "sending" || limitReached.value) return;
 
-  draft.value = '';
-  const updated: ChatMessage[] = [...messages.value, { role: 'user', content: text }];
+  draft.value = "";
+  const updated: ChatMessage[] = [
+    ...messages.value,
+    { role: "user", content: text },
+  ];
   messages.value = updated;
-  sendState.value = 'sending';
+  sendState.value = "sending";
   await scrollToBottom();
 
   try {
     const reply = await props.sendMessage(updated);
-    messages.value = [...messages.value, { role: 'assistant', content: reply }];
-    sendState.value = 'idle';
+    messages.value = [...messages.value, { role: "assistant", content: reply }];
+    sendState.value = "idle";
     await scrollToBottom();
   } catch {
-    sendState.value = 'error';
+    sendState.value = "error";
   }
 }
 
@@ -89,14 +98,14 @@ function toggle() {
 // Seeds the welcome message on any open transition — self-toggled via the
 // FAB, or forced open externally via `v-model:open` (e.g. a host switching
 // between multiple chat instances) — not just the FAB click path.
-watch(open, isOpen => {
+watch(open, (isOpen) => {
   if (isOpen && messages.value.length === 0 && props.welcomeMessage) {
-    messages.value = [{ role: 'assistant', content: props.welcomeMessage }];
+    messages.value = [{ role: "assistant", content: props.welcomeMessage }];
   }
 });
 
 function onKeydown(e: KeyboardEvent) {
-  if (e.key === 'Enter' && !e.shiftKey) {
+  if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     submit();
   }
@@ -145,12 +154,7 @@ function onKeydown(e: KeyboardEvent) {
     </button>
 
     <!-- Panel -->
-    <div
-      v-if="open"
-      class="chat-panel"
-      role="dialog"
-      :aria-label="title"
-    >
+    <div v-if="open" class="chat-panel" role="dialog" :aria-label="title">
       <div class="chat-header">
         <img
           v-if="assistantAvatarUrl"
@@ -158,15 +162,12 @@ function onKeydown(e: KeyboardEvent) {
           :src="assistantAvatarUrl"
           alt=""
           aria-hidden="true"
-        >
+        />
         <div class="chat-header__text">
           <p class="chat-header__title">
             {{ title }}
           </p>
-          <p
-            v-if="messages.length === 0"
-            class="chat-header__subtitle"
-          >
+          <p v-if="messages.length === 0" class="chat-header__subtitle">
             {{ subtitle }}
           </p>
           <div
@@ -187,10 +188,7 @@ function onKeydown(e: KeyboardEvent) {
         aria-live="polite"
         aria-atomic="false"
       >
-        <p
-          v-if="messages.length === 0"
-          class="chat-empty"
-        >
+        <p v-if="messages.length === 0" class="chat-empty">
           Send a message to get started.
         </p>
 
@@ -209,7 +207,7 @@ function onKeydown(e: KeyboardEvent) {
               :src="assistantAvatarUrl"
               alt=""
               aria-hidden="true"
-            >
+            />
             <svg
               v-else
               width="14"
@@ -239,7 +237,7 @@ function onKeydown(e: KeyboardEvent) {
               :src="userAvatarUrl"
               alt=""
               aria-hidden="true"
-            >
+            />
             <svg
               v-else
               width="14"
@@ -275,7 +273,7 @@ function onKeydown(e: KeyboardEvent) {
               :src="assistantAvatarUrl"
               alt=""
               aria-hidden="true"
-            >
+            />
             <svg
               v-else
               width="14"
@@ -293,26 +291,19 @@ function onKeydown(e: KeyboardEvent) {
               />
             </svg>
           </span>
-          <span
-            class="chat-typing"
-            aria-label="Assistant is typing"
-          >
-            <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
+          <span class="chat-typing" aria-label="Assistant is typing">
+            <span aria-hidden="true" /><span aria-hidden="true" /><span
+              aria-hidden="true"
+            />
           </span>
         </div>
       </div>
 
-      <div
-        v-if="limitReached"
-        class="chat-cta"
-      >
+      <div v-if="limitReached" class="chat-cta">
         <p class="chat-cta__text">
           Ready to go deeper? Let's talk through your specific situation.
         </p>
-        <a
-          class="chat-cta__btn"
-          :href="ctaUrl"
-        >{{ ctaLabel }}</a>
+        <a class="chat-cta__btn" :href="ctaUrl">{{ ctaLabel }}</a>
       </div>
 
       <template v-if="!limitReached">
@@ -348,11 +339,7 @@ function onKeydown(e: KeyboardEvent) {
             </svg>
           </button>
         </div>
-        <p
-          v-if="sendState === 'error'"
-          role="alert"
-          class="chat-error"
-        >
+        <p v-if="sendState === 'error'" role="alert" class="chat-error">
           Something went wrong — please try again.
         </p>
       </template>
@@ -361,7 +348,7 @@ function onKeydown(e: KeyboardEvent) {
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-chat {
   position: fixed;
@@ -374,7 +361,9 @@ function onKeydown(e: KeyboardEvent) {
   gap: var(--space-3);
   pointer-events: none;
 
-  > * { pointer-events: all; }
+  > * {
+    pointer-events: all;
+  }
 }
 
 .chat-toggle {
@@ -460,7 +449,11 @@ function onKeydown(e: KeyboardEvent) {
   overflow: hidden;
   align-self: flex-end;
 
-  img { width: 100%; height: 100%; object-fit: cover; }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   &--assistant {
     background: var(--color-surface-raised);
@@ -528,15 +521,29 @@ function onKeydown(e: KeyboardEvent) {
     background: var(--color-on-surface-muted);
     animation: chat-bounce 1.2s infinite ease-in-out;
 
-    &:nth-child(1) { animation-delay: 0s; }
-    &:nth-child(2) { animation-delay: 0.2s; }
-    &:nth-child(3) { animation-delay: 0.4s; }
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
   }
 }
 
 @keyframes chat-bounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40%            { transform: translateY(-5px); opacity: 1; }
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
 }
 
 .chat-cta {
@@ -588,8 +595,13 @@ function onKeydown(e: KeyboardEvent) {
   border-radius: var(--radius-md);
   flex-shrink: 0;
 
-  &:hover:not(:disabled) { opacity: 0.85; }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 }
 
 .chat-error {

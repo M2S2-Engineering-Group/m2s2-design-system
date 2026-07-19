@@ -5,45 +5,59 @@
 // [data-theme="dark"]. Mirrors _light.scss — keep in sync.
 // =============================================================================
 
-@use '../primitives' as *;
+@use "../primitives" as *;
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
 
-    --color-bg:               var(--neutral-50);
-    --color-surface:          var(--neutral-0);
-    --color-surface-raised:   #ede9fe;
-    --color-surface-overlay:  #ddd6fe;
-    --color-nav-bg:           var(--purple-950);
-    --color-nav-hover-bg:     var(--purple-900);
-    --color-nav-active-bg:    #5b21b6;
-    --color-nav-dropdown-bg:  #1e1030;
-    --color-on-bg:            #1a0030;
-    --color-on-surface:       #1e0a36;
+    --color-bg: var(--neutral-50);
+    --color-surface: var(--neutral-0);
+    --color-surface-raised: #ede9fe;
+    --color-surface-overlay: #ddd6fe;
+    --color-nav-bg: var(--purple-950);
+    --color-nav-hover-bg: var(--purple-900);
+    --color-nav-active-bg: #5b21b6;
+    --color-nav-dropdown-bg: #1e1030;
+    --color-on-bg: #1a0030;
+    --color-on-surface: #1e0a36;
     --color-on-surface-muted: var(--neutral-500);
-    --color-on-nav:           var(--neutral-50);
-    --color-primary:          var(--purple-700);
-    --color-primary-vivid:    var(--purple-800);
-    --color-primary-dim:      var(--purple-900);
-    --color-on-primary:       var(--neutral-0);
-    --color-secondary:        var(--cyan-900);
-    --color-secondary-dim:    var(--cyan-800);
-    --color-on-secondary:     var(--neutral-0);
-    --color-border:           var(--neutral-300);
-    --color-border-subtle:    var(--neutral-300);
-    --color-scrollbar:        var(--purple-700);
-    --color-scrollbar-hover:  var(--purple-800);
-    --gradient-brand:        linear-gradient(90deg, var(--purple-800) 0%, var(--purple-700) 50%, var(--cyan-900) 100%);
-    --gradient-brand-135:    linear-gradient(135deg, var(--purple-800) 0%, var(--cyan-900) 100%);
-    --gradient-nav-bar:      linear-gradient(90deg, rgb(64 6 144 / 100%) 0%, rgb(109 7 152 / 100%) 62%, rgb(0 212 255 / 100%) 100%);
-    --color-error:            var(--red-700);
-    --color-success:          var(--green-700);
-    --color-warning:          var(--yellow-700);
-    --color-info:             var(--blue-700);
-    --color-error-bg:         rgb(185  28  28 / 12%);
-    --color-success-bg:       rgb(21  128  61 / 12%);
-    --color-warning-bg:       rgb(180  83   9 / 12%);
-    --color-info-bg:          rgb(3   105 161 / 12%);
+    --color-on-nav: var(--neutral-50);
+    --color-primary: var(--purple-700);
+    --color-primary-vivid: var(--purple-800);
+    --color-primary-dim: var(--purple-900);
+    --color-on-primary: var(--neutral-0);
+    --color-secondary: var(--cyan-900);
+    --color-secondary-dim: var(--cyan-800);
+    --color-on-secondary: var(--neutral-0);
+    --color-border: var(--neutral-300);
+    --color-border-subtle: var(--neutral-300);
+    --color-scrollbar: var(--purple-700);
+    --color-scrollbar-hover: var(--purple-800);
+    --gradient-brand: linear-gradient(
+      90deg,
+      var(--purple-800) 0%,
+      var(--purple-700) 50%,
+      var(--cyan-900) 100%
+    );
+    --gradient-brand-135: linear-gradient(
+      135deg,
+      var(--purple-800) 0%,
+      var(--cyan-900) 100%
+    );
+    --gradient-nav-bar: linear-gradient(
+      90deg,
+      rgb(64 6 144 / 100%) 0%,
+      rgb(109 7 152 / 100%) 62%,
+      rgb(0 212 255 / 100%) 100%
+    );
+    --color-error: var(--red-700);
+    --color-success: var(--green-700);
+    --color-warning: var(--yellow-700);
+    --color-info: var(--blue-700);
+    --color-error-bg: rgb(185 28 28 / 12%);
+    --color-success-bg: rgb(21 128 61 / 12%);
+    --color-warning-bg: rgb(180 83 9 / 12%);
+    --color-info-bg: rgb(3 105 161 / 12%);
   }
 }

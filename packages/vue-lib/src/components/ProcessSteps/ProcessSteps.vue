@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import type { ProcessStep } from '@m2s2/models';
+import type { ProcessStep } from "@m2s2/models";
 
 defineProps<{ steps: ProcessStep[] }>();
 </script>
 
 <template>
   <ol class="ps-steps">
-    <template
-      v-for="(step, i) in steps"
-      :key="step.num"
-    >
+    <template v-for="(step, i) in steps" :key="step.num">
       <li class="ps-step">
         <span class="ps-num">{{ step.num }}</span>
         <span class="ps-name">{{ step.name }}</span>
         <span class="ps-desc">{{ step.desc }}</span>
       </li>
-      <li
-        v-if="i < steps.length - 1"
-        class="ps-divider"
-        aria-hidden="true"
-      >
+      <li v-if="i < steps.length - 1" class="ps-divider" aria-hidden="true">
         &#8594;
       </li>
     </template>
@@ -50,7 +43,9 @@ defineProps<{ steps: ProcessStep[] }>();
   background: var(--color-surface-raised);
   border-radius: 8px;
 
-  @media (max-width: 991px) { width: 100%; }
+  @media (max-width: 991px) {
+    width: 100%;
+  }
 }
 
 .ps-num {
@@ -81,6 +76,8 @@ defineProps<{ steps: ProcessStep[] }>();
   flex-shrink: 0;
   list-style: none;
 
-  @media (max-width: 991px) { display: none; }
+  @media (max-width: 991px) {
+    display: none;
+  }
 }
 </style>

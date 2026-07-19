@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
-import type { AnchorDropdownItem, ClickableDropdownItem } from '@m2s2/models';
-import Dropdown from './Dropdown.vue';
+import type { Meta, StoryObj } from "@storybook/vue3";
+import type { AnchorDropdownItem, ClickableDropdownItem } from "@m2s2/models";
+import Dropdown from "./Dropdown.vue";
 
 const BTN_STYLE = `
   .story-btn { padding: 8px 16px; background: #7c3aed; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
 `;
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'Components/Dropdown',
+  title: "Components/Dropdown",
   component: Dropdown,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -31,19 +31,19 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 const clickItems: ClickableDropdownItem[] = [
-  { id: '1', text: 'Dashboard', onClick: () => alert('Dashboard') },
-  { id: '2', text: 'Settings',  onClick: () => alert('Settings') },
-  { id: '3', text: 'Sign out',  onClick: () => alert('Sign out') },
+  { id: "1", text: "Dashboard", onClick: () => alert("Dashboard") },
+  { id: "2", text: "Settings", onClick: () => alert("Settings") },
+  { id: "3", text: "Sign out", onClick: () => alert("Sign out") },
 ];
 
 const anchorItems: AnchorDropdownItem[] = [
-  { id: '1', text: 'GitHub',    href: 'https://github.com' },
-  { id: '2', text: 'npm',       href: 'https://npmjs.com' },
-  { id: '3', text: 'Storybook', href: 'https://storybook.js.org' },
+  { id: "1", text: "GitHub", href: "https://github.com" },
+  { id: "2", text: "npm", href: "https://npmjs.com" },
+  { id: "3", text: "Storybook", href: "https://storybook.js.org" },
 ];
 
 export const ClickableItems: Story = {
-  name: 'Clickable Items',
+  name: "Clickable Items",
   render: () => ({
     components: { Dropdown },
     styles: [BTN_STYLE],
@@ -53,7 +53,7 @@ export const ClickableItems: Story = {
 };
 
 export const AnchorItems: Story = {
-  name: 'Anchor (Link) Items',
+  name: "Anchor (Link) Items",
   render: () => ({
     components: { Dropdown },
     styles: [BTN_STYLE],
@@ -63,7 +63,7 @@ export const AnchorItems: Story = {
 };
 
 export const AlignRight: Story = {
-  name: 'Right-aligned Menu',
+  name: "Right-aligned Menu",
   render: () => ({
     components: { Dropdown },
     styles: [BTN_STYLE],

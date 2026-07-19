@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { PageHeaderComponent } from './page-header.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { PageHeaderComponent } from "./page-header.component";
 
 const meta: Meta<PageHeaderComponent> = {
-  title: 'Components/PageHeader',
+  title: "Components/PageHeader",
   component: PageHeaderComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   render: (args) => ({
     props: args,
     template: `<m2s2-page-header [config]="config" />`,
@@ -16,8 +16,9 @@ type Story = StoryObj<PageHeaderComponent>;
 export const Default: Story = {
   args: {
     config: {
-      title: 'Get in Touch',
-      subtitle: 'Have a project in mind or just want to chat? We\'d love to hear from you.',
+      title: "Get in Touch",
+      subtitle:
+        "Have a project in mind or just want to chat? We'd love to hear from you.",
     },
   },
 };
@@ -25,8 +26,8 @@ export const Default: Story = {
 export const ShortSubtitle: Story = {
   args: {
     config: {
-      title: 'Admin',
-      subtitle: 'Manage inquiries and subscribers.',
+      title: "Admin",
+      subtitle: "Manage inquiries and subscribers.",
     },
   },
 };

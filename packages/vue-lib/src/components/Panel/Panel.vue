@@ -1,24 +1,27 @@
 <script setup lang="ts">
-import type { M2S2PanelData, DialogAction } from '@m2s2/models';
+import type { M2S2PanelData, DialogAction } from "@m2s2/models";
 
-const props = withDefaults(defineProps<{
-  data: M2S2PanelData;
-  open: boolean;
-}>(), {});
+const props = withDefaults(
+  defineProps<{
+    data: M2S2PanelData;
+    open: boolean;
+  }>(),
+  {},
+);
 
 const emit = defineEmits<{
   action: [value: unknown];
   close: [];
 }>();
 
-const side = () => props.data.side ?? 'right';
+const side = () => props.data.side ?? "right";
 
 function onAction(action: DialogAction): void {
-  emit('action', action.value);
+  emit("action", action.value);
 }
 
 function onBackdropClick(): void {
-  if (!props.data.modal) emit('close');
+  if (!props.data.modal) emit("close");
 }
 </script>
 
@@ -43,16 +46,10 @@ function onBackdropClick(): void {
       >
         <div class="panel-header">
           <div class="panel-header-text">
-            <h2
-              id="panel-title"
-              class="panel-title"
-            >
+            <h2 id="panel-title" class="panel-title">
               {{ data.title }}
             </h2>
-            <p
-              v-if="data.subtitle"
-              class="panel-subtitle"
-            >
+            <p v-if="data.subtitle" class="panel-subtitle">
               {{ data.subtitle }}
             </p>
           </div>
@@ -67,19 +64,13 @@ function onBackdropClick(): void {
         </div>
 
         <div class="panel-body">
-          <p
-            v-if="data.message && !$slots.default"
-            class="panel-message"
-          >
+          <p v-if="data.message && !$slots.default" class="panel-message">
             {{ data.message }}
           </p>
           <slot />
         </div>
 
-        <div
-          v-if="data.actions?.length"
-          class="panel-footer"
-        >
+        <div v-if="data.actions?.length" class="panel-footer">
           <button
             v-for="action in data.actions"
             :key="action.label"
@@ -96,7 +87,7 @@ function onBackdropClick(): void {
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-panel-overlay {
   position: fixed;
@@ -130,43 +121,77 @@ function onBackdropClick(): void {
   }
 }
 
-.panel-header      { @include m.overlay-header-stacked; }
+.panel-header {
+  @include m.overlay-header-stacked;
+}
 .panel-header-text {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
   min-width: 0;
 }
-.panel-title    { @include m.overlay-title; }
-.panel-subtitle { @include m.overlay-subtitle; }
-.panel-close    { @include m.btn-icon; }
-.panel-body     { @include m.overlay-body; }
-.panel-message  { @include m.overlay-message; }
-.panel-footer   { @include m.overlay-footer; }
+.panel-title {
+  @include m.overlay-title;
+}
+.panel-subtitle {
+  @include m.overlay-subtitle;
+}
+.panel-close {
+  @include m.btn-icon;
+}
+.panel-body {
+  @include m.overlay-body;
+}
+.panel-message {
+  @include m.overlay-message;
+}
+.panel-footer {
+  @include m.overlay-footer;
+}
 
 .panel-btn {
   @include m.btn-base;
-  &--primary     { @include m.btn-primary; }
-  &--secondary   { @include m.btn-secondary; }
-  &--destructive { @include m.btn-destructive; }
-  &--ghost       { @include m.btn-ghost; }
+  &--primary {
+    @include m.btn-primary;
+  }
+  &--secondary {
+    @include m.btn-secondary;
+  }
+  &--destructive {
+    @include m.btn-destructive;
+  }
+  &--ghost {
+    @include m.btn-ghost;
+  }
 }
 
 // Overlay fade
 .panel-overlay-fade-enter-active,
-.panel-overlay-fade-leave-active { transition: opacity 200ms ease; }
+.panel-overlay-fade-leave-active {
+  transition: opacity 200ms ease;
+}
 .panel-overlay-fade-enter-from,
-.panel-overlay-fade-leave-to     { opacity: 0; }
+.panel-overlay-fade-leave-to {
+  opacity: 0;
+}
 
 // Right slide
 .panel-slide-right-enter-active,
-.panel-slide-right-leave-active { transition: transform 220ms ease; }
+.panel-slide-right-leave-active {
+  transition: transform 220ms ease;
+}
 .panel-slide-right-enter-from,
-.panel-slide-right-leave-to     { transform: translateX(100%); }
+.panel-slide-right-leave-to {
+  transform: translateX(100%);
+}
 
 // Left slide
 .panel-slide-left-enter-active,
-.panel-slide-left-leave-active { transition: transform 220ms ease; }
+.panel-slide-left-leave-active {
+  transition: transform 220ms ease;
+}
 .panel-slide-left-enter-from,
-.panel-slide-left-leave-to     { transform: translateX(-100%); }
+.panel-slide-left-leave-to {
+  transform: translateX(-100%);
+}
 </style>

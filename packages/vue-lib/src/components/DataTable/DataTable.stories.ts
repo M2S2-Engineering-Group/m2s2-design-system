@@ -1,12 +1,12 @@
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import type { Meta, StoryObj } from '@storybook/vue3';
-import DataTable from './DataTable.vue';
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import DataTable from "./DataTable.vue";
 
 const meta: Meta<typeof DataTable> = {
-  title: 'Components/DataTable',
+  title: "Components/DataTable",
   component: DataTable,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
+  tags: ["autodocs"],
+  parameters: { layout: "padded" },
 };
 export default meta;
 type Story = StoryObj<typeof DataTable>;
@@ -20,21 +20,57 @@ interface Row {
 }
 
 const ALL_ROWS: Row[] = [
-  { date: 'May 1, 2026',  name: 'Jane Smith',  email: 'jane@acme.com',    engagement: 'Platform Build',   status: 'reviewing'       },
-  { date: 'Apr 28, 2026', name: 'Tom Baker',   email: 'tom@startup.io',   engagement: 'Fractional CTO',   status: 'in_conversation' },
-  { date: 'Apr 15, 2026', name: 'Sara Lee',    email: 'sara@company.com', engagement: 'Code Review',      status: 'received'        },
-  { date: 'Apr 10, 2026', name: 'Chris Park',  email: 'chris@venture.co', engagement: 'Platform Build',   status: 'closed'          },
-  { date: 'Mar 30, 2026', name: 'Alicia Moon', email: 'alicia@corp.com',  engagement: 'Fractional CTO',   status: 'cancelled'       },
+  {
+    date: "May 1, 2026",
+    name: "Jane Smith",
+    email: "jane@acme.com",
+    engagement: "Platform Build",
+    status: "reviewing",
+  },
+  {
+    date: "Apr 28, 2026",
+    name: "Tom Baker",
+    email: "tom@startup.io",
+    engagement: "Fractional CTO",
+    status: "in_conversation",
+  },
+  {
+    date: "Apr 15, 2026",
+    name: "Sara Lee",
+    email: "sara@company.com",
+    engagement: "Code Review",
+    status: "received",
+  },
+  {
+    date: "Apr 10, 2026",
+    name: "Chris Park",
+    email: "chris@venture.co",
+    engagement: "Platform Build",
+    status: "closed",
+  },
+  {
+    date: "Mar 30, 2026",
+    name: "Alicia Moon",
+    email: "alicia@corp.com",
+    engagement: "Fractional CTO",
+    status: "cancelled",
+  },
 ];
 
 const STATUS_LABELS: Record<string, string> = {
-  received: 'Received', reviewing: 'Reviewing',
-  in_conversation: 'In Conversation', closed: 'Closed', cancelled: 'Cancelled',
+  received: "Received",
+  reviewing: "Reviewing",
+  in_conversation: "In Conversation",
+  closed: "Closed",
+  cancelled: "Cancelled",
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  received: '#7c3aed', reviewing: '#0369a1', in_conversation: '#065f46',
-  closed: '#374151', cancelled: '#6b7280',
+  received: "#7c3aed",
+  reviewing: "#0369a1",
+  in_conversation: "#065f46",
+  closed: "#374151",
+  cancelled: "#6b7280",
 };
 
 const DEMO_STYLES = `
@@ -56,52 +92,67 @@ const DEMO_STYLES = `
 `;
 
 export const Default: Story = {
-  name: 'Interactive — search, filter, column toggle',
+  name: "Interactive — search, filter, column toggle",
   render: () => ({
     components: { DataTable },
     setup() {
-      const search        = ref('');
-      const statusFilter  = ref('all');
+      const search = ref("");
+      const statusFilter = ref("all");
       const colVisibility = ref<Record<string, boolean>>({
-        date: true, name: true, email: true, engagement: true, status: true,
+        date: true,
+        name: true,
+        email: true,
+        engagement: true,
+        status: true,
       });
 
       const filtered = computed(() => {
         const q = search.value.toLowerCase().trim();
         const s = statusFilter.value;
-        return ALL_ROWS.filter(r =>
-          (s === 'all' || r.status === s) &&
-          (!q || Object.values(r).some(v => v.toLowerCase().includes(q)))
+        return ALL_ROWS.filter(
+          (r) =>
+            (s === "all" || r.status === s) &&
+            (!q || Object.values(r).some((v) => v.toLowerCase().includes(q))),
         );
       });
 
-      const visibleColCount = computed(() =>
-        Object.values(colVisibility.value).filter(Boolean).length
+      const visibleColCount = computed(
+        () => Object.values(colVisibility.value).filter(Boolean).length,
       );
 
       function onStatusChange(status: string) {
-        statusFilter.value = statusFilter.value === status ? 'all' : status;
+        statusFilter.value = statusFilter.value === status ? "all" : status;
       }
 
       function toggleCol(key: string) {
-        colVisibility.value = { ...colVisibility.value, [key]: !colVisibility.value[key] };
+        colVisibility.value = {
+          ...colVisibility.value,
+          [key]: !colVisibility.value[key],
+        };
       }
 
       onMounted(() => {
-        const el = document.createElement('style');
-        el.id = 'dt-demo-styles';
+        const el = document.createElement("style");
+        el.id = "dt-demo-styles";
         el.textContent = DEMO_STYLES;
         document.head.appendChild(el);
       });
 
       onUnmounted(() => {
-        document.getElementById('dt-demo-styles')?.remove();
+        document.getElementById("dt-demo-styles")?.remove();
       });
 
       return {
-        search, statusFilter, colVisibility, filtered, visibleColCount,
-        onStatusChange, toggleCol, STATUS_LABELS, STATUS_COLORS,
-        statuses: ['all', ...Object.keys(STATUS_LABELS)],
+        search,
+        statusFilter,
+        colVisibility,
+        filtered,
+        visibleColCount,
+        onStatusChange,
+        toggleCol,
+        STATUS_LABELS,
+        STATUS_COLORS,
+        statuses: ["all", ...Object.keys(STATUS_LABELS)],
         rows: ALL_ROWS,
       };
     },

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { of, delay } from 'rxjs';
-import type { ChatMessage } from '@m2s2/models';
-import { ChatComponent } from './chat.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { of, delay } from "rxjs";
+import type { ChatMessage } from "@m2s2/models";
+import { ChatComponent } from "./chat.component";
 
 const fakeResponses: Record<number, string> = {
   1: "Good question. The answer depends on your read/write ratio and query patterns. If you're doing a lot of relational queries with joins, Postgres will serve you better. If you need horizontal write scalability and your data is genuinely document-shaped, then a document store makes sense. Most teams reach for NoSQL before they've actually outgrown Postgres — I'd start relational and migrate only when you have a concrete reason.",
@@ -13,21 +13,22 @@ const fakeResponses: Record<number, string> = {
 };
 
 function mockSendMessage(messages: ChatMessage[]) {
-  const userCount = messages.filter(m => m.role === 'user').length;
+  const userCount = messages.filter((m) => m.role === "user").length;
   const reply = fakeResponses[userCount] ?? fakeResponses[6];
   const ms = 1200 + Math.random() * 800;
   return of(reply).pipe(delay(ms));
 }
 
 const meta: Meta<ChatComponent> = {
-  title: 'Components/Chat',
+  title: "Components/Chat",
   component: ChatComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'Fixed bottom-right chat widget. The panel opens on toggle, supports a configurable message cap, and surfaces a CTA when the limit is reached. Pass `sendMessage` to connect to any backend.',
+        component:
+          "Fixed bottom-right chat widget. The panel opens on toggle, supports a configurable message cap, and surfaces a CTA when the limit is reached. Pass `sendMessage` to connect to any backend.",
       },
     },
   },
@@ -38,20 +39,20 @@ type Story = StoryObj<ChatComponent>;
 export const Default: Story = {
   args: {
     sendMessage: mockSendMessage,
-    title:       'Architecture Advisor',
-    ctaUrl:      '/contact',
-    ctaLabel:    'Start a Conversation',
+    title: "Architecture Advisor",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
 export const WithAvatars: Story = {
   args: {
-    sendMessage:        mockSendMessage,
-    title:              'Architecture Advisor',
-    assistantAvatarUrl: 'https://placehold.co/36x36/7c3aed/ffffff?text=M2',
-    userAvatarUrl:      'https://placehold.co/36x36/334155/ffffff?text=You',
-    ctaUrl:             '/contact',
-    ctaLabel:           'Start a Conversation',
+    sendMessage: mockSendMessage,
+    title: "Architecture Advisor",
+    assistantAvatarUrl: "https://placehold.co/36x36/7c3aed/ffffff?text=M2",
+    userAvatarUrl: "https://placehold.co/36x36/334155/ffffff?text=You",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
@@ -59,16 +60,17 @@ export const WithStringHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A plain string passed to `headerContent` renders as simple text below the subtitle.',
+        story:
+          "A plain string passed to `headerContent` renders as simple text below the subtitle.",
       },
     },
   },
   args: {
-    sendMessage:   mockSendMessage,
-    title:         'Architecture Advisor',
-    headerContent: 'Now serving both General and MARC² personas',
-    ctaUrl:        '/contact',
-    ctaLabel:      'Start a Conversation',
+    sendMessage: mockSendMessage,
+    title: "Architecture Advisor",
+    headerContent: "Now serving both General and MARC² personas",
+    ctaUrl: "/contact",
+    ctaLabel: "Start a Conversation",
   },
 };
 
@@ -76,19 +78,27 @@ export const WithTemplateHeaderContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A `TemplateRef` passed to `headerContent` renders as-is via `NgTemplateOutlet` — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`\'s `app.component.html`): **two independent `ChatComponent` instances**, one per persona, sharing a single tab-switcher template. Clicking a tab shows the target instance and forces it open via `[open]`/`(openChange)`, while the hidden instance stays mounted — via `[style.display]`, never `@if` — so its conversation history survives the switch.',
+        story:
+          "A `TemplateRef` passed to `headerContent` renders as-is via `NgTemplateOutlet` — the component has no opinion on what it contains. This story demonstrates the actual production pattern (see `m2s2-platform`'s `app.component.html`): **two independent `ChatComponent` instances**, one per persona, sharing a single tab-switcher template. Clicking a tab shows the target instance and forces it open via `[open]`/`(openChange)`, while the hidden instance stays mounted — via `[style.display]`, never `@if` — so its conversation history survives the switch.",
       },
     },
   },
   render: () => ({
     props: {
       sendMessage: mockSendMessage,
-      activePersona: 'general',
+      activePersona: "general",
       generalOpen: false,
       marcOpen: false,
-      setActivePersona(this: { activePersona: string; generalOpen: boolean; marcOpen: boolean }, persona: string) {
+      setActivePersona(
+        this: {
+          activePersona: string;
+          generalOpen: boolean;
+          marcOpen: boolean;
+        },
+        persona: string,
+      ) {
         this.activePersona = persona;
-        if (persona === 'general') {
+        if (persona === "general") {
           this.generalOpen = true;
         } else {
           this.marcOpen = true;

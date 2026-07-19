@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-import { ProcessStep } from '@m2s2/models';
-import './ProcessSteps.scss';
+import { Fragment } from "react";
+import { ProcessStep } from "@m2s2/models";
+import "./ProcessSteps.scss";
 
 interface ProcessStepsProps {
   steps: ProcessStep[];
@@ -17,7 +17,9 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
             <span className="ps-desc">{step.desc}</span>
           </li>
           {i < steps.length - 1 && (
-            <li className="ps-divider" aria-hidden="true">&#8594;</li>
+            <li className="ps-divider" aria-hidden="true">
+              &#8594;
+            </li>
           )}
         </Fragment>
       ))}

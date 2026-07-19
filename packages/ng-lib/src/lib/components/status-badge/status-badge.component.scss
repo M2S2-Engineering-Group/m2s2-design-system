@@ -1,9 +1,11 @@
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/mixins" as m;
 
 :host {
   @include m.status-badge-chrome;
 
-  &[data-variant='pill'] { @include m.status-badge-pill; }
+  &[data-variant="pill"] {
+    @include m.status-badge-pill;
+  }
 
   @include m.status-badge-colors;
 }

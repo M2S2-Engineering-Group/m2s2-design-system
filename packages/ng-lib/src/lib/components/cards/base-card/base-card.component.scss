@@ -1,13 +1,21 @@
-@use 'tokens/src/breakpoints' as t;
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/breakpoints" as t;
+@use "tokens/src/mixins" as m;
 
 :host {
   @include m.card-surface;
   padding: var(--space-8) var(--space-10);
 
-  @include t.m2-mobile { padding: var(--space-6) var(--space-5); }
+  @include t.m2-mobile {
+    padding: var(--space-6) var(--space-5);
+  }
 
-  &.featured          { @include m.card-featured; }
-  &[data-variant='raised']  { @include m.card-raised; }
-  &[data-variant='accent']  { @include m.card-accent; }
+  &.featured {
+    @include m.card-featured;
+  }
+  &[data-variant="raised"] {
+    @include m.card-raised;
+  }
+  &[data-variant="accent"] {
+    @include m.card-accent;
+  }
 }

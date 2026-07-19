@@ -1,6 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-export type Theme = 'dark' | 'light' | 'auto';
+export type Theme = "dark" | "light" | "auto";
 
 interface ThemeContextValue {
   theme: Theme;
@@ -9,17 +15,23 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-const STORAGE_KEY = 'm2s2-theme';
+const STORAGE_KEY = "m2s2-theme";
 
 function applyTheme(theme: Theme) {
-  if (theme === 'auto') {
-    document.documentElement.removeAttribute('data-theme');
+  if (theme === "auto") {
+    document.documentElement.removeAttribute("data-theme");
   } else {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
   }
 }
 
-export function ThemeProvider({ children, defaultTheme = 'auto' }: { children: React.ReactNode; defaultTheme?: Theme }) {
+export function ThemeProvider({
+  children,
+  defaultTheme = "auto",
+}: {
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+}) {
   const [theme, setThemeState] = useState<Theme>(() => {
     return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? defaultTheme;
   });
@@ -42,6 +54,6 @@ export function ThemeProvider({ children, defaultTheme = 'auto' }: { children: R
 
 export function useThemeContext(): ThemeContextValue {
   const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error('useTheme must be used within a <ThemeProvider>');
+  if (!ctx) throw new Error("useTheme must be used within a <ThemeProvider>");
   return ctx;
 }

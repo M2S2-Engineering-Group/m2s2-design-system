@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SectionHeaderConfig } from '@m2s2/models';
+import type { SectionHeaderConfig } from "@m2s2/models";
 
 defineProps<{ config: SectionHeaderConfig }>();
 </script>
@@ -9,10 +9,7 @@ defineProps<{ config: SectionHeaderConfig }>();
     <h2 class="sh-label">
       {{ config.label }}
     </h2>
-    <p
-      v-if="config.subtitle"
-      class="sh-subtitle"
-    >
+    <p v-if="config.subtitle" class="sh-subtitle">
       {{ config.subtitle }}
     </p>
   </div>

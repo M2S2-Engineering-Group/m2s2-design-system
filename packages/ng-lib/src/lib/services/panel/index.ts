@@ -1,1 +1,1 @@
-export * from './panel.service';
+export * from "./panel.service";

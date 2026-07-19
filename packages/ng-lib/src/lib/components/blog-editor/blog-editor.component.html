@@ -1,8 +1,6 @@
 <div class="be-root">
-
   <!-- ── Metadata ───────────────────────────────────────────────────────────── -->
   <section class="be-meta">
-
     <div class="be-field be-field--full">
       <label class="be-label">Title <span class="be-required">*</span></label>
       <input
@@ -48,7 +46,9 @@
     </div>
 
     <div class="be-field be-field--full">
-      <label class="be-label">Excerpt <span class="be-optional">(optional)</span></label>
+      <label class="be-label"
+        >Excerpt <span class="be-optional">(optional)</span></label
+      >
       <textarea
         class="be-input be-input--textarea"
         rows="2"
@@ -64,7 +64,14 @@
         @for (tag of tags(); track tag) {
           <span class="be-tag">
             {{ tag }}
-            <button type="button" class="be-tag__remove" (click)="removeTag(tag)" aria-label="Remove tag">×</button>
+            <button
+              type="button"
+              class="be-tag__remove"
+              (click)="removeTag(tag)"
+              aria-label="Remove tag"
+            >
+              ×
+            </button>
           </span>
         }
         <input
@@ -100,13 +107,22 @@
           />
         }
         <label class="be-cover__pick">
-          {{ (coverPreviewUrl() || coverImageUrl()) ? 'Replace' : 'Choose image' }}
-          <input type="file" accept="image/*" (change)="onCoverChange($event)" hidden />
+          {{
+            coverPreviewUrl() || coverImageUrl() ? "Replace" : "Choose image"
+          }}
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onCoverChange($event)"
+            hidden
+          />
         </label>
       </div>
     </div>
 
-    <div class="be-field-group-label">Series <span class="be-optional">(optional)</span></div>
+    <div class="be-field-group-label">
+      Series <span class="be-optional">(optional)</span>
+    </div>
 
     <div class="be-field be-field--full">
       <label class="be-label" for="be-series">Series</label>
@@ -124,7 +140,7 @@
       </select>
     </div>
 
-    @if (selectedSeriesKey() === '__new__') {
+    @if (selectedSeriesKey() === "__new__") {
       <div class="be-field">
         <label class="be-label">Series ID</label>
         <input
@@ -147,7 +163,7 @@
       </div>
     }
 
-    @if (selectedSeriesKey() !== 'none') {
+    @if (selectedSeriesKey() !== "none") {
       <div class="be-field be-field--narrow-pair">
         <div>
           <label class="be-label" for="series-part">Part</label>
@@ -161,7 +177,9 @@
           />
         </div>
         <div>
-          <label class="be-label" for="series-total">Total Parts <span class="be-optional">(optional)</span></label>
+          <label class="be-label" for="series-total"
+            >Total Parts <span class="be-optional">(optional)</span></label
+          >
           <input
             id="series-total"
             class="be-input be-input--narrow"
@@ -171,16 +189,16 @@
             (ngModelChange)="seriesTotal.set($event ? +$event : undefined)"
             placeholder="auto"
           />
-          <span class="be-hint">Leave blank to derive from published post count</span>
+          <span class="be-hint"
+            >Leave blank to derive from published post count</span
+          >
         </div>
       </div>
     }
-
   </section>
 
   <!-- ── Editor ─────────────────────────────────────────────────────────────── -->
   <section class="be-editor">
-
     <div class="be-toolbar" role="toolbar" aria-label="Formatting">
       <!-- Mobile pane toggle — hidden on desktop via CSS -->
       <div class="be-pane-toggle" role="group" aria-label="Editor mode">
@@ -189,13 +207,17 @@
           class="be-pane-toggle__btn"
           [class.be-pane-toggle__btn--active]="activePane() === 'write'"
           (click)="activePane.set('write')"
-        >Write</button>
+        >
+          Write
+        </button>
         <button
           type="button"
           class="be-pane-toggle__btn"
           [class.be-pane-toggle__btn--active]="activePane() === 'preview'"
           (click)="activePane.set('preview')"
-        >Preview</button>
+        >
+          Preview
+        </button>
       </div>
 
       <div class="be-toolbar__tools">
@@ -206,13 +228,18 @@
             [title]="item.label"
             [attr.aria-label]="item.label"
             (click)="applyFormat(item)"
-          >{{ item.icon }}</button>
+          >
+            {{ item.icon }}
+          </button>
         }
       </div>
     </div>
 
     <div class="be-panes">
-      <div class="be-pane be-pane--write" [class.be-pane--hidden]="activePane() === 'preview'">
+      <div
+        class="be-pane be-pane--write"
+        [class.be-pane--hidden]="activePane() === 'preview'"
+      >
         <div class="be-pane__label">Markdown</div>
         <textarea
           #editorTextarea
@@ -224,12 +251,17 @@
         ></textarea>
       </div>
 
-      <div class="be-pane be-pane--preview" [class.be-pane--hidden]="activePane() === 'write'">
+      <div
+        class="be-pane be-pane--preview"
+        [class.be-pane--hidden]="activePane() === 'write'"
+      >
         <div class="be-pane__label">Preview</div>
-        <div class="be-pane__preview prose" [innerHTML]="renderedContent()"></div>
+        <div
+          class="be-pane__preview prose"
+          [innerHTML]="renderedContent()"
+        ></div>
       </div>
     </div>
-
   </section>
 
   <!-- ── Footer ─────────────────────────────────────────────────────────────── -->
@@ -241,14 +273,17 @@
         class="be-export"
         [disabled]="!canPublish()"
         (click)="onExport()"
-      >Export</button>
+      >
+        Export
+      </button>
       <button
         type="button"
         class="be-publish"
         [disabled]="!canPublish()"
         (click)="onPublish()"
-      >Publish Post</button>
+      >
+        Publish Post
+      </button>
     </div>
   </footer>
-
 </div>

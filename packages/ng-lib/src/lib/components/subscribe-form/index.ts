@@ -1,1 +1,1 @@
-export * from './subscribe-form.component';
+export * from "./subscribe-form.component";

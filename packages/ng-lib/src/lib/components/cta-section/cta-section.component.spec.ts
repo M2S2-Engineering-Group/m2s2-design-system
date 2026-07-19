@@ -1,14 +1,14 @@
-import { render, screen } from '@testing-library/angular';
-import { axe } from 'jest-axe';
-import { provideRouter } from '@angular/router';
-import { CtaSectionComponent } from './cta-section.component';
+import { render, screen } from "@testing-library/angular";
+import { axe } from "jest-axe";
+import { provideRouter } from "@angular/router";
+import { CtaSectionComponent } from "./cta-section.component";
 
-describe('CtaSectionComponent', () => {
+describe("CtaSectionComponent", () => {
   const config = {
-    title: 'Ready to get started?',
-    body: 'Join us today and build something great.',
-    label: 'Get Started',
-    route: '/contact',
+    title: "Ready to get started?",
+    body: "Join us today and build something great.",
+    label: "Get Started",
+    route: "/contact",
   };
 
   const renderCta = () =>
@@ -17,29 +17,35 @@ describe('CtaSectionComponent', () => {
       providers: [provideRouter([])],
     });
 
-  it('renders the title', async () => {
+  it("renders the title", async () => {
     await renderCta();
-    expect(screen.getByText('Ready to get started?')).toBeInTheDocument();
+    expect(screen.getByText("Ready to get started?")).toBeInTheDocument();
   });
 
-  it('renders the body', async () => {
+  it("renders the body", async () => {
     await renderCta();
-    expect(screen.getByText('Join us today and build something great.')).toBeInTheDocument();
+    expect(
+      screen.getByText("Join us today and build something great."),
+    ).toBeInTheDocument();
   });
 
-  it('renders the CTA button with the correct label', async () => {
+  it("renders the CTA button with the correct label", async () => {
     await renderCta();
-    expect(screen.getByRole('link', { name: 'Get Started' })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Get Started" }),
+    ).toBeInTheDocument();
   });
 
-  it('applies the cta-title and cta-body classes', async () => {
+  it("applies the cta-title and cta-body classes", async () => {
     await renderCta();
-    expect(screen.getByText('Ready to get started?')).toHaveClass('cta-title');
-    expect(screen.getByText('Join us today and build something great.')).toHaveClass('cta-body');
+    expect(screen.getByText("Ready to get started?")).toHaveClass("cta-title");
+    expect(
+      screen.getByText("Join us today and build something great."),
+    ).toHaveClass("cta-body");
   });
 
-  describe('accessibility', () => {
-    it('has no violations', async () => {
+  describe("accessibility", () => {
+    it("has no violations", async () => {
       const { container } = await renderCta();
       expect(await axe(container)).toHaveNoViolations();
     });

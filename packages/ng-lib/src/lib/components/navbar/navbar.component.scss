@@ -12,7 +12,11 @@
     transform 300ms ease;
 
   &.toolbar-scrolled {
-    background: color-mix(in srgb, var(--color-nav-bg) 80%, transparent) !important;
+    background: color-mix(
+      in srgb,
+      var(--color-nav-bg) 80%,
+      transparent
+    ) !important;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow:

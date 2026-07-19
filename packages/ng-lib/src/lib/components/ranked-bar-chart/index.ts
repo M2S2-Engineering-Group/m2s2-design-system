@@ -1,1 +1,1 @@
-export * from './ranked-bar-chart.component';
+export * from "./ranked-bar-chart.component";

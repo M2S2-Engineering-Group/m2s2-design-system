@@ -1,4 +1,5 @@
-export type DialogActionVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
+export type DialogActionVariant =
+  "primary" | "secondary" | "destructive" | "ghost";
 
 export interface DialogAction {
   label: string;

@@ -1,7 +1,11 @@
 <m2s2-card [featured]="config().featured ?? false">
   <div class="fc-header">
     @if (config().icon) {
-      <span class="fc-icon" aria-hidden="true" [innerHTML]="config().icon"></span>
+      <span
+        class="fc-icon"
+        aria-hidden="true"
+        [innerHTML]="config().icon"
+      ></span>
     }
     <h2 class="fc-title">{{ config().title }}</h2>
   </div>

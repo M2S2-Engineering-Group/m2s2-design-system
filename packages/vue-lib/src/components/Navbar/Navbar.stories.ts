@@ -1,46 +1,73 @@
-import { ref } from 'vue';
-import type { Meta, StoryObj } from '@storybook/vue3';
-import type { NavbarConfig, AnchorDropdownItem, ClickableDropdownItem } from '@m2s2/models';
-import Navbar from './Navbar.vue';
+import { ref } from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import type {
+  NavbarConfig,
+  AnchorDropdownItem,
+  ClickableDropdownItem,
+} from "@m2s2/models";
+import Navbar from "./Navbar.vue";
 
 const meta: Meta<typeof Navbar> = {
-  title: 'Components/Navbar',
+  title: "Components/Navbar",
   component: Navbar,
-  tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  tags: ["autodocs"],
+  parameters: { layout: "fullscreen" },
 };
 export default meta;
 
 const BASE_CONFIG: NavbarConfig = {
-  brand: 'M²S²',
-  brandPath: '/',
+  brand: "M²S²",
+  brandPath: "/",
   isFixed: false,
   buttons: [
-    { id: 'home',     title: 'Home',     href: '/' },
-    { id: 'services', title: 'Services', href: '/services' },
+    { id: "home", title: "Home", href: "/" },
+    { id: "services", title: "Services", href: "/services" },
     {
-      id: 'resources',
-      title: 'Resources',
+      id: "resources",
+      title: "Resources",
       isDropdown: true,
       dropdownItems: [
-        { id: 'blog',   text: 'Blog',          href: '/blog'                                         } as AnchorDropdownItem,
-        { id: 'docs',   text: 'Documentation', href: '/docs'                                         } as AnchorDropdownItem,
-        { id: 'github', text: 'GitHub',        href: 'https://github.com/M2S2-Engineering-Group' } as AnchorDropdownItem,
+        { id: "blog", text: "Blog", href: "/blog" } as AnchorDropdownItem,
+        {
+          id: "docs",
+          text: "Documentation",
+          href: "/docs",
+        } as AnchorDropdownItem,
+        {
+          id: "github",
+          text: "GitHub",
+          href: "https://github.com/M2S2-Engineering-Group",
+        } as AnchorDropdownItem,
       ],
     },
-    { id: 'contact', title: 'Contact', href: '/contact' },
+    { id: "contact", title: "Contact", href: "/contact" },
   ],
   loginButton: {
     dropdownItems: [
-      { id: 'login',   text: 'Sign in',  requiresAuth: false, onClick: () => {} } as ClickableDropdownItem,
-      { id: 'logout',  text: 'Sign out', requiresAuth: true,  onClick: () => {} } as ClickableDropdownItem,
-      { id: 'profile', text: 'Profile',  requiresAuth: true,  href: '/profile'  } as AnchorDropdownItem,
+      {
+        id: "login",
+        text: "Sign in",
+        requiresAuth: false,
+        onClick: () => {},
+      } as ClickableDropdownItem,
+      {
+        id: "logout",
+        text: "Sign out",
+        requiresAuth: true,
+        onClick: () => {},
+      } as ClickableDropdownItem,
+      {
+        id: "profile",
+        text: "Profile",
+        requiresAuth: true,
+        href: "/profile",
+      } as AnchorDropdownItem,
     ],
   },
 };
 
 export const LoggedOut: StoryObj = {
-  name: 'Logged out',
+  name: "Logged out",
   render: () => ({
     components: { Navbar },
     setup() {
@@ -58,7 +85,7 @@ export const LoggedOut: StoryObj = {
 };
 
 export const LoggedIn: StoryObj = {
-  name: 'Logged in',
+  name: "Logged in",
   render: () => ({
     components: { Navbar },
     setup() {
@@ -67,11 +94,30 @@ export const LoggedIn: StoryObj = {
       const config: NavbarConfig = {
         ...BASE_CONFIG,
         loginButton: {
-          userName: 'Jane Smith',
+          userName: "Jane Smith",
           dropdownItems: [
-            { id: 'login',   text: 'Sign in',  requiresAuth: false, onClick: () => { loggedIn.value = true;  } } as ClickableDropdownItem,
-            { id: 'logout',  text: 'Sign out', requiresAuth: true,  onClick: () => { loggedIn.value = false; } } as ClickableDropdownItem,
-            { id: 'profile', text: 'Profile',  requiresAuth: true,  href: '/profile'                           } as AnchorDropdownItem,
+            {
+              id: "login",
+              text: "Sign in",
+              requiresAuth: false,
+              onClick: () => {
+                loggedIn.value = true;
+              },
+            } as ClickableDropdownItem,
+            {
+              id: "logout",
+              text: "Sign out",
+              requiresAuth: true,
+              onClick: () => {
+                loggedIn.value = false;
+              },
+            } as ClickableDropdownItem,
+            {
+              id: "profile",
+              text: "Profile",
+              requiresAuth: true,
+              href: "/profile",
+            } as AnchorDropdownItem,
           ],
         },
       };
@@ -90,12 +136,12 @@ export const LoggedIn: StoryObj = {
 };
 
 export const WithLogo: StoryObj = {
-  name: 'With logo image',
+  name: "With logo image",
   render: () => ({
     components: { Navbar },
     setup() {
       return {
-        config: { ...BASE_CONFIG, brandLogo: '/assets/logo-placeholder.svg' },
+        config: { ...BASE_CONFIG, brandLogo: "/assets/logo-placeholder.svg" },
       };
     },
     template: `
@@ -107,18 +153,28 @@ export const WithLogo: StoryObj = {
 };
 
 export const WithAvatar: StoryObj = {
-  name: 'With profile avatar',
+  name: "With profile avatar",
   render: () => ({
     components: { Navbar },
     setup() {
       const config: NavbarConfig = {
         ...BASE_CONFIG,
         loginButton: {
-          userName: 'Jane Smith',
-          profileImageUrl: '/assets/avatar-placeholder.svg',
+          userName: "Jane Smith",
+          profileImageUrl: "/assets/avatar-placeholder.svg",
           dropdownItems: [
-            { id: 'logout',  text: 'Sign out', requiresAuth: true, onClick: () => {} } as ClickableDropdownItem,
-            { id: 'profile', text: 'Profile',  requiresAuth: true, href: '/profile'  } as AnchorDropdownItem,
+            {
+              id: "logout",
+              text: "Sign out",
+              requiresAuth: true,
+              onClick: () => {},
+            } as ClickableDropdownItem,
+            {
+              id: "profile",
+              text: "Profile",
+              requiresAuth: true,
+              href: "/profile",
+            } as AnchorDropdownItem,
           ],
         },
       };

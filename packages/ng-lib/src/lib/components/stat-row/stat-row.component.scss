@@ -1,4 +1,4 @@
-@use 'tokens/src/breakpoints' as t;
+@use "tokens/src/breakpoints" as t;
 
 .sr-row {
   display: flex;
@@ -28,7 +28,9 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 
-  @include t.m2-mobile { font-size: var(--font-size-2xl); }
+  @include t.m2-mobile {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .sr-label {
@@ -43,5 +45,7 @@
   background: var(--color-border);
   flex-shrink: 0;
 
-  @include t.m2-mobile { display: none; }
+  @include t.m2-mobile {
+    display: none;
+  }
 }

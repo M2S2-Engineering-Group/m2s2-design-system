@@ -1,1 +1,1 @@
-export { StatItem } from '@m2s2/models';
+export { StatItem } from "@m2s2/models";

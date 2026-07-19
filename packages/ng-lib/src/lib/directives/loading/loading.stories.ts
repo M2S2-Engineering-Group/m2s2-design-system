@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { Component, signal } from '@angular/core';
-import { LoadingDirective } from './loading.directive';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { Component, signal } from "@angular/core";
+import { LoadingDirective } from "./loading.directive";
 
 // ── Shared demo styles ────────────────────────────────────────────────────────
 const DEMO_STYLES = `
@@ -22,7 +22,7 @@ const DEMO_STYLES = `
 
 // ── Interactive demo ──────────────────────────────────────────────────────────
 @Component({
-  selector: 'sb-loading-interactive',
+  selector: "sb-loading-interactive",
   standalone: true,
   imports: [LoadingDirective],
   styles: [DEMO_STYLES],
@@ -30,29 +30,41 @@ const DEMO_STYLES = `
     <div class="demo">
       <div class="demo-col">
         <span class="demo-label">Primary action</span>
-        <button class="btn btn-primary" [m2s2Loading]="saving()" (click)="simulate(saving, 2000)">
-          {{ saving() ? 'Saving…' : 'Save Changes' }}
+        <button
+          class="btn btn-primary"
+          [m2s2Loading]="saving()"
+          (click)="simulate(saving, 2000)"
+        >
+          {{ saving() ? "Saving…" : "Save Changes" }}
         </button>
       </div>
       <div class="demo-col">
         <span class="demo-label">Secondary action</span>
-        <button class="btn btn-secondary" [m2s2Loading]="submitting()" (click)="simulate(submitting, 1800)">
-          {{ submitting() ? 'Submitting…' : 'Submit Form' }}
+        <button
+          class="btn btn-secondary"
+          [m2s2Loading]="submitting()"
+          (click)="simulate(submitting, 1800)"
+        >
+          {{ submitting() ? "Submitting…" : "Submit Form" }}
         </button>
       </div>
       <div class="demo-col">
         <span class="demo-label">Destructive action</span>
-        <button class="btn btn-danger" [m2s2Loading]="deleting()" (click)="simulate(deleting, 1500)">
-          {{ deleting() ? 'Deleting…' : 'Delete Record' }}
+        <button
+          class="btn btn-danger"
+          [m2s2Loading]="deleting()"
+          (click)="simulate(deleting, 1500)"
+        >
+          {{ deleting() ? "Deleting…" : "Delete Record" }}
         </button>
       </div>
     </div>
   `,
 })
 class InteractiveDemoComponent {
-  saving     = signal(false);
+  saving = signal(false);
   submitting = signal(false);
-  deleting   = signal(false);
+  deleting = signal(false);
 
   simulate(s: ReturnType<typeof signal<boolean>>, ms: number): void {
     s.set(true);
@@ -62,7 +74,7 @@ class InteractiveDemoComponent {
 
 // ── Static loading state ──────────────────────────────────────────────────────
 @Component({
-  selector: 'sb-loading-static',
+  selector: "sb-loading-static",
   standalone: true,
   imports: [LoadingDirective],
   styles: [DEMO_STYLES],
@@ -70,7 +82,9 @@ class InteractiveDemoComponent {
     <div class="demo">
       <div class="demo-col">
         <span class="demo-label">Idle</span>
-        <button class="btn btn-primary" [m2s2Loading]="false">Save Changes</button>
+        <button class="btn btn-primary" [m2s2Loading]="false">
+          Save Changes
+        </button>
       </div>
       <div class="demo-col">
         <span class="demo-label">Loading</span>
@@ -78,7 +92,9 @@ class InteractiveDemoComponent {
       </div>
       <div class="demo-col">
         <span class="demo-label">Secondary loading</span>
-        <button class="btn btn-secondary" [m2s2Loading]="true">Submitting…</button>
+        <button class="btn btn-secondary" [m2s2Loading]="true">
+          Submitting…
+        </button>
       </div>
       <div class="demo-col">
         <span class="demo-label">Danger loading</span>
@@ -91,11 +107,11 @@ class StaticDemoComponent {}
 
 // ── Meta ──────────────────────────────────────────────────────────────────────
 const meta: Meta<StaticDemoComponent> = {
-  title:     'Directives/Loading',
+  title: "Directives/Loading",
   component: StaticDemoComponent,
-  tags:      ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component: `
@@ -122,19 +138,20 @@ export default meta;
 type Story = StoryObj<StaticDemoComponent>;
 
 export const States: Story = {
-  name: 'All States',
+  name: "All States",
 };
 
 export const Interactive: Story = {
-  name: 'Interactive Demo',
+  name: "Interactive Demo",
   render: () => ({
-    template: '<sb-loading-interactive />',
+    template: "<sb-loading-interactive />",
     moduleMetadata: { imports: [InteractiveDemoComponent] },
   }),
   parameters: {
     docs: {
       description: {
-        story: 'Click each button to simulate a 1.5–2s API call. The directive handles disabling and the spinner automatically.',
+        story:
+          "Click each button to simulate a 1.5–2s API call. The directive handles disabling and the spinner automatically.",
       },
     },
   },

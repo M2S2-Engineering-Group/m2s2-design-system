@@ -7,37 +7,37 @@
   --touch-target-min: 44px;
 
   // Structural heights — used to offset sticky elements and calc scroll padding
-  --nav-height:    64px;
+  --nav-height: 64px;
   --footer-height: 48px;
 
   // Max content widths
-  --container-max-sm:  640px;
-  --container-max-md:  768px;
-  --container-max-lg:  1024px;
-  --container-max-xl:  1280px;
+  --container-max-sm: 640px;
+  --container-max-md: 768px;
+  --container-max-lg: 1024px;
+  --container-max-xl: 1280px;
 
   // Border radii
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   16px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
   // Shadows
-  --shadow-sm:   0 1px 3px rgb(0 0 0 / 30%);
-  --shadow-md:   0 4px 12px rgb(0 0 0 / 40%);
-  --shadow-lg:   0 8px 32px rgb(0 0 0 / 40%);
-  --shadow-glow: 0 0 24px rgb(168 85 247 / 25%);   // primary color glow
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 30%);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 40%);
+  --shadow-lg: 0 8px 32px rgb(0 0 0 / 40%);
+  --shadow-glow: 0 0 24px rgb(168 85 247 / 25%); // primary color glow
 
   // Z-index scale
-  --z-below:    -1;
-  --z-base:      0;
-  --z-raised:    10;
-  --z-dropdown:  100;
-  --z-sticky:    200;
-  --z-overlay:   300;
-  --z-modal:     400;
-  --z-toast:     500;
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
 
   // Scroll padding — keeps anchor targets clear of the fixed nav
   scroll-padding-top: var(--nav-height);

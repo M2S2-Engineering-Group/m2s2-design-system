@@ -1,16 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import type { BlogPost } from '@m2s2/models';
-import { BlogEditor } from './BlogEditor';
+import type { Meta, StoryObj } from "@storybook/react";
+import type { BlogPost } from "@m2s2/models";
+import { BlogEditor } from "./BlogEditor";
 
 const existingPost: BlogPost = {
-  slug:        'angular-signals-deep-dive',
-  title:       'Angular Signals: A Deep Dive',
-  date:        '2025-03-15',
-  summary:     'A thorough look at Angular signals — what they are, how they work, and when to reach for them over RxJS.',
-  excerpt:     'Signals landed in Angular 17 and have quietly changed how we think about reactivity in large Angular apps.',
-  tags:        ['angular', 'signals', 'rxjs', 'frontend'],
+  slug: "angular-signals-deep-dive",
+  title: "Angular Signals: A Deep Dive",
+  date: "2025-03-15",
+  summary:
+    "A thorough look at Angular signals — what they are, how they work, and when to reach for them over RxJS.",
+  excerpt:
+    "Signals landed in Angular 17 and have quietly changed how we think about reactivity in large Angular apps.",
+  tags: ["angular", "signals", "rxjs", "frontend"],
   readingTime: 8,
-  coverImage:  'https://placehold.co/1200x630/1e293b/94a3b8?text=Angular+Signals',
+  coverImage:
+    "https://placehold.co/1200x630/1e293b/94a3b8?text=Angular+Signals",
   content: `## What are signals?
 
 A **signal** is a reactive primitive that holds a value and notifies consumers when that value changes. Unlike RxJS observables, signals are *synchronous* and *pull-based* — Angular reads them during rendering rather than subscribing asynchronously.
@@ -40,38 +43,43 @@ The practical rule: if it's *state*, reach for \`signal()\`. If it's an *event s
 
 const seriesPost: BlogPost = {
   ...existingPost,
-  slug:   'angular-signals-part-2',
-  title:  'Angular Signals: Advanced Patterns',
-  date:   '2025-04-10',
-  series: { id: 'angular-signals', title: 'Angular Signals Series', part: 2 },
+  slug: "angular-signals-part-2",
+  title: "Angular Signals: Advanced Patterns",
+  date: "2025-04-10",
+  series: { id: "angular-signals", title: "Angular Signals Series", part: 2 },
 };
 
 const seriesPostWithTotal: BlogPost = {
   ...seriesPost,
-  series: { id: 'angular-signals', title: 'Angular Signals Series', part: 2, total: 3 },
+  series: {
+    id: "angular-signals",
+    title: "Angular Signals Series",
+    part: 2,
+    total: 3,
+  },
 };
 
 const existingSeries = [
-  { id: 'angular-signals', title: 'Angular Signals Series' },
-  { id: 'go-backend',      title: 'Go Backend Series' },
+  { id: "angular-signals", title: "Angular Signals Series" },
+  { id: "go-backend", title: "Go Backend Series" },
 ];
 
 const meta: Meta<typeof BlogEditor> = {
-  title: 'Components/BlogEditor',
+  title: "Components/BlogEditor",
   component: BlogEditor,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         component:
-          'Split-pane markdown editor for authoring blog posts. Includes a metadata form, live preview rendered from markdown, toolbar shortcuts, and tag input. Pass `initialPost` to load an existing post for editing. Pass `existingSeries` to populate the series dropdown with series already in use across the blog. Wire `onPublish` and `onCoverImageSelected` to your API.',
+          "Split-pane markdown editor for authoring blog posts. Includes a metadata form, live preview rendered from markdown, toolbar shortcuts, and tag input. Pass `initialPost` to load an existing post for editing. Pass `existingSeries` to populate the series dropdown with series already in use across the blog. Wire `onPublish` and `onCoverImageSelected` to your API.",
       },
     },
   },
   decorators: [
-    Story => (
-      <div style={{ background: 'var(--color-bg, #0a0a0f)', padding: '2rem' }}>
+    (Story) => (
+      <div style={{ background: "var(--color-bg, #0a0a0f)", padding: "2rem" }}>
         <Story />
       </div>
     ),
@@ -84,72 +92,90 @@ export const Empty: Story = {
   args: {},
   parameters: {
     docs: {
-      description: { story: 'Blank editor — the default state when creating a new post. The series dropdown shows only "None" and "New series…" when no existing series are provided.' },
+      description: {
+        story:
+          'Blank editor — the default state when creating a new post. The series dropdown shows only "None" and "New series…" when no existing series are provided.',
+      },
     },
   },
 };
 
 export const WithExistingSeries: Story = {
-  name: 'With Existing Series',
+  name: "With Existing Series",
   args: { existingSeries },
   parameters: {
     docs: {
-      description: { story: 'New post with existing series available in the dropdown. The author can select a series without retyping its ID and title.' },
+      description: {
+        story:
+          "New post with existing series available in the dropdown. The author can select a series without retyping its ID and title.",
+      },
     },
   },
 };
 
 export const EditExistingPost: Story = {
-  name: 'Edit Existing Post',
+  name: "Edit Existing Post",
   args: {
-    initialPost:    existingPost,
-    coverImageUrl:  existingPost.coverImage,
+    initialPost: existingPost,
+    coverImageUrl: existingPost.coverImage,
     existingSeries,
   },
   parameters: {
     docs: {
-      description: { story: 'Pre-populated with an existing post that has no series. Slug is locked from auto-update since it was already set.' },
+      description: {
+        story:
+          "Pre-populated with an existing post that has no series. Slug is locked from auto-update since it was already set.",
+      },
     },
   },
 };
 
 export const EditPostWithSeries: Story = {
-  name: 'Edit Post With Series',
+  name: "Edit Post With Series",
   args: {
-    initialPost:    seriesPost,
-    coverImageUrl:  seriesPost.coverImage,
+    initialPost: seriesPost,
+    coverImageUrl: seriesPost.coverImage,
     existingSeries,
   },
   parameters: {
     docs: {
-      description: { story: 'Editing a post that belongs to an existing series without a total set. The "Total Parts" field is blank — the reader-facing count will be derived from the number of published posts in the series.' },
+      description: {
+        story:
+          'Editing a post that belongs to an existing series without a total set. The "Total Parts" field is blank — the reader-facing count will be derived from the number of published posts in the series.',
+      },
     },
   },
 };
 
 export const EditPostWithSeriesTotal: Story = {
-  name: 'Edit Post With Series (explicit total)',
+  name: "Edit Post With Series (explicit total)",
   args: {
-    initialPost:    seriesPostWithTotal,
-    coverImageUrl:  seriesPostWithTotal.coverImage,
+    initialPost: seriesPostWithTotal,
+    coverImageUrl: seriesPostWithTotal.coverImage,
     existingSeries,
   },
   parameters: {
     docs: {
-      description: { story: 'Editing a post where the author has explicitly set a total (e.g. "Part 2 of 3"). Use this when you want to announce the planned length of the series before all parts are published.' },
+      description: {
+        story:
+          'Editing a post where the author has explicitly set a total (e.g. "Part 2 of 3"). Use this when you want to announce the planned length of the series before all parts are published.',
+      },
     },
   },
 };
 
 export const EditPostSeriesNotInList: Story = {
-  name: 'Edit Post — Series Not In List',
+  name: "Edit Post — Series Not In List",
   args: {
-    initialPost:    seriesPost,
+    initialPost: seriesPost,
     existingSeries: [],
   },
   parameters: {
     docs: {
-      description: { story: 'Editing a post whose series ID is not found in existingSeries (e.g. list still loading). Falls back to "New series…" with the ID and title pre-filled.' },
+      description: {
+        story:
+          'Editing a post whose series ID is not found in existingSeries (e.g. list still loading). Falls back to "New series…" with the ID and title pre-filled.',
+      },
     },
   },
 };

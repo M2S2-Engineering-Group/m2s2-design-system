@@ -6,7 +6,9 @@
     }
   </div>
   @if (!data.modal) {
-    <button class="panel-close" aria-label="Close" (click)="close(null)">&#x2715;</button>
+    <button class="panel-close" aria-label="Close" (click)="close(null)">
+      &#x2715;
+    </button>
   }
 </div>
 
@@ -14,7 +16,8 @@
   @if (data.bodyComponent) {
     <ng-container
       [ngComponentOutlet]="data.bodyComponent"
-      [ngComponentOutletInputs]="data.bodyInputs ?? {}">
+      [ngComponentOutletInputs]="data.bodyInputs ?? {}"
+    >
     </ng-container>
   } @else if (data.message) {
     <p class="panel-message">{{ data.message }}</p>
@@ -26,7 +29,8 @@
     @for (a of data.actions; track a.label) {
       <button
         [class]="'panel-btn panel-btn--' + (a.variant ?? 'secondary')"
-        (click)="action(a)">
+        (click)="action(a)"
+      >
         {{ a.label }}
       </button>
     }

@@ -1,1 +1,1 @@
-export { PageHeaderConfig } from '@m2s2/models';
+export { PageHeaderConfig } from "@m2s2/models";

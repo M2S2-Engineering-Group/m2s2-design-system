@@ -1,2 +1,2 @@
-export * from './resizable-col/resizable-col.directive';
-export * from './loading/loading.directive';
+export * from "./resizable-col/resizable-col.directive";
+export * from "./loading/loading.directive";

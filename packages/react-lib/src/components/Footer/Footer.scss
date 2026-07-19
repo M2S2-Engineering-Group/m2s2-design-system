@@ -1,4 +1,4 @@
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-footer {
   width: 100%;
@@ -26,12 +26,23 @@
   }
 }
 
-.footer-copy { font-size: var(--font-size-sm); opacity: 0.85; }
+.footer-copy {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+}
 
-.footer-social { display: flex; align-items: center; gap: var(--space-3); }
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
 
-.social-link { @include m.social-link; }
-.social-icon { @include m.social-icon; }
+.social-link {
+  @include m.social-link;
+}
+.social-icon {
+  @include m.social-icon;
+}
 
 .footer-build {
   display: none;

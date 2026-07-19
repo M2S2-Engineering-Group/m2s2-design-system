@@ -1,7 +1,9 @@
 <div class="dialog-header">
   <h2 class="dialog-title">{{ data.title }}</h2>
   @if (!data.modal) {
-    <button class="dialog-close" aria-label="Close" (click)="ref.close(null)">&#x2715;</button>
+    <button class="dialog-close" aria-label="Close" (click)="ref.close(null)">
+      &#x2715;
+    </button>
   }
 </div>
 
@@ -15,7 +17,8 @@
   @for (action of data.actions; track action.label) {
     <button
       [class]="'dialog-btn dialog-btn--' + (action.variant ?? 'secondary')"
-      (click)="close(action)">
+      (click)="close(action)"
+    >
       {{ action.label }}
     </button>
   }

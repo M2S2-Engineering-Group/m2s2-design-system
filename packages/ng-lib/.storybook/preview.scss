@@ -1,5 +1,5 @@
 // Loads all design tokens (CSS custom properties) so stories render correctly.
-@use '../../tokens/index';
+@use "../../tokens/index";
 
 // Minimal body defaults matching the app shell
 body {

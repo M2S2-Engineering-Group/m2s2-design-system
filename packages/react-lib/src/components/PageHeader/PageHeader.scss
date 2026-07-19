@@ -1,4 +1,4 @@
-@use 'packages/tokens/src/breakpoints' as t;
+@use "packages/tokens/src/breakpoints" as t;
 
 .m2s2-page-header {
   display: block;
@@ -12,7 +12,9 @@
   color: var(--color-on-bg);
   margin: 0 0 var(--space-4);
 
-  @include t.m2-mobile { font-size: var(--font-size-2xl); }
+  @include t.m2-mobile {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .page-subtitle {
@@ -21,5 +23,7 @@
   color: var(--color-on-surface-muted);
   margin: 0;
 
-  @include t.m2-mobile { font-size: var(--font-size-base); }
+  @include t.m2-mobile {
+    font-size: var(--font-size-base);
+  }
 }

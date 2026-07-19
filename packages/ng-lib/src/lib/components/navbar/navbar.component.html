@@ -1,11 +1,16 @@
-<mat-toolbar class="m2-toolbar"
-             [class.toolbar-scrolled]="isScrolled"
-             [class.toolbar-hidden]="isHidden">
-
+<mat-toolbar
+  class="m2-toolbar"
+  [class.toolbar-scrolled]="isScrolled"
+  [class.toolbar-hidden]="isHidden"
+>
   <!-- Brand -->
   <a class="m2-brand" [routerLink]="'/' + navbarConfig.brandRouterOutlet">
     @if (navbarConfig.brandLogo) {
-      <img [src]="navbarConfig.brandLogo" [alt]="navbarConfig.brand" class="brand-logo">
+      <img
+        [src]="navbarConfig.brandLogo"
+        [alt]="navbarConfig.brand"
+        class="brand-logo"
+      />
     } @else {
       <span class="brand-text">{{ navbarConfig.brand }}</span>
     }
@@ -17,18 +22,29 @@
   <nav class="desktop-nav" aria-label="Main navigation">
     @for (item of navButtons; track item.id) {
       @if (isRouterLink(item) && isVisible(item)) {
-        <a mat-button class="nav-btn"
-           [routerLink]="'/' + item.routerLink"
-           routerLinkActive="nav-active">
-          @if (item.matIcon) { <mat-icon>{{ item.matIcon }}</mat-icon> }
+        <a
+          mat-button
+          class="nav-btn"
+          [routerLink]="'/' + item.routerLink"
+          routerLinkActive="nav-active"
+        >
+          @if (item.matIcon) {
+            <mat-icon>{{ item.matIcon }}</mat-icon>
+          }
           {{ item.title }}
         </a>
       }
       @if (isAnchor(item) && isVisible(item)) {
-        <a mat-button class="nav-btn"
-           [href]="item.href"
-           target="_blank" rel="noopener noreferrer">
-          @if (item.matIcon) { <mat-icon>{{ item.matIcon }}</mat-icon> }
+        <a
+          mat-button
+          class="nav-btn"
+          [href]="item.href"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @if (item.matIcon) {
+            <mat-icon>{{ item.matIcon }}</mat-icon>
+          }
           {{ item.title }}
         </a>
       }
@@ -37,7 +53,9 @@
     @for (item of navDropdowns; track item.id) {
       @if (isVisible(item)) {
         <button mat-button class="nav-btn" [matMenuTriggerFor]="desktopDrop">
-          @if (item.matIcon) { <mat-icon>{{ item.matIcon }}</mat-icon> }
+          @if (item.matIcon) {
+            <mat-icon>{{ item.matIcon }}</mat-icon>
+          }
           {{ item.title }}
           <mat-icon>arrow_drop_down</mat-icon>
         </button>
@@ -52,22 +70,33 @@
 
   <!-- Account menu -->
   @if (navbarConfig.loginButton) {
-    <button mat-icon-button class="icon-btn account-btn" [matMenuTriggerFor]="accountMenu" aria-label="Account menu">
+    <button
+      mat-icon-button
+      class="icon-btn account-btn"
+      [matMenuTriggerFor]="accountMenu"
+      aria-label="Account menu"
+    >
       @if (navbarConfig.loginButton.profileImageUrl) {
-        <img class="profile-avatar"
-             [src]="navbarConfig.loginButton.profileImageUrl"
-             alt="Profile photo"
-             referrerpolicy="no-referrer">
+        <img
+          class="profile-avatar"
+          [src]="navbarConfig.loginButton.profileImageUrl"
+          alt="Profile photo"
+          referrerpolicy="no-referrer"
+        />
       } @else {
         <mat-icon>account_circle</mat-icon>
       }
     </button>
     <mat-menu #accountMenu="matMenu" panelClass="m2-menu">
       @if (navbarConfig.loginButton.userName && loggedIn) {
-        <div class="menu-user-name">{{ navbarConfig.loginButton.userName }}</div>
+        <div class="menu-user-name">
+          {{ navbarConfig.loginButton.userName }}
+        </div>
       }
       @for (item of navbarConfig.loginButton.dropdownItems; track item.id) {
-        @if ((item.requiresAuth && loggedIn) || (!item.requiresAuth && !loggedIn)) {
+        @if (
+          (item.requiresAuth && loggedIn) || (!item.requiresAuth && !loggedIn)
+        ) {
           <m2-dropdown-item [dropdownItem]="item"></m2-dropdown-item>
         }
       }
@@ -78,26 +107,41 @@
   <ng-content></ng-content>
 
   <!-- Mobile hamburger -->
-  <button mat-icon-button class="icon-btn mobile-menu-btn"
-          [matMenuTriggerFor]="mobileMenu"
-          aria-label="Open navigation menu">
+  <button
+    mat-icon-button
+    class="icon-btn mobile-menu-btn"
+    [matMenuTriggerFor]="mobileMenu"
+    aria-label="Open navigation menu"
+  >
     <mat-icon>menu</mat-icon>
   </button>
-
 </mat-toolbar>
 
 <!-- Mobile menu panel -->
 <mat-menu #mobileMenu="matMenu" panelClass="m2-mobile-menu">
   @for (item of navButtons; track item.id) {
     @if (isRouterLink(item) && isVisible(item)) {
-      <a mat-menu-item [routerLink]="'/' + item.routerLink" routerLinkActive="nav-active">
-        @if (item.matIcon) { <mat-icon>{{ item.matIcon }}</mat-icon> }
+      <a
+        mat-menu-item
+        [routerLink]="'/' + item.routerLink"
+        routerLinkActive="nav-active"
+      >
+        @if (item.matIcon) {
+          <mat-icon>{{ item.matIcon }}</mat-icon>
+        }
         <span>{{ item.title }}</span>
       </a>
     }
     @if (isAnchor(item) && isVisible(item)) {
-      <a mat-menu-item [href]="item.href" target="_blank" rel="noopener noreferrer">
-        @if (item.matIcon) { <mat-icon>{{ item.matIcon }}</mat-icon> }
+      <a
+        mat-menu-item
+        [href]="item.href"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        @if (item.matIcon) {
+          <mat-icon>{{ item.matIcon }}</mat-icon>
+        }
         <span>{{ item.title }}</span>
       </a>
     }

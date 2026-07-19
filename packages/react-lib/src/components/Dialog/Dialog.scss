@@ -1,4 +1,4 @@
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 // ── Overlay backdrop ──────────────────────────────────────────────────────────
 
@@ -8,12 +8,30 @@
   background: rgba(0, 0, 0, 0.55);
   z-index: var(--z-modal);
 
-  &[data-state='open']  { animation: overlay-in  150ms ease; }
-  &[data-state='closed'] { animation: overlay-out 150ms ease; }
+  &[data-state="open"] {
+    animation: overlay-in 150ms ease;
+  }
+  &[data-state="closed"] {
+    animation: overlay-out 150ms ease;
+  }
 }
 
-@keyframes overlay-in  { from { opacity: 0; } to { opacity: 1; } }
-@keyframes overlay-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 
 // ── Dialog content ────────────────────────────────────────────────────────────
 
@@ -33,26 +51,68 @@
   display: flex;
   flex-direction: column;
 
-  &[data-state='open']  { animation: dialog-in  150ms ease; }
-  &[data-state='closed'] { animation: dialog-out 150ms ease; }
+  &[data-state="open"] {
+    animation: dialog-in 150ms ease;
+  }
+  &[data-state="closed"] {
+    animation: dialog-out 150ms ease;
+  }
 }
 
-@keyframes dialog-in  { from { opacity: 0; transform: translate(-50%, -48%); } to { opacity: 1; transform: translate(-50%, -50%); } }
-@keyframes dialog-out { from { opacity: 1; transform: translate(-50%, -50%); } to { opacity: 0; transform: translate(-50%, -48%); } }
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+}
 
 // ── Chrome ────────────────────────────────────────────────────────────────────
 
-.dialog-header  { @include m.overlay-header; }
-.dialog-title   { @include m.overlay-title; }
-.dialog-close   { @include m.btn-icon; }
-.dialog-body    { @include m.overlay-body; }
-.dialog-message { @include m.overlay-message; }
-.dialog-footer  { @include m.overlay-footer; }
+.dialog-header {
+  @include m.overlay-header;
+}
+.dialog-title {
+  @include m.overlay-title;
+}
+.dialog-close {
+  @include m.btn-icon;
+}
+.dialog-body {
+  @include m.overlay-body;
+}
+.dialog-message {
+  @include m.overlay-message;
+}
+.dialog-footer {
+  @include m.overlay-footer;
+}
 
 .dialog-btn {
   @include m.btn-base;
-  &--primary     { @include m.btn-primary; }
-  &--secondary   { @include m.btn-secondary; }
-  &--destructive { @include m.btn-destructive; }
-  &--ghost       { @include m.btn-ghost; }
+  &--primary {
+    @include m.btn-primary;
+  }
+  &--secondary {
+    @include m.btn-secondary;
+  }
+  &--destructive {
+    @include m.btn-destructive;
+  }
+  &--ghost {
+    @include m.btn-ghost;
+  }
 }

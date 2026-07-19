@@ -1,1 +1,1 @@
-export { useDialogContext as useDialog } from '../components/Dialog/DialogProvider';
+export { useDialogContext as useDialog } from "../components/Dialog/DialogProvider";

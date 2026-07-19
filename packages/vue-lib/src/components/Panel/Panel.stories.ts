@@ -1,71 +1,70 @@
-import { defineComponent } from 'vue';
-import type { Meta, StoryObj } from '@storybook/vue3';
-import type { M2S2PanelData } from '@m2s2/models';
-import PanelProvider from './PanelProvider.vue';
-import { usePanel } from './usePanel';
-import { ref } from 'vue';
+import { defineComponent } from "vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import type { M2S2PanelData } from "@m2s2/models";
+import PanelProvider from "./PanelProvider.vue";
+import { usePanel } from "./usePanel";
+import { ref } from "vue";
 
 const BUTTONS: { label: string; data: M2S2PanelData }[] = [
   {
-    label: 'Info panel (message)',
+    label: "Info panel (message)",
     data: {
-      title:    'Release notes',
-      subtitle: 'v2.4.0 — May 2026',
-      message:  'This release includes performance improvements to the data table, brand configurator enhancements, and the new side panel component.',
+      title: "Release notes",
+      subtitle: "v2.4.0 — May 2026",
+      message:
+        "This release includes performance improvements to the data table, brand configurator enhancements, and the new side panel component.",
+      actions: [{ label: "Close", value: null, variant: "secondary" }],
+    },
+  },
+  {
+    label: "Form panel (component body)",
+    data: {
+      title: "Edit member",
+      subtitle: "Update the member profile below.",
+      message: "Fill in the fields below to update the member record.",
       actions: [
-        { label: 'Close', value: null, variant: 'secondary' },
+        { label: "Cancel", value: false, variant: "ghost" },
+        { label: "Save", value: true, variant: "primary" },
       ],
     },
   },
   {
-    label: 'Form panel (component body)',
+    label: "Left panel",
     data: {
-      title:    'Edit member',
-      subtitle: 'Update the member profile below.',
-      message:  'Fill in the fields below to update the member record.',
+      title: "Navigation",
+      subtitle: "Slide in from the left.",
+      message: "This panel animates from the left side.",
+      side: "left",
+      width: "320px",
+      actions: [{ label: "Done", value: true, variant: "primary" }],
+    },
+  },
+  {
+    label: "Modal panel (cannot dismiss)",
+    data: {
+      title: "Terms of service",
+      subtitle: "Please read and accept before continuing.",
+      message:
+        "You must accept the terms to proceed. Clicking outside or pressing Escape will not close this panel.",
+      modal: true,
       actions: [
-        { label: 'Cancel', value: false, variant: 'ghost'   },
-        { label: 'Save',   value: true,  variant: 'primary' },
+        { label: "Decline", value: false, variant: "ghost" },
+        { label: "Accept", value: true, variant: "primary" },
       ],
     },
   },
   {
-    label: 'Left panel',
+    label: "Wide panel (720px)",
     data: {
-      title:    'Navigation',
-      subtitle: 'Slide in from the left.',
-      message:  'This panel animates from the left side.',
-      side:     'left',
-      width:    '320px',
+      title: "Record detail",
+      subtitle: "Wider panel for detailed content.",
+      message:
+        "This panel is wider than the default to accommodate detailed content.",
+      width: "720px",
       actions: [
-        { label: 'Done', value: true, variant: 'primary' },
-      ],
-    },
-  },
-  {
-    label: 'Modal panel (cannot dismiss)',
-    data: {
-      title:   'Terms of service',
-      subtitle: 'Please read and accept before continuing.',
-      message: 'You must accept the terms to proceed. Clicking outside or pressing Escape will not close this panel.',
-      modal:   true,
-      actions: [
-        { label: 'Decline', value: false, variant: 'ghost'   },
-        { label: 'Accept',  value: true,  variant: 'primary' },
-      ],
-    },
-  },
-  {
-    label: 'Wide panel (720px)',
-    data: {
-      title:    'Record detail',
-      subtitle: 'Wider panel for detailed content.',
-      message:  'This panel is wider than the default to accommodate detailed content.',
-      width:    '720px',
-      actions: [
-        { label: 'Cancel', value: false,    variant: 'ghost'       },
-        { label: 'Delete', value: 'delete', variant: 'destructive' },
-        { label: 'Save',   value: true,     variant: 'primary'     },
+        { label: "Cancel", value: false, variant: "ghost" },
+        { label: "Delete", value: "delete", variant: "destructive" },
+        { label: "Save", value: true, variant: "primary" },
       ],
     },
   },
@@ -88,18 +87,18 @@ const DEMO_STYLES = `
 
 const DemoInner = defineComponent({
   setup() {
-    const panelSvc  = usePanel();
+    const panelSvc = usePanel();
     const lastResult = ref<unknown>(undefined);
-    const hasResult  = ref(false);
+    const hasResult = ref(false);
 
     function resultLabel(v: unknown): string {
-      return v === null ? 'null (× button)' : JSON.stringify(v);
+      return v === null ? "null (× button)" : JSON.stringify(v);
     }
 
     async function open(data: M2S2PanelData) {
       const result = await panelSvc.panel(data);
       lastResult.value = result ?? null;
-      hasResult.value  = true;
+      hasResult.value = true;
     }
 
     return { buttons: BUTTONS, lastResult, hasResult, resultLabel, open };
@@ -123,22 +122,22 @@ const DemoInner = defineComponent({
 });
 
 const meta: Meta = {
-  title: 'Components/Panel',
-  tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  title: "Components/Panel",
+  tags: ["autodocs"],
+  parameters: { layout: "fullscreen" },
 };
 export default meta;
 
 export const Default: StoryObj = {
-  name: 'Interactive — all variants',
+  name: "Interactive — all variants",
   render: () => ({
     components: { PanelProvider, DemoInner },
     setup() {
-      if (typeof document !== 'undefined') {
-        let el = document.getElementById('panel-demo-styles');
+      if (typeof document !== "undefined") {
+        let el = document.getElementById("panel-demo-styles");
         if (!el) {
-          el = document.createElement('style');
-          el.id = 'panel-demo-styles';
+          el = document.createElement("style");
+          el.id = "panel-demo-styles";
           el.textContent = DEMO_STYLES;
           document.head.appendChild(el);
         }

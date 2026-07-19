@@ -1,1 +1,1 @@
-export { LoadingButtonComponent } from './loading-button.component';
+export { LoadingButtonComponent } from "./loading-button.component";

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
-import { ref, onUnmounted } from 'vue';
-import LoadingButton from './LoadingButton.vue';
+import type { Meta, StoryObj } from "@storybook/vue3";
+import { ref, onUnmounted } from "vue";
+import LoadingButton from "./LoadingButton.vue";
 
 const DEMO_STYLES = `
   .demo { display: flex; flex-wrap: wrap; gap: 24px; padding: 32px; background: var(--color-bg, #0a0a0f); align-items: flex-end; }
@@ -13,22 +13,22 @@ const DEMO_STYLES = `
 `;
 
 const meta: Meta<typeof LoadingButton> = {
-  title: 'Components/LoadingButton',
+  title: "Components/LoadingButton",
   component: LoadingButton,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     () => ({
       setup() {
-        const el = document.createElement('style');
+        const el = document.createElement("style");
         el.textContent = DEMO_STYLES;
         document.head.appendChild(el);
         onUnmounted(() => el.remove());
       },
-      template: '<story />',
+      template: "<story />",
     }),
   ],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component: `
@@ -51,7 +51,7 @@ export default meta;
 type Story = StoryObj<typeof LoadingButton>;
 
 export const States: Story = {
-  name: 'All States',
+  name: "All States",
   render: () => ({
     components: { LoadingButton },
 
@@ -79,18 +79,20 @@ export const States: Story = {
 };
 
 export const Interactive: Story = {
-  name: 'Interactive Demo',
+  name: "Interactive Demo",
   render: () => ({
     components: { LoadingButton },
 
     setup() {
-      const saving     = ref(false);
+      const saving = ref(false);
       const submitting = ref(false);
-      const deleting   = ref(false);
+      const deleting = ref(false);
 
       function simulate(state: { value: boolean }, ms: number) {
         state.value = true;
-        setTimeout(() => { state.value = false; }, ms);
+        setTimeout(() => {
+          state.value = false;
+        }, ms);
       }
 
       return { saving, submitting, deleting, simulate };
@@ -121,14 +123,14 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Click each button to simulate a 1.5–2s API call.',
+        story: "Click each button to simulate a 1.5–2s API call.",
       },
     },
   },
 };
 
 export const SpinnerOnly: Story = {
-  name: 'Spinner Without Label Change',
+  name: "Spinner Without Label Change",
   render: () => ({
     components: { LoadingButton },
 
@@ -144,7 +146,8 @@ export const SpinnerOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Omit `loadingText` and the original label stays visible alongside the spinner.',
+        story:
+          "Omit `loadingText` and the original label stays visible alongside the spinner.",
       },
     },
   },

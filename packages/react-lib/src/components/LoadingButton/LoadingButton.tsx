@@ -1,5 +1,5 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-import './LoadingButton.scss';
+import { ButtonHTMLAttributes, ReactNode } from "react";
+import "./LoadingButton.scss";
 
 export interface LoadingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;

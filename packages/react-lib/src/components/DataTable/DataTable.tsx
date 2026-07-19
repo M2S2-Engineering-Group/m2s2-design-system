@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import type { ColumnDef } from '@m2s2/models';
-import { getStatusLabel } from '@m2s2/utils';
-import './DataTable.scss';
+import { useEffect, useRef, useState } from "react";
+import type { ColumnDef } from "@m2s2/models";
+import { getStatusLabel } from "@m2s2/utils";
+import "./DataTable.scss";
 
 interface DataTableProps {
   children: React.ReactNode;
@@ -25,13 +25,13 @@ export function DataTable({
   columnDefs = [],
   colVisibility = {},
   statuses = [],
-  statusFilter = 'all',
+  statusFilter = "all",
   statusLabels = {},
-  searchValue = '',
-  searchPlaceholder = 'Search…',
+  searchValue = "",
+  searchPlaceholder = "Search…",
   totalCount = 0,
   filteredCount = 0,
-  emptyMessage = 'No data yet.',
+  emptyMessage = "No data yet.",
   onSearchChange,
   onStatusChange,
   onColToggle,
@@ -46,8 +46,8 @@ export function DataTable({
         setShowCols(false);
       }
     }
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
   }, [showCols]);
 
   if (totalCount === 0) {
@@ -69,20 +69,26 @@ export function DataTable({
               placeholder={searchPlaceholder}
               aria-label="Search"
               value={searchValue}
-              onChange={e => onSearchChange?.(e.target.value)}
+              onChange={(e) => onSearchChange?.(e.target.value)}
             />
-            <div className="dt-pills" role="group" aria-label="Filter by status">
-              {statuses.map(s => (
+            <div
+              className="dt-pills"
+              role="group"
+              aria-label="Filter by status"
+            >
+              {statuses.map((s) => (
                 <button
                   key={s}
-                  className={`dt-pill${statusFilter === s ? ' dt-pill--active' : ''}`}
+                  className={`dt-pill${statusFilter === s ? " dt-pill--active" : ""}`}
                   onClick={() => onStatusChange?.(s)}
                 >
                   {getStatusLabel(s, statusLabels)}
                 </button>
               ))}
             </div>
-            <span className="dt-count">{filteredCount} of {totalCount}</span>
+            <span className="dt-count">
+              {filteredCount} of {totalCount}
+            </span>
           </>
         )}
 
@@ -92,13 +98,13 @@ export function DataTable({
               className="dt-col-btn"
               aria-expanded={showCols}
               aria-controls="dt-col-panel"
-              onClick={() => setShowCols(v => !v)}
+              onClick={() => setShowCols((v) => !v)}
             >
               ⚙ Columns
             </button>
             {showCols && (
               <div id="dt-col-panel" className="dt-col-panel">
-                {columnDefs.map(col => (
+                {columnDefs.map((col) => (
                   <label key={col.key} className="dt-col-check">
                     <input
                       type="checkbox"

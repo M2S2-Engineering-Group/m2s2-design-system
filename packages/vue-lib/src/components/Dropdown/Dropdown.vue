@@ -1,27 +1,37 @@
 <script setup lang="ts">
-import { ref, nextTick, watch } from 'vue';
-import type { AnchorDropdownItem, ClickableDropdownItem, DropdownItem } from '@m2s2/models';
-import DropdownItemComponent from './DropdownItem.vue';
+import { ref, nextTick, watch } from "vue";
+import type {
+  AnchorDropdownItem,
+  ClickableDropdownItem,
+  DropdownItem,
+} from "@m2s2/models";
+import DropdownItemComponent from "./DropdownItem.vue";
 
-type DropdownItemConfig = DropdownItem & (
-  | Pick<AnchorDropdownItem, 'href'>
-  | Pick<ClickableDropdownItem, 'onClick'>
-  | Record<string, never>
+type DropdownItemConfig = DropdownItem &
+  (
+    | Pick<AnchorDropdownItem, "href">
+    | Pick<ClickableDropdownItem, "onClick">
+    | Record<string, never>
+  );
+
+withDefaults(
+  defineProps<{
+    items: DropdownItemConfig[];
+    align?: "left" | "right";
+  }>(),
+  { align: "left" },
 );
 
-withDefaults(defineProps<{
-  items: DropdownItemConfig[];
-  align?: 'left' | 'right';
-}>(), { align: 'left' });
-
-const open      = ref(false);
-const root      = ref<HTMLElement | null>(null);
+const open = ref(false);
+const root = ref<HTMLElement | null>(null);
 const triggerEl = ref<HTMLElement | null>(null);
-const menuEl    = ref<HTMLElement | null>(null);
+const menuEl = ref<HTMLElement | null>(null);
 
 function getMenuItems(): HTMLElement[] {
   return Array.from(
-    menuEl.value?.querySelectorAll('[role="menuitem"]:not([aria-disabled="true"])') ?? []
+    menuEl.value?.querySelectorAll(
+      '[role="menuitem"]:not([aria-disabled="true"])',
+    ) ?? [],
   ) as HTMLElement[];
 }
 
@@ -46,11 +56,11 @@ function onOutside(e: MouseEvent): void {
 }
 
 function onGlobalEscape(e: KeyboardEvent): void {
-  if (e.key === 'Escape' && open.value) closeMenu();
+  if (e.key === "Escape" && open.value) closeMenu();
 }
 
 function onTriggerKeyDown(e: KeyboardEvent): void {
-  if (e.key === 'Enter' || e.key === ' ') {
+  if (e.key === "Enter" || e.key === " ") {
     e.preventDefault();
     open.value ? closeMenu() : openMenu();
   }
@@ -58,40 +68,37 @@ function onTriggerKeyDown(e: KeyboardEvent): void {
 
 function onMenuKeyDown(e: KeyboardEvent): void {
   const items = getMenuItems();
-  const idx   = items.indexOf(document.activeElement as HTMLElement);
+  const idx = items.indexOf(document.activeElement as HTMLElement);
 
   switch (e.key) {
-    case 'ArrowDown':
+    case "ArrowDown":
       e.preventDefault();
       items[(idx + 1) % items.length]?.focus();
       break;
-    case 'ArrowUp':
+    case "ArrowUp":
       e.preventDefault();
       items[(idx - 1 + items.length) % items.length]?.focus();
       break;
-    case 'Home':
+    case "Home":
       e.preventDefault();
       items[0]?.focus();
       break;
-    case 'End':
+    case "End":
       e.preventDefault();
       items[items.length - 1]?.focus();
       break;
-    case 'Tab':
+    case "Tab":
       open.value = false;
       break;
   }
 }
 
-document.addEventListener('mousedown', onOutside);
-document.addEventListener('keydown', onGlobalEscape);
+document.addEventListener("mousedown", onOutside);
+document.addEventListener("keydown", onGlobalEscape);
 </script>
 
 <template>
-  <div
-    ref="root"
-    class="m2s2-dropdown"
-  >
+  <div ref="root" class="m2s2-dropdown">
     <div
       ref="triggerEl"
       class="m2s2-dropdown__trigger"
@@ -127,7 +134,9 @@ document.addEventListener('keydown', onGlobalEscape);
   position: relative;
   display: inline-block;
 
-  &__trigger { cursor: pointer; }
+  &__trigger {
+    cursor: pointer;
+  }
 
   &__menu {
     position: absolute;
@@ -142,8 +151,12 @@ document.addEventListener('keydown', onGlobalEscape);
     border-radius: var(--radius-md, 8px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 
-    &--left  { left: 0; }
-    &--right { right: 0; }
+    &--left {
+      left: 0;
+    }
+    &--right {
+      right: 0;
+    }
   }
 }
 </style>

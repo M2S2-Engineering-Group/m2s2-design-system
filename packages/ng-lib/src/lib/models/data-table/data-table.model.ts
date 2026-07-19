@@ -1,1 +1,1 @@
-export { ColumnDef } from '@m2s2/models';
+export { ColumnDef } from "@m2s2/models";

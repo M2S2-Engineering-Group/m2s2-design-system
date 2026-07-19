@@ -1,4 +1,4 @@
-import type { BlogCardConfig } from './card.model';
+import type { BlogCardConfig } from "./card.model";
 
 export interface BlogPost extends BlogCardConfig {
   content: string;

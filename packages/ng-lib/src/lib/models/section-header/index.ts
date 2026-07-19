@@ -1,1 +1,1 @@
-export * from './section-header.model';
+export * from "./section-header.model";

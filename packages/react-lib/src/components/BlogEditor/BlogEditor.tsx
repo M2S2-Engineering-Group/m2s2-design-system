@@ -1,9 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { marked } from 'marked';
-import type { BlogDraft, BlogPost } from '@m2s2/models';
-import { BLOG_EDITOR_TOOLBAR, calcReadingTime, generateSlug, todayAsIsoDate } from '@m2s2/utils';
-import type { ToolbarItem } from '@m2s2/utils';
-import './BlogEditor.scss';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { marked } from "marked";
+import type { BlogDraft, BlogPost } from "@m2s2/models";
+import {
+  BLOG_EDITOR_TOOLBAR,
+  calcReadingTime,
+  generateSlug,
+  todayAsIsoDate,
+} from "@m2s2/utils";
+import type { ToolbarItem } from "@m2s2/utils";
+import "./BlogEditor.scss";
 
 export interface BlogEditorProps {
   /** Populate fields when editing an existing post. */
@@ -27,23 +32,29 @@ export function BlogEditor({
   onPublish,
   onCoverImageSelected,
 }: BlogEditorProps) {
-  const [title,             setTitleRaw]          = useState(initialPost?.title ?? '');
-  const [slug,              setSlug]              = useState(initialPost?.slug  ?? '');
-  const [date,              setDate]              = useState(initialPost?.date  ?? todayAsIsoDate());
-  const [summary,           setSummary]           = useState(initialPost?.summary  ?? '');
-  const [excerpt,           setExcerpt]           = useState(initialPost?.excerpt  ?? '');
-  const [tags,              setTags]              = useState<string[]>(initialPost?.tags ?? []);
-  const [readingTime,       setReadingTime]       = useState(initialPost?.readingTime ?? 1);
-  const [content,           setContentRaw]        = useState(initialPost?.content ?? '');
-  const [coverPreview,      setCoverPreview]      = useState<string | undefined>(initialPost?.coverImage);
-  const [tagInput,          setTagInput]          = useState('');
-  const [selectedSeriesKey, setSelectedSeriesKey] = useState('none');
-  const [seriesId,          setSeriesId]          = useState(initialPost?.series?.id    ?? '');
-  const [seriesTitle,       setSeriesTitle]       = useState(initialPost?.series?.title ?? '');
-  const [seriesPart,        setSeriesPart]        = useState(initialPost?.series?.part  ?? 1);
-  const [seriesTotal,       setSeriesTotal]       = useState<number | undefined>(initialPost?.series?.total);
+  const [title, setTitleRaw] = useState(initialPost?.title ?? "");
+  const [slug, setSlug] = useState(initialPost?.slug ?? "");
+  const [date, setDate] = useState(initialPost?.date ?? todayAsIsoDate());
+  const [summary, setSummary] = useState(initialPost?.summary ?? "");
+  const [excerpt, setExcerpt] = useState(initialPost?.excerpt ?? "");
+  const [tags, setTags] = useState<string[]>(initialPost?.tags ?? []);
+  const [readingTime, setReadingTime] = useState(initialPost?.readingTime ?? 1);
+  const [content, setContentRaw] = useState(initialPost?.content ?? "");
+  const [coverPreview, setCoverPreview] = useState<string | undefined>(
+    initialPost?.coverImage,
+  );
+  const [tagInput, setTagInput] = useState("");
+  const [selectedSeriesKey, setSelectedSeriesKey] = useState("none");
+  const [seriesId, setSeriesId] = useState(initialPost?.series?.id ?? "");
+  const [seriesTitle, setSeriesTitle] = useState(
+    initialPost?.series?.title ?? "",
+  );
+  const [seriesPart, setSeriesPart] = useState(initialPost?.series?.part ?? 1);
+  const [seriesTotal, setSeriesTotal] = useState<number | undefined>(
+    initialPost?.series?.total,
+  );
 
-  const slugEdited  = useRef(!!initialPost);
+  const slugEdited = useRef(!!initialPost);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Populate all fields when the post changes.
@@ -53,14 +64,14 @@ export function BlogEditor({
     setSlug(initialPost.slug);
     setDate(initialPost.date);
     setSummary(initialPost.summary);
-    setExcerpt(initialPost.excerpt ?? '');
+    setExcerpt(initialPost.excerpt ?? "");
     setTags([...initialPost.tags]);
     setReadingTime(initialPost.readingTime ?? 1);
     setContentRaw(initialPost.content);
     setCoverPreview(initialPost.coverImage);
-    setSeriesId(initialPost.series?.id    ?? '');
-    setSeriesTitle(initialPost.series?.title ?? '');
-    setSeriesPart(initialPost.series?.part  ?? 1);
+    setSeriesId(initialPost.series?.id ?? "");
+    setSeriesTitle(initialPost.series?.title ?? "");
+    setSeriesPart(initialPost.series?.part ?? 1);
     setSeriesTotal(initialPost.series?.total);
     slugEdited.current = true;
   }, [initialPost]);
@@ -68,18 +79,21 @@ export function BlogEditor({
   // Derive which dropdown item is selected. Re-runs if existingSeries loads after initialPost.
   useEffect(() => {
     if (!initialPost?.series) {
-      setSelectedSeriesKey('none');
+      setSelectedSeriesKey("none");
       return;
     }
-    const inList = existingSeries.some(s => s.id === initialPost.series!.id);
-    setSelectedSeriesKey(inList ? initialPost.series!.id : '__new__');
+    const inList = existingSeries.some((s) => s.id === initialPost.series!.id);
+    setSelectedSeriesKey(inList ? initialPost.series!.id : "__new__");
   }, [initialPost, existingSeries]);
 
-  const setTitle = useCallback((value: string) => {
-    setTitleRaw(value);
-    if (!slugEdited.current) setSlug(generateSlug(value));
-    setReadingTime(calcReadingTime(content));
-  }, [content]);
+  const setTitle = useCallback(
+    (value: string) => {
+      setTitleRaw(value);
+      if (!slugEdited.current) setSlug(generateSlug(value));
+      setReadingTime(calcReadingTime(content));
+    },
+    [content],
+  );
 
   const setContent = useCallback((value: string) => {
     setContentRaw(value);
@@ -87,12 +101,15 @@ export function BlogEditor({
   }, []);
 
   const renderedHtml = marked.parse(content) as string;
-  const canPublish = title.trim().length > 0 && summary.trim().length > 0 && content.trim().length > 0;
+  const canPublish =
+    title.trim().length > 0 &&
+    summary.trim().length > 0 &&
+    content.trim().length > 0;
 
   function onSeriesKeyChange(key: string) {
     setSelectedSeriesKey(key);
-    if (key !== 'none' && key !== '__new__') {
-      const found = existingSeries.find(s => s.id === key);
+    if (key !== "none" && key !== "__new__") {
+      const found = existingSeries.find((s) => s.id === key);
       if (found) {
         setSeriesId(found.id);
         setSeriesTitle(found.title);
@@ -101,14 +118,14 @@ export function BlogEditor({
   }
 
   function onTagKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter' || e.key === ',') {
+    if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const tag = generateSlug(tagInput);
-      if (tag && !tags.includes(tag)) setTags(prev => [...prev, tag]);
-      setTagInput('');
+      if (tag && !tags.includes(tag)) setTags((prev) => [...prev, tag]);
+      setTagInput("");
     }
-    if (e.key === 'Backspace' && !tagInput && tags.length) {
-      setTags(prev => prev.slice(0, -1));
+    if (e.key === "Backspace" && !tagInput && tags.length) {
+      setTags((prev) => prev.slice(0, -1));
     }
   }
 
@@ -126,53 +143,70 @@ export function BlogEditor({
     if (!el) return;
 
     const start = el.selectionStart;
-    const end   = el.selectionEnd;
-    const cur   = content;
+    const end = el.selectionEnd;
+    const cur = content;
     let newContent: string;
     let newCursor: number;
 
     if (item.wrap) {
       const [before, after] = item.wrap;
-      const sel = cur.slice(start, end) || 'text';
+      const sel = cur.slice(start, end) || "text";
       newContent = cur.slice(0, start) + before + sel + after + cur.slice(end);
-      newCursor  = start + before.length + sel.length + after.length;
+      newCursor = start + before.length + sel.length + after.length;
     } else if (item.prefix) {
-      const lineStart = cur.lastIndexOf('\n', start - 1) + 1;
+      const lineStart = cur.lastIndexOf("\n", start - 1) + 1;
       newContent = cur.slice(0, lineStart) + item.prefix + cur.slice(lineStart);
-      newCursor  = start + item.prefix.length;
+      newCursor = start + item.prefix.length;
     } else if (item.block) {
       newContent = cur.slice(0, start) + item.block + cur.slice(end);
-      newCursor  = start + item.block.length;
+      newCursor = start + item.block.length;
     } else {
       return;
     }
 
     setContentRaw(newContent);
-    setTimeout(() => { el.selectionStart = el.selectionEnd = newCursor; el.focus(); }, 0);
+    setTimeout(() => {
+      el.selectionStart = el.selectionEnd = newCursor;
+      el.focus();
+    }, 0);
   }
 
   function handlePublish() {
     if (!canPublish) return;
-    let series: BlogDraft['series'];
-    if (selectedSeriesKey === '__new__') {
+    let series: BlogDraft["series"];
+    if (selectedSeriesKey === "__new__") {
       const id = seriesId.trim();
       const total = seriesTotal;
-      series = id ? { id, title: seriesTitle.trim() || id, part: seriesPart, ...(total !== undefined ? { total } : {}) } : undefined;
-    } else if (selectedSeriesKey !== 'none') {
-      const found = existingSeries.find(s => s.id === selectedSeriesKey);
+      series = id
+        ? {
+            id,
+            title: seriesTitle.trim() || id,
+            part: seriesPart,
+            ...(total !== undefined ? { total } : {}),
+          }
+        : undefined;
+    } else if (selectedSeriesKey !== "none") {
+      const found = existingSeries.find((s) => s.id === selectedSeriesKey);
       const total = seriesTotal;
-      series = found ? { id: found.id, title: found.title, part: seriesPart, ...(total !== undefined ? { total } : {}) } : undefined;
+      series = found
+        ? {
+            id: found.id,
+            title: found.title,
+            part: seriesPart,
+            ...(total !== undefined ? { total } : {}),
+          }
+        : undefined;
     }
     onPublish?.({
       title,
-      slug:        slug || generateSlug(title),
+      slug: slug || generateSlug(title),
       date,
       summary,
-      excerpt:     excerpt || undefined,
+      excerpt: excerpt || undefined,
       tags,
       readingTime,
       content,
-      coverImage:  coverImageUrl ?? coverPreview,
+      coverImage: coverImageUrl ?? coverPreview,
       series,
     });
   }
@@ -181,17 +215,17 @@ export function BlogEditor({
 
   return (
     <div className="be-root">
-
       {/* ── Metadata ────────────────────────────────────────────────────── */}
       <section className="be-meta">
-
         <div className="be-field be-field--full">
-          <label className="be-label">Title <span className="be-required">*</span></label>
+          <label className="be-label">
+            Title <span className="be-required">*</span>
+          </label>
           <input
             className="be-input"
             type="text"
             value={title}
-            onChange={e => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title…"
           />
         </div>
@@ -202,40 +236,49 @@ export function BlogEditor({
             className="be-input"
             type="text"
             value={slug}
-            onChange={e => { setSlug(e.target.value); slugEdited.current = true; }}
+            onChange={(e) => {
+              setSlug(e.target.value);
+              slugEdited.current = true;
+            }}
             placeholder="post-slug"
           />
         </div>
 
         <div className="be-field">
-          <label className="be-label" htmlFor="be-date">Date</label>
+          <label className="be-label" htmlFor="be-date">
+            Date
+          </label>
           <input
             id="be-date"
             className="be-input"
             type="date"
             value={date}
-            onChange={e => setDate(e.target.value)}
+            onChange={(e) => setDate(e.target.value)}
           />
         </div>
 
         <div className="be-field be-field--full">
-          <label className="be-label">Summary <span className="be-required">*</span></label>
+          <label className="be-label">
+            Summary <span className="be-required">*</span>
+          </label>
           <textarea
             className="be-input be-input--textarea"
             rows={2}
             value={summary}
-            onChange={e => setSummary(e.target.value)}
+            onChange={(e) => setSummary(e.target.value)}
             placeholder="Short description shown in blog listings…"
           />
         </div>
 
         <div className="be-field be-field--full">
-          <label className="be-label">Excerpt <span className="be-optional">(optional)</span></label>
+          <label className="be-label">
+            Excerpt <span className="be-optional">(optional)</span>
+          </label>
           <textarea
             className="be-input be-input--textarea"
             rows={2}
             value={excerpt}
-            onChange={e => setExcerpt(e.target.value)}
+            onChange={(e) => setExcerpt(e.target.value)}
             placeholder="Longer teaser for social previews…"
           />
         </div>
@@ -243,22 +286,26 @@ export function BlogEditor({
         <div className="be-field">
           <label className="be-label">Tags</label>
           <div className="be-tags">
-            {tags.map(tag => (
+            {tags.map((tag) => (
               <span key={tag} className="be-tag">
                 {tag}
                 <button
                   type="button"
                   className="be-tag__remove"
-                  onClick={() => setTags(prev => prev.filter(t => t !== tag))}
+                  onClick={() =>
+                    setTags((prev) => prev.filter((t) => t !== tag))
+                  }
                   aria-label={`Remove tag ${tag}`}
-                >×</button>
+                >
+                  ×
+                </button>
               </span>
             ))}
             <input
               className="be-tag-input"
               type="text"
               value={tagInput}
-              onChange={e => setTagInput(e.target.value)}
+              onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={onTagKeyDown}
               placeholder="Add tag, press Enter…"
             />
@@ -266,14 +313,16 @@ export function BlogEditor({
         </div>
 
         <div className="be-field">
-          <label className="be-label" htmlFor="be-reading-time">Reading time (min)</label>
+          <label className="be-label" htmlFor="be-reading-time">
+            Reading time (min)
+          </label>
           <input
             id="be-reading-time"
             className="be-input be-input--narrow"
             type="number"
             min={1}
             value={readingTime}
-            onChange={e => setReadingTime(Number(e.target.value))}
+            onChange={(e) => setReadingTime(Number(e.target.value))}
           />
         </div>
 
@@ -281,34 +330,49 @@ export function BlogEditor({
           <label className="be-label">Cover Image</label>
           <div className="be-cover">
             {previewUrl && (
-              <img className="be-cover__preview" src={previewUrl} alt="Cover preview" />
+              <img
+                className="be-cover__preview"
+                src={previewUrl}
+                alt="Cover preview"
+              />
             )}
             <label className="be-cover__pick">
-              {previewUrl ? 'Replace' : 'Choose image'}
-              <input type="file" accept="image/*" onChange={onCoverChange} hidden />
+              {previewUrl ? "Replace" : "Choose image"}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={onCoverChange}
+                hidden
+              />
             </label>
           </div>
         </div>
 
-        <div className="be-field-group-label">Series <span className="be-optional">(optional)</span></div>
+        <div className="be-field-group-label">
+          Series <span className="be-optional">(optional)</span>
+        </div>
 
         <div className="be-field be-field--full">
-          <label className="be-label" htmlFor="be-series">Series</label>
+          <label className="be-label" htmlFor="be-series">
+            Series
+          </label>
           <select
             id="be-series"
             className="be-input be-input--select"
             value={selectedSeriesKey}
-            onChange={e => onSeriesKeyChange(e.target.value)}
+            onChange={(e) => onSeriesKeyChange(e.target.value)}
           >
             <option value="none">— None —</option>
-            {existingSeries.map(s => (
-              <option key={s.id} value={s.id}>{s.title}</option>
+            {existingSeries.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.title}
+              </option>
             ))}
             <option value="__new__">+ New series…</option>
           </select>
         </div>
 
-        {selectedSeriesKey === '__new__' && (
+        {selectedSeriesKey === "__new__" && (
           <>
             <div className="be-field">
               <label className="be-label">Series ID</label>
@@ -316,7 +380,7 @@ export function BlogEditor({
                 className="be-input"
                 type="text"
                 value={seriesId}
-                onChange={e => setSeriesId(e.target.value)}
+                onChange={(e) => setSeriesId(e.target.value)}
                 placeholder="e.g. go-backend"
               />
             </div>
@@ -326,49 +390,57 @@ export function BlogEditor({
                 className="be-input"
                 type="text"
                 value={seriesTitle}
-                onChange={e => setSeriesTitle(e.target.value)}
+                onChange={(e) => setSeriesTitle(e.target.value)}
                 placeholder="e.g. Go Backend Series"
               />
             </div>
           </>
         )}
 
-        {selectedSeriesKey !== 'none' && (
+        {selectedSeriesKey !== "none" && (
           <div className="be-field be-field--narrow-pair">
             <div>
-              <label className="be-label" htmlFor="series-part">Part</label>
+              <label className="be-label" htmlFor="series-part">
+                Part
+              </label>
               <input
                 id="series-part"
                 className="be-input be-input--narrow"
                 type="number"
                 min={1}
                 value={seriesPart}
-                onChange={e => setSeriesPart(Number(e.target.value))}
+                onChange={(e) => setSeriesPart(Number(e.target.value))}
               />
             </div>
             <div>
-              <label className="be-label" htmlFor="series-total">Total Parts <span className="be-optional">(optional)</span></label>
+              <label className="be-label" htmlFor="series-total">
+                Total Parts <span className="be-optional">(optional)</span>
+              </label>
               <input
                 id="series-total"
                 className="be-input be-input--narrow"
                 type="number"
                 min={1}
-                value={seriesTotal ?? ''}
+                value={seriesTotal ?? ""}
                 placeholder="auto"
-                onChange={e => setSeriesTotal(e.target.value ? Number(e.target.value) : undefined)}
+                onChange={(e) =>
+                  setSeriesTotal(
+                    e.target.value ? Number(e.target.value) : undefined,
+                  )
+                }
               />
-              <span className="be-hint">Leave blank to derive from published post count</span>
+              <span className="be-hint">
+                Leave blank to derive from published post count
+              </span>
             </div>
           </div>
         )}
-
       </section>
 
       {/* ── Editor ──────────────────────────────────────────────────────── */}
       <section className="be-editor">
-
         <div className="be-toolbar" role="toolbar" aria-label="Formatting">
-          {BLOG_EDITOR_TOOLBAR.map(item => (
+          {BLOG_EDITOR_TOOLBAR.map((item) => (
             <button
               key={item.label}
               type="button"
@@ -376,7 +448,9 @@ export function BlogEditor({
               title={item.label}
               aria-label={item.label}
               onClick={() => applyFormat(item)}
-            >{item.icon}</button>
+            >
+              {item.icon}
+            </button>
           ))}
         </div>
 
@@ -387,7 +461,7 @@ export function BlogEditor({
               ref={textareaRef}
               className="be-pane__textarea"
               value={content}
-              onChange={e => setContent(e.target.value)}
+              onChange={(e) => setContent(e.target.value)}
               placeholder="Write your post in markdown…"
               spellCheck
             />
@@ -396,10 +470,12 @@ export function BlogEditor({
           <div className="be-pane be-pane--preview">
             <div className="be-pane__label">Preview</div>
             {/* content is authored by the admin user — trusted HTML */}
-            <div className="be-pane__preview prose" dangerouslySetInnerHTML={{ __html: renderedHtml }} />
+            <div
+              className="be-pane__preview prose"
+              dangerouslySetInnerHTML={{ __html: renderedHtml }}
+            />
           </div>
         </div>
-
       </section>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
@@ -410,9 +486,10 @@ export function BlogEditor({
           className="be-publish"
           disabled={!canPublish}
           onClick={handlePublish}
-        >Publish Post</button>
+        >
+          Publish Post
+        </button>
       </footer>
-
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-import { StatItem } from '@m2s2/models';
-import './StatRow.scss';
+import { Fragment } from "react";
+import { StatItem } from "@m2s2/models";
+import "./StatRow.scss";
 
 interface StatRowProps {
   stats: StatItem[];
@@ -15,7 +15,9 @@ export function StatRow({ stats }: StatRowProps) {
             <span className="sr-value">{stat.value}</span>
             <span className="sr-label">{stat.label}</span>
           </div>
-          {i < stats.length - 1 && <div className="sr-divider" aria-hidden="true" />}
+          {i < stats.length - 1 && (
+            <div className="sr-divider" aria-hidden="true" />
+          )}
         </Fragment>
       ))}
     </div>

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { LoadingButtonComponent } from './loading-button.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { LoadingButtonComponent } from "./loading-button.component";
 
 const BTN_STYLES = `
   .btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; &:disabled { opacity: 0.6; cursor: not-allowed; } }
@@ -12,11 +12,11 @@ const BTN_STYLES = `
 `;
 
 const meta: Meta<LoadingButtonComponent> = {
-  title: 'Components/LoadingButton',
+  title: "Components/LoadingButton",
   component: LoadingButtonComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component: `
@@ -37,7 +37,7 @@ export default meta;
 type Story = StoryObj<LoadingButtonComponent>;
 
 export const States: Story = {
-  name: 'All States',
+  name: "All States",
   render: () => ({
     styles: [BTN_STYLES],
     template: `
@@ -64,7 +64,7 @@ export const States: Story = {
 };
 
 export const SpinnerOnly: Story = {
-  name: 'Spinner Without Label Change',
+  name: "Spinner Without Label Change",
   render: () => ({
     styles: [BTN_STYLES],
     template: `
@@ -79,7 +79,8 @@ export const SpinnerOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Omit `loadingText` and the original label stays visible alongside the spinner.',
+        story:
+          "Omit `loadingText` and the original label stays visible alongside the spinner.",
       },
     },
   },

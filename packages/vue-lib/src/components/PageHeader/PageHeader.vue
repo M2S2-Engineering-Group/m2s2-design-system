@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PageHeaderConfig } from '@m2s2/models';
+import type { PageHeaderConfig } from "@m2s2/models";
 
 defineProps<{ config: PageHeaderConfig }>();
 </script>
@@ -28,7 +28,9 @@ defineProps<{ config: PageHeaderConfig }>();
   color: var(--color-on-bg);
   margin: 0 0 var(--space-4);
 
-  @media (max-width: 767px) { font-size: var(--font-size-2xl); }
+  @media (max-width: 767px) {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .page-subtitle {
@@ -37,6 +39,8 @@ defineProps<{ config: PageHeaderConfig }>();
   color: var(--color-on-surface-muted);
   margin: 0;
 
-  @media (max-width: 767px) { font-size: var(--font-size-base); }
+  @media (max-width: 767px) {
+    font-size: var(--font-size-base);
+  }
 }
 </style>

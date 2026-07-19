@@ -8,21 +8,22 @@ import {
   inject,
   input,
   viewChild,
-} from '@angular/core';
-import { Chart } from 'chart.js/auto';
-import { buildRankedBarChartConfig } from '@m2s2/utils';
-import { RankedBarItem } from '../../models/chart';
+} from "@angular/core";
+import { Chart } from "chart.js/auto";
+import { buildRankedBarChartConfig } from "@m2s2/utils";
+import { RankedBarItem } from "../../models/chart";
 
 @Component({
-  selector: 'm2s2-ranked-bar-chart',
-  templateUrl: './ranked-bar-chart.component.html',
-  styleUrls: ['./ranked-bar-chart.component.scss'],
+  selector: "m2s2-ranked-bar-chart",
+  templateUrl: "./ranked-bar-chart.component.html",
+  styleUrls: ["./ranked-bar-chart.component.scss"],
   standalone: true,
 })
 export class RankedBarChartComponent {
   data = input.required<RankedBarItem[]>();
 
-  private readonly canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
+  private readonly canvasRef =
+    viewChild.required<ElementRef<HTMLCanvasElement>>("canvas");
   private readonly injector = inject(Injector);
   private readonly destroyRef = inject(DestroyRef);
   private chart?: Chart;

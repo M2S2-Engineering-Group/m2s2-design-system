@@ -1,33 +1,35 @@
-import { render, screen } from '@testing-library/react';
-import { makeProcessSteps } from '@m2s2/utils/testing';
-import { axe } from 'jest-axe';
-import { ProcessSteps } from './ProcessSteps';
+import { render, screen } from "@testing-library/react";
+import { makeProcessSteps } from "@m2s2/utils/testing";
+import { axe } from "jest-axe";
+import { ProcessSteps } from "./ProcessSteps";
 
-describe('ProcessSteps', () => {
-  it('renders each step number', () => {
+describe("ProcessSteps", () => {
+  it("renders each step number", () => {
     render(<ProcessSteps steps={makeProcessSteps(3)} />);
-    expect(screen.getByText('01')).toBeInTheDocument();
-    expect(screen.getByText('02')).toBeInTheDocument();
-    expect(screen.getByText('03')).toBeInTheDocument();
+    expect(screen.getByText("01")).toBeInTheDocument();
+    expect(screen.getByText("02")).toBeInTheDocument();
+    expect(screen.getByText("03")).toBeInTheDocument();
   });
 
-  it('renders each step name', () => {
+  it("renders each step name", () => {
     render(<ProcessSteps steps={makeProcessSteps(3)} />);
-    expect(screen.getByText('Step 1')).toBeInTheDocument();
-    expect(screen.getByText('Step 2')).toBeInTheDocument();
-    expect(screen.getByText('Step 3')).toBeInTheDocument();
+    expect(screen.getByText("Step 1")).toBeInTheDocument();
+    expect(screen.getByText("Step 2")).toBeInTheDocument();
+    expect(screen.getByText("Step 3")).toBeInTheDocument();
   });
 
-  it('renders each step description', () => {
+  it("renders each step description", () => {
     render(<ProcessSteps steps={makeProcessSteps(3)} />);
-    expect(screen.getByText('Description 1.')).toBeInTheDocument();
-    expect(screen.getByText('Description 2.')).toBeInTheDocument();
-    expect(screen.getByText('Description 3.')).toBeInTheDocument();
+    expect(screen.getByText("Description 1.")).toBeInTheDocument();
+    expect(screen.getByText("Description 2.")).toBeInTheDocument();
+    expect(screen.getByText("Description 3.")).toBeInTheDocument();
   });
 
-  describe('accessibility', () => {
-    it('has no violations', async () => {
-      const { container } = render(<ProcessSteps steps={makeProcessSteps(3)} />);
+  describe("accessibility", () => {
+    it("has no violations", async () => {
+      const { container } = render(
+        <ProcessSteps steps={makeProcessSteps(3)} />,
+      );
       expect(await axe(container)).toHaveNoViolations();
     });
   });

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { BlogCardConfig } from '@m2s2/models';
-import { formatBlogDate, formatTagLabel } from '@m2s2/utils';
+import type { BlogCardConfig } from "@m2s2/models";
+import { formatBlogDate, formatTagLabel } from "@m2s2/utils";
 
 defineProps<{ config: BlogCardConfig }>();
 </script>
@@ -14,21 +14,17 @@ defineProps<{ config: BlogCardConfig }>();
         :alt="config.title"
         class="bc-cover-img"
         loading="lazy"
-      >
-      <div
-        v-else
-        class="bc-cover-placeholder"
-      >
+      />
+      <div v-else class="bc-cover-placeholder">
         <span class="bc-cover-tag">{{ formatTagLabel(config.tags[0]) }}</span>
       </div>
     </div>
     <div class="bc-inner">
       <div class="bc-meta">
         <time :dateTime="config.date">{{ formatBlogDate(config.date) }}</time>
-        <span
-          v-if="config.readingTime"
-          class="bc-reading-time"
-        >{{ config.readingTime }} min read</span>
+        <span v-if="config.readingTime" class="bc-reading-time"
+          >{{ config.readingTime }} min read</span
+        >
       </div>
       <h2 class="bc-title">
         <a :href="`/blog/${config.slug}`">{{ config.title }}</a>
@@ -37,18 +33,16 @@ defineProps<{ config: BlogCardConfig }>();
         {{ config.summary }}
       </p>
       <div class="bc-tags">
-        <span
-          v-for="tag in config.tags"
-          :key="tag"
-          class="bc-tag"
-        >{{ formatTagLabel(tag) }}</span>
+        <span v-for="tag in config.tags" :key="tag" class="bc-tag">{{
+          formatTagLabel(tag)
+        }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-blog-card {
   @include m.card-surface;
@@ -101,7 +95,9 @@ defineProps<{ config: BlogCardConfig }>();
   color: var(--color-on-surface-muted);
 }
 
-.bc-reading-time { opacity: 0.8; }
+.bc-reading-time {
+  opacity: 0.8;
+}
 
 .bc-title {
   font-size: var(--font-size-lg);
@@ -113,7 +109,9 @@ defineProps<{ config: BlogCardConfig }>();
   a {
     color: inherit;
     text-decoration: none;
-    &:hover { color: var(--color-secondary); }
+    &:hover {
+      color: var(--color-secondary);
+    }
   }
 }
 

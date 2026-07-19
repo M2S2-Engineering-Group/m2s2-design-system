@@ -1,1 +1,1 @@
-export type { TimeSeriesPoint, RankedBarItem } from '@m2s2/models';
+export type { TimeSeriesPoint, RankedBarItem } from "@m2s2/models";

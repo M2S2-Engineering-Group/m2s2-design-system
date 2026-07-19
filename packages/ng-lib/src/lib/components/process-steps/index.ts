@@ -1,1 +1,1 @@
-export * from './process-steps.component';
+export * from "./process-steps.component";

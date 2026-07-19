@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { BaseCardComponent } from './base-card.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { BaseCardComponent } from "./base-card.component";
 
 const meta: Meta<BaseCardComponent> = {
-  title: 'Cards/BaseCard',
+  title: "Cards/BaseCard",
   component: BaseCardComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['default', 'raised', 'accent'],
+      control: "select",
+      options: ["default", "raised", "accent"],
     },
-    featured: { control: 'boolean' },
+    featured: { control: "boolean" },
   },
   render: (args) => ({
     props: args,
@@ -28,17 +28,17 @@ export default meta;
 type Story = StoryObj<BaseCardComponent>;
 
 export const Default: Story = {
-  args: { variant: 'default', featured: false },
+  args: { variant: "default", featured: false },
 };
 
 export const Raised: Story = {
-  args: { variant: 'raised', featured: false },
+  args: { variant: "raised", featured: false },
 };
 
 export const Accent: Story = {
-  args: { variant: 'accent', featured: false },
+  args: { variant: "accent", featured: false },
 };
 
 export const Featured: Story = {
-  args: { variant: 'default', featured: true },
+  args: { variant: "default", featured: true },
 };

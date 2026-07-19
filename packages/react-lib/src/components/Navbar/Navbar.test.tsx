@@ -1,70 +1,82 @@
-import { render, screen } from '@testing-library/react';
-import { makeNavbarConfig, makeNavbarButton } from '@m2s2/utils/testing';
-import { axe } from 'jest-axe';
-import { Navbar } from './Navbar';
+import { render, screen } from "@testing-library/react";
+import { makeNavbarConfig, makeNavbarButton } from "@m2s2/utils/testing";
+import { axe } from "jest-axe";
+import { Navbar } from "./Navbar";
 
-const renderNavbar = (props: Partial<React.ComponentProps<typeof Navbar>> = {}) =>
-  render(
-    <Navbar
-      config={makeNavbarConfig()}
-      {...props}
-    />
-  );
+const renderNavbar = (
+  props: Partial<React.ComponentProps<typeof Navbar>> = {},
+) => render(<Navbar config={makeNavbarConfig()} {...props} />);
 
-describe('Navbar', () => {
-  it('renders the brand name', () => {
-    renderNavbar({ config: makeNavbarConfig({ brand: 'Acme Corp' }) });
-    expect(screen.getByText('Acme Corp')).toBeInTheDocument();
+describe("Navbar", () => {
+  it("renders the brand name", () => {
+    renderNavbar({ config: makeNavbarConfig({ brand: "Acme Corp" }) });
+    expect(screen.getByText("Acme Corp")).toBeInTheDocument();
   });
 
-  it('renders nav buttons that do not require auth', () => {
+  it("renders nav buttons that do not require auth", () => {
     renderNavbar({
       config: makeNavbarConfig({
-        buttons: [makeNavbarButton({ id: '1', title: 'Home', requiresAuth: false })],
+        buttons: [
+          makeNavbarButton({ id: "1", title: "Home", requiresAuth: false }),
+        ],
       }),
     });
-    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText("Home")).toBeInTheDocument();
   });
 
-  it('hides buttons that require auth when loggedIn is false', () => {
+  it("hides buttons that require auth when loggedIn is false", () => {
     renderNavbar({
       config: makeNavbarConfig({
-        buttons: [makeNavbarButton({ id: '1', title: 'Dashboard', requiresAuth: true })],
+        buttons: [
+          makeNavbarButton({ id: "1", title: "Dashboard", requiresAuth: true }),
+        ],
       }),
       loggedIn: false,
     });
-    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument();
+    expect(screen.queryByText("Dashboard")).not.toBeInTheDocument();
   });
 
-  it('shows buttons that require auth when loggedIn is true', () => {
+  it("shows buttons that require auth when loggedIn is true", () => {
     renderNavbar({
       config: makeNavbarConfig({
-        buttons: [makeNavbarButton({ id: '1', title: 'Dashboard', requiresAuth: true })],
+        buttons: [
+          makeNavbarButton({ id: "1", title: "Dashboard", requiresAuth: true }),
+        ],
       }),
       loggedIn: true,
     });
-    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+    expect(screen.getByText("Dashboard")).toBeInTheDocument();
   });
 
-  it('renders the mobile hamburger button', () => {
+  it("renders the mobile hamburger button", () => {
     renderNavbar();
-    expect(screen.getByRole('button', { name: 'Open navigation menu' })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    ).toBeInTheDocument();
   });
 
-  describe('accessibility', () => {
-    it('has no violations (logged out)', async () => {
-      const { container } = render(<Navbar config={makeNavbarConfig()} loggedIn={false} />);
+  describe("accessibility", () => {
+    it("has no violations (logged out)", async () => {
+      const { container } = render(
+        <Navbar config={makeNavbarConfig()} loggedIn={false} />,
+      );
       expect(await axe(container)).toHaveNoViolations();
     });
 
-    it('has no violations (logged in)', async () => {
+    it("has no violations (logged in)", async () => {
       const { container } = render(
         <Navbar
           config={makeNavbarConfig({
-            buttons: [makeNavbarButton({ id: '1', title: 'Dashboard', requiresAuth: true })],
+            buttons: [
+              makeNavbarButton({
+                id: "1",
+                title: "Dashboard",
+                requiresAuth: true,
+              }),
+            ],
           })}
           loggedIn={true}
-        />
+        />,
       );
       expect(await axe(container)).toHaveNoViolations();
     });

@@ -1,25 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
-import StatusBadge from './StatusBadge.vue';
+import type { Meta, StoryObj } from "@storybook/vue3";
+import StatusBadge from "./StatusBadge.vue";
 
 const meta: Meta<typeof StatusBadge> = {
-  title: 'Components/StatusBadge',
+  title: "Components/StatusBadge",
   component: StatusBadge,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    variant: { control: 'select', options: ['badge', 'pill'] },
+    variant: { control: "select", options: ["badge", "pill"] },
   },
 };
 export default meta;
 type Story = StoryObj<typeof StatusBadge>;
 
-export const Received: Story        = { args: { status: 'received',        variant: 'badge' } };
-export const Reviewing: Story       = { args: { status: 'reviewing',       variant: 'badge' } };
-export const InConversation: Story  = { args: { status: 'in_conversation', variant: 'badge' } };
-export const Closed: Story          = { args: { status: 'closed',          variant: 'badge' } };
-export const Cancelled: Story       = { args: { status: 'cancelled',       variant: 'badge' } };
-export const ResumePending: Story   = { args: { status: 'resume-pending',  variant: 'badge' } };
-export const ResumeApproved: Story  = { args: { status: 'resume-approved', variant: 'badge' } };
-export const ResumeDeclined: Story  = { args: { status: 'resume-declined', variant: 'badge' } };
+export const Received: Story = {
+  args: { status: "received", variant: "badge" },
+};
+export const Reviewing: Story = {
+  args: { status: "reviewing", variant: "badge" },
+};
+export const InConversation: Story = {
+  args: { status: "in_conversation", variant: "badge" },
+};
+export const Closed: Story = { args: { status: "closed", variant: "badge" } };
+export const Cancelled: Story = {
+  args: { status: "cancelled", variant: "badge" },
+};
+export const ResumePending: Story = {
+  args: { status: "resume-pending", variant: "badge" },
+};
+export const ResumeApproved: Story = {
+  args: { status: "resume-approved", variant: "badge" },
+};
+export const ResumeDeclined: Story = {
+  args: { status: "resume-declined", variant: "badge" },
+};
 
 export const PillVariant: Story = {
   render: () => ({
@@ -60,5 +74,5 @@ export const AllStatuses: Story = {
 };
 
 export const CustomLabel: Story = {
-  args: { status: 'in_conversation', label: 'Active', variant: 'badge' },
+  args: { status: "in_conversation", label: "Active", variant: "badge" },
 };

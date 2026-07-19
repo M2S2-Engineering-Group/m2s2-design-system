@@ -1,6 +1,6 @@
-import { DialogAction } from './dialog.model';
+import { DialogAction } from "./dialog.model";
 
-export type PanelSide = 'left' | 'right';
+export type PanelSide = "left" | "right";
 
 export interface M2S2PanelData {
   title: string;

@@ -1,11 +1,11 @@
-import { DropdownItem } from '@m2s2/models';
+import { DropdownItem } from "@m2s2/models";
 
 /** Angular-specific dropdown item — extends base with matIcon support. */
 export class DropdownItemModel implements DropdownItem {
-  id: string = '';
-  imgSrc: string = '';
-  matIcon: string = '';
-  text: string = '';
+  id: string = "";
+  imgSrc: string = "";
+  matIcon: string = "";
+  text: string = "";
   requiresAuth: boolean = false;
 
   constructor(id: string, imgSrc: string, text: string) {
@@ -16,7 +16,7 @@ export class DropdownItemModel implements DropdownItem {
 }
 
 export class AnchorDropdownItemModel extends DropdownItemModel {
-  hrefAddr: string = '';
+  hrefAddr: string = "";
 
   constructor(id: string, imgSrc: string, text: string, hrefAddr: string) {
     super(id, imgSrc, text);
@@ -35,7 +35,7 @@ export class ClickableDropdownItemModel extends DropdownItemModel {
 
 /** Angular Router variant — use routerLink instead of href. */
 export class RouterLinkDropdownModel extends DropdownItemModel {
-  routerLink: string = '';
+  routerLink: string = "";
 
   constructor(id: string, imgSrc: string, text: string, routerLink: string) {
     super(id, imgSrc, text);

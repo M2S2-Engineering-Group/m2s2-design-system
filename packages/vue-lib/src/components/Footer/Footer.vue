@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { FooterConfig } from '@m2s2/models';
-import SocialIcon from './SocialIcon.vue';
+import type { FooterConfig } from "@m2s2/models";
+import SocialIcon from "./SocialIcon.vue";
 
 defineProps<{ config: FooterConfig }>();
 
@@ -12,15 +12,11 @@ const year = new Date().getFullYear();
     <div class="footer-inner">
       <span class="footer-copy">
         &copy; {{ year }} {{ config.brandName }} &mdash; All Rights Reserved
-        <span
-          v-if="config.buildVersion"
-          class="footer-build"
-        >&middot; {{ config.buildVersion.split('+')[0] }}</span>
+        <span v-if="config.buildVersion" class="footer-build"
+          >&middot; {{ config.buildVersion.split("+")[0] }}</span
+        >
       </span>
-      <nav
-        class="footer-social"
-        aria-label="Social links"
-      >
+      <nav class="footer-social" aria-label="Social links">
         <a
           v-for="link in config.links"
           :key="link.type"
@@ -28,7 +24,11 @@ const year = new Date().getFullYear();
           class="social-link"
           :title="link.label ?? link.type"
           :aria-label="link.label ?? link.type"
-          v-bind="link.type !== 'email' ? { target: '_blank', rel: 'noopener noreferrer' } : {}"
+          v-bind="
+            link.type !== 'email'
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {}
+          "
         >
           <SocialIcon :type="link.type" />
         </a>
@@ -38,7 +38,7 @@ const year = new Date().getFullYear();
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-footer {
   width: 100%;
@@ -77,8 +77,12 @@ const year = new Date().getFullYear();
   gap: var(--space-3);
 }
 
-.social-link { @include m.social-link; }
-.social-icon { @include m.social-icon; }
+.social-link {
+  @include m.social-link;
+}
+.social-icon {
+  @include m.social-icon;
+}
 
 .footer-build {
   display: none;

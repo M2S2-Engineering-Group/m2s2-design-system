@@ -1,4 +1,4 @@
-export type SocialLinkType = 'github' | 'linkedin' | 'twitter' | 'email';
+export type SocialLinkType = "github" | "linkedin" | "twitter" | "email";
 
 export interface FooterSocialLink {
   type: SocialLinkType;

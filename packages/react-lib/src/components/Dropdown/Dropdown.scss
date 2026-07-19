@@ -19,8 +19,12 @@
     border-radius: var(--radius-md, 8px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 
-    &--left  { left: 0; }
-    &--right { right: 0; }
+    &--left {
+      left: 0;
+    }
+    &--right {
+      right: 0;
+    }
   }
 
   &__item {
@@ -40,7 +44,9 @@
     text-align: left;
     cursor: pointer;
     text-decoration: none;
-    transition: background 150ms ease, color 150ms ease;
+    transition:
+      background 150ms ease,
+      color 150ms ease;
 
     &:hover {
       background: var(--color-surface-overlay);

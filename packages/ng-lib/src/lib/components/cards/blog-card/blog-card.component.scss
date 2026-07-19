@@ -1,4 +1,4 @@
-@use 'tokens/src/breakpoints' as t;
+@use "tokens/src/breakpoints" as t;
 
 // Card chrome on the host — cover image must go edge-to-edge so padding lives
 // in bc-inner, not here.
@@ -10,7 +10,9 @@
   border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
-  transition: border-color var(--transition-base), transform var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base);
 
   &:hover {
     border-color: var(--color-primary-dim);
@@ -103,7 +105,7 @@
   color: var(--color-on-surface-muted);
 
   &::before {
-    content: '·';
+    content: "·";
     margin-right: var(--space-2);
   }
 }
@@ -119,11 +121,13 @@
     text-decoration: none;
     transition: color var(--transition-fast);
 
-    &:hover { color: var(--color-primary); }
+    &:hover {
+      color: var(--color-primary);
+    }
 
     // Stretch link to cover entire card
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
     }

@@ -1,5 +1,5 @@
-import { CtaConfig } from '@m2s2/models';
-import './CtaSection.scss';
+import { CtaConfig } from "@m2s2/models";
+import "./CtaSection.scss";
 
 interface CtaSectionProps {
   config: CtaConfig;

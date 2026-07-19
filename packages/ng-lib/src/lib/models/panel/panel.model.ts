@@ -1,5 +1,5 @@
-import { Type } from '@angular/core';
-import { M2S2PanelData, PanelSide, DialogAction } from '@m2s2/models';
+import { Type } from "@angular/core";
+import { M2S2PanelData, PanelSide, DialogAction } from "@m2s2/models";
 
 export type { PanelSide, DialogAction };
 export { M2S2PanelData };

@@ -1,6 +1,8 @@
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
-.m2s2-cta-section { padding: var(--space-12) 0; }
+.m2s2-cta-section {
+  padding: var(--space-12) 0;
+}
 
 .cta-card {
   display: flex;
@@ -23,7 +25,11 @@
   }
 }
 
-.cta-text { display: flex; flex-direction: column; gap: var(--space-3); }
+.cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
 
 .cta-title {
   font-size: var(--font-size-xl);
@@ -31,7 +37,9 @@
   color: var(--color-on-bg);
   margin: 0;
 
-  @media (min-width: 768px) { font-size: var(--font-size-2xl); }
+  @media (min-width: 768px) {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .cta-body {

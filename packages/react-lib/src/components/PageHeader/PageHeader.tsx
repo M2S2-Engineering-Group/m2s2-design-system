@@ -1,5 +1,5 @@
-import { PageHeaderConfig } from '@m2s2/models';
-import './PageHeader.scss';
+import { PageHeaderConfig } from "@m2s2/models";
+import "./PageHeader.scss";
 
 interface PageHeaderProps {
   config: PageHeaderConfig;

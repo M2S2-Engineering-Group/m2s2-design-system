@@ -1,1 +1,1 @@
-export * from './cta-section.component';
+export * from "./cta-section.component";

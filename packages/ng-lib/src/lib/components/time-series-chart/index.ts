@@ -1,1 +1,1 @@
-export * from './time-series-chart.component';
+export * from "./time-series-chart.component";

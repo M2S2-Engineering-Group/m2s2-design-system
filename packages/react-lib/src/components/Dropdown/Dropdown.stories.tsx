@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Dropdown } from './Dropdown';
-import type { AnchorDropdownItem, ClickableDropdownItem } from '@m2s2/models';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Dropdown } from "./Dropdown";
+import type { AnchorDropdownItem, ClickableDropdownItem } from "@m2s2/models";
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'Components/Dropdown',
+  title: "Components/Dropdown",
   component: Dropdown,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -31,29 +31,29 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 const clickItems: ClickableDropdownItem[] = [
-  { id: '1', text: 'Dashboard', onClick: () => alert('Dashboard') },
-  { id: '2', text: 'Settings',  onClick: () => alert('Settings') },
-  { id: '3', text: 'Sign out',  onClick: () => alert('Sign out') },
+  { id: "1", text: "Dashboard", onClick: () => alert("Dashboard") },
+  { id: "2", text: "Settings", onClick: () => alert("Settings") },
+  { id: "3", text: "Sign out", onClick: () => alert("Sign out") },
 ];
 
 const anchorItems: AnchorDropdownItem[] = [
-  { id: '1', text: 'GitHub',    href: 'https://github.com' },
-  { id: '2', text: 'npm',       href: 'https://npmjs.com' },
-  { id: '3', text: 'Storybook', href: 'https://storybook.js.org' },
+  { id: "1", text: "GitHub", href: "https://github.com" },
+  { id: "2", text: "npm", href: "https://npmjs.com" },
+  { id: "3", text: "Storybook", href: "https://storybook.js.org" },
 ];
 
 const TRIGGER_STYLE: React.CSSProperties = {
-  padding: '8px 16px',
-  background: '#7c3aed',
-  color: '#fff',
-  border: 'none',
+  padding: "8px 16px",
+  background: "#7c3aed",
+  color: "#fff",
+  border: "none",
   borderRadius: 8,
-  cursor: 'pointer',
+  cursor: "pointer",
   fontSize: 14,
 };
 
 export const ClickableItems: Story = {
-  name: 'Clickable Items',
+  name: "Clickable Items",
   render: () => (
     <Dropdown
       trigger={<button style={TRIGGER_STYLE}>Actions ▾</button>}
@@ -63,7 +63,7 @@ export const ClickableItems: Story = {
 };
 
 export const AnchorItems: Story = {
-  name: 'Anchor (Link) Items',
+  name: "Anchor (Link) Items",
   render: () => (
     <Dropdown
       trigger={<button style={TRIGGER_STYLE}>Links ▾</button>}
@@ -73,9 +73,9 @@ export const AnchorItems: Story = {
 };
 
 export const AlignRight: Story = {
-  name: 'Right-aligned Menu',
+  name: "Right-aligned Menu",
   render: () => (
-    <div style={{ display: 'flex', justifyContent: 'flex-end', width: 300 }}>
+    <div style={{ display: "flex", justifyContent: "flex-end", width: 300 }}>
       <Dropdown
         trigger={<button style={TRIGGER_STYLE}>Account ▾</button>}
         items={clickItems}

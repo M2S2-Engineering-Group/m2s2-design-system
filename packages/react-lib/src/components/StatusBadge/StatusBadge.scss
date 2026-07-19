@@ -1,9 +1,11 @@
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .m2s2-status-badge {
   @include m.status-badge-chrome;
 
-  &[data-variant='pill'] { @include m.status-badge-pill; }
+  &[data-variant="pill"] {
+    @include m.status-badge-pill;
+  }
 
   @include m.status-badge-colors;
 }

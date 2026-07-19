@@ -1,6 +1,8 @@
-@use 'tokens/src/mixins' as m;
+@use "tokens/src/mixins" as m;
 
-:host { display: inline-flex; }
+:host {
+  display: inline-flex;
+}
 
 @include m.btn-spinner-keyframes;
 
@@ -11,7 +13,11 @@ button {
   gap: 6px;
   cursor: pointer;
 
-  &:disabled { cursor: not-allowed; }
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
-.m2s2-btn-spinner { @include m.btn-spinner; }
+.m2s2-btn-spinner {
+  @include m.btn-spinner;
+}

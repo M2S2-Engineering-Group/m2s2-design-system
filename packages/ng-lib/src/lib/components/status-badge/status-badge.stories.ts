@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { StatusBadgeComponent } from './status-badge.component';
+import type { Meta, StoryObj } from "@storybook/angular";
+import { StatusBadgeComponent } from "./status-badge.component";
 
 const meta: Meta<StatusBadgeComponent> = {
-  title: 'Components/StatusBadge',
+  title: "Components/StatusBadge",
   component: StatusBadgeComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    variant: { control: 'select', options: ['badge', 'pill'] },
+    variant: { control: "select", options: ["badge", "pill"] },
   },
   render: (args) => ({
     props: args,
@@ -17,16 +17,30 @@ export default meta;
 type Story = StoryObj<StatusBadgeComponent>;
 
 // ── Inquiry statuses ──────────────────────────────────────────────────────────
-export const Received: Story        = { args: { status: 'received',        variant: 'badge' } };
-export const Reviewing: Story       = { args: { status: 'reviewing',       variant: 'badge' } };
-export const InConversation: Story  = { args: { status: 'in_conversation', variant: 'badge' } };
-export const Closed: Story          = { args: { status: 'closed',          variant: 'badge' } };
-export const Cancelled: Story       = { args: { status: 'cancelled',       variant: 'badge' } };
+export const Received: Story = {
+  args: { status: "received", variant: "badge" },
+};
+export const Reviewing: Story = {
+  args: { status: "reviewing", variant: "badge" },
+};
+export const InConversation: Story = {
+  args: { status: "in_conversation", variant: "badge" },
+};
+export const Closed: Story = { args: { status: "closed", variant: "badge" } };
+export const Cancelled: Story = {
+  args: { status: "cancelled", variant: "badge" },
+};
 
 // ── Resume statuses ───────────────────────────────────────────────────────────
-export const ResumePending: Story   = { args: { status: 'resume-pending',  variant: 'badge' } };
-export const ResumeApproved: Story  = { args: { status: 'resume-approved', variant: 'badge' } };
-export const ResumeDeclined: Story  = { args: { status: 'resume-declined', variant: 'badge' } };
+export const ResumePending: Story = {
+  args: { status: "resume-pending", variant: "badge" },
+};
+export const ResumeApproved: Story = {
+  args: { status: "resume-approved", variant: "badge" },
+};
+export const ResumeDeclined: Story = {
+  args: { status: "resume-declined", variant: "badge" },
+};
 
 // ── Pill variant ──────────────────────────────────────────────────────────────
 export const PillVariant: Story = {
@@ -68,5 +82,5 @@ export const AllStatuses: Story = {
 
 // ── Custom label override ─────────────────────────────────────────────────────
 export const CustomLabel: Story = {
-  args: { status: 'in_conversation', label: 'Active', variant: 'badge' },
+  args: { status: "in_conversation", label: "Active", variant: "badge" },
 };

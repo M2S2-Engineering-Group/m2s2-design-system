@@ -1,1 +1,1 @@
-export { CtaConfig } from '@m2s2/models';
+export { CtaConfig } from "@m2s2/models";

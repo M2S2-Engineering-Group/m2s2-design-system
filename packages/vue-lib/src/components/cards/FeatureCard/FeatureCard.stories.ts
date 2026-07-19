@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
-import FeatureCard from './FeatureCard.vue';
+import type { Meta, StoryObj } from "@storybook/vue3";
+import FeatureCard from "./FeatureCard.vue";
 
 const meta: Meta<typeof FeatureCard> = {
-  title: 'Cards/FeatureCard',
+  title: "Cards/FeatureCard",
   component: FeatureCard,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 export default meta;
 type Story = StoryObj<typeof FeatureCard>;
@@ -12,9 +12,9 @@ type Story = StoryObj<typeof FeatureCard>;
 export const Default: Story = {
   args: {
     config: {
-      icon: '🚀',
-      title: 'Ship Faster',
-      body: 'Accelerate your delivery pipeline with battle-tested engineering practices and tooling.',
+      icon: "🚀",
+      title: "Ship Faster",
+      body: "Accelerate your delivery pipeline with battle-tested engineering practices and tooling.",
     },
   },
 };
@@ -22,9 +22,9 @@ export const Default: Story = {
 export const Featured: Story = {
   args: {
     config: {
-      icon: '⭐',
-      title: 'Featured Capability',
-      body: 'This card is highlighted to draw attention to a key offering.',
+      icon: "⭐",
+      title: "Featured Capability",
+      body: "This card is highlighted to draw attention to a key offering.",
       featured: true,
     },
   },
@@ -33,10 +33,15 @@ export const Featured: Story = {
 export const WithItems: Story = {
   args: {
     config: {
-      icon: '🛠️',
-      title: 'Platform Engineering',
-      body: 'End-to-end platform work covering:',
-      items: ['CI/CD pipelines', 'Infrastructure as code', 'Observability stack', 'Developer tooling'],
+      icon: "🛠️",
+      title: "Platform Engineering",
+      body: "End-to-end platform work covering:",
+      items: [
+        "CI/CD pipelines",
+        "Infrastructure as code",
+        "Observability stack",
+        "Developer tooling",
+      ],
     },
   },
 };
@@ -44,10 +49,10 @@ export const WithItems: Story = {
 export const WithNote: Story = {
   args: {
     config: {
-      icon: '📋',
-      title: 'Advisory Retainer',
-      body: 'Ongoing strategic guidance for engineering leadership.',
-      note: 'Limited availability — contact for details.',
+      icon: "📋",
+      title: "Advisory Retainer",
+      body: "Ongoing strategic guidance for engineering leadership.",
+      note: "Limited availability — contact for details.",
     },
   },
 };
@@ -55,8 +60,8 @@ export const WithNote: Story = {
 export const NoIcon: Story = {
   args: {
     config: {
-      title: 'No Icon Variant',
-      body: 'Some cards may not have an icon — just a title and body.',
+      title: "No Icon Variant",
+      body: "Some cards may not have an icon — just a title and body.",
     },
   },
 };

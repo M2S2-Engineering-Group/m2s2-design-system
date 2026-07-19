@@ -1,1 +1,1 @@
-export * from './stat-row.model';
+export * from "./stat-row.model";

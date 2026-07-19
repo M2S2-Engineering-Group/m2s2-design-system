@@ -1,4 +1,4 @@
-@use 'tokens/src/breakpoints' as t;
+@use "tokens/src/breakpoints" as t;
 
 .ps-steps {
   display: flex;
@@ -23,7 +23,9 @@
   background: var(--color-surface-raised);
   border-radius: 8px;
 
-  @include t.m2-touch { width: 100%; }
+  @include t.m2-touch {
+    width: 100%;
+  }
 }
 
 .ps-num {
@@ -54,5 +56,7 @@
   flex-shrink: 0;
   list-style: none;
 
-  @include t.m2-touch { display: none; }
+  @include t.m2-touch {
+    display: none;
+  }
 }

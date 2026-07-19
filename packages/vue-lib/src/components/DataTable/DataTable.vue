@@ -1,31 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { ColumnDef } from '@m2s2/models';
-import { getStatusLabel as resolveStatusLabel } from '@m2s2/utils';
+import { ref } from "vue";
+import type { ColumnDef } from "@m2s2/models";
+import { getStatusLabel as resolveStatusLabel } from "@m2s2/utils";
 
-const props = withDefaults(defineProps<{
-  columnDefs?: ColumnDef[];
-  colVisibility?: Record<string, boolean>;
-  statuses?: string[];
-  statusFilter?: string;
-  statusLabels?: Record<string, string>;
-  searchValue?: string;
-  searchPlaceholder?: string;
-  totalCount?: number;
-  filteredCount?: number;
-  emptyMessage?: string;
-}>(), {
-  columnDefs: () => [],
-  colVisibility: () => ({}),
-  statuses: () => [],
-  statusFilter: 'all',
-  statusLabels: () => ({}),
-  searchValue: '',
-  searchPlaceholder: 'Search…',
-  totalCount: 0,
-  filteredCount: 0,
-  emptyMessage: 'No data yet.',
-});
+const props = withDefaults(
+  defineProps<{
+    columnDefs?: ColumnDef[];
+    colVisibility?: Record<string, boolean>;
+    statuses?: string[];
+    statusFilter?: string;
+    statusLabels?: Record<string, string>;
+    searchValue?: string;
+    searchPlaceholder?: string;
+    totalCount?: number;
+    filteredCount?: number;
+    emptyMessage?: string;
+  }>(),
+  {
+    columnDefs: () => [],
+    colVisibility: () => ({}),
+    statuses: () => [],
+    statusFilter: "all",
+    statusLabels: () => ({}),
+    searchValue: "",
+    searchPlaceholder: "Search…",
+    totalCount: 0,
+    filteredCount: 0,
+    emptyMessage: "No data yet.",
+  },
+);
 
 const emit = defineEmits<{
   searchChange: [value: string];
@@ -43,24 +46,21 @@ function getStatusLabel(s: string): string {
 function onDocClick(e: MouseEvent): void {
   if (!colWrapRef.value?.contains(e.target as Node)) {
     showCols.value = false;
-    document.removeEventListener('click', onDocClick);
+    document.removeEventListener("click", onDocClick);
   }
 }
 
 function toggleCols(): void {
   showCols.value = !showCols.value;
   if (showCols.value) {
-    setTimeout(() => document.addEventListener('click', onDocClick), 0);
+    setTimeout(() => document.addEventListener("click", onDocClick), 0);
   }
 }
 </script>
 
 <template>
   <div class="table-panel">
-    <p
-      v-if="totalCount === 0"
-      class="dt-empty"
-    >
+    <p v-if="totalCount === 0" class="dt-empty">
       {{ emptyMessage }}
     </p>
 
@@ -73,8 +73,10 @@ function toggleCols(): void {
             :placeholder="searchPlaceholder"
             aria-label="Search"
             :value="searchValue"
-            @input="emit('searchChange', ($event.target as HTMLInputElement).value)"
-          >
+            @input="
+              emit('searchChange', ($event.target as HTMLInputElement).value)
+            "
+          />
           <div class="dt-pills" role="group" aria-label="Filter by status">
             <button
               v-for="s in statuses"
@@ -89,11 +91,7 @@ function toggleCols(): void {
           <span class="dt-count">{{ filteredCount }} of {{ totalCount }}</span>
         </template>
 
-        <div
-          v-if="columnDefs.length > 0"
-          ref="colWrapRef"
-          class="dt-col-wrap"
-        >
+        <div v-if="columnDefs.length > 0" ref="colWrapRef" class="dt-col-wrap">
           <button
             class="dt-col-btn"
             :aria-expanded="showCols"
@@ -102,11 +100,7 @@ function toggleCols(): void {
           >
             &#9881; Columns
           </button>
-          <div
-            v-if="showCols"
-            id="dt-col-panel"
-            class="dt-col-panel"
-          >
+          <div v-if="showCols" id="dt-col-panel" class="dt-col-panel">
             <label
               v-for="col in columnDefs"
               :key="col.key"
@@ -116,7 +110,7 @@ function toggleCols(): void {
                 type="checkbox"
                 :checked="colVisibility[col.key] ?? true"
                 @change="emit('colToggle', col.key)"
-              >
+              />
               {{ col.label }}
             </label>
           </div>
@@ -131,7 +125,7 @@ function toggleCols(): void {
 </template>
 
 <style lang="scss">
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/mixins" as m;
 
 .table-panel {
   background: var(--color-surface);
@@ -161,14 +155,22 @@ function toggleCols(): void {
   @include m.form-input-compact;
   width: 200px;
   flex-shrink: 0;
-  &::-webkit-search-cancel-button { cursor: pointer; }
+  &::-webkit-search-cancel-button {
+    cursor: pointer;
+  }
 }
 
-.dt-pills { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.dt-pills {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
 
 .dt-pill {
   @include m.filter-pill;
-  &--active { @include m.filter-pill-active; }
+  &--active {
+    @include m.filter-pill-active;
+  }
 }
 
 .dt-count {
@@ -178,9 +180,14 @@ function toggleCols(): void {
   margin-right: auto;
 }
 
-.dt-col-wrap { position: relative; margin-left: auto; }
+.dt-col-wrap {
+  position: relative;
+  margin-left: auto;
+}
 
-.dt-col-btn { @include m.filter-pill; }
+.dt-col-btn {
+  @include m.filter-pill;
+}
 
 .dt-col-panel {
   @include m.floating-panel;
@@ -202,13 +209,22 @@ function toggleCols(): void {
   color: var(--color-on-surface);
   cursor: pointer;
 
-  input[type='checkbox'] { cursor: pointer; accent-color: var(--color-primary); }
+  input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: var(--color-primary);
+  }
 }
 
-.dt-scroll { overflow-x: auto; }
+.dt-scroll {
+  overflow-x: auto;
+}
 
 @media (max-width: 767px) {
-  .dt-search { width: 100%; }
-  .dt-scroll  { overflow-x: visible; }
+  .dt-search {
+    width: 100%;
+  }
+  .dt-scroll {
+    overflow-x: visible;
+  }
 }
 </style>

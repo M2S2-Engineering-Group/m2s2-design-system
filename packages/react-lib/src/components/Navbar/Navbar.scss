@@ -1,5 +1,5 @@
-@use 'packages/tokens/src/breakpoints' as t;
-@use 'packages/tokens/src/mixins' as m;
+@use "packages/tokens/src/breakpoints" as t;
+@use "packages/tokens/src/mixins" as m;
 
 // ── Navbar shell ──────────────────────────────────────────────────────────────
 
@@ -21,7 +21,10 @@
     backdrop-filter 200ms ease,
     transform 300ms ease;
 
-  &--fixed { position: fixed; width: 100%; }
+  &--fixed {
+    position: fixed;
+    width: 100%;
+  }
 
   &--scrolled {
     background: color-mix(in srgb, var(--color-nav-bg) 80%, transparent);
@@ -32,7 +35,9 @@
       0 4px 24px rgba(0, 0, 0, 0.35);
   }
 
-  &--hidden { transform: translateY(-100%); }
+  &--hidden {
+    transform: translateY(-100%);
+  }
 }
 
 // ── Brand ─────────────────────────────────────────────────────────────────────
@@ -57,7 +62,9 @@
   color: var(--color-on-nav);
 }
 
-.navbar-spacer { flex: 1 1 auto; }
+.navbar-spacer {
+  flex: 1 1 auto;
+}
 
 // ── Desktop nav ───────────────────────────────────────────────────────────────
 
@@ -66,7 +73,9 @@
   align-items: center;
   gap: var(--space-1);
 
-  @include t.m2-touch { display: none; }
+  @include t.m2-touch {
+    display: none;
+  }
 }
 
 .navbar-nav-btn {
@@ -83,7 +92,9 @@
   letter-spacing: 0.02em;
   text-decoration: none;
   cursor: pointer;
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
 
   &:hover {
     color: var(--color-secondary);
@@ -96,7 +107,10 @@
   }
 }
 
-.navbar-chevron { font-size: var(--font-size-xs); opacity: 0.7; }
+.navbar-chevron {
+  font-size: var(--font-size-xs);
+  opacity: 0.7;
+}
 
 // ── Dropdown content (Radix portal) ───────────────────────────────────────────
 
@@ -111,12 +125,34 @@
   z-index: calc(var(--z-sticky) + 50);
 
   // Radix animation
-  &[data-state='open']   { animation: dropdown-in  120ms ease; }
-  &[data-state='closed'] { animation: dropdown-out 100ms ease; }
+  &[data-state="open"] {
+    animation: dropdown-in 120ms ease;
+  }
+  &[data-state="closed"] {
+    animation: dropdown-out 100ms ease;
+  }
 }
 
-@keyframes dropdown-in  { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes dropdown-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-4px); } }
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes dropdown-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
 
 .navbar-dropdown-user {
   padding: var(--space-2) var(--space-4);
@@ -141,7 +177,9 @@
   text-align: left;
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
   outline: none;
 
   &:hover,
@@ -151,7 +189,11 @@
   }
 }
 
-.navbar-dropdown-img { width: 20px; height: 20px; object-fit: contain; }
+.navbar-dropdown-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
 
 // ── Account icon button ───────────────────────────────────────────────────────
 
@@ -159,7 +201,10 @@
   @include m.btn-icon;
   color: var(--color-on-nav);
 
-  &:hover { color: var(--color-secondary); background: transparent; }
+  &:hover {
+    color: var(--color-secondary);
+    background: transparent;
+  }
 }
 
 .navbar-avatar {
@@ -171,7 +216,11 @@
   display: block;
 }
 
-.navbar-account-icon { width: 24px; height: 24px; display: block; }
+.navbar-account-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
 
 // ── Mobile hamburger ──────────────────────────────────────────────────────────
 
@@ -180,9 +229,14 @@
   display: none;
   color: var(--color-on-nav);
 
-  &:hover { color: var(--color-secondary); background: transparent; }
+  &:hover {
+    color: var(--color-secondary);
+    background: transparent;
+  }
 
-  @include t.m2-touch { display: flex; }
+  @include t.m2-touch {
+    display: flex;
+  }
 }
 
 .navbar-hamburger {
@@ -196,23 +250,35 @@
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     width: 100%;
     height: 2px;
     background: currentColor;
     border-radius: 1px;
-    transition: transform 0.2s, top 0.2s;
+    transition:
+      transform 0.2s,
+      top 0.2s;
   }
 
-  &::before { top: -6px; }
-  &::after  { top:  6px; }
+  &::before {
+    top: -6px;
+  }
+  &::after {
+    top: 6px;
+  }
 
   &--open {
     background: transparent;
-    &::before { top: 0; transform: rotate(45deg); }
-    &::after  { top: 0; transform: rotate(-45deg); }
+    &::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+    &::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
   }
 }
 
@@ -249,6 +315,10 @@
   width: 100%;
   transition: color var(--transition-fast);
 
-  &:hover { color: var(--color-secondary); }
-  &:last-child { border-bottom: none; }
+  &:hover {
+    color: var(--color-secondary);
+  }
+  &:last-child {
+    border-bottom: none;
+  }
 }
