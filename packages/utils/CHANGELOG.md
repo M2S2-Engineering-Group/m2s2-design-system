@@ -4,6 +4,18 @@ All notable changes to the shared utility functions are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/utils [1.2.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/utils@1.1.1...@m2s2/utils@1.2.0) (2026-07-19)
+
+
+### Features
+
+* add blog editor to react and prettier fixes ([341de4e](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/341de4e2f0d1f6c2526e900fc42406ca78e2e7cf))
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.6.0
+
 ## @m2s2/utils [1.1.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/utils@1.1.0...@m2s2/utils@1.1.1) (2026-07-18)
 
 
