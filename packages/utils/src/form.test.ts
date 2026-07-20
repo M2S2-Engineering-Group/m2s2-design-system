@@ -37,6 +37,14 @@ describe("validateEmail", () => {
   it("rejects whitespace only", () => {
     expect(validateEmail("   ")).toBe(false);
   });
+
+  it("rejects consecutive dots in domain", () => {
+    expect(validateEmail("user@bar..com")).toBe(false);
+  });
+
+  it("rejects domain starting with a dot", () => {
+    expect(validateEmail("user@.example.com")).toBe(false);
+  });
 });
 
 describe("EMAIL_REGEX", () => {
