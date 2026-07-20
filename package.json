@@ -29,8 +29,8 @@
     "@angular/platform-browser-dynamic": "^21.0.0"
   },
   "devDependencies": {
-    "@angular-eslint/eslint-plugin": "^22.0.0",
-    "@angular-eslint/eslint-plugin-template": "^22.0.0",
+    "@angular-eslint/eslint-plugin": "^22.1.0",
+    "@angular-eslint/eslint-plugin-template": "^22.1.0",
     "@angular-eslint/template-parser": "^22.0.0",
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
