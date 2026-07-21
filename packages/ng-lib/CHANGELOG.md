@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.12.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.1...@m2s2/ng-lib@2.12.2) (2026-07-21)
+
+
+### Bug Fixes
+
+* storybook angular deploy failure ([8e439b8](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/8e439b8a9742379fa8801677ca6c19effc7447b2))
+
 ## @m2s2/ng-lib [2.12.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.0...@m2s2/ng-lib@2.12.1) (2026-07-20)
 
 
