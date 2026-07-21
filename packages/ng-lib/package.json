@@ -21,12 +21,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "cd ../.. && ng build --project=m2s2-ng-lib",
+    "build": "ng build --project=m2s2-ng-lib",
     "lint": "eslint \"src/**/*.ts\" \"src/**/*.html\"",
-    "build:prod": "cd ../.. && ng build --project=m2s2-ng-lib -c production",
-    "test": "cd ../.. && ng test --project=m2s2-ng-lib",
-    "storybook": "cd ../.. && ng run m2s2-ng-lib:storybook",
-    "build:storybook": "cd ../.. && ng run m2s2-ng-lib:build-storybook"
+    "build:prod": "ng build --project=m2s2-ng-lib -c production",
+    "test": "ng test --project=m2s2-ng-lib",
+    "storybook": "ng run m2s2-ng-lib:storybook",
+    "build:storybook": "ng run m2s2-ng-lib:build-storybook"
   },
   "dependencies": {
     "@m2s2/models": "2.6.0",
