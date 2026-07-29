@@ -27,7 +27,10 @@
     "@angular/core": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/platform-browser-dynamic": "^21.0.0",
+    "rxjs": "^7.8.2",
+    "postcss": "^8.5.18",
     "webpack-dev-server": {
+      ".": "^5.2.6",
       "http-proxy-middleware": "2.0.10"
     },
     "@istanbuljs/load-nyc-config": {
