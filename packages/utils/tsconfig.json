@@ -5,7 +5,7 @@
     "moduleResolution": "bundler",
     "strict": true,
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "dist/esm",
     "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
