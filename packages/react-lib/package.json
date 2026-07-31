@@ -54,8 +54,8 @@
   },
   "peerDependencies": {
     "aws-amplify": ">=6.0.0",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
+    "react": ">=19.2.7",
+    "react-dom": ">=19.2.7",
     "react-router": ">=7.0.0"
   },
   "peerDependenciesMeta": {
@@ -80,7 +80,7 @@
     "axe-core": "^4.12.1",
     "jest-axe": "^10.0.0",
     "jsdom": "^29.1.1",
-    "react-router": "^7.18.1",
+    "react-router": "^8.3.0",
     "sass": "^1.102.0",
     "storybook": "^10.3.6",
     "typescript": "~5.9.3",
