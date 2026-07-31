@@ -12,20 +12,22 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "build:prod": "tsc",
+    "build": "tsc && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
+    "build:prod": "npm run build",
     "lint": "eslint \"src/**/*.ts\""
   },
   "devDependencies": {
