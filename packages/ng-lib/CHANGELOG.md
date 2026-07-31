@@ -4,6 +4,14 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.12.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.2...@m2s2/ng-lib@2.12.3) (2026-07-31)
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.6.1
+* **@m2s2/utils:** upgraded to 1.2.2
+
 ## @m2s2/ng-lib [2.12.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.1...@m2s2/ng-lib@2.12.2) (2026-07-21)
 
 
