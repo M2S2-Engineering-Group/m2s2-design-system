@@ -4,6 +4,13 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/ng-lib [2.12.4](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.3...@m2s2/ng-lib@2.12.4) (2026-08-14)
+
+
+### Bug Fixes
+
+* **deps:** bump js-yaml and undici to resolve cves ([4f8046e](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/4f8046ebb0aafe6623369b15faeeb5828530a047))
+
 ## @m2s2/ng-lib [2.12.3](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.2...@m2s2/ng-lib@2.12.3) (2026-07-31)
 
 
