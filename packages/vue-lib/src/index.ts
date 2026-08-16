@@ -36,5 +36,7 @@ export { default as Dropdown } from "./components/Dropdown/Dropdown.vue";
 export { default as DropdownItem } from "./components/Dropdown/DropdownItem.vue";
 export { default as TimeSeriesChart } from "./components/TimeSeriesChart/TimeSeriesChart.vue";
 export { default as RankedBarChart } from "./components/RankedBarChart/RankedBarChart.vue";
+export { default as StatusRowList } from "./components/StatusRowList/StatusRowList.vue";
+export { default as Toast } from "./components/Toast/Toast.vue";
 export { createM2S2 } from "./plugin";
 export type { M2S2PluginOptions } from "./plugin";

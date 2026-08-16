@@ -375,6 +375,32 @@
     background: var(--color-warning-bg);
     color: var(--color-warning);
   }
+
+  // Deployment target status (content-delivery's StatusRowList usage)
+  &[data-status="succeeded"] {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+  }
+
+  &[data-status="failed"] {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+  }
+
+  &[data-status="blocked"] {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+  }
+
+  &[data-status="skipped"] {
+    background: rgb(156 163 175 / 15%);
+    color: #9ca3af;
+  }
+
+  &[data-status="canceled"] {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+  }
 }
 
 // ── Filter pills ──────────────────────────────────────────────────────────────
