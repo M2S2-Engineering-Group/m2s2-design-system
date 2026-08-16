@@ -4,6 +4,18 @@ All notable changes to the shared utility functions are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/utils [1.2.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/utils@1.2.1...@m2s2/utils@1.2.2) (2026-07-31)
+
+
+### Bug Fixes
+
+* **utils:** add commonjs build so require() consumers can resolve the package ([7922d2c](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/7922d2c94d08aa36e6d97b04a07ba9d696744706))
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.6.1
+
 ## @m2s2/utils [1.2.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/utils@1.2.0...@m2s2/utils@1.2.1) (2026-07-20)
 
 

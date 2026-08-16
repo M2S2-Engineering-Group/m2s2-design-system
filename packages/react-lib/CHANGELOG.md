@@ -4,6 +4,14 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+## @m2s2/react-lib [2.10.2](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.10.1...@m2s2/react-lib@2.10.2) (2026-07-31)
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.6.1
+* **@m2s2/utils:** upgraded to 1.2.2
+
 ## @m2s2/react-lib [2.10.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.10.0...@m2s2/react-lib@2.10.1) (2026-07-20)
 
 
