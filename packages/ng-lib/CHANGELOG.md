@@ -4,6 +4,20 @@ All notable changes to the Angular component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/ng-lib [2.13.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.4...@m2s2/ng-lib@2.13.0) (2026-08-16)
+
+
+### Features
+
+* addition of status row for connectors ([005d642](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/005d6426174fbade82a1e7b921ebc845b5a4052b))
+
+
+### Dependencies
+
+* **@m2s2/models:** upgraded to 2.7.0
+* **@m2s2/tokens:** upgraded to 2.4.0
+* **@m2s2/utils:** upgraded to 1.2.3
+
 ## @m2s2/ng-lib [2.12.4](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/ng-lib@2.12.3...@m2s2/ng-lib@2.12.4) (2026-08-14)
 
 
