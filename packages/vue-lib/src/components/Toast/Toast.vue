@@ -1,0 +1,80 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import type { ToastKind } from "@m2s2/models";
+
+const props = withDefaults(defineProps<{ kind?: ToastKind }>(), {
+  kind: "info",
+});
+
+const emit = defineEmits<{ dismiss: [] }>();
+
+// Errors are assertive (announced immediately, interrupting); info/success
+// are polite — matches each kind's actual urgency.
+const role = computed(() => (props.kind === "error" ? "alert" : "status"));
+</script>
+
+<template>
+  <div
+    class="m2s2-toast"
+    :role="role"
+    :data-kind="kind"
+  >
+    <div class="toast-body">
+      <slot />
+    </div>
+    <button
+      class="toast-close"
+      aria-label="Dismiss"
+      @click="emit('dismiss')"
+    >
+      ×
+    </button>
+  </div>
+</template>
+
+<style lang="scss">
+.m2s2-toast {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 420px;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-info);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  font-size: var(--font-size-sm);
+  color: var(--color-on-bg);
+  z-index: 1100;
+
+  &[data-kind="success"] {
+    border-left-color: var(--color-success);
+  }
+
+  &[data-kind="error"] {
+    border-left-color: var(--color-error);
+  }
+}
+
+.toast-body {
+  flex: 1;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-on-surface-muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+
+  &:hover {
+    color: var(--color-on-bg);
+  }
+}
+</style>

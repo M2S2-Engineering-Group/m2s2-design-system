@@ -14,4 +14,9 @@ export const STATUS_LABELS: Record<string, string> = {
   signup: "Email",
   verified: "Verified",
   unverified: "Pending",
+  succeeded: "Succeeded",
+  failed: "Failed",
+  blocked: "Blocked",
+  skipped: "Skipped",
+  canceled: "Canceled",
 };

@@ -1,0 +1,54 @@
+import { render, screen } from "@testing-library/react";
+import { axe } from "jest-axe";
+import { StatusRowList } from "./StatusRowList";
+
+describe("StatusRowList", () => {
+  const rows = [
+    { id: "m2s2site", label: "m2s2site", status: "succeeded" },
+    {
+      id: "devto",
+      label: "devto",
+      status: "failed",
+      detail: "no prior DEV.to article to update",
+    },
+  ];
+
+  it("renders a label per row", () => {
+    render(<StatusRowList rows={rows} />);
+    expect(screen.getByText("m2s2site")).toBeInTheDocument();
+    expect(screen.getByText("devto")).toBeInTheDocument();
+  });
+
+  it("renders detail text only when present", () => {
+    render(<StatusRowList rows={rows} />);
+    expect(
+      screen.getByText("no prior DEV.to article to update"),
+    ).toBeInTheDocument();
+  });
+
+  it("renders a link only when present", () => {
+    const withLink = [
+      {
+        id: "m2s2site",
+        label: "m2s2site",
+        status: "succeeded",
+        link: { label: "View →", href: "https://m2s2.io/blog/example" },
+      },
+    ];
+    render(<StatusRowList rows={withLink} />);
+    const link = screen.getByRole("link", { name: "View →" });
+    expect(link).toHaveAttribute("href", "https://m2s2.io/blog/example");
+  });
+
+  it("renders no link when absent", () => {
+    render(<StatusRowList rows={rows} />);
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  });
+
+  describe("accessibility", () => {
+    it("has no violations", async () => {
+      const { container } = render(<StatusRowList rows={rows} />);
+      expect(await axe(container)).toHaveNoViolations();
+    });
+  });
+});
