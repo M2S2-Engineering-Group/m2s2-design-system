@@ -1,0 +1,22 @@
+<ul class="srl-list">
+  @for (row of rows(); track row.id) {
+    <li class="srl-row">
+      <div class="srl-main">
+        <span class="srl-label">{{ row.label }}</span>
+        <m2s2-status-badge [status]="row.status" />
+      </div>
+      @if (row.detail) {
+        <p class="srl-detail">{{ row.detail }}</p>
+      }
+      @if (row.link) {
+        <a
+          class="srl-link"
+          [href]="row.link.href"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{ row.link.label }}</a
+        >
+      }
+    </li>
+  }
+</ul>

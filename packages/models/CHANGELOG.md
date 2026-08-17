@@ -4,6 +4,13 @@ All notable changes to the shared model interfaces are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/models [2.7.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/models@2.6.1...@m2s2/models@2.7.0) (2026-08-16)
+
+
+### Features
+
+* addition of status row for connectors ([005d642](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/005d6426174fbade82a1e7b921ebc845b5a4052b))
+
 ## @m2s2/models [2.6.1](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/models@2.6.0...@m2s2/models@2.6.1) (2026-07-31)
 
 
