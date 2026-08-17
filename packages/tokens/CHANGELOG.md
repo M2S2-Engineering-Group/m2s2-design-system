@@ -4,6 +4,13 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/tokens [2.4.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.3.0...@m2s2/tokens@2.4.0) (2026-08-16)
+
+
+### Features
+
+* addition of status row for connectors ([005d642](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/005d6426174fbade82a1e7b921ebc845b5a4052b))
+
 # @m2s2/tokens [2.3.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.2.2...@m2s2/tokens@2.3.0) (2026-07-19)
 
 
