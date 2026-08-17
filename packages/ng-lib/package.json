@@ -54,7 +54,7 @@
     "@angular/compiler-cli": "^21.2.20",
     "@storybook/addon-docs": "^10.5.7",
     "@storybook/angular": "^10.5.7",
-    "@testing-library/angular": "^19.2.1",
+    "@testing-library/angular": "^19.4.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/user-event": "^14.6.4",
     "@types/jest": "^30.0.0",
