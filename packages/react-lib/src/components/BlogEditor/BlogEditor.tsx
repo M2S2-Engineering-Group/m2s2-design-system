@@ -19,6 +19,8 @@ export interface BlogEditorProps {
   existingSeries?: Array<{ id: string; title: string }>;
   /** Called with the assembled draft when the user clicks Publish. */
   onPublish?: (draft: BlogDraft) => void;
+  /** Called with the assembled draft when the user clicks Export. */
+  onExportDraft?: (draft: BlogDraft) => void;
   /** Called with the selected File so the platform can upload it to S3. */
   onCoverImageSelected?: (file: File) => void;
 }
@@ -30,6 +32,7 @@ export function BlogEditor({
   coverImageUrl,
   existingSeries = NO_SERIES,
   onPublish,
+  onExportDraft,
   onCoverImageSelected,
 }: BlogEditorProps) {
   const [title, setTitleRaw] = useState(initialPost?.title ?? "");
@@ -44,6 +47,7 @@ export function BlogEditor({
     initialPost?.coverImage,
   );
   const [tagInput, setTagInput] = useState("");
+  const [activePane, setActivePane] = useState<"write" | "preview">("write");
   const [selectedSeriesKey, setSelectedSeriesKey] = useState("none");
   const [seriesId, setSeriesId] = useState(initialPost?.series?.id ?? "");
   const [seriesTitle, setSeriesTitle] = useState(
@@ -171,8 +175,7 @@ export function BlogEditor({
     }, 0);
   }
 
-  function handlePublish() {
-    if (!canPublish) return;
+  function assembleDraft(): BlogDraft {
     let series: BlogDraft["series"];
     if (selectedSeriesKey === "__new__") {
       const id = seriesId.trim();
@@ -197,7 +200,7 @@ export function BlogEditor({
           }
         : undefined;
     }
-    onPublish?.({
+    return {
       title,
       slug: slug || generateSlug(title),
       date,
@@ -208,7 +211,17 @@ export function BlogEditor({
       content,
       coverImage: coverImageUrl ?? coverPreview,
       series,
-    });
+    };
+  }
+
+  function handlePublish() {
+    if (!canPublish) return;
+    onPublish?.(assembleDraft());
+  }
+
+  function handleExport() {
+    if (!canPublish) return;
+    onExportDraft?.(assembleDraft());
   }
 
   const previewUrl = coverPreview ?? coverImageUrl;
@@ -250,7 +263,7 @@ export function BlogEditor({
           </label>
           <input
             id="be-date"
-            className="be-input"
+            className="be-input be-input--date"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
@@ -440,22 +453,44 @@ export function BlogEditor({
       {/* ── Editor ──────────────────────────────────────────────────────── */}
       <section className="be-editor">
         <div className="be-toolbar" role="toolbar" aria-label="Formatting">
-          {BLOG_EDITOR_TOOLBAR.map((item) => (
+          {/* Mobile pane toggle — hidden on desktop via CSS */}
+          <div className="be-pane-toggle" role="group" aria-label="Editor mode">
             <button
-              key={item.label}
               type="button"
-              className="be-toolbar__btn"
-              title={item.label}
-              aria-label={item.label}
-              onClick={() => applyFormat(item)}
+              className={`be-pane-toggle__btn${activePane === "write" ? " be-pane-toggle__btn--active" : ""}`}
+              onClick={() => setActivePane("write")}
             >
-              {item.icon}
+              Write
             </button>
-          ))}
+            <button
+              type="button"
+              className={`be-pane-toggle__btn${activePane === "preview" ? " be-pane-toggle__btn--active" : ""}`}
+              onClick={() => setActivePane("preview")}
+            >
+              Preview
+            </button>
+          </div>
+
+          <div className="be-toolbar__tools">
+            {BLOG_EDITOR_TOOLBAR.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                className="be-toolbar__btn"
+                title={item.label}
+                aria-label={item.label}
+                onClick={() => applyFormat(item)}
+              >
+                {item.icon}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="be-panes">
-          <div className="be-pane be-pane--write">
+          <div
+            className={`be-pane be-pane--write${activePane === "preview" ? " be-pane--hidden" : ""}`}
+          >
             <div className="be-pane__label">Markdown</div>
             <textarea
               ref={textareaRef}
@@ -467,7 +502,9 @@ export function BlogEditor({
             />
           </div>
 
-          <div className="be-pane be-pane--preview">
+          <div
+            className={`be-pane be-pane--preview${activePane === "write" ? " be-pane--hidden" : ""}`}
+          >
             <div className="be-pane__label">Preview</div>
             {/* content is authored by the admin user — trusted HTML */}
             <div
@@ -481,14 +518,24 @@ export function BlogEditor({
       {/* ── Footer ──────────────────────────────────────────────────────── */}
       <footer className="be-footer">
         <span className="be-footer__meta">~{readingTime} min read</span>
-        <button
-          type="button"
-          className="be-publish"
-          disabled={!canPublish}
-          onClick={handlePublish}
-        >
-          Publish Post
-        </button>
+        <div className="be-footer__actions">
+          <button
+            type="button"
+            className="be-export"
+            disabled={!canPublish}
+            onClick={handleExport}
+          >
+            Export
+          </button>
+          <button
+            type="button"
+            className="be-publish"
+            disabled={!canPublish}
+            onClick={handlePublish}
+          >
+            Publish Post
+          </button>
+        </div>
       </footer>
     </div>
   );

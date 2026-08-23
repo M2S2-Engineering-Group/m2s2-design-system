@@ -40,6 +40,21 @@ describe("BlogCard", () => {
     expect(wrapper.find(".bc-reading-time").exists()).toBe(false);
   });
 
+  it("renders the series block when provided", () => {
+    const wrapper = mountCard({
+      series: { id: "s1", title: "Building the thing", part: 2, total: 4 },
+    });
+    expect(wrapper.find(".bc-series-part").text()).toBe("Part 2 of 4");
+    expect(wrapper.find(".bc-series-title").text()).toBe(
+      "Building the thing",
+    );
+  });
+
+  it("does not render a series block when omitted", () => {
+    const wrapper = mountCard();
+    expect(wrapper.find(".bc-series").exists()).toBe(false);
+  });
+
   it("renders a cover image when provided", () => {
     const wrapper = mountCard({ coverImage: "https://example.com/cover.jpg" });
     const img = wrapper.find("img");

@@ -27,6 +27,14 @@ export function BlogCard({ config }: BlogCardProps) {
         )}
       </div>
       <div className="bc-inner">
+        {config.series && (
+          <div className="bc-series">
+            <span className="bc-series-part">
+              Part {config.series.part} of {config.series.total}
+            </span>
+            <span className="bc-series-title">{config.series.title}</span>
+          </div>
+        )}
         <div className="bc-meta">
           <time dateTime={config.date}>{formatBlogDate(config.date)}</time>
           {config.readingTime && (
