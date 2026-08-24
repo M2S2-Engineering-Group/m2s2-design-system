@@ -24,8 +24,9 @@
   line-height: 1.3;
   padding-top: 4px;
   background: var(--gradient-brand-135);
-  background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 
   @include t.m2-mobile {
     font-size: var(--font-size-2xl);

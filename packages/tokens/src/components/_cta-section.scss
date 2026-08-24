@@ -16,7 +16,7 @@
   border-image: var(--gradient-brand) 1;
   text-align: center;
 
-  @media (width >= 768px) {
+  @media (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
@@ -37,7 +37,7 @@
   color: var(--color-on-bg);
   margin: 0;
 
-  @media (width >= 768px) {
+  @media (min-width: 768px) {
     font-size: var(--font-size-2xl);
   }
 }
