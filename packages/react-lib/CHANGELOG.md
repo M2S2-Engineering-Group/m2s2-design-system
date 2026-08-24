@@ -4,6 +4,18 @@ All notable changes to the React component library are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/react-lib [2.12.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.11.0...@m2s2/react-lib@2.12.0) (2026-08-24)
+
+
+### Features
+
+* de-duplicate component scss across ng-lib/react-lib/vue-lib ([#60](https://github.com/M2S2-Engineering-Group/m2s2-design-system/issues/60)) ([b302151](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/b302151f2a412767eb2b776a2db6aa7d269acc61))
+
+
+### Dependencies
+
+* **@m2s2/tokens:** upgraded to 2.5.0
+
 # @m2s2/react-lib [2.11.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/react-lib@2.10.2...@m2s2/react-lib@2.11.0) (2026-08-16)
 
 
