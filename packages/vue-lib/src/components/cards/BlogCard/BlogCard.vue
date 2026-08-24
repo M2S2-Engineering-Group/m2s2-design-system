@@ -20,6 +20,12 @@ defineProps<{ config: BlogCardConfig }>();
       </div>
     </div>
     <div class="bc-inner">
+      <div v-if="config.series" class="bc-series">
+        <span class="bc-series-part"
+          >Part {{ config.series.part }} of {{ config.series.total }}</span
+        >
+        <span class="bc-series-title">{{ config.series.title }}</span>
+      </div>
       <div class="bc-meta">
         <time :dateTime="config.date">{{ formatBlogDate(config.date) }}</time>
         <span v-if="config.readingTime" class="bc-reading-time"
@@ -85,6 +91,33 @@ defineProps<{ config: BlogCardConfig }>();
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+}
+
+.bc-series {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  background: color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  border-left: 2px solid var(--color-secondary);
+  border-radius: 0 4px 4px 0;
+}
+
+.bc-series-part {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.bc-series-title {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bc-meta {

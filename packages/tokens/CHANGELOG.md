@@ -4,6 +4,18 @@ All notable changes to the design token system are documented here.
 
 Breaking changes are marked with ⚠️. Commits follow [Conventional Commits](https://www.conventionalcommits.org/).
 
+# @m2s2/tokens [2.5.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.4.0...@m2s2/tokens@2.5.0) (2026-08-24)
+
+
+### Bug Fixes
+
+* revert stylelint auto-fix regressions in shared component partials ([823aa4d](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/823aa4d7cc1bdbf8b0bb965d774d84f1e4966c86))
+
+
+### Features
+
+* de-duplicate component scss across ng-lib/react-lib/vue-lib ([#60](https://github.com/M2S2-Engineering-Group/m2s2-design-system/issues/60)) ([b302151](https://github.com/M2S2-Engineering-Group/m2s2-design-system/commit/b302151f2a412767eb2b776a2db6aa7d269acc61))
+
 # @m2s2/tokens [2.4.0](https://github.com/M2S2-Engineering-Group/m2s2-design-system/compare/@m2s2/tokens@2.3.0...@m2s2/tokens@2.4.0) (2026-08-16)
 
 

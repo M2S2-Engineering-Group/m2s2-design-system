@@ -194,7 +194,57 @@ describe("BlogEditor", () => {
     it("renders 12 toolbar buttons", () => {
       renderEditor();
       const toolbar = screen.getByRole("toolbar", { name: "Formatting" });
-      expect(toolbar.querySelectorAll("button")).toHaveLength(12);
+      expect(toolbar.querySelectorAll(".be-toolbar__btn")).toHaveLength(12);
+    });
+  });
+
+  describe("mobile pane toggle", () => {
+    it("starts with the write pane visible and the preview pane hidden", () => {
+      const { container } = renderEditor();
+      expect(
+        container.querySelector(".be-pane--write"),
+      ).not.toHaveClass("be-pane--hidden");
+      expect(container.querySelector(".be-pane--preview")).toHaveClass(
+        "be-pane--hidden",
+      );
+    });
+
+    it("switches to the preview pane when Preview is clicked", () => {
+      const { container } = renderEditor();
+      fireEvent.click(screen.getByRole("button", { name: "Preview" }));
+      expect(container.querySelector(".be-pane--write")).toHaveClass(
+        "be-pane--hidden",
+      );
+      expect(
+        container.querySelector(".be-pane--preview"),
+      ).not.toHaveClass("be-pane--hidden");
+    });
+  });
+
+  describe("date input", () => {
+    it("has the narrow-width modifier class", () => {
+      const { container } = renderEditor();
+      expect(
+        container.querySelector('input[type="date"]'),
+      ).toHaveClass("be-input--date");
+    });
+  });
+
+  describe("onExportDraft callback", () => {
+    it("fires with the correct draft when Export is clicked", () => {
+      const onExportDraft = vi.fn();
+      renderEditor({ onExportDraft });
+      fillRequiredFields();
+      fireEvent.click(screen.getByRole("button", { name: "Export" }));
+      expect(onExportDraft).toHaveBeenCalledTimes(1);
+      expect(onExportDraft.mock.calls[0][0].title).toBe("My Post");
+    });
+
+    it("does not fire when canPublish is false", () => {
+      const onExportDraft = vi.fn();
+      renderEditor({ onExportDraft });
+      fireEvent.click(screen.getByRole("button", { name: "Export" }));
+      expect(onExportDraft).not.toHaveBeenCalled();
     });
   });
 

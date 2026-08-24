@@ -44,6 +44,19 @@ describe("BlogCard", () => {
     expect(screen.queryByText(/min read/)).not.toBeInTheDocument();
   });
 
+  it("renders the series block when provided", () => {
+    renderCard({
+      series: { id: "s1", title: "Building the thing", part: 2, total: 4 },
+    });
+    expect(screen.getByText("Part 2 of 4")).toBeInTheDocument();
+    expect(screen.getByText("Building the thing")).toBeInTheDocument();
+  });
+
+  it("does not render a series block when omitted", () => {
+    const { container } = renderCard();
+    expect(container.querySelector(".bc-series")).not.toBeInTheDocument();
+  });
+
   it("renders a cover image when provided", () => {
     renderCard({ coverImage: "https://example.com/cover.jpg" });
     expect(screen.getByRole("img", { name: "My First Post" })).toHaveAttribute(
