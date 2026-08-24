@@ -41,6 +41,13 @@ describe("BlogEditor", () => {
       const wrapper = mountEditor();
       expect(wrapper.find('input[type="date"]').exists()).toBe(true);
     });
+
+    it("gives the date input the narrow-width modifier class", () => {
+      const wrapper = mountEditor();
+      expect(wrapper.find('input[type="date"]').classes()).toContain(
+        "be-input--date",
+      );
+    });
   });
 
   describe("Publish button state", () => {
@@ -130,6 +137,49 @@ describe("BlogEditor", () => {
     it("renders 12 toolbar buttons", () => {
       const wrapper = mountEditor();
       expect(wrapper.findAll(".be-toolbar__btn")).toHaveLength(12);
+    });
+  });
+
+  describe("mobile pane toggle", () => {
+    it("starts with the write pane visible and the preview pane hidden", () => {
+      const wrapper = mountEditor();
+      expect(wrapper.find(".be-pane--write").classes()).not.toContain(
+        "be-pane--hidden",
+      );
+      expect(wrapper.find(".be-pane--preview").classes()).toContain(
+        "be-pane--hidden",
+      );
+    });
+
+    it("switches to the preview pane when Preview is clicked", async () => {
+      const wrapper = mountEditor();
+      const buttons = wrapper.findAll(".be-pane-toggle__btn");
+      const previewBtn = buttons.find((b) => b.text() === "Preview")!;
+      await previewBtn.trigger("click");
+      expect(wrapper.find(".be-pane--write").classes()).toContain(
+        "be-pane--hidden",
+      );
+      expect(wrapper.find(".be-pane--preview").classes()).not.toContain(
+        "be-pane--hidden",
+      );
+    });
+  });
+
+  describe("exportDraft emit", () => {
+    it("emits exportDraft with correct draft shape when Export is clicked", async () => {
+      const wrapper = mountEditor();
+      await fillRequiredFields(wrapper);
+      await wrapper.find(".be-export").trigger("click");
+      const emitted = wrapper.emitted("exportDraft") as unknown[][];
+      expect(emitted).toHaveLength(1);
+      const draft = emitted[0][0] as Record<string, unknown>;
+      expect(draft.title).toBe("My Post");
+    });
+
+    it("does not emit when canPublish is false", async () => {
+      const wrapper = mountEditor();
+      await wrapper.find(".be-export").trigger("click");
+      expect(wrapper.emitted("exportDraft")).toBeUndefined();
     });
   });
 

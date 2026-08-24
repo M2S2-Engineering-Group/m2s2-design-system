@@ -87,7 +87,7 @@ function onBackdropClick(): void {
 </template>
 
 <style lang="scss">
-@use "packages/tokens/src/mixins" as m;
+@use "packages/tokens/src/components/panel";
 
 .m2s2-panel-overlay {
   position: fixed;
@@ -118,50 +118,6 @@ function onBackdropClick(): void {
   &--left {
     left: 0;
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-  }
-}
-
-.panel-header {
-  @include m.overlay-header-stacked;
-}
-.panel-header-text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  min-width: 0;
-}
-.panel-title {
-  @include m.overlay-title;
-}
-.panel-subtitle {
-  @include m.overlay-subtitle;
-}
-.panel-close {
-  @include m.btn-icon;
-}
-.panel-body {
-  @include m.overlay-body;
-}
-.panel-message {
-  @include m.overlay-message;
-}
-.panel-footer {
-  @include m.overlay-footer;
-}
-
-.panel-btn {
-  @include m.btn-base;
-  &--primary {
-    @include m.btn-primary;
-  }
-  &--secondary {
-    @include m.btn-secondary;
-  }
-  &--destructive {
-    @include m.btn-destructive;
-  }
-  &--ghost {
-    @include m.btn-ghost;
   }
 }
 

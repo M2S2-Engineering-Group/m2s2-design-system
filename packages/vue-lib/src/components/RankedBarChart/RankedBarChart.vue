@@ -27,9 +27,5 @@ onBeforeUnmount(() => chart?.destroy());
 </template>
 
 <style lang="scss">
-.m2s2-chart {
-  position: relative;
-  width: 100%;
-  height: var(--chart-height, 320px);
-}
+@use "packages/tokens/src/components/chart";
 </style>

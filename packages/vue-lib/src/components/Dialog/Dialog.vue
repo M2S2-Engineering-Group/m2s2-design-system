@@ -78,7 +78,7 @@ function onKeydown(e: KeyboardEvent): void {
 </template>
 
 <style lang="scss">
-@use "packages/tokens/src/mixins" as m;
+@use "packages/tokens/src/components/dialog";
 
 .m2s2-dialog-overlay {
   position: fixed;
@@ -101,42 +101,6 @@ function onKeydown(e: KeyboardEvent): void {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-}
-
-.dialog-header {
-  @include m.overlay-header;
-}
-
-.dialog-title {
-  @include m.overlay-title;
-}
-.dialog-close {
-  @include m.btn-icon;
-}
-.dialog-body {
-  @include m.overlay-body;
-}
-.dialog-message {
-  @include m.overlay-message;
-}
-.dialog-footer {
-  @include m.overlay-footer;
-}
-
-.dialog-btn {
-  @include m.btn-base;
-  &--primary {
-    @include m.btn-primary;
-  }
-  &--secondary {
-    @include m.btn-secondary;
-  }
-  &--destructive {
-    @include m.btn-destructive;
-  }
-  &--ghost {
-    @include m.btn-ghost;
-  }
 }
 
 .dialog-fade-enter-active,

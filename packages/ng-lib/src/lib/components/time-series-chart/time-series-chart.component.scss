@@ -1,5 +1,1 @@
-.m2s2-chart {
-  position: relative;
-  width: 100%;
-  height: var(--chart-height, 320px);
-}
+@use "tokens/src/components/chart";
