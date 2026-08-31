@@ -29,6 +29,7 @@
     "@angular/platform-browser-dynamic": "^21.0.0",
     "rxjs": "^7.8.2",
     "postcss": "^8.5.18",
+    "npm": "11.19.1",
     "webpack-dev-server": {
       ".": "^5.2.6",
       "http-proxy-middleware": "2.0.10"
