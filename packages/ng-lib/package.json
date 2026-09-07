@@ -48,9 +48,9 @@
   },
   "devDependencies": {
     "@angular-builders/jest": "^21.0.3",
-    "@angular-devkit/build-angular": "^21.2.22",
+    "@angular-devkit/build-angular": "^21.2.23",
     "@angular/build": "^21.2.21",
-    "@angular/cli": "^21.2.22",
+    "@angular/cli": "^21.2.23",
     "@angular/compiler-cli": "^21.2.22",
     "@storybook/addon-docs": "^10.5.7",
     "@storybook/angular": "^10.5.7",
