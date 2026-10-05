@@ -27,6 +27,7 @@
     "@angular/core": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/platform-browser-dynamic": "^21.0.0",
+    "ip-address": "^10.5.1",
     "rxjs": "^7.8.2",
     "postcss": "^8.5.18",
     "npm": "11.19.1",
