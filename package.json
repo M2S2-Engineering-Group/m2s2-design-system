@@ -27,6 +27,7 @@
     "@angular/core": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/platform-browser-dynamic": "^21.0.0",
+    "@angular/router": "^21.0.0",
     "ip-address": "^10.5.1",
     "hono": "^4.13.13",
     "@actions/http-client": {
@@ -41,7 +42,8 @@
     "npm": "11.19.1",
     "webpack-dev-server": {
       ".": "^5.2.6",
-      "http-proxy-middleware": "2.0.10"
+      "http-proxy-middleware": "2.0.10",
+      "webpack-dev-middleware": "^7.4.6"
     },
     "js-yaml": "^4.3.2",
     "@istanbuljs/load-nyc-config": {
