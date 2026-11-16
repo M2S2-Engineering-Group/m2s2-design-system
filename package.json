@@ -93,6 +93,6 @@
     "turbo": "^2.11.11",
     "typescript-eslint": "^8.72.1",
     "vite": "^7.3.7",
-    "vue-eslint-parser": "^10.4.1"
+    "vue-eslint-parser": "^10.4.2"
   }
 }
