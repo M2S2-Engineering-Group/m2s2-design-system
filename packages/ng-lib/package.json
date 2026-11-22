@@ -56,7 +56,7 @@
     "@storybook/angular": "^10.6.7",
     "@testing-library/angular": "^19.6.0",
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/user-event": "^14.6.10",
+    "@testing-library/user-event": "^14.6.13",
     "@types/jest": "^30.0.0",
     "@types/jest-axe": "^3.5.9",
     "axe-core": "^4.14.0",
